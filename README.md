@@ -6,7 +6,7 @@
 -->
 
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/Modern-Analytics-Harmonized-Governance/.github/main/profile/araya-banner.svg" alt="ARAYA" width="600" />
+  <img src=".araya/araya.svg" alt="ARAYA" width="600" />
 </h1>
 
 <p align="center">
