@@ -55,10 +55,22 @@ ARAYA follows these principles:
 ## Governance
 
 ARAYA enforces enterprise governance for all changes:
-- **No direct writes to `main`** — all changes through PR to `dev`
+- **No direct writes to `main`** — all changes through PR to `dev-mahg`
 - **Quality gates** in CI/CD (lint, test, coverage, security)
 - **Architecture review** required for schema/API changes
 - **Security review** required for auth/crypto/secret changes
+
+## Versioning
+
+ARAYA follows a pragmatic semantic versioning scheme:
+
+| Level | Example | When |
+|-------|---------|------|
+| **Hotfix** | 0.2.0 → 0.2.1 | Every PR merged to dev-mahg |
+| **Revision** | 0.2.x → 0.3.0 | Major feature, architecture change, or new domain |
+| **Version** | 0.x.x → 1.0.0 | Mature major release — may not happen this year |
+
+Hotfix resets to 0 on revision bump. Version bump only for production-grade milestone releases.
 
 ## Code of Conduct
 

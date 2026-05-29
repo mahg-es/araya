@@ -1,7 +1,7 @@
 ---
 name: lucas
 description: "ARAYA agent: Content Strategist. Model tier: balanced."
-tools: read, write, edit
+tools: read, grep, find
 model_tier: balanced
 ---
 
