@@ -3,7 +3,7 @@
 # model tiers, execution budgets, circuit breakers, and workflow policies.
 # This is the source of truth. Code reads this, never the reverse.
 
-version: "0.2.1"
+version: "0.2.2"
 description: "ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance"
 
 # ─── DELIVERY MODES ───────────────────────────────────────────────────────

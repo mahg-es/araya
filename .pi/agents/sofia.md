@@ -1,7 +1,7 @@
 ---
 name: sofia
 description: "ARAYA agent: AI Assistant. Model tier: fast."
-tools: read, grep, find
+tools: read, write, edit, bash, grep, find
 model_tier: fast
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: eunice
 description: "ARAYA agent: Educational Designer. Model tier: balanced."
-tools: read, write, edit
+tools: read, write, edit, bash, grep, find
 model_tier: balanced
 ---
 
