@@ -42,3 +42,9 @@ logic, and quality gates per layer.
 - Delta Lake time travel: retain 7 days default, 30 days for regulated data
 - Never query Bronze directly — always through Silver or Gold
 - Coordinate with Junia (design) and Bernabé (pipeline implementation)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

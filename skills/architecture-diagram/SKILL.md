@@ -47,3 +47,9 @@ or PlantUML/C4-PlantUML format.
 - Text-based formats (Mermaid, PlantUML) over image-only — version controlled
 - Keep diagrams updated — outdated diagrams are worse than no diagrams
 - Coordinate with Priscila (documentation) and relevant architect
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

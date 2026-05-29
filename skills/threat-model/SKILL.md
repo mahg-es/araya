@@ -80,3 +80,9 @@ Client → [HTTPS] → API Gateway → Auth Middleware → User Controller → P
 - Audit logs required for: authentication events, data mutations, permission changes
 - Share findings with relevant agents: Diana (overall security), Valentina (API fixes), Isla (infra controls)
 - If a threat cannot be fully mitigated, document it as an accepted risk with justification
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

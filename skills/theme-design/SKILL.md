@@ -49,3 +49,9 @@ scale, spacing system, and component variant definitions.
 - Reduced motion: animations disabled or minimized when preferred
 - High-contrast mode for accessibility (optional but recommended)
 - Coordinate with Dorcas (brand guidelines) and Aquila (static sites)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

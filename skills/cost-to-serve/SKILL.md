@@ -48,3 +48,9 @@ activity, service tier recommendations, and profit improvement opportunities.
 - Economy tier: self-service, automated support, minimal SLAs
 - Premium tier: dedicated support, proactive outreach, priority SLAs
 - Coordinate with Lidia for ABC model and whale-curve analysis
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

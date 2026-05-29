@@ -53,3 +53,9 @@ implementation guidance.
 - Colorblind-safe: avoid red-green alone; use blue-orange or add patterns
 - Sort by value, not alphabetically — categories have no natural order
 - Coordinate with Pablo (dashboards) and Dorcas (brand colors)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

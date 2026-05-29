@@ -44,3 +44,9 @@ access policies, and retention schedules.
 - Access control: least privilege; no human reads production data without audit log
 - Retention policies must be automated — no manual cleanup of old data
 - Coordinate with Diana for security classification and compliance requirements
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

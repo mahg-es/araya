@@ -89,3 +89,9 @@ Coverage report (Istanbul/nyc, JaCoCo, coverage.py), source code, risk analysis.
 - Never approve a PR that decreases critical module coverage
 - Exclude generated code, types, and config files from coverage calculations
 - Trend data is more valuable than point-in-time metrics — is coverage improving or degrading?
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

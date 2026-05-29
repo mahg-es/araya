@@ -135,3 +135,9 @@ Monitor these four signals for EVERY service:
 - Dashboards begin with the four golden signals — everything else is secondary
 - Trace every request across services — OpenTelemetry context propagation is mandatory
 - Alert fatigue kills monitoring — if an alert fires > 5 times without action, demote or remove it
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

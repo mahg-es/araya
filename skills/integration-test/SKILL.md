@@ -97,3 +97,9 @@ describe('POST /api/users', () => {
 - Database tests: use transactions and rollback (PostgreSQL) or test database reset (SQLite)
 - Integration tests may take up to 10 seconds per file — slower than unit tests, still fast enough for CI
 - Test authentication: valid token, expired token, missing token, wrong permissions
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

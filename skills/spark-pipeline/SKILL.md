@@ -148,3 +148,9 @@ if __name__ == "__main__":
 - Partition by date for time-series data; limit to < 1000 partitions
 - Use Parquet with Snappy compression as default format
 - Coordinate with Junia for architecture and Bernabé for pipeline orchestration
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -43,3 +43,9 @@ A `specs/vision.md` file containing:
 - Objectives must be measurable — no vague goals
 - Security and compliance must be considered from the vision stage
 - The vision document is a contract — change it deliberately, not accidentally
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

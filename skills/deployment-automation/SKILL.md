@@ -47,3 +47,9 @@ CI/CD pipeline configuration for automated build, test, deploy, and rollback.
 - Secrets in CI/CD platform secret store, never in config files
 - SSL/TLS mandatory — no production deployment without HTTPS
 - Coordinate with Isla (infrastructure) and cicd-pipeline (quality gates)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

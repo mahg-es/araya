@@ -48,3 +48,9 @@ A sprint plan document containing:
 - Buffer 20% of sprint capacity for unknowns, blockers, and context switching
 - The Definition of Done must be testable — "code reviewed" is not testable; "PR merged with 2 approvals and passing CI" is
 - If a task is too big to estimate, it needs decomposition first
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

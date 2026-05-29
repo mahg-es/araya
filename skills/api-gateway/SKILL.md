@@ -111,3 +111,9 @@ plugins:
 - Health checks on every backend route — gateway must know when a service is down
 - Request timeout: 30 seconds default, 5 seconds for pricing/real-time endpoints
 - Gateway logs must never contain passwords, tokens, or PII in URL query parameters
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

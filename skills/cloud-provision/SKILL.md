@@ -43,3 +43,9 @@ A Terraform module structure with VPC, compute, storage, and database configurat
 - Secrets in vault (Secrets Manager, OCI Vault), never in .tf files
 - Security groups: deny-all default, explicit allows by port + source CIDR
 - Deploy via CI/CD — Terraform plan on PR, manual approval for production apply
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

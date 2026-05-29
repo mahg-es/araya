@@ -57,3 +57,9 @@ Docker Compose configuration or service architecture description.
 - NetworkPolicy deny-all default, then whitelist only required traffic
 - Use Kustomize (or Helm) — never raw kubectl apply with env-specific values
 - Container images must use digests, not tags, in production manifests
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

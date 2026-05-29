@@ -66,3 +66,9 @@ describe('Feature: User Login', () => {
 - Use descriptive test names that explain the behavior being tested
 - Security scenarios must have dedicated security tests with attack payloads
 - Mock external dependencies; don't test third-party services
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

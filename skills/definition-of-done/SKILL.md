@@ -176,3 +176,9 @@ then verified at completion.
 - **Any unchecked DoD item = NOT DONE** — no exceptions
 - **Delivery DoD requires Manu's sign-off** — the PO validates
 - **DoD artifacts saved to** `.araya/runs/{run_id}/dod-{phase}.md`
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

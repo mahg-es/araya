@@ -152,3 +152,9 @@ export const usersApi = {
 - Mutations (POST/PUT/DELETE): no caching; invalidate affected GET queries on success
 - TypeScript types derived from API schema — never manually typed API responses
 - Network errors (offline, timeout) must surface user-friendly messages, not "TypeError: Failed to fetch"
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

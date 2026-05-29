@@ -139,3 +139,9 @@ UI states that need animation, performance budget, accessibility requirements.
 - No animation on first load — let the page render, then animate subsequent interactions
 - Performance budget: animations must maintain 60fps on target devices
 - Use `will-change` sparingly and remove after animation — overuse causes memory bloat
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

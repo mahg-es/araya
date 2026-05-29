@@ -43,3 +43,9 @@ and DDL ready for implementation.
 - SCD Type 2 for dimensions that need history (customer address); Type 1 for corrections
 - No null foreign keys in fact tables — use "Unknown" dimension row (`_sk = -1`)
 - Coordinate with Junia (architecture) and Bernabé (implementation)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

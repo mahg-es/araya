@@ -48,3 +48,9 @@ improvement candidates, and actionable recommendations.
 - Sensitivity analysis: how does the curve change with ±10% cost/revenue?
 - Present with data and narrative — numbers alone don't drive decisions
 - Coordinate with Lidia for ABC model input and strategic recommendations
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

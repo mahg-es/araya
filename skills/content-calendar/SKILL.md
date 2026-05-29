@@ -41,3 +41,9 @@ A content calendar with topics, formats, platforms, dates, and KPIs.
 - Maintain a content backlog: 10+ ideas ready for development
 - Track content performance and adjust calendar based on data
 - Coordinate with Lucas (strategy) and multi-platform-publish (execution)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

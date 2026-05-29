@@ -85,3 +85,9 @@ For every PR, run:
 - Regression suite grows linearly with features — budget CI time accordingly
 - Never skip regression tests "to save time" on release day — that's when you need them most
 - Coordinate with Teresa for test generation from regression test cases
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

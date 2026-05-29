@@ -100,3 +100,9 @@ Content, website URL, target keywords, competitor URLs.
 - HTTPS mandatory — Google penalizes HTTP sites
 - Mobile-first: Google indexes mobile version; test with Mobile-Friendly Test
 - GEO is complementary to SEO, not a replacement — optimize for both traditional and AI search
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

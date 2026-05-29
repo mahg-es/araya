@@ -48,3 +48,9 @@ validation results, and alerting on quality failures.
 - Anomaly detection: row count outside 3σ from baseline → alert
 - Quality failures in Bronze/Silver block downstream writes
 - Monitor quality trends: is data quality improving or degrading over time?
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

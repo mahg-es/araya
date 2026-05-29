@@ -107,3 +107,9 @@ Application URL or build output, performance budget, target device profiles.
 - No render-blocking JavaScript or CSS — critical path must be lean
 - Monitor performance in CI — block PRs that degrade Core Web Vitals
 - Test on real devices, not just Chrome DevTools — throttled CPU + network is not reality
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

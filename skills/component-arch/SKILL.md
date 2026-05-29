@@ -143,3 +143,9 @@ MainLayout, AuthLayout, SettingsLayout, DashboardLayout
 - Component API must be consistent: similar props names, similar patterns
 - Accessibility audit on every component before release
 - Deprecate before removing — give consumers one release to migrate
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

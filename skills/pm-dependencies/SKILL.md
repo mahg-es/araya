@@ -67,3 +67,9 @@ A dependency graph in `.araya/plan/spec/dependencies.md`:
 - Parallelization only where tasks are truly independent (no shared state, no shared resources)
 - If dependency logic is unclear, ask the domain agent: "Does Task B really need Task A to complete first?"
 - Cross-agent dependencies (Valentina depends on Isla) require explicit handoff coordination
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

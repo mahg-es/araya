@@ -93,3 +93,9 @@ Cumulative profit curve shows:
 - Distinguish between attributable costs (ABC) and non-attributable costs (corporate overhead) — separate reporting
 - If data is incomplete, flag assumptions explicitly — "estimated" vs. "measured" costs
 - ABC is a management tool, not GAAP — coordinate with Lidia; she owns profitability at ARAYA
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

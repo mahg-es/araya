@@ -77,3 +77,9 @@ describe('divide', () => {
 - Cover edge cases first — happy path tests prove it works; edge case tests prove it's robust
 - If a function has no error handling, add a test that documents expected failure behavior
 - Never test implementation details — test observable behavior, not internal state
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -155,3 +155,9 @@ jobs:
 - Copyright footer on every page: "© 2026 Manuel Alejandro Hernández Giuliani. All rights reserved."
 - Custom domain with HTTPS — Let's Encrypt or CDN-provided certificate
 - Coordinate with Lucas for content strategy and Dorcas for brand compliance
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

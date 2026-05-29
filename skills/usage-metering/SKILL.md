@@ -44,3 +44,9 @@ trends, and optimization opportunities.
 - Usage not cost: separate metering from pricing for flexibility
 - Forecast monthly: linear regression on 90-day usage trend
 - Coordinate with Mateo (FinOps) and Isla (infrastructure)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

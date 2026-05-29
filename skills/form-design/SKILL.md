@@ -141,3 +141,9 @@ export function UserForm({ onSubmit }: {
 - `noValidate` on `<form>` — use custom validation, not browser defaults
 - Support Enter to submit, Escape to cancel in modals
 - Autocomplete attributes (`autocomplete="email"`, `autocomplete="new-password"`) for UX
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

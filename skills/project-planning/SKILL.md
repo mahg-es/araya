@@ -44,3 +44,9 @@ and success criteria.
 - Stakeholders identified upfront — no surprise dependencies
 - Charter approved by The Data Professor before work begins
 - Coordinate with Sonia (PM execution) and pm-plan (sprint planning)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

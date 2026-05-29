@@ -48,3 +48,9 @@ lab integration, and assessment strategy.
 - Assessments must verify learning objectives — not just completion
 - Certification requires 80%+ on all assessments
 - Coordinate with Eunice (overall education) and lab-scenario-design (labs)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

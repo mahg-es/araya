@@ -45,3 +45,9 @@ settings, and query pipeline.
 - Benchmark with YOUR data — recall varies dramatically by domain
 - Monitor: query latency distribution, recall@K trend, index size growth
 - Coordinate with María for embedding model selection and RAG integration
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

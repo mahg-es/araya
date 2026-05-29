@@ -107,3 +107,9 @@ tolerances.
 - Consumer lag > 1000 messages for > 5 minutes → alert
 - DLQ must be monitored — any message in DLQ > 1 hour → human intervention
 - Message payload: include event ID, timestamp, version — not just business data
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

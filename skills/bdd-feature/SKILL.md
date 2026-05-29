@@ -63,3 +63,9 @@ Feature: [Feature name]
 - Every functional requirement must be covered by at least one scenario
 - Security scenarios are mandatory — consult Diana for threat-based scenarios
 - Tags (@smoke, @regression, @security) must be applied consistently
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

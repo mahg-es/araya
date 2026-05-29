@@ -159,3 +159,9 @@ jobs:
 - Flaky gates erode trust — fix flaky tests/checks within one sprint or demote to advisory
 - Security gate: high+ severity vulnerabilities block merge — no exceptions without security lead approval
 - Coverage threshold: 80% minimum — greenfield projects can target higher (90%); legacy can phase in
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -124,3 +124,9 @@ After completing this lab, you will be able to:
 - Test from clean environment — "works on my machine" is insufficient
 - Business context before technical content — why before how
 - Coordinate with Eunice for curriculum fit and Bernabé for pipeline correctness
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

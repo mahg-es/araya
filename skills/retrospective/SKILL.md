@@ -96,3 +96,9 @@ Sprint metrics, completed tasks, blocker log, team feedback, standup notes.
 - Review previous retrospective's action items at the start — accountability loop
 - The retrospective is worthless if nothing changes next sprint — action items must be tracked
 - Celebrate wins first — start positive to create psychological safety before criticism
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -59,3 +59,9 @@ Project language, framework, test runner, deployment target, and security requir
 - Docker image tags: use `git sha` for uniqueness, never `latest` for deployments
 - Rollback must be automated — if smoke tests fail after deploy, revert to previous image
 - Secrets: never echo or log; use GitHub Secrets or equivalent; rotate quarterly
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

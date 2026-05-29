@@ -50,3 +50,9 @@ mechanisms for each learning objective.
 - Feedback must be actionable: "fix X by doing Y" not "needs improvement"
 - Passing threshold defined before assessment — 80% minimum for competency
 - Coordinate with Eunice (lab design) and training-module (course structure)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -74,3 +74,9 @@ Score < 4: Low — accept or monitor
 - Re-assess risks at sprint boundaries — likelihood and impact change over time
 - Include at least one security risk (consult Diana) and one infrastructure risk (consult Isla)
 - Risk register is a living document — update when new information emerges
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -44,3 +44,9 @@ and error catalog.
 - Error catalog: every error code explained with fix instructions
 - Versioning: document current version, deprecation notices, migration guides
 - Coordinate with Priscila (writer) and Valentina (backend developer)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

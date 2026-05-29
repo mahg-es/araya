@@ -51,3 +51,9 @@ and implementation guidance.
 - Reserved Instance purchases only after rightsizing — locking over-provisioned waste is worse
 - Modernize before upsizing: newer instance generations offer better price/performance
 - Coordinate with Mateo (cost analysis) and Isla (infrastructure)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

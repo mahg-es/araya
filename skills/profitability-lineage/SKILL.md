@@ -44,3 +44,9 @@ with profit/loss attribution at each level.
 - Visualize with Sankey diagrams showing cost flow through activities to objects
 - Update lineage model quarterly or when business model changes significantly
 - Coordinate with Lidia (all profitability skills) and Pablo (visualization)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

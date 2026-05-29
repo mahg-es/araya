@@ -43,3 +43,9 @@ and alerting configuration.
 - SLA: define expected completion time for every DAG; alert if exceeded
 - Monitor: DAG run history, task duration trends, failure rate per DAG
 - Coordinate with Bernabé (pipelines) and Isla (infrastructure)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

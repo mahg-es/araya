@@ -114,3 +114,9 @@ App writes to Redis → Redis writes to PostgreSQL asynchronously
 - Monitor cache hit rate — if < 80%, your TTL is too short or your keys are wrong
 - Never cache POST/PUT/DELETE responses
 - Authentication/authorization data: short TTL (5-15 min), immediate invalidation on role change
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

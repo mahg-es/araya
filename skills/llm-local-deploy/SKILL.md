@@ -77,3 +77,9 @@ needs, latency requirements, and available hardware (RAM, GPU VRAM, CPU cores).
 - Use `num_ctx` (context window) matching task needs — larger context = more RAM
 - If the use case requires RAG, coordinate with María's rag-pipeline skill
 - Present model options as numbered choices [1][2][3] with tradeoffs: quality vs. speed vs. RAM
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

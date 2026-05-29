@@ -97,3 +97,9 @@ refresh requirements.
 - Every chart must have: title, labeled axes, data source, last updated timestamp
 - Filters at the top, consistent across the dashboard
 - Empty state: show why (no data for selected period), not a blank widget
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

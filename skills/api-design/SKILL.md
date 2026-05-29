@@ -146,3 +146,9 @@ components:
 - Use standard HTTP status codes — don't invent custom codes
 - Pagination required on any list endpoint that could return > 100 items
 - OpenAPI spec is the source of truth — code and tests derive from it, not the reverse
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured
