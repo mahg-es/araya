@@ -288,6 +288,16 @@ cd araya
 /araya run --policy aggressive --mode standard "Add caching"
 ```
 
+> **💬 Natural language works too.** ARAYA understands conversational English — no need to memorize command syntax:
+>
+> ```
+> sonia from araya can you review the latest status of the project
+> manu from araya please review the findings and issues from The Data Professor
+> sonia from araya coordinate with diana and lidia to audit the pricing module
+> ```
+>
+> Just start typing. ARAYA figures out who you want and what you need.
+
 ### `/araya <agent>`
 
 ```bash
