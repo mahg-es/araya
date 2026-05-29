@@ -1,4 +1,4 @@
-// ARRAYA v2 — Main Orchestrator
+// ARAYA v2 — Main Orchestrator
 // Ties together all engines and manages the run lifecycle.
 
 import { readFileSync } from "node:fs";
