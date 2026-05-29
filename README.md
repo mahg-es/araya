@@ -6,7 +6,7 @@
 -->
 
 <h1 align="center">
-  <img src=".araya/araya.svg" alt="ARAYA" width="600" />
+  <img src=".araya/araya.svg" alt="ARAYA" width="572" />
 </h1>
 
 <p align="center">
