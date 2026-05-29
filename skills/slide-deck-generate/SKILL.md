@@ -44,3 +44,9 @@ recommendations — ready for PowerPoint, Google Slides, or Reveal.js.
 - Copyright footer on every slide: "© 2026 Manuel Alejandro Hernández Giuliani."
 - Slides support the speaker, not replace them — speaker notes for what to say
 - Coordinate with Priscila (content) and Dorcas (brand compliance)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

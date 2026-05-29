@@ -105,3 +105,9 @@ configuration.
 - Admin actions require re-authentication (step-up auth)
 - Services authenticate to each other, not just the gateway to the user
 - Default deny for all network policies — whitelist only required traffic
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

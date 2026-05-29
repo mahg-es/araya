@@ -106,3 +106,9 @@ System architecture, expected user counts, target response times, critical paths
 - Connection pool exhaustion is the #1 bottleneck — monitor connections during every test
 - Soak test for at least 2x your longest-running production process (memory leaks are slow)
 - Never run performance tests against production during peak hours
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

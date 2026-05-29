@@ -46,3 +46,9 @@ strategies, and synthesis practices.
 - Synthesis is the goal: capture → organize → connect → create
 - Review and iterate quarterly — PKM is personal, what works changes
 - Coordinate with Esteban (knowledge management), daily-note, and knowledge-graph
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

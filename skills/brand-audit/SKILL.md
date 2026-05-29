@@ -46,3 +46,9 @@ and prioritized remediation actions.
 - Quarterly audits minimum — more frequent for rapidly changing properties
 - After fixes, re-audit — verify remediation, don't assume it happened
 - Coordinate with Dorcas (brand governance) and visual-identity (guidelines)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

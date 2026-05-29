@@ -44,3 +44,9 @@ identification, and budget alert thresholds.
 - Budget alerts: auto-notify at 50%, 80%, 95%, 100% thresholds
 - Reforecast monthly: compare actuals to previous forecast, explain variance > 10%
 - Coordinate with Mateo (FinOps) and cost-analysis (actual spend tracking)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

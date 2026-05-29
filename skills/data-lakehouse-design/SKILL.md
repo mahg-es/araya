@@ -87,3 +87,9 @@ Sources (CSV, API, streaming) → Bronze (raw, append-only) → Silver (typed, d
 - Open formats only: Delta Lake or Apache Iceberg, Parquet underneath — no proprietary formats
 - Partition by date for time-series; partition by category for high-cardinality lookups (but ≤ 1000 partitions)
 - Design for query patterns, not for storage — access patterns drive partitioning and indexing
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

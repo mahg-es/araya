@@ -49,3 +49,9 @@ configuration — ready for deployment.
 - Re-rank top-N results with cross-encoder for 10-20% relevance improvement
 - Evaluate with test queries — 80%+ retrieval recall before deployment
 - Coordinate with María for LLM deployment and model selection
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

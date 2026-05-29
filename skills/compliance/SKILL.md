@@ -91,3 +91,9 @@ security controls.
 - Data subject requests (access, deletion, portability) must be self-service where possible
 - Compliance inherited from cloud providers is not sufficient — shared responsibility means you're still responsible
 - Jurisdiction matters: EU data in EU region, healthcare data with BAA, financial data per local regulations
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

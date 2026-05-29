@@ -82,3 +82,9 @@ A status report in `.araya/plan/spec/status-report.md`:
 - Velocity is a trailing indicator — use burndown for current sprint health
 - Decision requests must be numbered and offer concrete options
 - Report frequency: weekly minimum; daily if in red status or final sprint week
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

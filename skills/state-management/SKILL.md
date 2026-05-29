@@ -128,3 +128,9 @@ export const useAppStore = create<AppStore>()(
 - Stale time ≥ 30 seconds for read-heavy data — avoid unnecessary refetches
 - Never duplicate state — one source of truth per data type
 - If state can be derived, derive it — don't store derived state
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

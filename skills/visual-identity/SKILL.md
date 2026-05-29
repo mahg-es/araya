@@ -46,3 +46,9 @@ and application examples.
 - Spacing and layout consistent with the identity — not an afterthought
 - Accessibility: contrast ratios, colorblind-safe alternatives, focus indicators
 - Coordinate with Dorcas (brand governance) and brand-compliance (auditing)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

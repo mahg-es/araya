@@ -61,3 +61,9 @@ Task: Build User Management API
 - Cross-cutting tasks (security review, testing, docs) must be explicit subtasks, not afterthoughts
 - Done criteria must be binary — either done or not, no "partially done"
 - If you're uncertain about technical scope, consult the domain specialist agent before finalizing
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

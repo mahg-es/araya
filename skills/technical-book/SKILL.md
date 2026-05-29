@@ -50,3 +50,9 @@ objectives, body content, diagrams, code examples, and exercises.
 - Consistent voice across chapters — Priscila maintains editorial standards
 - Citation format: author, title, year for references
 - Coordinate with Priscila (editorial) and domain specialists for technical review
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

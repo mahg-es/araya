@@ -48,3 +48,9 @@ metadata, and distribution guidelines.
 - Archive, don't delete — obsolete assets moved to `archive/`, not removed
 - Access: designers edit, everyone reads — no accidental overwrites
 - Coordinate with Dorcas (brand governance) and visual-identity (guidelines)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

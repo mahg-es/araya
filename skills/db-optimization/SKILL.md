@@ -129,3 +129,9 @@ random_page_cost = 1.1         # SSD-optimized (default 4.0 is for HDD)
 - Update statistics after large data changes: `ANALYZE table_name`
 - `VACUUM` regularly for PostgreSQL — autovacuum is not enough for high-write tables
 - Connection pooling (PgBouncer) required for any app with > 20 concurrent connections
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

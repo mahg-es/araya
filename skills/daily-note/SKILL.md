@@ -93,3 +93,9 @@ moving fast. Consider peer review from Sonia or Priscila.
 - Be specific: "Fixed bug in auth middleware" not "Worked on auth"
 - Open questions drive tomorrow's agenda — don't let them sit unanswered
 - Daily notes are for you — write in your voice, optimize for future-you's search
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

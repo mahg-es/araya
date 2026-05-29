@@ -137,3 +137,9 @@ export default router;
 - Parametrize all SQL queries — never string concatenation
 - Return only the data the client needs — never return password hashes, internal IDs unnecessarily
 - Coordinate with Diana for security-sensitive endpoints (auth, payments, PII)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

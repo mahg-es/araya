@@ -55,3 +55,9 @@ volumes, and environment variables.
 - `.env` files must be in `.gitignore` and `.dockerignore` — provide `.env.example` instead
 - Image size target: < 200MB for interpreted languages, < 50MB for compiled
 - Test with `docker compose down -v && docker compose up --build -d` for reproducibility
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

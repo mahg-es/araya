@@ -53,3 +53,9 @@ A red/green test report:
 - Coverage is informative, not a target — don't chase 100% blindly
 - Every test failure must have an actionable error message
 - Run tests in CI mode (single run, not watch mode) for reporting
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

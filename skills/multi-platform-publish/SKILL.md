@@ -47,3 +47,9 @@ Platform-adapted content variants with scheduling and analytics tracking.
 - Publishing schedule: Blogger → X (same day) → LinkedIn (next day) → Email (day 3)
 - Copyright footer on all published content: "© 2026 Manuel Alejandro Hernández Giuliani."
 - Coordinate with Lucas for content strategy and Dorcas for brand voice
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

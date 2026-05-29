@@ -127,3 +127,9 @@ with numbered questions ready for The Data Professor to answer.
 - After answers are applied, produce the formal artifact (requirements doc, AC doc)
 - If a question cannot be answered now, mark it DEFERRED with a reason
 - Questionnaire goes to `.araya/plan/spec/po-questionnaire-{topic}.md`
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -96,3 +96,9 @@ Requirements document, user stories, or feature specification.
 - Prioritize: P0 tests block release; P1 tests should pass; P2/P3 are nice-to-have
 - Security test cases required for any endpoint handling auth, PII, or payments
 - Hand off to Teresa for unit/integration test generation from these cases
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

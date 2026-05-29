@@ -101,3 +101,9 @@ Blocker report from agent, context about what's blocked, who can resolve it.
 - Blockers > 48 hours trigger automatic escalation to Sonia and The Data Professor
 - Remove the blocker, not the task — never drop a task to "resolve" a blocker
 - After resolution, add to "resolved" log with duration — builds evidence for process improvement
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

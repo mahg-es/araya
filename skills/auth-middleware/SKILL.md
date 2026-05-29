@@ -131,3 +131,9 @@ export function authorize(...roles: string[]) {
 - Rate limit auth endpoints: 5 attempts per IP per 15 minutes
 - 401 = not authenticated (log in first), 403 = not authorized (wrong permissions)
 - Coordinate with Diana for security review of all auth code
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

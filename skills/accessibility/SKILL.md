@@ -159,3 +159,9 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
 - Tab order must follow visual order — don't use `tabindex > 0`
 - Modal dialogs: focus trap, Escape to close, focus returns to trigger on close
 - Accessibility is continuous, not a launch checklist — audit every sprint
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

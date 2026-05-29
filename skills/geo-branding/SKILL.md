@@ -49,3 +49,9 @@ and content formatting optimized for AI extraction and citation.
 - Author authority: visible credentials + publication history on every page
 - Monitor AI search traffic separately from traditional search traffic
 - Coordinate with Lucas (content strategy) and Aquila (technical implementation)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -98,3 +98,9 @@ resource inventory, project tags.
 - Budget alerts: 50% (inform), 80% (warn), 100% (block new resources)
 - Compare month-over-month, not month-to-budget — budget variance alone hides trends
 - Reserved Instances / Savings Plans for stable workloads; spot instances for fault-tolerant
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

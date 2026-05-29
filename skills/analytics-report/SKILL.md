@@ -44,3 +44,9 @@ insights, and recommendations.
 - Consistent format issue to issue — stakeholders should know where to look
 - Note data limitations and assumptions — be honest about uncertainty
 - Coordinate with Pablo (overall BI) and data-visualization (charts)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

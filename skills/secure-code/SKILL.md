@@ -85,3 +85,9 @@ A security review report:
 - Input validation: whitelist over blacklist; validate type, length, format, range
 - CORS: explicit origins, not `*`; CSP headers on all HTML responses
 - A single Critical finding blocks the PR from merging — remediation required first
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -104,3 +104,9 @@ Sprint history: committed points, completed points, carry-over, team composition
 - Team composition changes reset velocity baselines — new members have a ramp-up period
 - Don't compare velocity across teams — points are team-specific, not universal
 - Velocity is for the team, not for performance evaluation — weaponized velocity destroys trust
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

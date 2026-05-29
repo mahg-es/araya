@@ -44,3 +44,9 @@ definitions, targets, and leading/lagging indicator balance.
 - Red/Amber/Green thresholds defined for every metric
 - Review frequency: strategic (monthly), tactical (weekly), operational (daily)
 - Coordinate with Pablo (dashboards) and data-visualization (charts)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

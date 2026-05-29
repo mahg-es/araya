@@ -94,3 +94,9 @@ team structure.
 - Services communicate via API contracts — never access another service's database directly
 - Events are the backbone — invest early in reliable event infrastructure
 - If two services always deploy together, they should be one service
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

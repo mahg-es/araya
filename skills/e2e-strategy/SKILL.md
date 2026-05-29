@@ -138,3 +138,9 @@ e2e-tests:
 - E2E suite must complete in < 10 minutes — if slower, parallelize or split
 - Flaky tests (> 5% failure rate) get quarantined — fix within 1 sprint or remove
 - Test on the browser your users actually use — don't test only Chrome if users are on Safari
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

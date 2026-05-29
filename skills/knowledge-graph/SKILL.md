@@ -41,3 +41,9 @@ A knowledge graph with entities (nodes), relationships (edges), and metadata.
 - Knowledge graph is for finding, not for showing off — optimize for retrieval
 - Prune quarterly: remove obsolete links, update changed relationships
 - Coordinate with Esteban (knowledge management) and daily-note (capture)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

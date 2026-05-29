@@ -93,3 +93,9 @@ export function Button({
 - Props extend native HTML attributes where the component wraps a native element
 - Support `className` prop for consumer customization
 - Import only what you need — no giant component libraries for a single button
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

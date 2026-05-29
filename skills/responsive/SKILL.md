@@ -117,3 +117,9 @@ Design mockups at key breakpoints (mobile 375px, tablet 768px, desktop 1440px).
 - `clamp()` for fluid typography: `font-size: clamp(1rem, 2.5vw, 1.5rem)`
 - Test on real devices when possible — Chrome DevTools device mode is not reality
 - Reduced motion: `@media (prefers-reduced-motion)` for animations
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

@@ -44,3 +44,9 @@ milestones, and certification paths.
 - Regular review: update curriculum annually based on industry changes
 - Part-time and self-paced tracks for working professionals
 - Coordinate with Eunice (education), training-module (courses), and lab-scenario-design (labs)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

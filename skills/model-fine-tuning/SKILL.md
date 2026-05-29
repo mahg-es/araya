@@ -48,3 +48,9 @@ metrics, and deployment instructions.
 - Check for catastrophic forgetting: model should still perform on general tasks
 - Training on CPU with QLoRA is viable — llama.cpp + QLoRA works on consumer hardware
 - Coordinate with María for deployment after fine-tuning
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

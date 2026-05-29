@@ -103,3 +103,9 @@ Use PostgreSQL with PostGIS extension as our primary spatial database.
 - ADRs are immutable once accepted — edit only to fix typos or update status
 - Use the MADR (Markdown Architecture Decision Record) format for consistency
 - Coordinate with the relevant domain agent for technical validation before finalizing
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

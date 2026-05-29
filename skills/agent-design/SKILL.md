@@ -45,3 +45,9 @@ safety guardrails — ready for implementation.
 - Memory must be inspectable — humans must see what the agent remembers
 - Fallback: if agent is uncertain, escalate to human — never guess on critical decisions
 - Coordinate with María for LLM deployment and Diana for security review
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

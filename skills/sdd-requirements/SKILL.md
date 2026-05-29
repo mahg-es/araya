@@ -48,3 +48,9 @@ A `specs/requirements.md` file containing:
 - Security requirements are mandatory — involve Diana
 - Non-functional requirements must be measurable, not aspirational
 - Requirements must be testable — if you can't test it, it's not a requirement
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

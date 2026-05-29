@@ -154,3 +154,9 @@ resource "aws_db_instance" "main" {
 - Tags on every resource: Environment, Project, ManagedBy, CostCenter
 - Secrets never in `.tf` files — use AWS Secrets Manager, OCI Vault, or `sops`-encrypted values
 - Terraform plan must be reviewed before apply — automated in CI, manual approval for production
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

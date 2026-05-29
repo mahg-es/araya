@@ -136,3 +136,9 @@ export function errorHandler(
 - Unhandled promise rejections must crash the process (let the process manager restart it)
 - Validation errors must return which field failed and why — not just "invalid input"
 - Coordinate with Diana: error messages must not leak system internals
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

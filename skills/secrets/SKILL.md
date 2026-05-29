@@ -71,3 +71,9 @@ Project configuration, environment variable patterns, or repository to audit.
 - CI/CD: use platform secret stores; secrets must be masked in logs
 - Production: secrets rotated every 90 days minimum; on suspicion of exposure, rotate immediately
 - Audit before every major release and after any team member departure
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

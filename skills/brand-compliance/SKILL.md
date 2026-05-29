@@ -137,3 +137,9 @@ to audit.
 - Brand voice matters as much as visual identity — audit content tone, not just design
 - Fixes must reference exact values (hex, font name, file path), not vague suggestions
 - Coordinate with Aquila for website fixes and Lucas for content voice
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

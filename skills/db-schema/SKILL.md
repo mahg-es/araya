@@ -105,3 +105,9 @@ CREATE TRIGGER users_updated_at
 - Index every foreign key — missing FK indexes are the #1 performance killer
 - Denormalize only with justification and documentation — premature denormalization is premature optimization
 - Coordinate with Bernabé for data models that need pipeline support (Bronze/Silver/Gold)
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured

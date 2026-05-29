@@ -88,3 +88,9 @@ Previous day's standup notes, task board status, agent status updates.
 - Not every agent reports every day — only those active on the sprint
 - Standup notes are reference material for status reports and retrospectives
 - If an agent is blocked for 2+ days without escalation, that's a process failure
+## Done Criteria
+
+- [ ] All steps completed as specified
+- [ ] Output validated against requirements
+- [ ] Status reported with confidence score
+- [ ] Evidence artifacts captured
