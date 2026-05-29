@@ -1,4 +1,4 @@
-// ARRAYA — AI-Native SDLC Orchestration Framework Extension for pi
+// ARAYA — AI-Native SDLC Orchestration Framework Extension for pi
 //
 // This extension reads araya.yaml and prompts/agents/*.md to register
 // slash commands for each agent and the `/araya run` orchestration pipeline.

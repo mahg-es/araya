@@ -1,4 +1,4 @@
-// ARRAYA v2 — Barrel export
+// ARAYA v2 — Barrel export
 export { ArayaOrchestrator } from "./orchestrator";
 export { WorkflowPolicyEngine } from "./engines/workflow-policy";
 export { ModelSelectionEngine } from "./engines/model-selection";

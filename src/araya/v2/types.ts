@@ -1,4 +1,4 @@
-// ARRAYA v2 — Types
+// ARAYA v2 — Types
 // Shared type definitions for the orchestration framework.
 
 // ─── Core Types ──────────────────────────────────────────────────────────
