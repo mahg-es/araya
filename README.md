@@ -4,7 +4,7 @@
 </div>
 
 <p align="center">
-    <strong>24 specialized AI agents. 104 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
+    <strong>24 specialized AI agents. 108 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
 </p>
 
 <p align="center">
@@ -67,6 +67,9 @@ DAG-aware delegation: independent phases run in parallel
            │
            ▼
 Manu (PO) validates delivery against acceptance criteria
+           │
+           ▼
+Post-delivery review: DRR → IAR → CR → work package → next iteration
            │
            ▼
 Done. Traceable. Auditable. Governed.
@@ -155,6 +158,7 @@ cd araya
 | `/araya:status` | Full agent roster with tiers and skills |
 | `/araya:install` | Install ARAYA on this machine |
 | `/araya help` | Complete command manual |
+| `/araya review-delivery <id>` | Create DRR → IAR → CR for post-delivery feedback |
 
 ### Run Flags
 
@@ -307,6 +311,14 @@ Shows the full agent roster with tiers, skills, and governance information.
 
 Installs ARAYA from the canonical source on any machine.
 
+### `/araya review-delivery <delivery-id>`
+
+Creates a Delivery Review Report (DRR) for post-delivery feedback. Sonia classifies findings, generates Impact Analysis (IAR), and produces Change Requests (CR) approved by Manu.
+
+```bash
+/araya review-delivery DEL-2026-005
+```
+
 ---
 
 ## 🏗 Architecture
@@ -369,9 +381,18 @@ Agents resolve to capability tiers — never hardcoded model names:
 
 Three-tier mandatory verification per task, phase, and delivery. Binary only — done or not done. Cross-agent verification required.
 
-### 104 Skills Across 12 Domains
+### Post-Delivery Review
 
-From `definition-of-done` to `po-gap-questionnaire`, from `sdd-vision` to `whale-curve-analyze`, from `docker` to `llm-local-deploy`, from `threat-model` to `brand-compliance`.
+Feedback is never lost. After delivery, the complete feedback loop:
+- **DRR** (Delivery Review Report): captures all feedback as classified findings across 13 categories
+- **IAR** (Impact Analysis Report): maps findings to affected artifacts, estimates effort and risk
+- **CR** (Change Request): converts approved findings to new work packages routed back into the SDLC
+- Traceability chain: Delivery → DRR → IAR → CR → Implementation
+- Command: `/araya review-delivery <delivery-id>`
+
+### 108 Skills Across 12 Domains
+
+From `definition-of-done` to `po-gap-questionnaire`, from `drr-create` to `cr-generate`, from `sdd-vision` to `whale-curve-analyze`, from `docker` to `llm-local-deploy`, from `threat-model` to `brand-compliance`.
 
 ---
 
@@ -402,7 +423,7 @@ Then `/reload` and you're ready.
 |------|--------|
 | Extensions | Symlinks ARAYA + subagent + notifier to `~/.pi/agent/extensions/` |
 | Agents | Copies 24 agent definitions to `~/.pi/agent/agents/` |
-| Skills | Symlinks 104 skills to `~/.pi/agent/skills/araya/` |
+| Skills | Symlinks 108 skills to `~/.pi/agent/skills/araya/` |
 | Prompts | Symlinks prompt templates to `~/.pi/agent/prompts/araya/` |
 | Config | Copies `araya.yaml` (single source of truth for version) |
 
