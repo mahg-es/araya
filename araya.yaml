@@ -1,4 +1,4 @@
-version: 0.3.4
+version: 0.3.5
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -174,6 +174,7 @@ agents:
     - po-gap-questionnaire
     - definition-of-done
     - drr-create
+    - uat-review
   sonia:
     role: PM Head Orchestrator
     emoji: 👩‍💼
@@ -210,6 +211,8 @@ agents:
     - drr-create
     - iar-generate
     - cr-generate
+    - uat-generate
+    - uat-review
   valentina:
     role: Backend Developer
     emoji: 🔧
@@ -257,6 +260,7 @@ agents:
     - coverage
     - tdd-generate
     - tdd-execute
+    - uat-review
   aisha:
     role: Backend Architect
     emoji: 🔷
@@ -300,6 +304,7 @@ agents:
     - performance-test
     - e2e-strategy
     - cicd-quality
+    - uat-review
   diana:
     role: Cybersecurity Specialist
     emoji: 🛡️

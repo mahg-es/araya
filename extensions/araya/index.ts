@@ -558,6 +558,48 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:generate-uat ───────────────────────────────────────────────────
+
+  pi.registerCommand("araya:generate-uat", {
+    description: "📋 Generate UAT package from requirements, ACs, BDD, TDD",
+    handler: async (args, ctx) => {
+      const deliveryId = args?.trim() || "latest";
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
+        `## Generate UAT Package`,
+        `**Delivery ID:** ${deliveryId}`,
+        `Generate complete UAT with traceability matrix, test cases per AC, coverage matrix, findings register, and acceptance decision.`,
+        `Save to .araya/reviews/uat/uat-${deliveryId}.md`,
+      ].join("\n"));
+      pi.sendUserMessage(soniaPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:review-uat", {
+    description: "🔍 Review UAT package for completeness and coverage",
+    handler: async (args, ctx) => {
+      const uatId = args?.trim() || "latest";
+      const manuPrompt = buildAgentPrompt(config, "manu", [
+        `## Review UAT Package`,
+        `**UAT ID:** ${uatId}`,
+        `Validate: every req has AC, every AC has UAT test, traceability complete, coverage adequate. Report: READY | NEEDS FIXES | REJECTED.`,
+      ].join("\n"));
+      pi.sendUserMessage(manuPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:uat-status", {
+    description: "📊 Show UAT status for a delivery",
+    handler: async (args, ctx) => {
+      const uatId = args?.trim() || "latest";
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
+        `## UAT Status Report`,
+        `**UAT ID:** ${uatId}`,
+        `Report: coverage %, pass/fail/blocked, critical findings, acceptance status, next steps.`,
+      ].join("\n"));
+      pi.sendUserMessage(soniaPrompt);
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {
