@@ -65,6 +65,28 @@ All coordinated. All traceable. All through a single pi session.
 
 ---
 
+## 📸 ARAYA in Action
+
+<p align="center">
+  <img src=".araya/ss/araya-ss01.png" alt="Sonia orchestrating a delivery plan" width="90%" />
+  <br/><em>Sonia orchestrates a full delivery plan with governance checks</em>
+</p>
+
+<p align="center">
+  <img src=".araya/ss/araya-ss02.png" alt="SDD — Software Design Document" width="90%" />
+  <br/><em>SDD phase — architecture, boundaries, workflows, entities defined</em>
+</p>
+
+<p align="center">
+  <img src=".araya/ss/araya-ss03.png" alt="BDD — Behavior-Driven Development" width="90%" />
+  <br/><em>BDD phase — Gherkin scenarios covering user flows and exceptions</em>
+</p>
+
+<p align="center">
+  <img src=".araya/ss/araya-ss04.png" alt="TDD and proactive status" width="90%" />
+  <br/><em>TDD phase complete — Sonia proactively reports delegation status without being asked</em>
+</p>
+
 ## 🏗 Architecture
 
 ```
