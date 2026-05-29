@@ -1,174 +1,179 @@
-# ARAYA v2.0 — AI-Native SDLC Orchestration Framework
-# Configuration file. Agents, roles, skill associations, delivery modes,
-# model tiers, execution budgets, circuit breakers, and workflow policies.
-# This is the source of truth. Code reads this, never the reverse.
-
-version: "0.2.2"
-description: "ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance"
-
-# ─── DELIVERY MODES ───────────────────────────────────────────────────────
-# Each mode defines which phases/gates are required. Sonia selects mode
-# based on task complexity, or the user specifies it explicitly.
-
+version: 0.3.0
+description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
-    description: "All gates — new features, architecture changes, data model changes, security-sensitive, large refactors"
-    phases: [sdd, bdd, tdd, implementation, review, security, validation, documentation]
+    description: All gates — new features, architecture changes, data model changes,
+      security-sensitive, large refactors
+    phases:
+    - sdd
+    - bdd
+    - tdd
+    - implementation
+    - review
+    - security
+    - validation
+    - documentation
     requires_approval: true
-
   standard:
-    description: "Normal feature work"
-    phases: [plan, tests, implementation, review, validation]
+    description: Normal feature work
+    phases:
+    - plan
+    - tests
+    - implementation
+    - review
+    - validation
     requires_approval: false
-
   quick:
-    description: "Documentation, naming fixes, UI text, minor config"
-    phases: [review]
+    description: Documentation, naming fixes, UI text, minor config
+    phases:
+    - review
     requires_approval: false
-
   review:
-    description: "Code review, PR review, architecture review"
-    phases: [review, security]
+    description: Code review, PR review, architecture review
+    phases:
+    - review
+    - security
     requires_approval: false
-
   repair:
-    description: "Fixing failed tests, broken builds, lint issues, regressions"
-    phases: [tests, validation]
+    description: Fixing failed tests, broken builds, lint issues, regressions
+    phases:
+    - tests
+    - validation
     requires_approval: false
-
-# ─── WORKFLOW POLICIES ────────────────────────────────────────────────────
-
 workflow_policies:
   auto:
-    description: "Sonia decides dynamically based on task analysis"
+    description: Sonia decides dynamically based on task analysis
     default_gates: all
     override: false
-
   conservative:
-    description: "Prefers more gates and reviews"
+    description: Prefers more gates and reviews
     default_gates: all
     require_security_review: true
     require_architect_review: true
-
   balanced:
-    description: "Standard enterprise workflow"
-    default_gates: [plan, tests, implementation, review, validation]
+    description: Standard enterprise workflow
+    default_gates:
+    - plan
+    - tests
+    - implementation
+    - review
+    - validation
     require_security_review: false
     require_architect_review: false
-
   aggressive:
-    description: "Optimized for speed, reduced approvals"
-    default_gates: [implementation, review]
+    description: Optimized for speed, reduced approvals
+    default_gates:
+    - implementation
+    - review
     require_security_review: false
     require_architect_review: false
-
-# ─── MODEL TIERS (Capability-based, not hardcoded model names) ───────────
-
 model_tiers:
   fast:
-    purpose: "Documentation, formatting, simple edits, grep/find, simple QA"
+    purpose: Documentation, formatting, simple edits, grep/find, simple QA
     primary_provider: deepseek
     primary_capability: non_thinking_fast
-    allowed_fallback_providers: [openai, google]
+    allowed_fallback_providers:
+    - openai
+    - google
     reasoning_effort: low
-
   balanced:
-    purpose: "Standard development, code review, test generation, BDD features"
+    purpose: Standard development, code review, test generation, BDD features
     primary_provider: deepseek
     primary_capability: non_thinking_balanced
-    allowed_fallback_providers: [openai, google]
+    allowed_fallback_providers:
+    - openai
+    - google
     reasoning_effort: medium
-
   reasoning:
-    purpose: "Architecture, security analysis, complex debugging, SDD, planning, risk analysis"
+    purpose: Architecture, security analysis, complex debugging, SDD, planning, risk
+      analysis
     primary_provider: deepseek
     primary_capability: thinking_reasoning
-    allowed_fallback_providers: [openai, google]
+    allowed_fallback_providers:
+    - openai
+    - google
     reasoning_effort: high
-
-# ─── EXECUTION BUDGETS ────────────────────────────────────────────────────
-
 execution_budget:
-  max_cost_usd: 2.00
+  max_cost_usd: 2.0
   max_runtime_minutes: 20
   max_parallel_agents: 4
   max_reasoning_tokens: 50000
   max_turns_per_agent: 30
-
-# ─── CIRCUIT BREAKERS ─────────────────────────────────────────────────────
-
 circuit_breakers:
   max_failures_per_phase: 3
   max_retries: 2
   stop_on_security_failure: true
   stop_on_schema_risk: true
   stop_on_cost_threshold_exceeded: true
-
-# ─── EXECUTION MODES ──────────────────────────────────────────────────────
-
 execution_modes:
   deterministic:
-    description: "Lower temperature, stable prompts, reproducible outputs"
+    description: Lower temperature, stable prompts, reproducible outputs
   adaptive:
-    description: "More creativity, exploration, broader solution search"
-
-# ─── SAFE MODE ────────────────────────────────────────────────────────────
-
+    description: More creativity, exploration, broader solution search
 safe_mode:
-  description: "Dry-run — no writes to disk, no shell execution, no git operations"
+  description: Dry-run — no writes to disk, no shell execution, no git operations
   restrictions:
-    - no_write_to_disk
-    - no_shell_execution
-    - no_git_operations
-
-# ─── BRANCH GOVERNANCE ────────────────────────────────────────────────────
-
+  - no_write_to_disk
+  - no_shell_execution
+  - no_git_operations
 branch_strategy:
   main:
     type: protected
-    description: "No direct writes"
+    description: No direct writes
   dev:
     type: integration
-    description: "PR required from feature/*"
+    description: PR required from feature/*
   feature:
     type: execution
-    description: "Worktree isolation, auto-commit"
-    pattern: "feature/*"
+    description: Worktree isolation, auto-commit
+    pattern: feature/*
   hotfix:
     type: repair
-    description: "Expedited but gated"
-    pattern: "hotfix/*"
+    description: Expedited but gated
+    pattern: hotfix/*
   review:
     type: governance
-    description: "Read-only validation"
-    pattern: "review/*"
-
-# ─── HUMAN APPROVAL CHECKPOINTS ───────────────────────────────────────────
-
+    description: Read-only validation
+    pattern: review/*
 human_approval_required_for:
-  - destructive_operations   # DROP TABLE, DELETE without WHERE
-  - schema_changes           # ALTER TABLE, migrations
-  - infrastructure_changes   # Docker, K8s, terraform
-  - dependency_upgrades      # Major version bumps
-  - security_sensitive       # Auth, secrets, encryption
-
-# ─── ARTIFACT STORAGE ─────────────────────────────────────────────────────
-
+- destructive_operations
+- schema_changes
+- infrastructure_changes
+- dependency_upgrades
+- security_sensitive
 artifact_storage:
-  runs: ".araya/runs/"
-  reports: ".araya/reports/"
-  evidence: ".araya/evidence/"
-  telemetry: ".araya/telemetry/"
-  approvals: ".araya/approvals/"
-  memory: ".araya/memory/"
-
-# ─── AGENTS ───────────────────────────────────────────────────────────────
-# Same 23 agents from v1.0, now with model_tier assignments
-
+  runs: .araya/runs/
+  reports: .araya/reports/
+  evidence: .araya/evidence/
+  telemetry: .araya/telemetry/
+  approvals: .araya/approvals/
+  memory: .araya/memory/
 agents:
+  manu:
+    role: Product Owner
+    emoji: 👑
+    model_tier: reasoning
+    primary_provider: deepseek
+    max_turns: 35
+    permissions:
+      can_write_code: false
+      can_approve_review: true
+    capabilities:
+    - product_ownership
+    - requirements
+    - acceptance_criteria
+    - scope_management
+    - release_gate
+    skills:
+    - sdd-vision
+    - sdd-requirements
+    - test-case
+    - bdd-feature
+    - pm-status
+    - project-planning
   sonia:
-    role: "PM Head Orchestrator"
-    emoji: "👩‍💼"
+    role: PM Head Orchestrator
+    emoji: 👩‍💼
     model_tier: reasoning
     reasoning_effort: high
     primary_provider: deepseek
@@ -179,29 +184,28 @@ agents:
       can_merge_pr: false
       can_approve_review: true
     capabilities:
-      - orchestration
-      - governance
-      - reporting
-      - risk_management
+    - orchestration
+    - governance
+    - reporting
+    - risk_management
     skills:
-      - pm-plan
-      - pm-decompose
-      - pm-dependencies
-      - pm-risk
-      - pm-status
-      - sdd-vision
-      - project-planning
-      - sprint-planning
-      - daily-standup
-      - daily-note
-      - retrospective
-      - impediment
-      - velocity
-      - content-calendar
-
+    - pm-plan
+    - pm-decompose
+    - pm-dependencies
+    - pm-risk
+    - pm-status
+    - sdd-vision
+    - project-planning
+    - sprint-planning
+    - daily-standup
+    - daily-note
+    - retrospective
+    - impediment
+    - velocity
+    - content-calendar
   valentina:
-    role: "Backend Developer"
-    emoji: "🔧"
+    role: Backend Developer
+    emoji: 🔧
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
@@ -209,15 +213,14 @@ agents:
       can_write_code: true
       can_merge_pr: false
     skills:
-      - api-design
-      - db-schema
-      - endpoint
-      - auth-middleware
-      - error-handling
-
+    - api-design
+    - db-schema
+    - endpoint
+    - auth-middleware
+    - error-handling
   alejandra:
-    role: "Frontend Developer"
-    emoji: "🎨"
+    role: Frontend Developer
+    emoji: 🎨
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
@@ -225,15 +228,14 @@ agents:
       can_write_code: true
       can_merge_pr: false
     skills:
-      - component
-      - form-design
-      - page-route
-      - api-integration
-      - responsive
-
+    - component
+    - form-design
+    - page-route
+    - api-integration
+    - responsive
   teresa:
-    role: "QA Engineer"
-    emoji: "🧪"
+    role: QA Engineer
+    emoji: 🧪
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
@@ -241,17 +243,16 @@ agents:
       can_write_code: true
       can_merge_pr: false
     skills:
-      - unit-test
-      - integration-test
-      - test-case
-      - regression
-      - coverage
-      - tdd-generate
-      - tdd-execute
-
+    - unit-test
+    - integration-test
+    - test-case
+    - regression
+    - coverage
+    - tdd-generate
+    - tdd-execute
   aisha:
-    role: "Backend Architect"
-    emoji: "🔷"
+    role: Backend Architect
+    emoji: 🔷
     model_tier: reasoning
     primary_provider: deepseek
     max_turns: 40
@@ -259,15 +260,14 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - microservice
-      - api-gateway
-      - cache-strategy
-      - message-queue
-      - db-optimization
-
+    - microservice
+    - api-gateway
+    - cache-strategy
+    - message-queue
+    - db-optimization
   lin:
-    role: "Frontend Architect"
-    emoji: "🎨"
+    role: Frontend Architect
+    emoji: 🎨
     model_tier: reasoning
     primary_provider: deepseek
     max_turns: 40
@@ -275,15 +275,14 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - component-arch
-      - animation
-      - performance
-      - accessibility
-      - state-management
-
+    - component-arch
+    - animation
+    - performance
+    - accessibility
+    - state-management
   priya:
-    role: "QA Lead"
-    emoji: "🧪"
+    role: QA Lead
+    emoji: 🧪
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
@@ -291,13 +290,12 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - performance-test
-      - e2e-strategy
-      - cicd-quality
-
+    - performance-test
+    - e2e-strategy
+    - cicd-quality
   diana:
-    role: "Cybersecurity Specialist"
-    emoji: "🛡️"
+    role: Cybersecurity Specialist
+    emoji: 🛡️
     model_tier: reasoning
     primary_provider: deepseek
     max_turns: 35
@@ -305,16 +303,15 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - threat-model
-      - secure-arch
-      - secure-code
-      - pentest
-      - compliance
-      - secrets
-
+    - threat-model
+    - secure-arch
+    - secure-code
+    - pentest
+    - compliance
+    - secrets
   isla:
-    role: "Infra Architect"
-    emoji: "🖥️"
+    role: Infra Architect
+    emoji: 🖥️
     model_tier: reasoning
     primary_provider: deepseek
     max_turns: 35
@@ -322,15 +319,14 @@ agents:
       can_write_code: true
       can_merge_pr: false
     skills:
-      - docker
-      - kubernetes
-      - cicd-pipeline
-      - cloud-deploy
-      - monitoring
-
+    - docker
+    - kubernetes
+    - cicd-pipeline
+    - cloud-deploy
+    - monitoring
   elena:
-    role: "Scrum Master + PM Auditor"
-    emoji: "📋"
+    role: Scrum Master + PM Auditor
+    emoji: 📋
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
@@ -338,24 +334,22 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - daily-standup
-      - sprint-planning
-      - retrospective
-      - impediment
-      - velocity
-
+    - daily-standup
+    - sprint-planning
+    - retrospective
+    - impediment
+    - velocity
   sofia:
-    role: "AI Assistant"
-    emoji: "💬"
+    role: AI Assistant
+    emoji: 💬
     model_tier: fast
     primary_provider: deepseek
     max_turns: 20
-    description: "General-purpose AI assistant — delegates to specialist agents"
+    description: General-purpose AI assistant — delegates to specialist agents
     skills: []
-
   junia:
-    role: "Data Platform Architect"
-    emoji: "☁️"
+    role: Data Platform Architect
+    emoji: ☁️
     model_tier: reasoning
     primary_provider: deepseek
     max_turns: 40
@@ -363,73 +357,68 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - data-lakehouse-design
-      - spark-pipeline
-      - cloud-provision
-      - data-modeling
-      - data-governance
-
+    - data-lakehouse-design
+    - spark-pipeline
+    - cloud-provision
+    - data-modeling
+    - data-governance
   bernabe:
-    role: "Data Engineer"
-    emoji: "⚙️"
+    role: Data Engineer
+    emoji: ⚙️
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
     permissions:
       can_write_code: true
     skills:
-      - spark-pipeline
-      - etl-orchestration
-      - data-quality
-      - medallion-architecture
-
+    - spark-pipeline
+    - etl-orchestration
+    - data-quality
+    - medallion-architecture
   maria:
-    role: "AI/ML Engineer"
-    emoji: "🧠"
+    role: AI/ML Engineer
+    emoji: 🧠
     model_tier: reasoning
     primary_provider: deepseek
     max_turns: 35
     permissions:
       can_write_code: true
     skills:
-      - llm-local-deploy
-      - rag-pipeline
-      - vector-search
-      - agent-design
-      - model-fine-tuning
-
+    - llm-local-deploy
+    - rag-pipeline
+    - vector-search
+    - agent-design
+    - model-fine-tuning
   lucas:
-    role: "Content Strategist"
-    emoji: "✍️"
+    role: Content Strategist
+    emoji: ✍️
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 25
     permissions:
       can_write_code: false
     skills:
-      - seo-optimize
-      - geo-branding
-      - multi-platform-publish
-      - content-calendar
-
+    - seo-optimize
+    - geo-branding
+    - multi-platform-publish
+    - content-calendar
   priscila:
-    role: "Technical Writer"
-    emoji: "📚"
+    role: Technical Writer
+    emoji: 📚
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
     permissions:
       can_write_code: true
     skills:
-      - adr-write
-      - api-document
-      - architecture-diagram
-      - slide-deck-generate
-      - technical-book
-
+    - adr-write
+    - api-document
+    - architecture-diagram
+    - slide-deck-generate
+    - technical-book
   lidia:
-    role: "Profitability Domain Expert"
-    emoji: "💰"
+    role: Profitability Domain Expert
+    emoji: 💰
     model_tier: reasoning
     primary_provider: deepseek
     max_turns: 35
@@ -437,91 +426,85 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - abc-costing-model
-      - whale-curve-analyze
-      - cost-to-serve
-      - profitability-lineage
-
+    - abc-costing-model
+    - whale-curve-analyze
+    - cost-to-serve
+    - profitability-lineage
   pablo:
-    role: "BI & Analytics Lead"
-    emoji: "📊"
+    role: BI & Analytics Lead
+    emoji: 📊
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
     permissions:
       can_write_code: false
     skills:
-      - dashboard-design
-      - data-visualization
-      - kpi-framework
-      - analytics-report
-
+    - dashboard-design
+    - data-visualization
+    - kpi-framework
+    - analytics-report
   mateo:
-    role: "FinOps Specialist"
-    emoji: "📈"
+    role: FinOps Specialist
+    emoji: 📈
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
     permissions:
       can_write_code: false
     skills:
-      - cost-analysis
-      - usage-metering
-      - resource-rightsizing
-      - budget-forecasting
-
+    - cost-analysis
+    - usage-metering
+    - resource-rightsizing
+    - budget-forecasting
   eunice:
-    role: "Educational Designer"
-    emoji: "🎓"
+    role: Educational Designer
+    emoji: 🎓
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
     permissions:
       can_write_code: true
     skills:
-      - lab-scenario-design
-      - student-assessment
-      - training-module
-      - curriculum-planning
-
+    - lab-scenario-design
+    - student-assessment
+    - training-module
+    - curriculum-planning
   esteban:
-    role: "Knowledge Manager"
-    emoji: "🗂️"
+    role: Knowledge Manager
+    emoji: 🗂️
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 25
     permissions:
       can_write_code: true
     skills:
-      - daily-note
-      - knowledge-graph
-      - project-planning
-      - pkm-workflow
-
+    - daily-note
+    - knowledge-graph
+    - project-planning
+    - pkm-workflow
   aquila:
-    role: "Static Site Engineer"
-    emoji: "🏗️"
+    role: Static Site Engineer
+    emoji: 🏗️
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 30
     permissions:
       can_write_code: true
     skills:
-      - static-site-generate
-      - theme-design
-      - seo-optimize
-      - deployment-automation
-
+    - static-site-generate
+    - theme-design
+    - seo-optimize
+    - deployment-automation
   dorcas:
-    role: "Brand Governance Lead"
-    emoji: "🎯"
+    role: Brand Governance Lead
+    emoji: 🎯
     model_tier: balanced
     primary_provider: deepseek
     max_turns: 25
     permissions:
       can_write_code: false
     skills:
-      - brand-compliance
-      - visual-identity
-      - brand-audit
-      - asset-management
+    - brand-compliance
+    - visual-identity
+    - brand-audit
+    - asset-management

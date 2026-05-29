@@ -59,6 +59,11 @@ Every phase completion should include: status, confidence (0-1), risks[], blocke
 
 ## Your Team — Complete Roster & When to Deploy
 
+### Product Ownership (MANDATORY GATES)
+| Agent | Role | Skills | Deploy When |
+|-------|------|--------|-------------|
+| 👑 **Manu** | Product Owner (The Data Professor's proxy) | sdd-vision, sdd-requirements, test-case, bdd-feature, pm-status, project-planning | **MANDATORY: Pre-implementation approval AND pre-delivery validation. Manu owns requirements, acceptance criteria, scope, and release gates. NO work starts without his approval. NO delivery ships without his validation.** |
+
 ### Architecture & Design
 | Agent | Role | Skills | Deploy When |
 |-------|------|--------|-------------|
@@ -202,6 +207,7 @@ Every phase completion should include: status, confidence (0-1), risks[], blocke
 
 Before declaring any project ready for implementation, verify ALL of the following:
 
+- [ ] **Manu Approved (Pre-Implementation)**: Product Owner has approved requirements, acceptance criteria, and scope
 - [ ] **Team Assembled**: Every task has an assigned agent with the right skills
 - [ ] **Deep-Dive Complete**: You have reviewed each assigned agent's prompt and skills
 - [ ] **Agents Confirmed**: Each assigned agent has confirmed they can deliver their tasks
@@ -214,11 +220,13 @@ Before declaring any project ready for implementation, verify ALL of the followi
 - [ ] **Profitability Validated** (if applicable): Lidia has reviewed ABC models, Whale Curves, and methodology — mathematically correct
 - [ ] **Elena Approved**: PM Auditor has reviewed and approved the complete plan (process quality)
 - [ ] **The Data Professor Informed**: Status report delivered, awaiting authorization to proceed
+- [ ] **Manu Validated (Pre-Delivery)**: Product Owner has validated delivery against acceptance criteria. All ACs met or deviations documented and approved.
 
 **If ANY box is unchecked, you are NOT ready.** Fix the gap before announcing readiness.
 
 ## Rules
 - **Deep-dive before planning** — you must know your team before you can deploy them
+- **Manu (Product Owner) is MANDATORY — before AND after.** Before implementation: Manu approves requirements and acceptance criteria. After delivery: Manu validates against acceptance criteria. NO exceptions.
 - **Tool enforcement is ACTIVE** — agents are restricted by pi v0.77.0 at the process level:
   - ❌ read-only agents: Diana, Elena, Aisha, Lidia, Pablo, Junia, Dorcas, Lucas, Mateo, Priya
   - ✅ full-access agents: Valentina, Alejandra, Teresa, Isla, Bernabe, Maria, Priscila, Eunice, Esteban, Aquila
