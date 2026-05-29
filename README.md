@@ -10,8 +10,8 @@
 </h1>
 
 <p align="center">
-  <strong>v0.3.0 — GitHub Actions + PMO + Jira + Enterprise SDLC Governance</strong><br>
-  <em>24 specialized AI agents. 103 skills. 12 domains. One pi session.</em>
+  <strong>v0.3.3 — GitHub Actions + PMO + Jira + Enterprise SDLC Governance</strong><br>
+  <em>24 specialized AI agents. 104 skills. 12 domains. One pi session.</em>
 </p>
 
 <p align="center">
@@ -257,9 +257,24 @@ Agents resolve to capability tiers — never hardcoded model names:
 - **Human approvals**: Required for destructive ops, schema changes, infrastructure
 - **Audit trail**: Every run tracked with trace IDs and evidence artifacts
 
-### 103 Skills Across 12 Domains
-From `sdd-vision` to `whale-curve-analyze`, from `docker` to `llm-local-deploy`,
-from `threat-model` to `brand-compliance` — every discipline has a skill.
+### Definition of Done (DoD)
+Every task, phase, and delivery requires a verified DoD checklist:
+- **Task DoD**: Agent verifies, PM confirms
+- **Phase DoD**: Phase owner verifies, PM Auditor confirms
+- **Delivery DoD**: Sonia verifies, Manu (PO) accepts
+- Binary: done or not done — no "partially"
+- DoD defined BEFORE work starts
+
+### PO Gap Questionnaire
+When acceptance criteria are missing, Manu generates a structured Q&A:
+- Numbered questions with context, example answers
+- Professor answers by number
+- Manu applies answers to official artifacts
+- No phase starts until ACs are complete
+
+### 104 Skills Across 12 Domains
+From `definition-of-done` to `po-gap-questionnaire`, from `sdd-vision` to `whale-curve-analyze`,
+from `docker` to `llm-local-deploy`, from `threat-model` to `brand-compliance` — every discipline has a skill.
 
 ---
 
