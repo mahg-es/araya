@@ -233,6 +233,9 @@ from `threat-model` to `brand-compliance` — every discipline has a skill.
 
 ## 🔧 Installation
 
+> **ARAYA is a git-based framework** — it is not distributed via npm, Docker, or package registries.
+> The [Releases](https://github.com/Modern-Analytics-Harmonized-Governance/araya/releases) page provides tagged, stable versions. Clone and run the setup script to install.
+
 ### Prerequisites
 - [pi](https://github.com/earendil-works/pi-mono) v0.76.0+
 - Node.js 22+
