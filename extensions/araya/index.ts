@@ -1,6 +1,6 @@
-// ARAYA v2.0 — AI-Native SDLC Orchestration Framework Extension for pi
+// ARRAYA — AI-Native SDLC Orchestration Framework Extension for pi
 //
-// This extension reads araya.yaml (v2.0) and prompts/agents/*.md to register
+// This extension reads araya.yaml and prompts/agents/*.md to register
 // slash commands for each agent and the `/araya run` orchestration pipeline.
 //
 // Architecture:
@@ -296,7 +296,7 @@ export default function (pi: ExtensionAPI) {
       // /araya run — execute orchestrated run
       if (firstWord === "run") {
         if (!isV2) {
-          ctx.ui.notify("❌ `/araya run` requires ARAYA v2.0+ config", "error");
+          ctx.ui.notify("❌ `/araya run` requires ARAYA with delivery_modes config", "error");
           return;
         }
 
@@ -373,7 +373,7 @@ export default function (pi: ExtensionAPI) {
 
         // ── Phase 1: Send task to Sonia with subagent delegation instructions ──
         const soniaPrompt = buildAgentPrompt(config, firstAgent, [
-          `## ARAYA v2.0 Run — Phase 1 of ${total}`,
+          `## ARAYA Run — Phase 1 of ${total}`,
           ``,
           `**Run ID:** ${runId} | **Mode:** ${mode} | **Policy:** ${policy}`,
           `**Governance:** ${requiresGovernance ? "ENTERPRISE — Full pipeline" : "LIGHT"}`,

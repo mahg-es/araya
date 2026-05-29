@@ -99,7 +99,7 @@ All coordinated. All traceable. All through a single pi session.
 ## 🏗 Architecture
 
 ```
-ARAYA v0.3.0
+ARAYA v0.3.3
 ├── Manu: Product Owner (pre-implementation + pre-delivery gates)
 ├── Sonia: PM Head Orchestrator (PMO + workflow + governance)
 ├── Workflow Policy Engine (auto / conservative / balanced / aggressive)
@@ -319,7 +319,7 @@ The setup script handles:
 
 ```
 araya/
-├── araya.yaml              # Configuration (v0.3.0, 24 agents, modes, tiers)
+├── araya.yaml              # Configuration (single source of truth for version)
 ├── araya-setup.sh          # One-command installer
 ├── extensions/araya/       # ARAYA pi extension (command handlers)
 ├── .pi/agents/             # 23 agent definitions (YAML frontmatter)

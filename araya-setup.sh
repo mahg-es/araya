@@ -7,7 +7,7 @@ FORCE=false
 [ "$1" = "--force" ] && FORCE=true
 
 echo ""
-echo "ARAYA v2.0 - Setup"
+echo "ARRAYA v0.3.3 - Setup"
 echo "Canonical: $CANONICAL"
 echo ""
 
