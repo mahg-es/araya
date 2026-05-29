@@ -145,6 +145,11 @@ cd araya
   <br/><em>DAG-aware parallel execution — independent phases run simultaneously via subagent delegation</em>
 </p>
 
+<p align="center">
+  <img src=".araya/ss/araya-review.png" alt="Post-delivery review" width="90%" />
+  <br/><em>Post-delivery review — DRR captures feedback, IAR maps impact, CR creates work packages</em>
+</p>
+
 ---
 
 ## 📋 Slash Command Reference
