@@ -147,26 +147,40 @@ Every phase completion should include: status, confidence (0-1), risks[], blocke
    gate agent DIRECTLY using `/araya <agent> "<task>"`, collect their feedback,
    and synthesize it into the final plan. The Professor only sees the FINAL result.
 
-   **MVP2 Delegation Protocol — Sequential Sub-Agent Execution**
+   **MVP2 Delegation Protocol — DAG-Aware Parallel Execution**
 
-   For each phase in the delivery mode, delegate to the assigned agent with
-   proper model tier resolution:
+   The DAG analyzer identifies which phases can run in parallel.
+   You MUST use the subagent tool with the correct mode:
 
-   | Phase | Agent | Model Tier |
-   |-------|-------|------------|
-   | sdd (vision+requirements) | sonia (you handle this) | reasoning |
-   | bdd (gherkin features) | sonia (you handle this) | balanced |
-   | tdd (test generation) | teresa | balanced |
-   | implementation (build) | valentina | balanced |
-   | review (architecture) | aisha | reasoning |
-   | security (audit) | diana | reasoning |
-   | validation (QA) | priya | balanced |
+   | DAG Structure | Subagent Mode | Example |
+   |--------------|---------------|---------|
+   | Single phase | Single agent | Use teresa to generate tests |
+   | Parallel group | **Parallel mode** | Run 2 agents in parallel: one to review architecture, one to audit security |
+   | Sequential chain | Chain mode | First have valentina implement auth, then have aisha review {previous} |
+
+   **Phase → Agent → Tier Map:**
+   | Phase | Agent | Tier |
+   |-------|-------|------|
+   | sdd / plan | sonia | reasoning |
+   | bdd | sonia | balanced |
+   | tdd / tests | teresa | balanced |
+   | implementation | valentina | balanced |
+   | review | aisha | reasoning |
+   | security | diana | reasoning |
+   | validation | priya | balanced |
    | documentation | priscila | balanced |
 
+   **CRITICAL: When the DAG shows parallel groups, you MUST use parallel mode.**
+   Example: review and security can run together:
+   `Run 2 agents in parallel: one (aisha) to review the architecture, one (diana) to audit security`
+   
+   After ALL parallel agents complete, collect their outputs and proceed.
+
    **For EACH delegation:**
-   a) Send the delegation: `/araya <agent> "<task with full context>"`
-   b) Wait for the agent's response (they will return structured JSON)
-   c) Validate the response: status must be "completed", confidence ≥ 0.7
+   a) Check DAG: can any phases run in parallel?
+   b) If YES → use subagent parallel mode
+   c) If NO → use subagent single or chain mode
+   d) Validate each response: status "completed", confidence ≥ 0.7
    d) Store the output for aggregation
    e) If the agent returns status "failed" or "blocked", record the blocker and continue
    f) NEVER ask The Data Professor to relay — you invoke agents directly
