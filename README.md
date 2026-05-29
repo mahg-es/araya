@@ -27,6 +27,10 @@
 
 ## Why ARAYA?
 
+**ARAYA** is named after the [Araya Peninsula](https://es.wikipedia.org/wiki/Pen%C3%ADnsula_de_Araya) in Venezuela — a remote, resilient land known for its ancient salt flats, where the ocean, desert, and sky converge. A place of quiet strength, natural resources, and timeless endurance.
+
+Like its namesake, ARAYA is built to last — not a fleeting tool, but a foundation. A place where agents gather, work together, and produce something of lasting value.
+
 Solo development becomes **team development**. You are never alone.
 
 ARAYA transforms the [pi](https://github.com/earendil-works/pi-mono) coding
