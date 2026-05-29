@@ -10,8 +10,8 @@
 </h1>
 
 <p align="center">
-  <strong>GitHub Actions + PMO + Jira + Enterprise SDLC Governance</strong><br>
-  <em>23 specialized AI agents. 103 skills. 12 domains. One pi session.</em>
+  <strong>v0.3.0 — GitHub Actions + PMO + Jira + Enterprise SDLC Governance</strong><br>
+  <em>24 specialized AI agents. 103 skills. 12 domains. One pi session.</em>
 </p>
 
 <p align="center">
@@ -149,6 +149,7 @@ No implementation starts without governance artifacts. The platform enforces it.
 
 | Agent | Role | Tier |
 |-------|------|------|
+| 👑 **Manu** | Product Owner (The Data Professor's proxy) | reasoning |
 | 👩‍💼 **Sonia** | PM Head Orchestrator | reasoning |
 | 📋 **Elena** | Scrum Master + PM Auditor | balanced |
 | 🛡️ **Diana** | Cybersecurity Specialist | reasoning |
@@ -276,7 +277,7 @@ The setup script handles:
 
 ```
 araya/
-├── araya.yaml              # Configuration (v2.0, 23 agents, modes, tiers)
+├── araya.yaml              # Configuration (v0.3.0, 24 agents, modes, tiers)
 ├── araya-setup.sh          # One-command installer
 ├── extensions/araya/       # ARAYA pi extension (command handlers)
 ├── .pi/agents/             # 23 agent definitions (YAML frontmatter)
