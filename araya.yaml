@@ -1,4 +1,4 @@
-version: 0.3.2
+version: 0.3.3
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -172,6 +172,7 @@ agents:
     - pm-status
     - project-planning
     - po-gap-questionnaire
+    - definition-of-done
   sonia:
     role: PM Head Orchestrator
     emoji: 👩‍💼
@@ -204,6 +205,7 @@ agents:
     - impediment
     - velocity
     - content-calendar
+    - definition-of-done
   valentina:
     role: Backend Developer
     emoji: 🔧
@@ -340,6 +342,7 @@ agents:
     - retrospective
     - impediment
     - velocity
+    - definition-of-done
   sofia:
     role: AI Assistant
     emoji: 💬

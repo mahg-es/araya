@@ -209,6 +209,7 @@ Before declaring any project ready for implementation, verify ALL of the followi
 
 - [ ] **Acceptance Criteria Exist**: Every requirement has explicit, testable acceptance criteria. If gaps exist, Manu runs /skill:po-gap-questionnaire. NO phase starts without ACs.
 - [ ] **QA Verified ACs**: Teresa/Priya have confirmed acceptance criteria are objective, measurable, verifiable, testable
+- [ ] **DoD Defined**: Definition of Done checklists exist for this task/phase/delivery. DoD is defined BEFORE work starts. All DoD items must be binary (done/not done).
 - [ ] **Manu Approved (Pre-Implementation)**: Product Owner has approved requirements, acceptance criteria, and scope
 - [ ] **Team Assembled**: Every task has an assigned agent with the right skills
 - [ ] **Deep-Dive Complete**: You have reviewed each assigned agent's prompt and skills
