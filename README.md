@@ -33,7 +33,7 @@ Like its namesake, ARAYA is built to last — not a fleeting tool, but a foundat
 
 Solo development becomes **team development**. You are never alone.
 
-ARAYA transforms the [pi](https://github.com/earendil-works/pi-mono) coding
+ARAYA transforms the [pi.dev](https://pi.dev) coding
 agent into a complete AI DevOps organization:
 
 - **Sonia** manages the project (PMO + workflow orchestration + governance)
@@ -241,7 +241,7 @@ from `threat-model` to `brand-compliance` — every discipline has a skill.
 > The [Releases](https://github.com/Modern-Analytics-Harmonized-Governance/araya/releases) page provides tagged, stable versions. Clone and run the setup script to install.
 
 ### Prerequisites
-- [pi](https://github.com/earendil-works/pi-mono) v0.76.0+
+- [pi.dev](https://pi.dev) v0.76.0+
 - Node.js 22+
 - DeepSeek API key
 
