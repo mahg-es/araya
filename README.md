@@ -83,7 +83,7 @@ Done. Traceable. Auditable. Governed.
 
 - [pi.dev](https://pi.dev) v0.76.0+
 - Node.js 22+
-- DeepSeek API key
+- Any pi.dev supported model provider
 
 ### 2. Install ARAYA
 
@@ -381,9 +381,9 @@ Each agent runs in an **isolated pi process** with its own context window. Strea
 ### Model Tiering
 
 Agents resolve to capability tiers — never hardcoded model names:
-- **reasoning** → DeepSeek thinking mode (architecture, security, planning)
-- **balanced** → DeepSeek non-thinking (development, testing, review)
-- **fast** → DeepSeek lightweight (documentation, triage)
+- **reasoning** → pi.dev thinking models (architecture, security, planning)
+- **balanced** → pi.dev balanced models (development, testing, review)
+- **fast** → pi.dev fast models (documentation, triage)
 
 ### Execution Governance
 

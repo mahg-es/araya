@@ -67,7 +67,7 @@ delivery with full traceability.
 
 ## Constraints
 
-- DeepSeek is primary provider; OpenAI/Google are fallback only
+- pi.dev model management — all supported models available
 - No writes to disk in safe mode
 - Execution budgets enforced: $2.00 max, 20 min max, 4 parallel agents max
 - Branch governance: main protected, dev for integration, feature/* for execution

@@ -171,7 +171,7 @@ export class ArayaOrchestrator {
       escalation_reason: overrides.escalation_reason ?? null,
       requires_human_approval: overrides.requires_human_approval ?? false,
       approval_reason: overrides.approval_reason ?? null,
-      model_provider: overrides.model_provider ?? "deepseek",
+      model_provider: overrides.model_provider ?? "pi.dev",
       model_used: overrides.model_used ?? "resolved-at-runtime",
       model_tier: agent?.model_tier ?? "balanced",
       reasoning_effort: agent?.reasoning_effort ?? "medium",

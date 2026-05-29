@@ -70,7 +70,7 @@ workflow_policies:
 model_tiers:
   fast:
     purpose: Documentation, formatting, simple edits, grep/find, simple QA
-    primary_provider: deepseek
+    primary_provider: pi.dev
     primary_capability: non_thinking_fast
     allowed_fallback_providers:
     - openai
@@ -78,7 +78,7 @@ model_tiers:
     reasoning_effort: low
   balanced:
     purpose: Standard development, code review, test generation, BDD features
-    primary_provider: deepseek
+    primary_provider: pi.dev
     primary_capability: non_thinking_balanced
     allowed_fallback_providers:
     - openai
@@ -87,7 +87,7 @@ model_tiers:
   reasoning:
     purpose: Architecture, security analysis, complex debugging, SDD, planning, risk
       analysis
-    primary_provider: deepseek
+    primary_provider: pi.dev
     primary_capability: thinking_reasoning
     allowed_fallback_providers:
     - openai
@@ -153,7 +153,7 @@ agents:
     role: Product Owner
     emoji: 👑
     model_tier: reasoning
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 35
     permissions:
       can_write_code: false
@@ -179,7 +179,7 @@ agents:
     emoji: 👩‍💼
     model_tier: reasoning
     reasoning_effort: high
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 40
     execution_mode: adaptive
     permissions:
@@ -214,7 +214,7 @@ agents:
     role: Backend Developer
     emoji: 🔧
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: true
@@ -229,7 +229,7 @@ agents:
     role: Frontend Developer
     emoji: 🎨
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: true
@@ -244,7 +244,7 @@ agents:
     role: QA Engineer
     emoji: 🧪
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: true
@@ -261,7 +261,7 @@ agents:
     role: Backend Architect
     emoji: 🔷
     model_tier: reasoning
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 40
     permissions:
       can_write_code: false
@@ -276,7 +276,7 @@ agents:
     role: Frontend Architect
     emoji: 🎨
     model_tier: reasoning
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 40
     permissions:
       can_write_code: false
@@ -291,7 +291,7 @@ agents:
     role: QA Lead
     emoji: 🧪
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: false
@@ -304,7 +304,7 @@ agents:
     role: Cybersecurity Specialist
     emoji: 🛡️
     model_tier: reasoning
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 35
     permissions:
       can_write_code: false
@@ -320,7 +320,7 @@ agents:
     role: Infra Architect
     emoji: 🖥️
     model_tier: reasoning
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 35
     permissions:
       can_write_code: true
@@ -335,7 +335,7 @@ agents:
     role: Scrum Master + PM Auditor
     emoji: 📋
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: false
@@ -351,7 +351,7 @@ agents:
     role: AI Assistant
     emoji: 💬
     model_tier: fast
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 20
     description: General-purpose AI assistant — delegates to specialist agents
     skills: []
@@ -359,7 +359,7 @@ agents:
     role: Data Platform Architect
     emoji: ☁️
     model_tier: reasoning
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 40
     permissions:
       can_write_code: false
@@ -374,7 +374,7 @@ agents:
     role: Data Engineer
     emoji: ⚙️
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: true
@@ -387,7 +387,7 @@ agents:
     role: AI/ML Engineer
     emoji: 🧠
     model_tier: reasoning
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 35
     permissions:
       can_write_code: true
@@ -401,7 +401,7 @@ agents:
     role: Content Strategist
     emoji: ✍️
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 25
     permissions:
       can_write_code: false
@@ -414,7 +414,7 @@ agents:
     role: Technical Writer
     emoji: 📚
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: true
@@ -428,7 +428,7 @@ agents:
     role: Profitability Domain Expert
     emoji: 💰
     model_tier: reasoning
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 35
     permissions:
       can_write_code: false
@@ -442,7 +442,7 @@ agents:
     role: BI & Analytics Lead
     emoji: 📊
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: false
@@ -455,7 +455,7 @@ agents:
     role: FinOps Specialist
     emoji: 📈
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: false
@@ -468,7 +468,7 @@ agents:
     role: Educational Designer
     emoji: 🎓
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: true
@@ -481,7 +481,7 @@ agents:
     role: Knowledge Manager
     emoji: 🗂️
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 25
     permissions:
       can_write_code: true
@@ -494,7 +494,7 @@ agents:
     role: Static Site Engineer
     emoji: 🏗️
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: true
@@ -507,7 +507,7 @@ agents:
     role: Brand Governance Lead
     emoji: 🎯
     model_tier: balanced
-    primary_provider: deepseek
+    primary_provider: pi.dev
     max_turns: 25
     permissions:
       can_write_code: false

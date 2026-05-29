@@ -133,7 +133,7 @@ function buildAgentPrompt(
   const header = indent > 0 ? [
     `${pad}┌─────────────────────────────────────────`,
     `${pad}│ AGENT: ${agentName.toUpperCase()} — ${agent.role}`,
-    `${pad}│ TIER: ${tier} | PROVIDER: ${agent.primary_provider ?? "deepseek"}`,
+    `${pad}│ TIER: ${tier} | PROVIDER: ${agent.primary_provider ?? "pi.dev"}`,
     `${pad}└─────────────────────────────────────────`,
   ].join("\n") + "\n\n" : "";
 
@@ -447,7 +447,7 @@ export default function (pi: ExtensionAPI) {
         const v2Info = isV2 ? [
           ``,
           `**Model Tier:** ${agent.model_tier ?? "N/A"}`,
-          `**Provider:** ${agent.primary_provider ?? "deepseek"}`,
+          `**Provider:** ${agent.primary_provider ?? "pi.dev"}`,
           `**Max Turns:** ${agent.max_turns ?? "N/A"}`,
           agent.permissions
             ? `**Can Write Code:** ${agent.permissions.can_write_code ? "✅" : "❌"}`
