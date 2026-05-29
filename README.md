@@ -137,6 +137,11 @@ cd araya
   <br/><em>Sonia proactively reports delegation status — Phase breakdown, blockers, forecast</em>
 </p>
 
+<p align="center">
+  <img src=".araya/ss/araya-parallel.png" alt="Parallel orchestration" width="90%" />
+  <br/><em>DAG-aware parallel execution — independent phases run simultaneously via subagent delegation</em>
+</p>
+
 ---
 
 ## 📋 Slash Command Reference
