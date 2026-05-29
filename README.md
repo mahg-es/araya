@@ -99,7 +99,8 @@ All coordinated. All traceable. All through a single pi session.
 ## 🏗 Architecture
 
 ```
-ARAYA v2.0
+ARAYA v0.3.0
+├── Manu: Product Owner (pre-implementation + pre-delivery gates)
 ├── Sonia: PM Head Orchestrator (PMO + workflow + governance)
 ├── Workflow Policy Engine (auto / conservative / balanced / aggressive)
 ├── Model Selection Engine (capability tiers: fast / balanced / reasoning)
@@ -114,11 +115,11 @@ ARAYA v2.0
 ### Governance Pipeline
 
 ```
-Requirement → SDD → BDD → TDD → Dependency Analysis → Resource Assignment
-  → Implementation → Cross-Audit → Delivery Comparison → Controlled Merge
+Manu (PO Gate) → Requirement → SDD → BDD → TDD → Dependency Analysis → Resource Assignment
+  → Implementation → Cross-Audit → Delivery Comparison → Manu (PO Validation) → Controlled Merge
 ```
 
-No implementation starts without governance artifacts. The platform enforces it.
+No implementation without Manu's approval. No delivery without Manu's validation.
 
 ---
 
@@ -207,6 +208,32 @@ No implementation starts without governance artifacts. The platform enforces it.
 ---
 
 ## ⚡ Features
+
+### 👑 Product Owner Gates (NEW in v0.3.0)
+
+**Manu** — The Data Professor's permanent proxy in every delivery:
+
+```
+┌──────────────────────────────────────┐
+│  PRE-IMPLEMENTATION GATE (Manu)     │
+│  ✅ Requirements approved            │
+│  ✅ Acceptance criteria defined      │
+│  ✅ Scope explicit                   │
+│  → No work starts without approval   │
+└──────────────────────────────────────┘
+              │
+              ▼
+     [SDD → BDD → TDD → Implementation]
+              │
+              ▼
+┌──────────────────────────────────────┐
+│  PRE-DELIVERY GATE (Manu)           │
+│  ✅ All ACs verified                 │
+│  ✅ Requirements satisfied           │
+│  ✅ Deviations documented            │
+│  → No delivery ships without sign-off│
+└──────────────────────────────────────┘
+```
 
 ### Sub-Agent Delegation
 ```
