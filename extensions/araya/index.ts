@@ -923,6 +923,51 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:constitution ──────────────────────────────────────────────────
+
+  pi.registerCommand("araya:constitution", {
+    description: "📜 Show ARAYA Constitution and governance rules",
+    handler: async (args, ctx) => {
+      const cwd = process.cwd();
+      const { existsSync, readFileSync } = await import("node:fs");
+      const { resolve } = await import("node:path");
+
+      const isValidate = args?.trim() === "--validate";
+      const constPath = resolve(cwd, ".araya/governance/constitution.md");
+
+      if (isValidate) {
+        // Count rules from constitution
+        const rules: string[] = [];
+        if (existsSync(resolve(cwd, ".araya/governance/constitution.md"))) {
+          const content = readFileSync(constPath, "utf-8");
+          const ruleLines = content.match(/\| (GOV|DOC|SEC|HR|ENG|FIN)-\d+ \|/g) ?? [];
+          const obligations = (content.match(/OBLIGATION/g) ?? []).length;
+          const prohibitions = (content.match(/PROHIBITION/g) ?? []).length;
+          const permissions = (content.match(/PERMISSION/g) ?? []).length;
+          const escalations = (content.match(/ESCALATION/g) ?? []).length;
+
+          ctx.ui.notify(
+            `## Constitution Validation\n\n` +
+            `**Total Rules:** ${ruleLines.length}\n` +
+            `**Obligations:** ${obligations} | **Prohibitions:** ${prohibitions} | **Permissions:** ${permissions} | **Escalations:** ${escalations}\n` +
+            `**Status:** ${obligations >= 10 && prohibitions >= 3 ? "🟢 COMPLIANT" : "🔴 NON-COMPLIANT"}`,
+            "info"
+          );
+        } else {
+          ctx.ui.notify("⚠️ No constitution found. Run /araya spec:init to create governance structure.", "warning");
+        }
+      } else {
+        if (existsSync(constPath)) {
+          const content = readFileSync(constPath, "utf-8");
+          const summary = content.split("## Summary")[1]?.split("##")[0] ?? "";
+          ctx.ui.notify(`## ARAYA Constitution\n\n${summary.trim()}`, "info");
+        } else {
+          ctx.ui.notify("⚠️ No constitution found. Run /araya spec:init to create governance structure.", "warning");
+        }
+      }
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {

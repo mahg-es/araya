@@ -1,0 +1,36 @@
+flowchart TD
+    TDP[The Data Professor]
+    CON[Constitution — 17 Rules]
+    
+    TDP -->|highest authority| CON
+    
+    CON --> GOV[Governance: 4 rules]
+    CON --> DOC[Documentation: 4 rules]
+    CON --> SEC[Security: 3 rules]
+    CON --> HR[Human Resources: 4 rules]
+    CON --> ENG[Engineering: 3 rules]
+    CON --> FIN[Financial: 2 rules]
+    
+    GOV --> OBL1[OBLIGATION: REQ before impl]
+    DOC --> OBL2[OBLIGATION: README updated]
+    SEC --> PRO1[PROHIBITION: No hardcoded secrets]
+    HR --> ESC1[ESCALATION: Gaps block execution]
+    ENG --> OBL3[OBLIGATION: Follow specs]
+    FIN --> OBL4[OBLIGATION: Respect budgets]
+    
+    CON --> VIO[Violations Registry]
+    CON --> EXC[Exceptions Registry]
+    
+    VIO -->|repeated| TDP
+    EXC -->|approval required| TDP
+    
+    style TDP fill:#ffd700,stroke:#333,stroke-width:3px
+    style CON fill:#fff,stroke:#333,stroke-width:2px
+    style GOV fill:#bbf,stroke:#333
+    style DOC fill:#bfb,stroke:#333
+    style SEC fill:#fbb,stroke:#333
+    style HR fill:#fbf,stroke:#333
+    style ENG fill:#ff9,stroke:#333
+    style FIN fill:#9f9,stroke:#333
+    style VIO fill:#f99,stroke:#333
+    style EXC fill:#ff9,stroke:#333
