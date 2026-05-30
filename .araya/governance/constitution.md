@@ -208,3 +208,9 @@ amendments but may not enact them.
 | BRANCH-009 | OBLIGATION | A capability is not delivered until it exists in dev-mahg |
 | BRANCH-010 | OBLIGATION | A capability is not released until it exists in main |
 | BRANCH-011 | OBLIGATION | Merged feature branches must be flagged for deletion by governance-check |
+
+### Project Hygiene (PROJECT)
+
+| ID | Type | Rule |
+|----|------|------|
+| PROJECT-001 | OBLIGATION | All ARAYA operational artifacts must live under .araya/ — project root is reserved for customer-facing assets |
