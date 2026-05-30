@@ -1,0 +1,30 @@
+flowchart LR
+    subgraph Sources[Source Artifacts]
+        SPEC[Specifications]
+        AC[Acceptance Criteria]
+        CAP[Capabilities]
+        TECH[Technology Prefs]
+        CONST[Constitution]
+        TRAJ[Trajectories]
+        KNOW[Knowledge]
+    end
+    
+    subgraph Builder[Graph Builder Engine]
+        MAP[Mapping Rules]
+        ENT[Entity Schema]
+        REL[Relationship Schema]
+    end
+    
+    subgraph Output[Graph-Ready Output]
+        NODES[Entities]
+        EDGES[Relationships]
+    end
+    
+    Sources --> Builder
+    Builder --> Output
+    
+    Output -->|Batch 9| GRAPH[Organizational Knowledge Graph]
+    
+    style Builder fill:#ff9,stroke:#333
+    style GRAPH fill:#9f9,stroke:#333
+    style MAP fill:#fff,stroke:#333,stroke-width:2px

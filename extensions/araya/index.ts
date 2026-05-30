@@ -1150,6 +1150,36 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:graph:prepare ─────────────────────────────────────────────────
+
+  pi.registerCommand("araya:graph:prepare", {
+    description: "🔧 Validate graph builder readiness for Batch 9",
+    handler: async (_args, ctx) => {
+      const cwd = process.cwd();
+      const { existsSync } = await import("node:fs");
+      const { resolve } = await import("node:path");
+
+      var checks: Array<{ name: string; ok: boolean }> = [];
+      var gb = resolve(cwd, ".araya/graph-builder");
+
+      checks.push({ name: "Graph Builder README", ok: existsSync(resolve(gb, "README.md")) });
+      checks.push({ name: "Sources definition", ok: existsSync(resolve(gb, "sources.md")) });
+      checks.push({ name: "Mapping rules", ok: existsSync(resolve(gb, "mapping-rules.md")) });
+      checks.push({ name: "Entity schema", ok: existsSync(resolve(gb, "entity-schema.md")) });
+      checks.push({ name: "Relationship schema", ok: existsSync(resolve(gb, "relationship-schema.md")) });
+      checks.push({ name: "Specifications", ok: existsSync(resolve(cwd, ".araya/specs")) });
+      checks.push({ name: "Knowledge", ok: existsSync(resolve(cwd, ".araya/knowledge")) });
+      checks.push({ name: "Trajectories", ok: existsSync(resolve(cwd, ".araya/trajectories")) });
+
+      var ready = checks.every(function(c) { return c.ok; });
+      var lines = ["## Graph Builder Readiness", ""];
+      checks.forEach(function(c) { lines.push((c.ok ? "✅" : "❌") + " " + c.name); });
+      lines.push("", "**Status:** " + (ready ? "🟢 READY FOR BATCH 9" : "🔴 NOT READY — missing artifacts"));
+
+      ctx.ui.notify(lines.join("\n"), ready ? "info" : "warning");
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {

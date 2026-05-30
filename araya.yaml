@@ -1,4 +1,4 @@
-version: 0.5.4
+version: 0.5.5
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -508,7 +508,7 @@ agents:
     - training-module
     - curriculum-planning
   esteban:
-    role: Chief Knowledge Officer
+    role: Chief Knowledge Officer & Graph Builder Steward
     emoji: 🗂️
     model_tier: balanced
     primary_provider: pi.dev
