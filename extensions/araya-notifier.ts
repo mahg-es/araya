@@ -54,6 +54,16 @@ function buildNormalTitle(cwd: string): string {
 }
 
 export default function (pi: ExtensionAPI) {
+  // Set title immediately on session start (covers /reload)
+  pi.on("session_start", async (_event, _ctx) => {
+    const cwd = process.cwd();
+    if (isHomePath(cwd)) {
+      setTitle("R. Daneel Olivaw");
+    } else {
+      setTitle(buildNormalTitle(cwd));
+    }
+  });
+
   pi.on("agent_start", async (_event, _ctx) => {
     const cwd = process.cwd();
     if (isHomePath(cwd)) {
