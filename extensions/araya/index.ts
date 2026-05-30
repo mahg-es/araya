@@ -1342,6 +1342,29 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:usability-check ────────────────────────────────────────────────
+
+  pi.registerCommand("araya:usability-check", {
+    description: "✅ Check usability evidence coverage for all features",
+    handler: async (_args, ctx) => {
+      const cwd = process.cwd();
+      const { existsSync, readdirSync } = await import("node:fs");
+      const { resolve } = await import("node:path");
+      const evidenceDir = resolve(cwd, ".araya/evidence/usability");
+      const evidenceFiles = existsSync(evidenceDir) ? readdirSync(evidenceDir).filter(f => f.endsWith(".md") && f !== "_template.md") : [];
+      const verified = evidenceFiles.length;
+
+      ctx.ui.notify(
+        `## Usability Evidence Coverage\n\n` +
+        `**Evidence files:** ${verified}\n` +
+        `**Status values:** ✅ Verified E2E | ⚠️ Partially Verified | ⚠️ Unverified | ❌ Not Working | 🚫 Not Implemented\n\n` +
+        `Features without evidence files are automatically **⚠️ Unverified** — per USE-002.\n` +
+        `Passing technical tests is not sufficient evidence of user usability — per USE-003.`,
+        verified > 0 ? "info" : "warning"
+      );
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {

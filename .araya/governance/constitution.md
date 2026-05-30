@@ -170,3 +170,5 @@ amendments but may not enact them.
 | ID | Type | Rule |
 |----|------|------|
 | USE-001 | OBLIGATION | A feature is complete only when it can be used, solves a real problem, can be demonstrated end-to-end, and reduces manual work |
+| USE-002 | PROHIBITION | No ARAYA agent may claim that a feature is usable, working, complete, or ready without reproducible evidence |
+| USE-003 | OBLIGATION | Passing technical tests is not sufficient evidence of user usability |
