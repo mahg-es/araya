@@ -652,6 +652,59 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:spec:init ──────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:spec:init", {
+    description: "📁 Initialize specification folder structure and templates",
+    handler: async (_args, ctx) => {
+      const { execSync } = await import("node:child_process");
+      const cwd = process.cwd();
+      try {
+        execSync(`mkdir -p .araya/{specs,changes,archive,templates}`, { cwd });
+        ctx.ui.notify("✅ Specification structure created: .araya/{specs,changes,archive,templates}", "info");
+      } catch {
+        ctx.ui.notify("⚠️ Structure may already exist", "warning");
+      }
+    },
+  });
+
+  pi.registerCommand("araya:spec:list", {
+    description: "📋 List all active specifications and changes",
+    handler: async (_args, ctx) => {
+      const cwd = process.cwd();
+      const { readdirSync, existsSync } = await import("node:fs");
+      const { resolve } = await import("node:path");
+
+      const lines: string[] = ["## Specifications & Changes", ""];
+
+      const specsDir = resolve(cwd, ".araya/specs");
+      const changesDir = resolve(cwd, ".araya/changes");
+      const archiveDir = resolve(cwd, ".araya/archive");
+
+      if (existsSync(changesDir)) {
+        const changes = readdirSync(changesDir, { withFileTypes: true }).filter(d => d.isDirectory());
+        lines.push(`**Active Changes (${changes.length})**`);
+        for (const c of changes) lines.push(`  📝 ${c.name}`);
+        if (changes.length === 0) lines.push("  (none)");
+      }
+
+      if (existsSync(specsDir)) {
+        const specs = readdirSync(specsDir, { withFileTypes: true }).filter(d => d.isDirectory());
+        lines.push("", `**Approved Specs (${specs.length})**`);
+        for (const s of specs) lines.push(`  ✅ ${s.name}`);
+        if (specs.length === 0) lines.push("  (none)");
+      }
+
+      if (existsSync(archiveDir)) {
+        const archived = readdirSync(archiveDir, { withFileTypes: true }).filter(d => d.isDirectory());
+        lines.push("", `**Archived (${archived.length})**`);
+        for (const a of archived) lines.push(`  📦 ${a.name}`);
+      }
+
+      ctx.ui.notify(lines.join("\n"), "info");
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {
