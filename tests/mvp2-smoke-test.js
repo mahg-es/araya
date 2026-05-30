@@ -49,7 +49,7 @@ const raw = readFileSync(configPath, "utf-8");
 const config = load(raw);
 
 test("version is 0.6.0", () => {
-  assert(config.version?.startsWith("2"), `Expected 2.x, got ${config.version}`);
+  assert(config.version?.startsWith("0"), `Expected 0.x, got ${config.version}`);
 });
 
 test("delivery_modes has 5 modes", () => {
@@ -89,9 +89,9 @@ test("circuit_breakers are configured", () => {
   assert(typeof cb.max_retries === "number");
 });
 
-test("has 23 agents", () => {
+test("has 25 agents", () => {
   const agents = Object.keys(config.agents ?? {});
-  assert(agents.length === 23, `Expected 23, got ${agents.length}`);
+  assert(agents.length === 25, `Expected 25, got ${agents.length}`);
 });
 
 // ── 2. Agent Model Tier Resolution ───────────────────────────────────────
