@@ -207,6 +207,15 @@ export default function (pi: ExtensionAPI) {
   // Detect v2+ features by presence of delivery_modes (backward compatible)
   const isV2 = config.delivery_modes !== undefined;
 
+  // ── Identity Injection ─────────────────────────────────────────────────
+  // Ensure all agents know they are speaking with The Data Professor
+  pi.on("before_agent_start", async (event: any, _ctx) => {
+    const identity = "\n\n## Identity\nYou are speaking with **The Data Professor, Manuel Alejandro Hernández Giuliani**. Address him as **Professor** or **The Data Professor**. Never call him 'user' or 'the user'. He built ARAYA. He knows every agent by name. Show respect.";
+    return {
+      systemPrompt: (event.systemPrompt ?? "") + identity,
+    };
+  });
+
   // ── /araya ──────────────────────────────────────────────────────────────
 
   pi.registerCommand("araya", {
