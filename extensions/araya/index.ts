@@ -705,6 +705,80 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:validate ──────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:validate", {
+    description: "✅ Validate delivery against acceptance criteria",
+    handler: async (args, ctx) => {
+      const cwd = process.cwd();
+      const { existsSync, readdirSync, readFileSync } = await import("node:fs");
+      const { resolve, join } = await import("node:path");
+
+      const isSummary = args?.trim() === "--summary";
+      const changesDir = resolve(cwd, ".araya/changes");
+      const specsDir = resolve(cwd, ".araya/specs");
+
+      let totalACs = 0, passed = 0, failed = 0, pending = 0;
+      const details: string[] = [];
+
+      // Scan changes and specs for acceptance files
+      for (const baseDir of [changesDir, specsDir]) {
+        if (!existsSync(baseDir)) continue;
+        const entries = readdirSync(baseDir, { withFileTypes: true }).filter(d => d.isDirectory());
+        for (const entry of entries) {
+          const acPath = resolve(baseDir, entry.name, "acceptance.md");
+          if (!existsSync(acPath)) continue;
+          const content = readFileSync(acPath, "utf-8");
+
+          // Count AC IDs
+          const acMatches = content.match(/AC-\d+/g) ?? [];
+          totalACs += acMatches.length;
+
+          // Count results
+          const passedMatch = content.match(/\|\s*(Passed)\s*\|/gi);
+          const failedMatch = content.match(/\|\s*(Failed)\s*\|/gi);
+          const pendingMatch = content.match(/\|\s*(Pending)\s*\|/gi);
+
+          if (passedMatch) passed += passedMatch.length;
+          if (failedMatch) failed += failedMatch.length;
+          if (pendingMatch) pending += pendingMatch.length;
+          // Remaining ACs without explicit status are pending
+          const explicit = (passedMatch?.length ?? 0) + (failedMatch?.length ?? 0) + (pendingMatch?.length ?? 0);
+          pending += Math.max(0, acMatches.length - explicit);
+
+          if (!isSummary) {
+            details.push(`**${entry.name}**: ${acMatches.length} ACs | ✅ ${passedMatch?.length ?? 0} | ❌ ${failedMatch?.length ?? 0} | ⏳ ${pendingMatch?.length ?? 0}`);
+          }
+        }
+      }
+
+      const coverage = totalACs > 0 ? Math.round((passed / totalACs) * 100) : 0;
+      const ready = failed === 0 && pending === 0 && totalACs > 0;
+
+      const lines = [
+        "## Validation Summary",
+        "",
+        `**Total ACs:** ${totalACs}`,
+        `**Passed:** ${passed}`,
+        `**Failed:** ${failed}`,
+        `**Pending:** ${pending}`,
+        `**Coverage:** ${coverage}%`,
+        "",
+        `**Delivery Status:** ${ready ? "🟢 READY" : "🔴 NOT READY"}`,
+      ];
+
+      if (!isSummary && details.length > 0) {
+        lines.push("", "### Details", ...details);
+      }
+
+      if (pending > 0 || failed > 0) {
+        lines.push("", "⚠️ Pending or failed criteria exist. Manu approval requires all ACs to pass or have documented deviations.");
+      }
+
+      ctx.ui.notify(lines.join("\n"), ready ? "info" : "warning");
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {
