@@ -1,0 +1,78 @@
+{
+  "run_id": "RUN-0001",
+  "objective": "ARAYA Governance Remediation Batch 2 \u2014 Operational Capability Registry",
+  "workflow": "governance-remediation",
+  "mode": "standard",
+  "start_time": "2026-05-30T17:00:00Z",
+  "end_time": "2026-05-30T23:04:53.104343",
+  "participants": [
+    {
+      "agent": "daneel",
+      "role": "Implementation Lead",
+      "accountable": true
+    },
+    {
+      "agent": "sonia",
+      "role": "PM Head Orchestrator",
+      "consulted": true
+    },
+    {
+      "agent": "aurora",
+      "role": "CHRO",
+      "informed": true
+    }
+  ],
+  "phases": [
+    {
+      "phase": "discovery",
+      "status": "completed",
+      "output": "Read araya.yaml and skills/*/SKILL.md"
+    },
+    {
+      "phase": "generation",
+      "status": "completed",
+      "output": "capability-registry.yaml (572 lines)"
+    },
+    {
+      "phase": "automation",
+      "status": "completed",
+      "output": "generate-registry.sh (reproducible)"
+    },
+    {
+      "phase": "validation",
+      "status": "completed",
+      "output": "25 agents, 120 skills, 0 orphans"
+    },
+    {
+      "phase": "delivery",
+      "status": "completed",
+      "output": "PR #48 merged to main"
+    }
+  ],
+  "artifacts": [
+    ".araya/organization/capability-registry.yaml",
+    ".araya/organization/generate-registry.sh"
+  ],
+  "evidence": {
+    "agents_registered": 25,
+    "skills_catalogued": 120,
+    "orphan_skills": 0,
+    "pr_merged": 48,
+    "branch": "dev-mahg \u2192 main"
+  },
+  "governance": {
+    "branch_compliant": true,
+    "run_record_exists": true,
+    "reality_verified": true,
+    "real_004_compliant": true
+  },
+  "status": "completed",
+  "outcome": "SUCCESS",
+  "constitution_rules_applied": [
+    "REAL-004",
+    "REAL-006",
+    "REAL-007",
+    "BRANCH-001",
+    "BRANCH-010"
+  ]
+}

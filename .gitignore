@@ -2,7 +2,6 @@ node_modules/
 *.log
 .env
 .DS_Store
-.araya/runs/
 .araya/evidence/
 .araya/telemetry/
 .araya/approvals/
