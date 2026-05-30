@@ -1,4 +1,4 @@
-version: 0.6.4
+version: 0.6.5
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -221,25 +221,12 @@ agents:
     - pm-dependencies
     - pm-risk
     - pm-status
-    - sdd-vision
     - project-planning
-    - sprint-planning
-    - daily-standup
-    - daily-note
-    - retrospective
-    - impediment
-    - velocity
-    - content-calendar
-    - definition-of-done
     - drr-create
     - iar-generate
     - cr-generate
-    - uat-generate
-    - uat-review
-    - token-efficiency
     - ai-routing
     - autonomous-execution
-    - reality-verification
   valentina:
     role: Backend Developer
     emoji: 🔧
@@ -289,6 +276,7 @@ agents:
     - tdd-execute
     - uat-review
     - token-efficiency
+    - uat-generate
   aisha:
     role: Backend Architect
     emoji: 🔷
@@ -381,6 +369,7 @@ agents:
     - impediment
     - velocity
     - definition-of-done
+    - reality-verification
   sofia:
     role: AI Assistant
     emoji: 💬
@@ -498,6 +487,7 @@ agents:
     - usage-metering
     - resource-rightsizing
     - budget-forecasting
+    - token-efficiency
   eunice:
     role: Educational Designer
     emoji: 🎓
