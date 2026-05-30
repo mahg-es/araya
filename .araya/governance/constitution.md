@@ -162,3 +162,5 @@ amendments but may not enact them.
 | NL-003 | PERMISSION | Commands remain available for advanced users |
 | NL-004 | OBLIGATION | Commands are implementation details |
 | NL-005 | OBLIGATION | Responses must identify the responsible agent |
+
+| TECH-006 | OBLIGATION | HOTFIX values are limited to 0..5. Values greater than 5 are invalid |

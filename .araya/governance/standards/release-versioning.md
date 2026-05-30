@@ -46,4 +46,5 @@ Controlled evolution. Stability. Governance maturity.
 
 ## ARAYA Current State
 
-**v0.5.6** — Revision 5, Hotfix 6. Path to 1.0.0 requires 73 revisions and 5 hotfixes.
+**v0.6.0** — Revision 6, Hotfix 0.
+Hotfix ≤ 5 (May). Revision ≤ 73 (1973).

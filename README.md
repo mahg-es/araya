@@ -397,11 +397,12 @@ Exceptions require approval. `/araya constitution` — `/araya constitution --va
 ### Versioning Standard
 
 ```
-MAJOR.REVISION.HOTFIX — 0.73.5 → 1.0.0
+MAJOR.REVISION.HOTFIX — Hotfix ≤ 5, Revision ≤ 73
 ```
 
-Major versions are earned. Promotion requires 73 revisions + 5 hotfixes.
-Origin: 1973 (The Data Professor's birth year) / 05 (May).
+Hotfix values represent The Data Professor's birth month (May = 5).
+When hotfix reaches 5, the next increment rolls to the next revision.
+Major promotion: 0.73.5 → 1.0.0.
 `/araya version` — `/araya release-check`
 
 ---

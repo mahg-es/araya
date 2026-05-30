@@ -1212,15 +1212,22 @@ export default function (pi: ExtensionAPI) {
       var compliant = true;
       var notes: string[] = [];
 
-      if (hot >= 5 && rev < 73) {
-        notes.push("⚠️ HOTFIX ≥ 5 but REVISION < 73 — major promotion not yet earned");
+      if (hot > 5) {
+        notes.push("❌ INVALID: HOTFIX " + hot + " exceeds maximum (5). Hotfix represents The Data Professor's birth month (May).");
+        compliant = false;
+      }
+      if (rev > 73) {
+        notes.push("❌ INVALID: REVISION " + rev + " exceeds maximum (73). Revision represents The Data Professor's birth year (1973).");
+        compliant = false;
+      }
+      if (hot === 5) {
+        notes.push("📌 HOTFIX at maximum (5). Next: " + major + "." + (rev + 1) + ".0");
       }
       if (rev === 73 && hot === 5) {
         notes.push("🎯 ELIGIBLE for major promotion: " + v + " → " + (major + 1) + ".0.0");
-        compliant = true;
       }
-      if (notes.length === 0) {
-        notes.push("✅ Version compliant with MAHG Release Standard");
+      if (compliant && notes.length === 0) {
+        notes.push("✅ Version compliant with MAHG Release Standard (hotfix ≤ 5, revision ≤ 73)");
       }
 
       ctx.ui.notify("## Release Compliance\n\n" + notes.join("\n"), compliant ? "info" : "warning");
