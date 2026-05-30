@@ -164,3 +164,9 @@ amendments but may not enact them.
 | NL-005 | OBLIGATION | Responses must identify the responsible agent |
 
 | TECH-006 | OBLIGATION | HOTFIX values are limited to 0..5. Values greater than 5 are invalid |
+
+### Usability (USE)
+
+| ID | Type | Rule |
+|----|------|------|
+| USE-001 | OBLIGATION | A feature is complete only when it can be used, solves a real problem, can be demonstrated end-to-end, and reduces manual work |

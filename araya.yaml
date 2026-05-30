@@ -1,4 +1,4 @@
-version: 0.6.0
+version: 0.6.1
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -238,6 +238,7 @@ agents:
     - uat-review
     - token-efficiency
     - ai-routing
+    - autonomous-execution
   valentina:
     role: Backend Developer
     emoji: 🔧
