@@ -20,6 +20,9 @@ const PROVIDER_TPM: Record<string, number> = {
 // Cooldown tracking
 const usage = new Map<string, { tokensThisMinute: number; minuteStart: number; tpmHits: number; usageLimitHits: number }>();
 
+// Provider cooldown — blocks requests until timestamp expires
+const cooldownUntil = new Map<string, number>();
+
 function getUsage(provider: string) {
   const now = Date.now();
   let u = usage.get(provider);
@@ -73,9 +76,10 @@ export default function (pi: ExtensionAPI) {
             u.tpmHits++;
             u.tokensThisMinute = 0; // Reset — minute window will pass
             
-            // SILENT WAIT — no error, no beep, just wait for the minute to pass
-            const waitSeconds = Math.ceil((tpmCheck.retrySeconds ?? 7) + 1); // Add 1s buffer
-            console.error(`[ARAYA Quota Guard] TPM limit on ${provider}. Waiting ${waitSeconds}s silently...`);
+            // SILENT WAIT — capture retry time and enforce cooldown
+            const waitSeconds = Math.ceil((tpmCheck.retrySeconds ?? 7) + 2); // +2s buffer
+            cooldownUntil.set(provider, Date.now() + waitSeconds * 1000);
+            console.error(`[ARAYA Quota Guard] TPM limit on ${provider}. Cooldown ${waitSeconds}s until ${new Date(Date.now() + waitSeconds * 1000).toISOString()}. Silent — no bell.`);
             
             // The model will naturally retry after the wait
             // No notification to user — just let the minute pass
@@ -93,6 +97,23 @@ export default function (pi: ExtensionAPI) {
           }
         }
       }
+    }
+  });
+
+  // before_agent_start — enforce cooldown from rate-limit errors
+  pi.on("before_agent_start", async (_event, _ctx) => {
+    const provider = (_event as any).systemPromptOptions?.selectedTools?.[0] ?? "openai-codex";
+    const cooldown = cooldownUntil.get(provider);
+    if (cooldown && Date.now() < cooldown) {
+      const remaining = Math.ceil((cooldown - Date.now()) / 1000);
+      console.error(`[ARAYA Quota Guard] Cooling down ${provider}. ${remaining}s remaining. Request held.`);
+      return {
+        message: {
+          customType: "araya-quota-cooldown",
+          content: `⏳ Rate limit cooldown: ${remaining}s remaining on ${provider}. Waiting...`,
+          display: true,
+        },
+      };
     }
   });
 
