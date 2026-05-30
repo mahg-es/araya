@@ -44,6 +44,11 @@ function isUsageWindowLimit(text: string): boolean {
   return /usage.*limit|quota.*exceeded|usage.*window|5.?hour/i.test(text);
 }
 
+function isClaudeExtraUsageError(text: string): boolean {
+  // Claude: "Third-party apps now draw from your extra usage"
+  return /extra usage|third.party apps.*draw from/i.test(text);
+}
+
 export default function (pi: ExtensionAPI) {
   pi.on("agent_end", async (event: AgentEndEvent, _ctx) => {
     const provider = event.messages?.[0]?.provider ?? "unknown";
@@ -77,11 +82,13 @@ export default function (pi: ExtensionAPI) {
             break;
           }
           
-          if (isUsageWindowLimit(text)) {
+          if (isUsageWindowLimit(text) || isClaudeExtraUsageError(text)) {
             const u = getUsage(provider);
             u.usageLimitHits++;
-            console.error(`[ARAYA Quota Guard] USAGE WINDOW LIMIT on ${provider}. Switch to DeepSeek recommended.`);
-            // Only for usage window limits do we suggest switching
+            const reason = isClaudeExtraUsageError(text)
+              ? "CLAUDE EXTRA USAGE required"
+              : "USAGE WINDOW LIMIT";
+            console.error(`[ARAYA Quota Guard] ${reason} on ${provider}. Switch to DeepSeek — reliable, tested, no extra credits needed.`);
             break;
           }
         }
@@ -110,13 +117,13 @@ export default function (pi: ExtensionAPI) {
         }
       }
 
-      // Only suggest switching for usage window limits
+      // Only suggest switching for usage window limits or Claude extra usage
       let hasUsageLimit = false;
       for (const [, u] of usage) {
         if (u.usageLimitHits > 0) hasUsageLimit = true;
       }
       if (hasUsageLimit) {
-        lines.push("", "⚠️ Usage window limit reached. Switch to DeepSeek (Ctrl+P).");
+        lines.push("", "⚠️ Provider limit reached. Switch to DeepSeek (Ctrl+P) — reliable, tested, no extra credits.");
       }
 
       ctx.ui.notify(lines.join("\n"), hasUsageLimit ? "warning" : "info");
