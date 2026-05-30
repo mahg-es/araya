@@ -233,7 +233,24 @@ export default function (pi: ExtensionAPI) {
         } else {
           lines.push(`/araya:status → full roster | /araya <agent> <task> → delegate`);
         }
-        ctx.ui.notify(lines.join("\n"), "info");
+              // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
+
+      ctx.ui.notify(lines.join("\n"), "info");
         return;
       }
 
@@ -710,6 +727,23 @@ export default function (pi: ExtensionAPI) {
         for (const a of archived) lines.push(`  📦 ${a.name}`);
       }
 
+            // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
+
       ctx.ui.notify(lines.join("\n"), "info");
     },
   });
@@ -784,6 +818,23 @@ export default function (pi: ExtensionAPI) {
         lines.push("", "⚠️ Pending or failed criteria exist. Manu approval requires all ACs to pass or have documented deviations.");
       }
 
+            // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
+
       ctx.ui.notify(lines.join("\n"), ready ? "info" : "warning");
     },
   });
@@ -838,7 +889,24 @@ export default function (pi: ExtensionAPI) {
         const hasOrphans = false; // Simplified — full implementation in skills
         lines.push(`**Status:** ${hasOrphans ? "🔴 FAILED" : "🟢 PASSED"}`);
         if (hasOrphans) lines.push("", "⚠️ Orphan references detected. Run /skill:token-efficiency for detailed analysis.");
-        ctx.ui.notify(lines.join("\n"), hasOrphans ? "warning" : "info");
+              // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
+
+      ctx.ui.notify(lines.join("\n"), hasOrphans ? "warning" : "info");
       } else {
         const lines = ["## Traceability Chain", "",
           `\`\`\``,
@@ -850,7 +918,24 @@ export default function (pi: ExtensionAPI) {
           "",
           `**Total Artifacts:** ${refs.REQ.size + refs.AC.size + refs.TASK.size}`,
         ];
-        ctx.ui.notify(lines.join("\n"), "info");
+              // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
+
+      ctx.ui.notify(lines.join("\n"), "info");
       }
     },
   });
@@ -927,6 +1012,23 @@ export default function (pi: ExtensionAPI) {
       }
 
       if (healthScore < 80) lines.push("", "⚠️ Health score below threshold. Review required before delivery.");
+
+            // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
 
       ctx.ui.notify(lines.join("\n"), healthScore >= 95 ? "info" : healthScore >= 80 ? "warning" : "warning");
     },
@@ -1099,6 +1201,23 @@ export default function (pi: ExtensionAPI) {
       lines.push("### Safe Next Action",
         branch === "main" ? "⚠️ Switch to dev-mahg before any work." : "✅ Branch compliant.");
 
+            // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
+
       ctx.ui.notify(lines.join("\n"), authConflicts.length > 0 ? "warning" : "info");
     },
   });
@@ -1136,7 +1255,24 @@ export default function (pi: ExtensionAPI) {
         const lines = ["## Trajectories", "", `**Golden:** ${golden} | **Candidate:** ${candidate}`];
         if (existsSync(goldenDir)) readdirSync(goldenDir).forEach(f => lines.push(`  ⭐ ${f}`));
         if (existsSync(candidateDir)) readdirSync(candidateDir).forEach(f => lines.push(`  🔄 ${f}`));
-        ctx.ui.notify(lines.join("\n"), "info");
+              // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
+
+      ctx.ui.notify(lines.join("\n"), "info");
       } else {
         ctx.ui.notify(
           `## Trajectory Summary\n\n` +
@@ -1237,6 +1373,23 @@ export default function (pi: ExtensionAPI) {
       var lines = ["## Graph Builder Readiness", ""];
       checks.forEach(function(c) { lines.push((c.ok ? "✅" : "❌") + " " + c.name); });
       lines.push("", "**Status:** " + (ready ? "🟢 READY FOR BATCH 9" : "🔴 NOT READY — missing artifacts"));
+
+            // PROJECT-001 — Repository hygiene check
+      const projectViolations: string[] = [];
+      if (existsSync(resolve(cwd, "memory"))) {
+        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+      }
+      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+      if (existsSync(resolve(cwd, "docs/operations"))) {
+        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+      }
+      if (projectViolations.length > 0) {
+        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
+          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        authConflicts.push(...projectViolations);
+      }
 
       ctx.ui.notify(lines.join("\n"), ready ? "info" : "warning");
     },
@@ -1423,6 +1576,46 @@ export default function (pi: ExtensionAPI) {
         `Features without evidence files are automatically **⚠️ Unverified** — per USE-002.\n` +
         `Passing technical tests is not sufficient evidence of user usability — per USE-003.`,
         verified > 0 ? "info" : "warning"
+      );
+    },
+  });
+
+  // ── /araya:compact ────────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:compact", {
+    description: "🗜️ Produce minimal context capsule from repository truth",
+    handler: async (_args, ctx) => {
+      const cwd = process.cwd();
+      const { existsSync, readFileSync } = await import("node:fs");
+      const { resolve, basename } = await import("node:path");
+
+      let capsule = [`# Context Capsule — ${basename(cwd)}`, "", "## Active Standards"];
+      const constPath = resolve(cwd, ".araya/governance/constitution.md");
+      if (existsSync(constPath)) {
+        const c = readFileSync(constPath, "utf-8");
+        const rules = c.match(/\| (GOV|DOC|SEC|HR|ENG|FIN|REAL|BRANCH|TECH|USE|ROUTE|TOPO|NL|GRAPH|KNW|PROJECT)-\d+ \| (OBLIGATION|PROHIBITION|PERMISSION|ESCALATION) \| (.+?) \|/g) ?? [];
+        capsule.push(`**${rules.length} active constitutional rules**`, "");
+      }
+      capsule.push("### Architecture", "- Docker + Traefik mandatory (PREF-003)", "- Authelia default auth", "- Authentik NOT default", "", "### Branch", "- feature/* → dev-mahg → main", "- No direct commits to main", "", "### Repository Truth", "- Workspace ≠ delivered", "- Uncommitted ≠ progress", "- Claims need evidence (REAL-001)");
+      ctx.ui.notify(capsule.join("\n"), "info");
+    },
+  });
+
+  pi.registerCommand("araya:handoff", {
+    description: "🤝 Generate compact agent-to-agent handoff document",
+    handler: async (_args, ctx) => {
+      const cwd = process.cwd();
+      const { execSync } = await import("node:child_process");
+      let branch = ""; try { branch = execSync("git branch --show-current", { cwd }).toString().trim(); } catch {}
+
+      ctx.ui.notify(
+        `## Agent Handoff — ${new Date().toISOString().slice(0, 16)}\n\n` +
+        `**Project:** ${require("node:path").basename(cwd)}\n` +
+        `**Branch:** ${branch}\n` +
+        `**Active Constraints:** Docker + Traefik | Authelia default | feature → dev-mahg → main\n` +
+        `**Context Source:** Repository truth only (/araya reconstitute)\n` +
+        `**Handoff Protocol:** What was done → What's next → Open decisions → Active constraints`,
+        "info"
       );
     },
   });
