@@ -1,0 +1,19 @@
+flowchart LR
+    D[Draft] --> P[Planned]
+    P --> A[Approved]
+    A --> E[Executing]
+    E --> R[Review]
+    R --> V[Validated]
+    V --> AR[Archived]
+    
+    R -->|findings| E
+    V -->|failed ACs| E
+    A -->|scope change| D
+    
+    style D fill:#f9f,stroke:#333
+    style P fill:#bbf,stroke:#333
+    style A fill:#bfb,stroke:#333
+    style E fill:#ff9,stroke:#333
+    style R fill:#f96,stroke:#333
+    style V fill:#9f9,stroke:#333
+    style AR fill:#ddd,stroke:#333

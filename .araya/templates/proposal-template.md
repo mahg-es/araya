@@ -1,39 +1,67 @@
 ---
 change_id: CHG-YYYY-NNN
-title: "[Title of the proposed change]"
+title: "[Title]"
 status: draft
 owner: manu
 created_at: YYYY-MM-DD
 updated_at: YYYY-MM-DD
+requirement_ids: []
+acceptance_ids: []
+task_ids: []
+evidence_ids: []
+delivery_id: ""
+drr_id: ""
+iar_id: ""
+cr_id: ""
 ---
 
-# Proposal: [Title]
+# [Title]
 
-## Objective
+## Lifecycle States
 
-[What problem does this solve? 1-2 sentences.]
+| State | Description |
+|-------|-------------|
+| **Draft** | Initial creation, not yet reviewed |
+| **Planned** | Tasks defined, dependencies mapped |
+| **Approved** | Manu approved, ready for execution |
+| **Executing** | Implementation in progress |
+| **Review** | Under review (architecture, security, QA) |
+| **Validated** | All ACs passed, ready for delivery |
+| **Archived** | Delivered and closed |
 
-## Business Value
+## Traceability Chain
 
-[Why does this matter? What business outcome does it enable?]
+```
+REQ-001
+ ├── AC-001
+ │   ├── TASK-001
+ │   └── TASK-002
+ └── AC-002
+     └── TASK-003
+         └── EVD-001
+             └── DEL-001
+                 ├── DRR-001
+                 ├── IAR-001
+                 └── CR-001
+```
 
-## Scope
+## Artifact References
 
-- [Included item 1]
-- [Included item 2]
+| Artifact | ID | Status |
+|----------|-----|--------|
+| Requirement | REQ-001 | |
+| Acceptance | AC-001 | |
+| Task | TASK-001 | |
+| Evidence | EVD-001 | |
+| Delivery | DEL-001 | |
+| Review | DRR-001 | |
+| Impact | IAR-001 | |
+| Change Request | CR-001 | |
 
-## Out of Scope
+## Validation
 
-- [Excluded item 1]
-- [Excluded item 2]
-
-## Risks
-
-| Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|------------|
-| | | | |
-
-## Dependencies
-
-- [Dependency 1]
-- [Dependency 2]
+- [ ] No orphan requirements
+- [ ] No orphan acceptance criteria
+- [ ] No orphan tasks
+- [ ] No broken references
+- [ ] Full traceability chain exists

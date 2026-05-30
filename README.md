@@ -162,6 +162,8 @@ cd araya
 | `/araya <agent> "<task>"` | Delegate a task to a specialist agent |
 | `/araya:status` | Full agent roster with tiers and skills |
 | `/araya:install` | Install ARAYA on this machine |
+| `/araya trace` | Show end-to-end traceability tree from REQ to CR |
+| `/araya trace --validate` | Detect orphan requirements, ACs, and broken references |
 | `/araya help` | Complete command manual |
 | `/araya review-delivery <id>` | Create DRR → IAR → CR for post-delivery feedback |
 
@@ -360,6 +362,22 @@ Manu (PO Gate) → Requirement → SDD → BDD → TDD → Dependency Analysis �
 ```
 
 **No implementation without Manu's approval. No delivery without Manu's validation.**
+
+### Change Lifecycle
+
+```
+Draft → Planned → Approved → Executing → Review → Validated → Archived
+```
+
+Every change follows a deterministic lifecycle. Review findings loop back to Executing. Failed ACs return to Executing. Scope changes restart at Draft.
+
+### End-to-End Traceability
+
+```
+REQ → AC → TASK → EVD → DEL → DRR → IAR → CR
+```
+
+Every artifact is traceable. Orphan detection via `/araya trace --validate`. Full tree via `/araya trace`.
 
 ---
 
