@@ -1032,21 +1032,74 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.registerCommand("araya:reconstitute", {
-    description: "🔍 Reconstitute existing project — analyze, recover, establish baseline",
+    description: "🔍 Reconstitute project context — reset to repository truth",
     handler: async (args, ctx) => {
-      const mode = args?.trim() || "--quick";
-      const soniaPrompt = buildAgentPrompt(config, "sonia", [
-        `## Project Reconstitution`,
-        `**Mode:** ${mode}`,
-        mode === "--deep"
-          ? `Full repository archaeology: git history, docs, architecture, requirements reconstruction.`
-          : mode === "--propose"
-          ? `Generate recovered specs, requirements, acceptance criteria, and recovery roadmap.`
-          : `Lightweight assessment: current state, gaps, recovery options.`,
-        `Produce a Project Reconstitution Report (PRR) with recovery recommendations.`,
-        `Save to .araya/knowledge/recovered-projects/.`,
-      ].join("\n"));
-      pi.sendUserMessage(soniaPrompt);
+      const cwd = process.cwd();
+      const { existsSync, readdirSync } = await import("node:fs");
+      const { resolve, basename } = await import("node:path");
+      const { execSync } = await import("node:child_process");
+
+      let branch = ""; let permanentBranches: string[] = [];
+      try { branch = execSync("git branch --show-current", { cwd }).toString().trim(); } catch {}
+      try { 
+        const branches = execSync("git branch -a", { cwd }).toString();
+        permanentBranches = ["main", "dev-mahg"].filter(b => branches.includes(b));
+      } catch {}
+
+      const adrLocations: string[] = [];
+      for (const loc of [".araya/adr", "docs/adr", ".araya/governance/adrs"]) {
+        if (existsSync(resolve(cwd, loc))) adrLocations.push(loc);
+      }
+
+      let authStandard = "Authelia (default per PREF-003)";
+      let authConflicts: string[] = [];
+      if (existsSync(resolve(cwd, "docs/adr/ADR-0010-authentik-as-central-identity-provider.md"))) {
+        authConflicts.push("ADR-0010 references Authentik — may conflict with Authelia default");
+      }
+      if (existsSync(resolve(cwd, "infrastructure/authelia"))) {
+        authStandard = "Authelia (infrastructure present)";
+      }
+      if (existsSync(resolve(cwd, "docs/adr")) && !existsSync(resolve(cwd, ".araya/adr"))) {
+        authConflicts.push("ADRs in docs/adr/ — migrate to .araya/adr/ per ARAYA standard");
+      }
+
+      const directMainRisk = branch === "main" && !permanentBranches.includes("dev-mahg");
+      const runsDir = resolve(cwd, ".araya/runs");
+      const runCount = existsSync(runsDir) ? readdirSync(runsDir).filter(d => d.startsWith("RUN-")).length : 0;
+
+      const lines = [
+        "## Project Reconstitution",
+        "",
+        `**Project:** ${basename(cwd)}`,
+        `**Branch:** ${branch}${directMainRisk ? " ⚠️ Direct main — use dev-mahg" : ""}`,
+        `**Permanent branches:** ${permanentBranches.join(", ") || "N/A"}`,
+        "",
+        "### Architecture Standards",
+        `**Auth:** ${authStandard}`,
+        "**Proxy:** Traefik (PREF-003)",
+        "**Containers:** Docker mandatory",
+        "**Environments:** Local → Pre-production → Production",
+        "",
+        `**ADRs:** ${adrLocations.length > 0 ? adrLocations.join(", ") : "NONE"} | Preferred: .araya/adr/`,
+      ];
+
+      if (adrLocations.includes("docs/adr") && !adrLocations.includes(".araya/adr")) {
+        lines.push("⚠️ Migrate ADRs from docs/adr/ → .araya/adr/");
+      }
+      lines.push("");
+      lines.push("### Active Constraints", "- Docker + Traefik mandatory",
+        "- Authelia default auth (unless ADR overrides)", "- Authentik NOT default",
+        "- feature/* → dev-mahg → main", "- No direct commits to main",
+        "- Workspace ≠ delivered. Repository truth only.", "");
+      lines.push(`**Run Records:** ${runCount}`, "");
+
+      if (authConflicts.length > 0) {
+        lines.push("### ⚠️ Conflicts", ...authConflicts.map(c => `- ${c}`), "");
+      }
+      lines.push("### Safe Next Action",
+        branch === "main" ? "⚠️ Switch to dev-mahg before any work." : "✅ Branch compliant.");
+
+      ctx.ui.notify(lines.join("\n"), authConflicts.length > 0 ? "warning" : "info");
     },
   });
 
