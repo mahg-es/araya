@@ -164,6 +164,8 @@ cd araya
 | `/araya:install` | Install ARAYA on this machine |
 | `/araya trace` | Show end-to-end traceability tree from REQ to CR |
 | `/araya trace --validate` | Detect orphan requirements, ACs, and broken references |
+| `/araya constitution` | Show ARAYA Constitution — rules, types, and governance |
+| `/araya constitution --validate` | Validate constitutional compliance |
 | `/araya help` | Complete command manual |
 | `/araya review-delivery <id>` | Create DRR → IAR → CR for post-delivery feedback |
 
@@ -379,6 +381,16 @@ REQ → AC → TASK → EVD → DEL → DRR → IAR → CR
 ```
 
 Every artifact is traceable. Orphan detection via `/araya trace --validate`. Full tree via `/araya trace`.
+
+### Constitutional Governance
+
+```
+The Constitution — 17 rules, 4 types, 6 domains
+```
+
+ARAYA is governed by a constitution — the highest authority below The Data Professor.
+Rules are OBLIGATION, PROHIBITION, PERMISSION, or ESCALATION. Violations are tracked.
+Exceptions require approval. `/araya constitution` — `/araya constitution --validate`
 
 ---
 
