@@ -220,3 +220,5 @@ amendments but may not enact them.
 | ID | Type | Rule |
 |----|------|------|
 | CMD-001 | OBLIGATION | No ARAYA command may be documented unless registered, executable, and verified |
+
+| CMD-002 | OBLIGATION | No command may be reported as operational unless executable, tested, and output validated — documentation alone is insufficient |
