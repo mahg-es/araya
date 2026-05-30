@@ -259,7 +259,7 @@ cd araya
 |-------|------|------|-----------|--------|
 | **Eunice** | Educational Designer | balanced | ✅ | lab-scenario-design, student-assessment, training-module, curriculum-planning |
 | **Priscila** | Technical Writer | balanced | ✍️ docs | adr-write, api-document, architecture-diagram, slide-deck-generate, technical-book |
-| **Esteban** | Knowledge Manager | balanced | ✅ | daily-note, knowledge-graph, project-planning, pkm-workflow |
+| **Esteban** | Chief Knowledge Officer | balanced | ✅ | daily-note, knowledge-graph, project-planning, pkm-workflow, organizational-knowledge, trajectory-management |
 
 ### 🎯 Brand & Identity
 

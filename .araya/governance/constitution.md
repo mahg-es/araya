@@ -103,3 +103,21 @@ amendments but may not enact them.
 | GOV-011 | PERMISSION | Reconstitution may establish a new baseline |
 | GOV-012 | OBLIGATION | Historical artifacts remain auditable |
 | GOV-013 | PROHIBITION | Re-baselining never destroys history |
+
+### Technology (TECH)
+
+| ID | Type | Rule |
+|----|------|------|
+| TECH-001 | OBLIGATION | Preferred technologies should be evaluated before introducing new frameworks |
+| TECH-002 | OBLIGATION | Deviations from organizational preferences require documented justification |
+| TECH-003 | PROHIBITION | Technology sprawl should be minimized |
+| TECH-004 | OBLIGATION | The simplest technology capable of solving the problem should be preferred |
+
+### Knowledge (KNW)
+
+| ID | Type | Rule |
+|----|------|------|
+| KNW-001 | OBLIGATION | Validated organizational learning must be preserved |
+| KNW-002 | OBLIGATION | Golden trajectories are organizational assets |
+| KNW-003 | OBLIGATION | Lessons learned must remain auditable |
+| KNW-004 | PROHIBITION | Trajectory recommendations must never override constitutional rules |

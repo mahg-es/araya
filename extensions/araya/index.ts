@@ -1041,6 +1041,64 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:trajectory ────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:trajectory", {
+    description: "⭐ Show golden trajectories and delivery patterns",
+    handler: async (args, ctx) => {
+      const cwd = process.cwd();
+      const { existsSync, readdirSync } = await import("node:fs");
+      const { resolve } = await import("node:path");
+
+      const trajDir = resolve(cwd, ".araya/trajectories");
+      const goldenDir = resolve(trajDir, "golden");
+      const candidateDir = resolve(trajDir, "candidate");
+
+      const golden = existsSync(goldenDir) ? readdirSync(goldenDir).length : 0;
+      const candidate = existsSync(candidateDir) ? readdirSync(candidateDir).length : 0;
+
+      const recTerm = args?.startsWith("--search ") ? args.slice(10).replace(/"/g, "") : null;
+      const isList = args?.trim() === "--list";
+      const isRecommend = args?.startsWith("--recommend ");
+
+      if (isRecommend) {
+        ctx.ui.notify(
+          `## Trajectory Recommendation\n\n` +
+          `**Task:** ${args!.slice(13).replace(/"/g, "")}\n\n` +
+          `**Golden Trajectories:** ${golden} available for pattern matching\n` +
+          `**Candidate Trajectories:** ${candidate} being evaluated\n\n` +
+          `Esteban (CKO) can analyze matching patterns. Use /araya trajectory --list for details.`,
+          "info"
+        );
+      } else if (isList || recTerm) {
+        const lines = ["## Trajectories", "", `**Golden:** ${golden} | **Candidate:** ${candidate}`];
+        if (existsSync(goldenDir)) readdirSync(goldenDir).forEach(f => lines.push(`  ⭐ ${f}`));
+        if (existsSync(candidateDir)) readdirSync(candidateDir).forEach(f => lines.push(`  🔄 ${f}`));
+        ctx.ui.notify(lines.join("\n"), "info");
+      } else {
+        ctx.ui.notify(
+          `## Trajectory Summary\n\n` +
+          `**Golden:** ${golden} | **Candidate:** ${candidate}\n\n` +
+          `Use --list to view all, --search to find, --recommend for patterns.`,
+          "info"
+        );
+      }
+    },
+  });
+
+  pi.registerCommand("araya:improve", {
+    description: "📈 Analyze trajectories and recommend process improvements",
+    handler: async (_args, ctx) => {
+      const estebanPrompt = buildAgentPrompt(config, "esteban", [
+        `## Continuous Improvement Analysis`,
+        `Analyze golden trajectories for patterns. Recommend process improvements.`,
+        `Extract: common agent teams, common skills, common workflows, common risks, common success factors.`,
+        `Save recommendations to .araya/learning/recommendations/.`,
+      ].join("\n"));
+      pi.sendUserMessage(estebanPrompt);
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {
