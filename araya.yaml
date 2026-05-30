@@ -1,4 +1,4 @@
-version: 0.3.5
+version: 0.4.0
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -175,6 +175,7 @@ agents:
     - definition-of-done
     - drr-create
     - uat-review
+    - token-efficiency
   sonia:
     role: PM Head Orchestrator
     emoji: 👩‍💼
@@ -213,6 +214,7 @@ agents:
     - cr-generate
     - uat-generate
     - uat-review
+    - token-efficiency
   valentina:
     role: Backend Developer
     emoji: 🔧
@@ -261,6 +263,7 @@ agents:
     - tdd-generate
     - tdd-execute
     - uat-review
+    - token-efficiency
   aisha:
     role: Backend Architect
     emoji: 🔷
@@ -305,6 +308,7 @@ agents:
     - e2e-strategy
     - cicd-quality
     - uat-review
+    - token-efficiency
   diana:
     role: Cybersecurity Specialist
     emoji: 🛡️
@@ -521,3 +525,34 @@ agents:
     - visual-identity
     - brand-audit
     - asset-management
+provider_optimization:
+  codex:
+    optimize_for: small prompts, incremental, frequent checkpoints
+    avoid: large plans, full repo scans, excessive discussion
+    priority: maximum_efficiency
+  claude:
+    optimize_for: deep reasoning, architecture, governance, design
+    avoid: repeating context, repeating standards
+    priority: reasoning_efficiency
+  deepseek:
+    optimize_for: cost efficiency, long workflows, documentation
+    avoid: unbounded context growth
+    priority: balanced_efficiency
+  gemini:
+    optimize_for: large-scale analysis, research, synthesis
+    avoid: small incremental tasks
+    priority: analysis_efficiency
+  github_copilot:
+    optimize_for: local implementation, fast iteration
+    avoid: architecture discussions
+    priority: developer_efficiency
+  opencode_go:
+    optimize_for: lightweight execution, rapid tasks
+    avoid: heavy planning
+    priority: execution_efficiency
+efficiency:
+  context_capsule_enabled: true
+  auto_decompose_threshold_tokens: 8000
+  rate_limit_warning_threshold_percent: 70
+  context_reuse_enabled: true
+  token_budget_before_execution: true
