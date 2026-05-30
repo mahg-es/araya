@@ -93,3 +93,13 @@ No silent overrides.
 
 The constitution is amended only by The Data Professor. Agents may propose
 amendments but may not enact them.
+
+
+### Reconstitution (GOV)
+
+| ID | Type | Rule |
+|----|------|------|
+| GOV-010 | PERMISSION | Projects may be reconstituted |
+| GOV-011 | PERMISSION | Reconstitution may establish a new baseline |
+| GOV-012 | OBLIGATION | Historical artifacts remain auditable |
+| GOV-013 | PROHIBITION | Re-baselining never destroys history |

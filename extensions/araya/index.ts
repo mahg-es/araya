@@ -968,6 +968,79 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:knowledge ─────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:knowledge", {
+    description: "🧠 Show organizational knowledge or search",
+    handler: async (args, ctx) => {
+      const cwd = process.cwd();
+      const { existsSync, readdirSync, readFileSync } = await import("node:fs");
+      const { resolve } = await import("node:path");
+
+      const searchTerm = args?.startsWith("--search ") ? args.slice(10).replace(/"/g, "") : null;
+      const knowledgeDir = resolve(cwd, ".araya/knowledge");
+      const types = ["standards", "patterns", "anti-patterns", "lessons-learned", "adrs", "technology-preferences"];
+
+      if (searchTerm) {
+        const results: string[] = [];
+        for (const t of types) {
+          const dir = resolve(knowledgeDir, t);
+          if (!existsSync(dir)) continue;
+          for (const f of readdirSync(dir)) {
+            const content = readFileSync(resolve(dir, f), "utf-8");
+            if (content.toLowerCase().includes(searchTerm.toLowerCase())) {
+              results.push(`**${t}/${f}**: ${content.slice(0, 100)}...`);
+            }
+          }
+        }
+        ctx.ui.notify(results.length > 0 ? results.join("\n") : `No results for "${searchTerm}"`, "info");
+      } else {
+        const counts = types.map(t => {
+          const dir = resolve(knowledgeDir, t);
+          const count = existsSync(dir) ? readdirSync(dir).length : 0;
+          return `  ${t}: ${count}`;
+        });
+        ctx.ui.notify(`## Organizational Knowledge\n\n${counts.join("\n")}`, "info");
+      }
+    },
+  });
+
+  pi.registerCommand("araya:learn", {
+    description: "📝 Capture a structured organizational lesson",
+    handler: async (args, ctx) => {
+      const lesson = args?.trim() || "";
+      if (!lesson) { ctx.ui.notify("Usage: /araya learn \"<lesson>\"", "warning"); return; }
+      const cwd = process.cwd();
+      const { writeFileSync, existsSync, mkdirSync, readdirSync } = await import("node:fs");
+      const { resolve } = await import("node:path");
+      const dir = resolve(cwd, ".araya/knowledge/lessons-learned");
+      if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+      const count = readdirSync(dir).length + 1;
+      const id = `LESSON-${String(count).padStart(3, "0")}`;
+      writeFileSync(resolve(dir, `${id}.md`), `# ${id}\n\n${lesson}\n\n**Captured:** ${new Date().toISOString().slice(0, 10)}`);
+      ctx.ui.notify(`✅ ${id} captured: ${lesson.slice(0, 80)}...`, "info");
+    },
+  });
+
+  pi.registerCommand("araya:reconstitute", {
+    description: "🔍 Reconstitute existing project — analyze, recover, establish baseline",
+    handler: async (args, ctx) => {
+      const mode = args?.trim() || "--quick";
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
+        `## Project Reconstitution`,
+        `**Mode:** ${mode}`,
+        mode === "--deep"
+          ? `Full repository archaeology: git history, docs, architecture, requirements reconstruction.`
+          : mode === "--propose"
+          ? `Generate recovered specs, requirements, acceptance criteria, and recovery roadmap.`
+          : `Lightweight assessment: current state, gaps, recovery options.`,
+        `Produce a Project Reconstitution Report (PRR) with recovery recommendations.`,
+        `Save to .araya/knowledge/recovered-projects/.`,
+      ].join("\n"));
+      pi.sendUserMessage(soniaPrompt);
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {

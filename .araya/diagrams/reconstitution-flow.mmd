@@ -1,0 +1,23 @@
+flowchart TD
+    PROJ[Existing Project] --> DISC[Discovery]
+    DISC --> HIST[Historical Analysis]
+    HIST --> CURR[Current State Assessment]
+    CURR --> GAP[Gap Analysis]
+    GAP --> PROP[Recovery Proposal]
+    PROP --> BASE[New Baseline]
+    
+    GAP -->|gaps found| REC{Recovery Mode}
+    REC -->|Option 1| MIN[Minimal Cleanup]
+    REC -->|Option 2| MOD[Moderate Re-Baselining]
+    REC -->|Option 3| FULL[Full Reconstitution]
+    
+    MIN --> BASE
+    MOD --> BASE
+    FULL --> BASE
+    
+    BASE --> GOV[Governed Project]
+    
+    style PROJ fill:#ff9,stroke:#333
+    style GOV fill:#9f9,stroke:#333
+    style GAP fill:#f99,stroke:#333
+    style REC fill:#fff,stroke:#333,stroke-width:2px

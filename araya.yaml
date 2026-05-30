@@ -1,4 +1,4 @@
-version: 0.5.1
+version: 0.5.2
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -520,6 +520,7 @@ agents:
     - knowledge-graph
     - project-planning
     - pkm-workflow
+    - organizational-knowledge
   aquila:
     role: Static Site Engineer
     emoji: 🏗️
