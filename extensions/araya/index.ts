@@ -1227,6 +1227,58 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:route ──────────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:route", {
+    description: "🧭 Route task to optimal agent + provider + model",
+    handler: async (args, ctx) => {
+      const task = (args?.startsWith("--explain ") ? args.slice(10) : args)?.trim() || "";
+      const explain = args?.startsWith("--explain");
+      if (!task && !explain) { ctx.ui.notify("Usage: /araya route \"<task>\" or /araya route --explain \"<task>\"", "warning"); return; }
+
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
+        `## AI Routing Request`,
+        `**Task:** ${task || "current task"}`,
+        explain ? `**Mode:** EXPLAIN — show detailed reasoning for routing decision.` : `**Mode:** RECOMMEND — suggest optimal agent, provider, and model.`,
+        `Consider: agent capabilities, historical trajectories, technology preferences, cost governance, and constitutional rules.`,
+        `Output: Recommended Agent → Provider → Model → Strategy → Cost Class → Reasoning.`,
+      ].join("\n"));
+      pi.sendUserMessage(soniaPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:provider:list", {
+    description: "📡 List registered AI providers and models",
+    handler: async (_args, ctx) => {
+      ctx.ui.notify(
+        `## Registered Providers\n\n` +
+        `**OpenAI** — Codex (coding), GPT-5 (general)\n` +
+        `**Anthropic** — Claude (reasoning, architecture)\n` +
+        `**Google** — Gemini (analysis, research)\n` +
+        `**DeepSeek** — DeepSeek (cost-efficient, long workflows)\n` +
+        `**GitHub Copilot** — Copilot (local implementation)\n` +
+        `**OpenCode** — OpenCode (lightweight execution)\n\n` +
+        `Routing respects provider capabilities and organizational preferences.`,
+        "info"
+      );
+    },
+  });
+
+  pi.registerCommand("araya:model:list", {
+    description: "🧠 List model capabilities and routing classes",
+    handler: async (_args, ctx) => {
+      ctx.ui.notify(
+        `## Model Routing Classes\n\n` +
+        `**FAST:** Smallest model capable — documentation, formatting, simple tasks\n` +
+        `**BALANCED:** Quality/cost tradeoff — development, testing, review\n` +
+        `**REASONING:** Deep analysis — architecture, security, planning\n` +
+        `**ECONOMY:** Lowest cost — simple tasks, drafts, summaries\n` +
+        `**ENTERPRISE:** Governance-first — respects all constitutional rules`,
+        "info"
+      );
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {

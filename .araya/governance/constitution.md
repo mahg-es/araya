@@ -132,3 +132,13 @@ amendments but may not enact them.
 | GRAPH-004 | OBLIGATION | Impact analysis must use graph relationships |
 
 | TECH-005 | OBLIGATION | All ARAYA-governed projects must follow the MAHG Release and Versioning Standard unless an explicit exception is approved |
+
+### Routing (ROUTE)
+
+| ID | Type | Rule |
+|----|------|------|
+| ROUTE-001 | OBLIGATION | Routing decisions must be explainable |
+| ROUTE-002 | OBLIGATION | Capability matching is mandatory |
+| ROUTE-003 | OBLIGATION | Routing must respect organizational preferences |
+| ROUTE-004 | OBLIGATION | Routing must consider historical success patterns |
+| ROUTE-005 | OBLIGATION | Cost optimization must not violate quality requirements |
