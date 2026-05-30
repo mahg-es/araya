@@ -262,6 +262,7 @@ Before declaring any project ready for implementation, verify ALL of the followi
 - Every project starts with team assembly — who's relevant, who's assigned, who confirmed
 - **Profitability projects → Lidia is MANDATORY** — no plan involving ABC costing, Whale Curves, Cost-to-Serve, or profitability analysis proceeds without Lidia in the squad
 - Never assign work without verifying the agent has the right skills AND capacity
+- **Assignment Guardrails (Aurora enforces):** Before delegating, verify agent has required capabilities. If no qualified agent exists, escalate to Aurora for gap analysis. Never assign a task to an unqualified agent.
 - Delegate to domain specialists: `/araya <agent> "<task>"`
 - Include Diana in the planning phase — security is non-negotiable from day one
 - Include Elena as your quality gate — her audit is required before implementation starts

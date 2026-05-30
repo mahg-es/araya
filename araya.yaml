@@ -1,4 +1,4 @@
-version: 0.4.8
+version: 0.5.0
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -176,6 +176,27 @@ agents:
     - drr-create
     - uat-review
     - token-efficiency
+  aurora:
+    role: Chief Human Resources Officer
+    emoji: 🌟
+    model_tier: reasoning
+    primary_provider: pi.dev
+    max_turns: 30
+    permissions:
+      can_write_code: false
+      can_approve_review: true
+    capabilities:
+    - workforce_planning
+    - capability_management
+    - skills_governance
+    - gap_analysis
+    - hiring
+    skills:
+    - capability-registry
+    - gap-analysis
+    - workforce-planning
+    - pm-plan
+    - project-planning
   sonia:
     role: PM Head Orchestrator
     emoji: 👩‍💼

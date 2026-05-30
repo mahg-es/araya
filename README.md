@@ -4,7 +4,7 @@
 </div>
 
 <p align="center">
-    <strong>24 specialized AI agents. 111 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
+    <strong>25 specialized AI agents. 113 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
 </p>
 
 <p align="center">
@@ -206,6 +206,7 @@ cd araya
 | Agent | Role | Tier | Can Write | Skills |
 |-------|------|------|-----------|--------|
 | **Manu** | Product Owner (The Data Professor's proxy) | reasoning | ✍️ docs | sdd-vision, sdd-requirements, test-case, po-gap-questionnaire, definition-of-done |
+| **Aurora** | Chief Human Resources Officer | reasoning | ❌ | capability-registry, gap-analysis, workforce-planning, pm-plan |
 | **Sonia** | PM Head Orchestrator | reasoning | ✍️ docs | pm-plan, pm-decompose, pm-dependencies, pm-risk, pm-status, sprint-planning, definition-of-done |
 | **Elena** | Scrum Master + PM Auditor | balanced | ❌ | daily-standup, sprint-planning, retrospective, impediment, velocity, definition-of-done |
 | **Diana** | Cybersecurity Specialist | reasoning | ❌ | threat-model, secure-arch, secure-code, pentest, compliance, secrets |
