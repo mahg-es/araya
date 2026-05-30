@@ -1279,6 +1279,62 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:team ───────────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:team:recommend", {
+    description: "👥 Recommend optimal team for a task",
+    handler: async (args, ctx) => {
+      const task = args?.trim() || "";
+      if (!task) { ctx.ui.notify("Usage: /araya team:recommend \"<task>\"", "warning"); return; }
+      const auroraPrompt = buildAgentPrompt(config, "aurora", [
+        `## Team Recommendation`,
+        `**Task:** ${task}`,
+        `Analyze required capabilities, skills, trajectories, and constitutional rules.`,
+        `Recommend optimal team with role assignments and confidence score.`,
+      ].join("\n"));
+      pi.sendUserMessage(auroraPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:team:assemble", {
+    description: "🏗️ Assemble execution team with role assignments",
+    handler: async (args, ctx) => {
+      const task = args?.trim() || "";
+      if (!task) { ctx.ui.notify("Usage: /araya team:assemble \"<task>\"", "warning"); return; }
+      const auroraPrompt = buildAgentPrompt(config, "aurora", [
+        `## Team Assembly`,
+        `**Task:** ${task}`,
+        `Assemble team: lead (Manu), planning (Sonia), execution (domain agents), review (Elena/Diana).`,
+        `Validate capability coverage and constitutional compliance.`,
+      ].join("\n"));
+      pi.sendUserMessage(auroraPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:team:risk", {
+    description: "⚠️ Analyze workforce risks and single points of failure",
+    handler: async (_args, ctx) => {
+      const auroraPrompt = buildAgentPrompt(config, "aurora", [
+        `## Workforce Risk Analysis`,
+        `Detect: single points of failure, overstaffed teams, understaffed teams, unused agents, duplicate skills.`,
+        `Report risks with severity and recommendations.`,
+      ].join("\n"));
+      pi.sendUserMessage(auroraPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:team:list", {
+    description: "📋 List active team formations",
+    handler: async (_args, ctx) => {
+      ctx.ui.notify(
+        `## Active Team Formations\n\n` +
+        `**Templates:** Web Platform, CLI Tool, Data Platform, AI Product, Security Initiative, Architecture Program\n\n` +
+        `Use /araya team:recommend for dynamic team assembly based on your task.`,
+        "info"
+      );
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {

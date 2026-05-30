@@ -142,3 +142,13 @@ amendments but may not enact them.
 | ROUTE-003 | OBLIGATION | Routing must respect organizational preferences |
 | ROUTE-004 | OBLIGATION | Routing must consider historical success patterns |
 | ROUTE-005 | OBLIGATION | Cost optimization must not violate quality requirements |
+
+### Topology (TOPO)
+
+| ID | Type | Rule |
+|----|------|------|
+| TOPO-001 | OBLIGATION | Every project must have required capability coverage |
+| TOPO-002 | ESCALATION | Missing capabilities block execution |
+| TOPO-003 | OBLIGATION | Single points of failure must be reported |
+| TOPO-004 | OBLIGATION | Team recommendations must be explainable |
+| TOPO-005 | OBLIGATION | Topology recommendations must respect constitutional rules |
