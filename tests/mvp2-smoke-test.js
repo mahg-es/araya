@@ -48,7 +48,7 @@ test("araya.yaml exists", () => {
 const raw = readFileSync(configPath, "utf-8");
 const config = load(raw);
 
-test("version is 2.0", () => {
+test("version is 0.6.0", () => {
   assert(config.version?.startsWith("2"), `Expected 2.x, got ${config.version}`);
 });
 
