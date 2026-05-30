@@ -50,7 +50,7 @@ function buildNormalTitle(cwd: string): string {
     "mahg_bigdata_cloud": "MBC",
   };
   const label = acronyms[name] ?? name;
-  return `\u03C0 \uFE4C ${label}`;
+  return `\u03C0\uFE4C ${label}`;
 }
 
 export default function (pi: ExtensionAPI) {
