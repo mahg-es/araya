@@ -392,6 +392,16 @@ ARAYA is governed by a constitution — the highest authority below The Data Pro
 Rules are OBLIGATION, PROHIBITION, PERMISSION, or ESCALATION. Violations are tracked.
 Exceptions require approval. `/araya constitution` — `/araya constitution --validate`
 
+### Versioning Standard
+
+```
+MAJOR.REVISION.HOTFIX — 0.73.5 → 1.0.0
+```
+
+Major versions are earned. Promotion requires 73 revisions + 5 hotfixes.
+Origin: 1973 (The Data Professor's birth year) / 05 (May).
+`/araya version` — `/araya release-check`
+
 ---
 
 ## ⚡ Features

@@ -1180,6 +1180,53 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:version ───────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:version", {
+    description: "📌 Show ARAYA version and release path",
+    handler: async (_args, ctx) => {
+      const v = config.version || "0.5.6";
+      const parts = v.split(".").map(Number);
+      var rev = parts[1] || 0;
+      var hot = parts[2] || 0;
+      var toMajor = 73 - rev;
+      var toHotfix = toMajor > 0 ? (5 - hot) : 0;
+
+      ctx.ui.notify(
+        `## ARAYA v${v}\n\n` +
+        `**MAJOR:** ${parts[0]} | **REVISION:** ${rev} | **HOTFIX:** ${hot}\n\n` +
+        `**Path to 1.0.0:** ${toMajor} revisions + ${Math.max(0, toHotfix)} hotfixes remaining\n` +
+        `**Rule:** 0.73.5 → 1.0.0 (MAHG Release Standard)\n` +
+        `**Origin:** 1973 (The Data Professor's birth year) / 05 (May)`,
+        "info"
+      );
+    },
+  });
+
+  pi.registerCommand("araya:release-check", {
+    description: "✅ Validate version compliance with MAHG Release Standard",
+    handler: async (_args, ctx) => {
+      var v = config.version || "0.5.6";
+      var parts = v.split(".").map(Number);
+      var major = parts[0], rev = parts[1] || 0, hot = parts[2] || 0;
+      var compliant = true;
+      var notes: string[] = [];
+
+      if (hot >= 5 && rev < 73) {
+        notes.push("⚠️ HOTFIX ≥ 5 but REVISION < 73 — major promotion not yet earned");
+      }
+      if (rev === 73 && hot === 5) {
+        notes.push("🎯 ELIGIBLE for major promotion: " + v + " → " + (major + 1) + ".0.0");
+        compliant = true;
+      }
+      if (notes.length === 0) {
+        notes.push("✅ Version compliant with MAHG Release Standard");
+      }
+
+      ctx.ui.notify("## Release Compliance\n\n" + notes.join("\n"), compliant ? "info" : "warning");
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {

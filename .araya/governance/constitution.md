@@ -130,3 +130,5 @@ amendments but may not enact them.
 | GRAPH-002 | OBLIGATION | Knowledge graph data must be auditable |
 | GRAPH-003 | PROHIBITION | Graph recommendations must not override constitutional rules |
 | GRAPH-004 | OBLIGATION | Impact analysis must use graph relationships |
+
+| TECH-005 | OBLIGATION | All ARAYA-governed projects must follow the MAHG Release and Versioning Standard unless an explicit exception is approved |
