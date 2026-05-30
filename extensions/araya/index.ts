@@ -600,6 +600,58 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
+  // ── /araya:budget-status ─────────────────────────────────────────────────
+
+  pi.registerCommand("araya:budget-status", {
+    description: "💰 Show token efficiency and provider budget status",
+    handler: async (_args, ctx) => {
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
+        `## Token Efficiency & Budget Status`,
+        `Report: session tokens consumed, rate-limit risk, provider efficiency score,`,
+        `context reuse ratio, pending optimizations.`,
+      ].join("\n"));
+      pi.sendUserMessage(soniaPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:optimize-task", {
+    description: "⚡ Analyze and optimize a task for token efficiency",
+    handler: async (args, ctx) => {
+      const task = args?.trim() || "current task";
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
+        `## Optimize Task for Token Efficiency`,
+        `**Task:** ${task}`,
+        `Analyze: estimate tokens, detect oversize risk, recommend decomposition, apply provider profile, suggest context capsules.`,
+      ].join("\n"));
+      pi.sendUserMessage(soniaPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:compress-context", {
+    description: "🗜️ Compress current context into reusable capsule",
+    handler: async (_args, ctx) => {
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
+        `## Compress Context into Capsule`,
+        `Generate a context capsule: extract key requirements, decisions, standards, findings.`,
+        `Target: 40:1 compression ratio. Save to .araya/efficiency/capsules/.`,
+      ].join("\n"));
+      pi.sendUserMessage(soniaPrompt);
+    },
+  });
+
+  pi.registerCommand("araya:efficiency-report", {
+    description: "📊 Generate token efficiency and provider optimization report",
+    handler: async (_args, ctx) => {
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
+        `## Efficiency Report`,
+        `Generate: avg tokens/task, compression ratio, context reuse ratio,`,
+        `delegation efficiency, rate-limit events, cost/delivery, provider scores.`,
+        `Save to .araya/efficiency/reports/.`,
+      ].join("\n"));
+      pi.sendUserMessage(soniaPrompt);
+    },
+  });
+
   // ── Log ─────────────────────────────────────────────────────────────────
 
   if (process.env.ARAYA_DEBUG) {
