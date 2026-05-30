@@ -43,6 +43,10 @@ ARAYA is an **AI-native SDLC orchestration framework** built on [pi.dev](https:/
 
 Solo development becomes **team development**. You are never alone:
 
+> *"I built ARAYA because I know how to deliver software professionally, but I cannot afford an entire delivery organization. ARAYA gives a solo professional access to the structure, governance, specialization and discipline normally found in larger teams. Many AI tools help you write code. ARAYA helps you work like an organization. One person. Many specialists. Professional delivery."*
+>
+> — **Manuel Alejandro Hernández Giuliani**, The Data Professor
+
 - 👑 **Manu** owns product direction, requirements, and acceptance criteria — The Data Professor's proxy
 - 👩‍💼 **Sonia** manages the project — PMO + workflow orchestration + governance
 - 🔧 **Valentina** builds the backend. 🎨 **Alejandra** builds the frontend.
