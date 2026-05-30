@@ -449,6 +449,44 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
+      // /araya compact — context capsule
+      if (firstWord === "compact") {
+        ctx.ui.notify([
+          `## Context Capsule`,
+          `**Constitution:** ${Object.keys(config.agents ?? {}).length + 89} active rules`,
+          `**Standards:** Docker + Traefik | Authelia default | Authentik NOT default`,
+          `**Branch:** feature/* → dev-mahg → main | No direct main`,
+          `**Truth:** Workspace ≠ delivered | Uncommitted ≠ progress | Claims need evidence`,
+        ].join("\n"), "info");
+        return;
+      }
+
+      // /araya handoff — delegation handoff
+      if (firstWord === "handoff") {
+        ctx.ui.notify(`## Agent Handoff\n\n**Protocol:** Done → Next → Decisions → Constraints\n**Source:** Repository truth only\n**Active:** Docker + Traefik | Authelia default | feature → dev-mahg → main`, "info");
+        return;
+      }
+
+      // /araya reconstitute — project context reset
+      if (firstWord === "reconstitute") {
+        const { existsSync, readdirSync } = await import("node:fs");
+        const { resolve, basename } = await import("node:path");
+        const { execSync } = await import("node:child_process");
+        const cwd = process.cwd();
+        let branch = ""; try { branch = execSync("git branch --show-current", { cwd }).toString().trim(); } catch {}
+        const violations: string[] = [];
+        if (existsSync(resolve(cwd, "memory"))) violations.push("memory/ → .araya/memory/");
+        if (existsSync(resolve(cwd, "docs/agents"))) violations.push("docs/agents/ → .araya/agents/");
+        ctx.ui.notify([
+          `## Project Reconstitution — ${basename(cwd)}`,
+          `**Branch:** ${branch}${branch === "main" ? " ⚠️ Use dev-mahg" : ""}`,
+          `**Auth:** Authelia default | Authentik NOT default`,
+          `**Proxy:** Traefik (PREF-003) | **Containers:** Docker mandatory`,
+          ...(violations.length > 0 ? ["", "### 🔴 PROJECT-001 Violations", ...violations.map(v => `- ${v}`)] : []),
+        ].join("\n"), violations.length > 0 ? "warning" : "info");
+        return;
+      }
+
       // /araya <agent> — show agent info or delegate task
       const agentName = firstWord;
       const task2 = rest;
