@@ -152,3 +152,13 @@ amendments but may not enact them.
 | TOPO-003 | OBLIGATION | Single points of failure must be reported |
 | TOPO-004 | OBLIGATION | Team recommendations must be explainable |
 | TOPO-005 | OBLIGATION | Topology recommendations must respect constitutional rules |
+
+### Natural Language (NL)
+
+| ID | Type | Rule |
+|----|------|------|
+| NL-001 | OBLIGATION | Natural language is the preferred interaction mode |
+| NL-002 | OBLIGATION | All major capabilities must be reachable through natural language |
+| NL-003 | PERMISSION | Commands remain available for advanced users |
+| NL-004 | OBLIGATION | Commands are implementation details |
+| NL-005 | OBLIGATION | Responses must identify the responsible agent |

@@ -293,15 +293,17 @@ cd araya
 /araya run --policy aggressive --mode standard "Add caching"
 ```
 
-> **💬 Natural language works too.** ARAYA understands conversational English — no need to memorize command syntax:
+> **💬 Conversational-first.** ARAYA understands natural language — commands are optional. Just speak to your organization:
 >
 > ```
-> sonia from araya can you review the latest status of the project
-> manu from araya please review the findings and issues from The Data Professor
-> sonia from araya coordinate with diana and lidia to audit the pricing module
+> Sonia, how are we doing?
+> Manu and Sonia, I want to build a customer portal.
+> Aurora, do we have capability gaps?
+> Diana, review the security implications.
+> Esteban, what have we learned recently?
 > ```
 >
-> Just start typing. ARAYA figures out who you want and what you need.
+> ARAYA detects intent, routes to agents, executes workflows, and responds — no memorization needed.
 
 ### `/araya <agent>`
 
