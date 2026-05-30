@@ -4,7 +4,7 @@
 </div>
 
 <p align="center">
-    <strong>24 specialized AI agents. 108 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
+    <strong>24 specialized AI agents. 111 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
 </p>
 
 <p align="center">
@@ -404,6 +404,26 @@ Feedback is never lost. After delivery, the complete feedback loop:
 - **CR** (Change Request): converts approved findings to new work packages routed back into the SDLC
 - Traceability chain: Delivery → DRR → IAR → CR → Implementation
 - Command: `/araya review-delivery <delivery-id>`
+
+### User Acceptance Testing (UAT)
+
+Every delivery can generate a formal acceptance package:
+- **UAT packages**: traceability matrix (requirement → AC → UAT test case)
+- **Test cases per AC**: preconditions, steps, expected results, PASS/FAIL/BLOCKED
+- **Coverage matrix**: % requirements tested, % ACs tested, pass rate
+- **Acceptance decision**: ACCEPTED | ACCEPTED WITH CONDITIONS | REJECTED
+- **Result processing**: FAIL → DRR → IAR → CR → work package
+- Commands: `/araya generate-uat`, `/araya review-uat`, `/araya uat-status`
+
+### Token Efficiency & Provider Optimization
+
+Maximize useful work within available quotas — transparent for the entire pi environment:
+- **7 provider profiles**: Codex, Claude, DeepSeek, Gemini, Copilot, OpenCode Go, Zen
+- **Token budget estimation** before execution
+- **Rate-limit risk prediction** with early warnings
+- **Context capsules**: 40:1 compression, reusable across agents
+- **Auto-decomposition** at 8K tokens
+- Commands: `/araya budget-status`, `/araya optimize-task`, `/araya compress-context`, `/araya efficiency-report`
 
 ### 108 Skills Across 12 Domains
 
