@@ -186,6 +186,7 @@ cd araya
 | `/araya constitution` | Show ARAYA Constitution — rules, types, governance |
 | `/araya constitution --validate` | Validate constitutional compliance |
 | `/araya release-check` | Validate version compliance with MAHG Standard |
+| `/araya usability-check` | Check usability evidence coverage |
 
 ### Delivery Review
 
@@ -203,6 +204,7 @@ cd araya
 | `/araya trace` | End-to-end traceability tree from REQ to CR |
 | `/araya trace --validate` | Detect orphan requirements and broken references |
 | `/araya graph` | Organizational knowledge graph summary |
+| `/araya graph:prepare` | Validate graph builder readiness for Batch 9 |
 | `/araya ask "<question>"` | Organizational query using graph + capabilities |
 
 ### Knowledge & Learning
@@ -231,9 +233,13 @@ cd araya
 | `/araya team:recommend "<task>"` | Recommend optimal team |
 | `/araya team:assemble "<task>"` | Assemble team with role assignments |
 | `/araya team:risk` | Workforce risk analysis |
+| `/araya team:list` | Active team formations |
 | `/araya route "<task>"` | Recommend provider + model |
+| `/araya route --explain "<task>"` | Show routing decision reasoning |
 | `/araya provider:list` | Registered AI providers |
+| `/araya model:list` | Model capabilities and routing classes |
 | `/araya spec:init` | Initialize specification structure |
+| `/araya spec:list` | List active specifications and changes |
 
 ### Run Flags
 
