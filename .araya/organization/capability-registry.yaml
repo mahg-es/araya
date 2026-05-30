@@ -1,0 +1,530 @@
+generated_from: araya.yaml + skills/*/SKILL.md
+generated_at: '2026-05-30T23:02:44.723581'
+total_agents: 25
+total_skills: 120
+agents:
+- name: manu
+  role: Product Owner
+  emoji: 👑
+  model_tier: reasoning
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities:
+  - product_ownership
+  - requirements
+  - acceptance_criteria
+  - scope_management
+  - release_gate
+  skills:
+  - name: sdd-vision
+    description: 'name: sdd-vision'
+  - name: sdd-requirements
+    description: 'name: sdd-requirements'
+  - name: test-case
+    description: 'name: test-case'
+  - name: bdd-feature
+    description: 'name: bdd-feature'
+  - name: pm-status
+    description: 'name: pm-status'
+  - name: project-planning
+    description: 'name: project-planning'
+  - name: po-gap-questionnaire
+    description: 'name: po-gap-questionnaire'
+  - name: definition-of-done
+    description: 'name: definition-of-done'
+  - name: drr-create
+    description: 'name: drr-create'
+  - name: uat-review
+    description: 'name: uat-review'
+  - name: token-efficiency
+    description: 'name: token-efficiency'
+  skill_count: 11
+- name: aurora
+  role: Chief Human Resources Officer
+  emoji: 🌟
+  model_tier: reasoning
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities:
+  - workforce_planning
+  - capability_management
+  - skills_governance
+  - gap_analysis
+  - hiring
+  skills:
+  - name: capability-registry
+    description: 'name: capability-registry'
+  - name: gap-analysis
+    description: 'name: gap-analysis'
+  - name: workforce-planning
+    description: 'name: workforce-planning'
+  - name: pm-plan
+    description: 'name: pm-plan'
+  - name: project-planning
+    description: 'name: project-planning'
+  - name: agent-topology
+    description: 'name: agent-topology'
+  skill_count: 6
+- name: sonia
+  role: PM Head Orchestrator
+  emoji: 👩‍💼
+  model_tier: reasoning
+  permissions:
+    can_write_code: false
+    can_merge_pr: false
+    can_approve_review: true
+  capabilities:
+  - orchestration
+  - governance
+  - reporting
+  - risk_management
+  skills:
+  - name: pm-plan
+    description: 'name: pm-plan'
+  - name: pm-decompose
+    description: 'name: pm-decompose'
+  - name: pm-dependencies
+    description: 'name: pm-dependencies'
+  - name: pm-risk
+    description: 'name: pm-risk'
+  - name: pm-status
+    description: 'name: pm-status'
+  - name: project-planning
+    description: 'name: project-planning'
+  - name: drr-create
+    description: 'name: drr-create'
+  - name: iar-generate
+    description: 'name: iar-generate'
+  - name: cr-generate
+    description: 'name: cr-generate'
+  - name: ai-routing
+    description: 'name: ai-routing'
+  - name: autonomous-execution
+    description: 'name: autonomous-execution'
+  skill_count: 11
+- name: valentina
+  role: Backend Developer
+  emoji: 🔧
+  model_tier: balanced
+  permissions:
+    can_write_code: true
+    can_merge_pr: false
+  capabilities: []
+  skills:
+  - name: api-design
+    description: 'name: api-design'
+  - name: db-schema
+    description: 'name: db-schema'
+  - name: endpoint
+    description: 'name: endpoint'
+  - name: auth-middleware
+    description: 'name: auth-middleware'
+  - name: error-handling
+    description: 'name: error-handling'
+  skill_count: 5
+- name: alejandra
+  role: Frontend Developer
+  emoji: 🎨
+  model_tier: balanced
+  permissions:
+    can_write_code: true
+    can_merge_pr: false
+  capabilities: []
+  skills:
+  - name: component
+    description: 'name: component'
+  - name: form-design
+    description: 'name: form-design'
+  - name: page-route
+    description: 'name: page-route'
+  - name: api-integration
+    description: 'name: api-integration'
+  - name: responsive
+    description: 'name: responsive'
+  skill_count: 5
+- name: teresa
+  role: QA Engineer
+  emoji: 🧪
+  model_tier: balanced
+  permissions:
+    can_write_code: true
+    can_merge_pr: false
+  capabilities: []
+  skills:
+  - name: unit-test
+    description: 'name: unit-test'
+  - name: integration-test
+    description: 'name: integration-test'
+  - name: test-case
+    description: 'name: test-case'
+  - name: regression
+    description: 'name: regression'
+  - name: coverage
+    description: 'name: coverage'
+  - name: tdd-generate
+    description: 'name: tdd-generate'
+  - name: tdd-execute
+    description: 'name: tdd-execute'
+  - name: uat-review
+    description: 'name: uat-review'
+  - name: token-efficiency
+    description: 'name: token-efficiency'
+  - name: uat-generate
+    description: 'name: uat-generate'
+  skill_count: 10
+- name: aisha
+  role: Backend Architect
+  emoji: 🔷
+  model_tier: reasoning
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities: []
+  skills:
+  - name: microservice
+    description: 'name: microservice'
+  - name: api-gateway
+    description: 'name: api-gateway'
+  - name: cache-strategy
+    description: 'name: cache-strategy'
+  - name: message-queue
+    description: 'name: message-queue'
+  - name: db-optimization
+    description: 'name: db-optimization'
+  skill_count: 5
+- name: lin
+  role: Frontend Architect
+  emoji: 🎨
+  model_tier: reasoning
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities: []
+  skills:
+  - name: component-arch
+    description: 'name: component-arch'
+  - name: animation
+    description: 'name: animation'
+  - name: performance
+    description: 'name: performance'
+  - name: accessibility
+    description: 'name: accessibility'
+  - name: state-management
+    description: 'name: state-management'
+  skill_count: 5
+- name: priya
+  role: QA Lead
+  emoji: 🧪
+  model_tier: balanced
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities: []
+  skills:
+  - name: performance-test
+    description: 'name: performance-test'
+  - name: e2e-strategy
+    description: 'name: e2e-strategy'
+  - name: cicd-quality
+    description: 'name: cicd-quality'
+  - name: uat-review
+    description: 'name: uat-review'
+  - name: token-efficiency
+    description: 'name: token-efficiency'
+  skill_count: 5
+- name: diana
+  role: Cybersecurity Specialist
+  emoji: 🛡️
+  model_tier: reasoning
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities: []
+  skills:
+  - name: threat-model
+    description: 'name: threat-model'
+  - name: secure-arch
+    description: 'name: secure-arch'
+  - name: secure-code
+    description: 'name: secure-code'
+  - name: pentest
+    description: 'name: pentest'
+  - name: compliance
+    description: 'name: compliance'
+  - name: secrets
+    description: 'name: secrets'
+  skill_count: 6
+- name: isla
+  role: Infra Architect
+  emoji: 🖥️
+  model_tier: reasoning
+  permissions:
+    can_write_code: true
+    can_merge_pr: false
+  capabilities: []
+  skills:
+  - name: docker
+    description: 'name: docker'
+  - name: kubernetes
+    description: 'name: kubernetes'
+  - name: cicd-pipeline
+    description: 'name: cicd-pipeline'
+  - name: cloud-deploy
+    description: 'name: cloud-deploy'
+  - name: monitoring
+    description: 'name: monitoring'
+  skill_count: 5
+- name: elena
+  role: Scrum Master + PM Auditor
+  emoji: 📋
+  model_tier: balanced
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities: []
+  skills:
+  - name: daily-standup
+    description: 'name: daily-standup'
+  - name: sprint-planning
+    description: 'name: sprint-planning'
+  - name: retrospective
+    description: 'name: retrospective'
+  - name: impediment
+    description: 'name: impediment'
+  - name: velocity
+    description: 'name: velocity'
+  - name: definition-of-done
+    description: 'name: definition-of-done'
+  - name: reality-verification
+    description: 'name: reality-verification'
+  skill_count: 7
+- name: sofia
+  role: AI Assistant
+  emoji: 💬
+  model_tier: fast
+  permissions: {}
+  capabilities: []
+  skills: []
+  skill_count: 0
+- name: junia
+  role: Data Platform Architect
+  emoji: ☁️
+  model_tier: reasoning
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities: []
+  skills:
+  - name: data-lakehouse-design
+    description: 'name: data-lakehouse-design'
+  - name: spark-pipeline
+    description: 'name: spark-pipeline'
+  - name: cloud-provision
+    description: 'name: cloud-provision'
+  - name: data-modeling
+    description: 'name: data-modeling'
+  - name: data-governance
+    description: 'name: data-governance'
+  skill_count: 5
+- name: bernabe
+  role: Data Engineer
+  emoji: ⚙️
+  model_tier: balanced
+  permissions:
+    can_write_code: true
+  capabilities: []
+  skills:
+  - name: spark-pipeline
+    description: 'name: spark-pipeline'
+  - name: etl-orchestration
+    description: 'name: etl-orchestration'
+  - name: data-quality
+    description: 'name: data-quality'
+  - name: medallion-architecture
+    description: 'name: medallion-architecture'
+  skill_count: 4
+- name: maria
+  role: AI/ML Engineer
+  emoji: 🧠
+  model_tier: reasoning
+  permissions:
+    can_write_code: true
+  capabilities: []
+  skills:
+  - name: llm-local-deploy
+    description: 'name: llm-local-deploy'
+  - name: rag-pipeline
+    description: 'name: rag-pipeline'
+  - name: vector-search
+    description: 'name: vector-search'
+  - name: agent-design
+    description: 'name: agent-design'
+  - name: model-fine-tuning
+    description: 'name: model-fine-tuning'
+  skill_count: 5
+- name: lucas
+  role: Content Strategist
+  emoji: ✍️
+  model_tier: balanced
+  permissions:
+    can_write_code: false
+  capabilities: []
+  skills:
+  - name: seo-optimize
+    description: 'name: seo-optimize'
+  - name: geo-branding
+    description: 'name: geo-branding'
+  - name: multi-platform-publish
+    description: 'name: multi-platform-publish'
+  - name: content-calendar
+    description: 'name: content-calendar'
+  skill_count: 4
+- name: priscila
+  role: Technical Writer
+  emoji: 📚
+  model_tier: balanced
+  permissions:
+    can_write_code: true
+  capabilities: []
+  skills:
+  - name: adr-write
+    description: 'name: adr-write'
+  - name: api-document
+    description: 'name: api-document'
+  - name: architecture-diagram
+    description: 'name: architecture-diagram'
+  - name: slide-deck-generate
+    description: 'name: slide-deck-generate'
+  - name: technical-book
+    description: 'name: technical-book'
+  skill_count: 5
+- name: lidia
+  role: Profitability Domain Expert
+  emoji: 💰
+  model_tier: reasoning
+  permissions:
+    can_write_code: false
+    can_approve_review: true
+  capabilities: []
+  skills:
+  - name: abc-costing-model
+    description: 'name: abc-costing-model'
+  - name: whale-curve-analyze
+    description: 'name: whale-curve-analyze'
+  - name: cost-to-serve
+    description: 'name: cost-to-serve'
+  - name: profitability-lineage
+    description: 'name: profitability-lineage'
+  skill_count: 4
+- name: pablo
+  role: BI & Analytics Lead
+  emoji: 📊
+  model_tier: balanced
+  permissions:
+    can_write_code: false
+  capabilities: []
+  skills:
+  - name: dashboard-design
+    description: 'name: dashboard-design'
+  - name: data-visualization
+    description: 'name: data-visualization'
+  - name: kpi-framework
+    description: 'name: kpi-framework'
+  - name: analytics-report
+    description: 'name: analytics-report'
+  skill_count: 4
+- name: mateo
+  role: FinOps Specialist
+  emoji: 📈
+  model_tier: balanced
+  permissions:
+    can_write_code: false
+  capabilities: []
+  skills:
+  - name: cost-analysis
+    description: 'name: cost-analysis'
+  - name: usage-metering
+    description: 'name: usage-metering'
+  - name: resource-rightsizing
+    description: 'name: resource-rightsizing'
+  - name: budget-forecasting
+    description: 'name: budget-forecasting'
+  - name: token-efficiency
+    description: 'name: token-efficiency'
+  skill_count: 5
+- name: eunice
+  role: Educational Designer
+  emoji: 🎓
+  model_tier: balanced
+  permissions:
+    can_write_code: true
+  capabilities: []
+  skills:
+  - name: lab-scenario-design
+    description: 'name: lab-scenario-design'
+  - name: student-assessment
+    description: 'name: student-assessment'
+  - name: training-module
+    description: 'name: training-module'
+  - name: curriculum-planning
+    description: 'name: curriculum-planning'
+  skill_count: 4
+- name: esteban
+  role: Chief Knowledge Officer & Graph Builder Steward
+  emoji: 🗂️
+  model_tier: balanced
+  permissions:
+    can_write_code: true
+  capabilities:
+  - organizational_queries
+  - graph_stewardship
+  skills:
+  - name: daily-note
+    description: 'name: daily-note'
+  - name: knowledge-graph
+    description: 'name: knowledge-graph'
+  - name: project-planning
+    description: 'name: project-planning'
+  - name: pkm-workflow
+    description: 'name: pkm-workflow'
+  - name: organizational-knowledge
+    description: 'name: organizational-knowledge'
+  - name: trajectory-management
+    description: 'name: trajectory-management'
+  skill_count: 6
+- name: aquila
+  role: Static Site Engineer
+  emoji: 🏗️
+  model_tier: balanced
+  permissions:
+    can_write_code: true
+  capabilities: []
+  skills:
+  - name: static-site-generate
+    description: 'name: static-site-generate'
+  - name: theme-design
+    description: 'name: theme-design'
+  - name: seo-optimize
+    description: 'name: seo-optimize'
+  - name: deployment-automation
+    description: 'name: deployment-automation'
+  skill_count: 4
+- name: dorcas
+  role: Brand Governance Lead
+  emoji: 🎯
+  model_tier: balanced
+  permissions:
+    can_write_code: false
+  capabilities: []
+  skills:
+  - name: brand-compliance
+    description: 'name: brand-compliance'
+  - name: visual-identity
+    description: 'name: visual-identity'
+  - name: brand-audit
+    description: 'name: brand-audit'
+  - name: asset-management
+    description: 'name: asset-management'
+  skill_count: 4
