@@ -1,15 +1,17 @@
-// ARAYA Notifier — Terminal bell + timed "!" marker when agent finishes
+// ARAYA Notifier — Terminal bell + timed "!" marker + footer version
 //
-// Rings the terminal bell and prepends "!" to the tab title for 30 seconds
-// so The Data Professor can multitask and know when the AI has finished.
-// Title shows "R. Daneel Olivaw" when in home paths (/, /home, etc.)
-// or "π project-name" for all other directories.
+// Rings the terminal bell and prepends "!" to the tab title for 30 seconds.
+// Title shows "R. Daneel Olivaw" when in home paths.
+// Footer shows "ARAYA vX.Y.Z" when in ARAYA-managed projects.
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { basename } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { load } from "js-yaml";
 
 const BELL = "\x07";
-const FLASH_DURATION_MS = 30_000; // 30 seconds
+const FLASH_DURATION_MS = 30_000;
 
 const HOME_PATHS = new Set([
   "/home/thedataprofessor/github",
@@ -27,20 +29,16 @@ function bell(): void {
 function setTitle(text: string): void {
   try {
     process.stdout.write(`\x1b]0;${text}\x07`);
-  } catch {
-    // Terminal may not support OSC; bell alone is enough
-  }
+  } catch { /* ignore */ }
 }
 
 function isHomePath(cwd: string): boolean {
-  // Normalize: strip trailing slash
   const normalized = cwd.endsWith("/") && cwd !== "/" ? cwd.slice(0, -1) : cwd;
   return HOME_PATHS.has(normalized);
 }
 
 function buildNormalTitle(cwd: string): string {
   const name = basename(cwd);
-  // Use acronym for known long names
   const acronyms: Record<string, string> = {
     "mahg-ai-project-office": "MAHG-PO",
     "mahg_bigdata_training_lab": "MBTL",
@@ -53,16 +51,30 @@ function buildNormalTitle(cwd: string): string {
   return `\u03C0\uFE4C ${label}`;
 }
 
+function getArayaVersion(cwd: string): string | null {
+  try {
+    const yamlPath = resolve(cwd, "araya.yaml");
+    if (existsSync(yamlPath)) {
+      const config = load(readFileSync(yamlPath, "utf-8")) as any;
+      return config?.version ?? null;
+    }
+  } catch { /* not an ARAYA project */ }
+  return null;
+}
+
 export default function (pi: ExtensionAPI) {
-  // Set title immediately on session start (covers /reload)
-  pi.on("session_start", async (_event, _ctx) => {
-    // Small delay to let pi finish its own title initialization
+  pi.on("session_start", async (_event, ctx) => {
     setTimeout(() => {
       const cwd = process.cwd();
       if (isHomePath(cwd)) {
         setTitle("R. Daneel Olivaw");
       } else {
         setTitle(buildNormalTitle(cwd));
+      }
+      // Set footer with ARAYA version
+      const version = getArayaVersion(cwd);
+      if (version) {
+        try { ctx.ui.setStatus("araya-version", `ARAYA v${version}`); } catch { /* ignore */ }
       }
     }, 200);
   });
@@ -77,7 +89,11 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.on("agent_end", async (_event, _ctx) => {
-    // Suppress bell for TPM rate-limit errors — Quota Guard handles silently
+    if (clearFlashTimer) {
+      clearTimeout(clearFlashTimer);
+      clearFlashTimer = null;
+    }
+
     const messages = (_event as any).messages ?? [];
     const hasRateLimitError = messages.some((m: any) => {
       const content = m?.content;
@@ -90,27 +106,11 @@ export default function (pi: ExtensionAPI) {
       return false;
     });
 
-    // Clear any previous pending clear
-    if (clearFlashTimer) {
-      clearTimeout(clearFlashTimer);
-      clearFlashTimer = null;
-    }
-
-    // Only bell for real completions, not rate-limit errors
     if (!hasRateLimitError) {
       bell();
-    }
-
-    const cwd = process.cwd();
-    const baseTitle = isHomePath(cwd)
-      ? "R. Daneel Olivaw"
-      : buildNormalTitle(cwd);
-
-    // Flash the "!" marker (suppress for rate-limit errors)
-    if (!hasRateLimitError) {
+      const cwd = process.cwd();
+      const baseTitle = isHomePath(cwd) ? "R. Daneel Olivaw" : buildNormalTitle(cwd);
       setTitle(`! ${baseTitle}`);
-
-      // Remove the "!" after 30 seconds
       clearFlashTimer = setTimeout(() => {
         setTitle(baseTitle);
         clearFlashTimer = null;
