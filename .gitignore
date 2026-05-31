@@ -6,6 +6,7 @@ node_modules/
 .araya/telemetry/
 .araya/approvals/
 .araya/memory/
+.araya/worktrees/
 runtime/
 *.pyc
 __pycache__/

@@ -11,5 +11,6 @@ export { PiAdapter } from "./adapters/pi";
 export { MockAdapter } from "./adapters/mock";
 export { resolveAdapter } from "./adapters/factory";
 export { ToolRegistry, ToolResult } from "./tools/registry";
+export { WorktreeSandboxManager } from "./sandbox/worktree";
 export * from "./types";
 
