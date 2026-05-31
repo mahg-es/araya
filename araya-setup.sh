@@ -57,24 +57,15 @@ fi
 
 # Notifier
 if [ -f "$CANONICAL/extensions/araya-notifier.ts" ]; then
-  if [ "$FORCE" = true ]; then
-    rm -f "$EXT_DIR/araya-notifier.ts" 2>/dev/null || true
-  fi
-  if [ -e "$EXT_DIR/araya-notifier.ts" ]; then
-    echo "  [SKIP] notifier (exists)"
-  else
-    ln -sf "$CANONICAL/extensions/araya-notifier.ts" "$EXT_DIR/araya-notifier.ts"
-    echo "  [OK] notifier installed"
-  fi
+  rm -f "$EXT_DIR/araya-notifier.ts" 2>/dev/null || true
+  ln -sf "$CANONICAL/extensions/araya-notifier.ts" "$EXT_DIR/araya-notifier.ts"
+  echo "  [OK] notifier installed"
 fi
 
-# araya.yaml
-if [ "$FORCE" = true ] || [ ! -f "$EXT_DIR/araya.yaml" ]; then
-  cp "$CANONICAL/araya.yaml" "$EXT_DIR/araya.yaml"
-  echo "  [OK] araya.yaml installed"
-else
-  echo "  [SKIP] araya.yaml (exists)"
-fi
+# araya.yaml — always symlink, never copy
+rm -f "$EXT_DIR/araya.yaml" 2>/dev/null || true
+ln -sf "$CANONICAL/araya.yaml" "$EXT_DIR/araya.yaml"
+echo "  [OK] araya.yaml linked"
 
 # --- Agents ---
 echo ""

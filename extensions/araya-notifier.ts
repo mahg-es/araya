@@ -71,17 +71,14 @@ function getArayaVersion(cwd: string): string | null {
 }
 
 export default function (pi: ExtensionAPI) {
-  pi.on("session_start", async (_event, ctx) => {
+  pi.on("session_start", async (_event, _ctx) => {
     const cwd = process.cwd();
     if (isHomePath(cwd)) {
       setTitle("R. Daneel Olivaw");
     } else {
-      setTitle(buildNormalTitle(cwd));
-    }
-    // ARAYA version in footer — no delay, no try/catch
-    const version = getArayaVersion(cwd);
-    if (version) {
-      ctx.ui.setStatus("araya-version", `ARAYA v${version}`);
+      const baseTitle = buildNormalTitle(cwd);
+      const version = getArayaVersion(cwd);
+      setTitle(version ? `${baseTitle}  |  ARAYA v${version}` : baseTitle);
     }
   });
 

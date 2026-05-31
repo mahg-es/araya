@@ -89,6 +89,17 @@ function loadPersonality(root: string, agentName: string): string {
   return `You are ${agentName}, a member of the ARAYA DevOps team.`;
 }
 
+function readLiveVersion(): string {
+  try {
+    const root = findArayaRoot();
+    const yamlPath = resolve(root, "araya.yaml");
+    const content = readFileSync(yamlPath, "utf-8");
+    const match = content.match(/^version:\s*(.+)$/m);
+    if (match) return match[1].trim();
+  } catch { /* fall through */ }
+  return "0.0.0";
+}
+
 function buildAgentPrompt(
   config: ArayaV2Config,
   agentName: string,
@@ -629,7 +640,7 @@ export default function (pi: ExtensionAPI) {
         if (route === "inline") {
           // Inline commands — handle directly
           if (firstWord === "version") {
-            const v = config.version || "0.7.3";
+            const v = readLiveVersion();
             const parts = v.split(".").map(Number);
             const rev = parts[1] || 0, hot = parts[2] || 0;
             const toMajor = 73 - rev;
@@ -638,7 +649,7 @@ export default function (pi: ExtensionAPI) {
               `## ARAYA v${v}\n\n` +
               `**MAJOR:** ${parts[0]} | **REVISION:** ${rev} | **HOTFIX:** ${hot}\n\n` +
               `**Path to 1.0.0:** ${toMajor} revisions + ${Math.max(0, toHotfix)} hotfixes remaining\n` +
-              `**Active:** 83 rules | 16 domains | 120 skills | 25 agents\n` +
+              `**Active:** 90 rules | 17 domains | 120 skills | 25 agents\n` +
               `**Rule:** 0.73.5 → 1.0.0 (MAHG Release Standard)`,
               "info"
             );
@@ -1651,7 +1662,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerCommand("araya:version", {
     description: "📌 Show ARAYA version and release path",
     handler: async (_args, ctx) => {
-      const v = config.version || "0.5.6";
+      const v = readLiveVersion();
       const parts = v.split(".").map(Number);
       var rev = parts[1] || 0;
       var hot = parts[2] || 0;
