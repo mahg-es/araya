@@ -1,4 +1,4 @@
-version: 0.9.1
+version: 0.9.2
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -258,8 +258,22 @@ agents:
     - api-integration
     - responsive
   teresa:
+    role: Chief Culinary Officer (CCO)
+    emoji: 👩‍🍳
+    model_tier: balanced
+    primary_provider: pi.dev
+    max_turns: 20
+    permissions:
+      can_write_code: false
+      can_merge_pr: false
+      can_approve_review: true
+    skills:
+    - uat-review
+    - token-efficiency
+    description: Board-level. Advisory. The Professor's mother-in-law.
+  clara:
     role: QA Engineer
-    emoji: 🧪
+    emoji: 🔍
     model_tier: balanced
     primary_provider: pi.dev
     max_turns: 30
@@ -274,9 +288,8 @@ agents:
     - coverage
     - tdd-generate
     - tdd-execute
-    - uat-review
-    - token-efficiency
     - uat-generate
+    - token-efficiency
   aisha:
     role: Backend Architect
     emoji: 🔷

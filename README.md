@@ -4,7 +4,7 @@
 </div>
 
 <p align="center">
-    <strong>25 specialized AI agents. 120 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
+    <strong>26 specialized AI agents. 120 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
 </p>
 
 <p align="center">
@@ -50,7 +50,7 @@ Solo development becomes **team development**. You are never alone:
 - 👑 **Manu** owns product direction, requirements, and acceptance criteria — The Data Professor's proxy
 - 👩‍💼 **Sonia** manages the project — PMO + workflow orchestration + governance
 - 🔧 **Valentina** builds the backend. 🎨 **Alejandra** builds the frontend.
-- 🧪 **Teresa** and **Priya** ensure quality. 🛡️ **Diana** guards security.
+- 🧪 **Clara** and **Priya** ensure quality. 🛡️ **Diana** guards security.
 - 💰 **Lidia** validates profitability methodology. ☁️ **Junia** architects data platforms.
 - 🧠 **María** deploys local LLMs. 📚 **Priscila** writes the documentation.
 - *And 13 more specialists across every domain.*
@@ -320,7 +320,8 @@ cd araya
 
 | Agent | Role | Tier | Can Write | Skills |
 |-------|------|------|-----------|--------|
-| **Teresa** | QA Engineer | balanced | ✅ | unit-test, integration-test, test-case, regression, coverage, tdd-generate, tdd-execute |
+| **Teresa** | Chief Culinary Officer (CCO) | balanced | ❌ | uat-review, token-efficiency |
+| **Clara** | QA Engineer | balanced | ✅ | unit-test, integration-test, test-case, regression, coverage, tdd-generate, tdd-execute, uat-generate, token-efficiency |
 | **Priya** | QA Lead | balanced | ❌ | performance-test, e2e-strategy, cicd-quality |
 
 ### 🖥 Infrastructure
