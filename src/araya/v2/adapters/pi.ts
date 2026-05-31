@@ -1,4 +1,4 @@
-import type { ArayaExecutionAdapter } from "../adapter";
+import type { ArayaExecutionAdapter, ExecutionEvent, HostCapabilities } from "../adapter";
 import type { StructuredOutput, RunConfig } from "../types";
 
 function findArayaRoot(startDir: string): string {
@@ -27,8 +27,20 @@ export class PiAdapter implements ArayaExecutionAdapter {
     agentName: string,
     task: string,
     runConfig: RunConfig,
-    delegationDepth: number = 0
+    delegationDepth: number = 0,
+    systemPrompt?: string,
+    skills?: string[],
+    modelTier?: string,
+    onEvent?: (event: ExecutionEvent) => void
   ): Promise<StructuredOutput> {
+    if (onEvent) {
+      onEvent({
+        type: "log",
+        agent: agentName,
+        payload: { message: `Executing subagent via PiAdapter: ${agentName}` }
+      });
+    }
+
     // If the host pi API is available and supports callTool, attempt to use the subagent tool
     if (this.pi && typeof this.pi.callTool === "function") {
       try {
@@ -46,7 +58,24 @@ export class PiAdapter implements ArayaExecutionAdapter {
       }
     }
 
-    return this.spawnPiProcess(agentName, task, runConfig, delegationDepth);
+    return this.spawnPiProcess(agentName, task, runConfig, delegationDepth, systemPrompt);
+  }
+
+  async requestApproval(action: string, reason: string): Promise<boolean> {
+    if (this.pi && typeof this.pi.confirm === "function") {
+      return this.pi.confirm(`Approve action: ${action}`, reason);
+    }
+    console.log(`[PiAdapter] Automatically approving action: ${action} (${reason})`);
+    return true;
+  }
+
+  getCapabilities(): HostCapabilities {
+    return {
+      hasBash: true,
+      hasFilesystem: true,
+      hasNetwork: true,
+      nativeToolUse: true,
+    };
   }
 
   private parseStructuredOutput(
@@ -66,7 +95,8 @@ export class PiAdapter implements ArayaExecutionAdapter {
     agentName: string,
     task: string,
     runConfig: RunConfig,
-    delegationDepth: number
+    delegationDepth: number,
+    systemPrompt?: string
   ): Promise<StructuredOutput> {
     const { spawn } = require("node:child_process");
     const { writeFileSync, unlinkSync, existsSync, readFileSync } = require("node:fs");
@@ -76,14 +106,16 @@ export class PiAdapter implements ArayaExecutionAdapter {
     const agent = this.config.agents?.[agentName];
     
     // Resolve personality system prompt
-    let personality = "";
-    try {
-      const root = findArayaRoot(process.cwd());
-      const path = join(root, "prompts", "agents", `${agentName}.md`);
-      if (existsSync(path)) {
-        personality = readFileSync(path, "utf-8");
-      }
-    } catch {}
+    let personality = systemPrompt || "";
+    if (!personality.trim()) {
+      try {
+        const root = findArayaRoot(process.cwd());
+        const path = join(root, "prompts", "agents", `${agentName}.md`);
+        if (existsSync(path)) {
+          personality = readFileSync(path, "utf-8");
+        }
+      } catch {}
+    }
 
     const args: string[] = ["--mode", "json", "-p", "--no-session"];
     

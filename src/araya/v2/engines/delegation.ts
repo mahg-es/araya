@@ -53,9 +53,28 @@ export class DelegationEngine {
     agentName: string,
     task: string,
     runConfig: RunConfig,
-    delegationDepth: number = 0
+    delegationDepth: number = 0,
+    onEvent?: (event: any) => void
   ): Promise<StructuredOutput> {
-    const output = await this.adapter.executeSubagent(agentName, task, runConfig, delegationDepth);
+    const agent = this.config.agents?.[agentName];
+    const skills = agent?.skills ?? [];
+    const modelTier = agent?.model_tier ?? "balanced";
+    
+    let systemPrompt = "";
+    try {
+      systemPrompt = loadPersonality(this.root, agentName);
+    } catch {}
+
+    const output = await this.adapter.executeSubagent(
+      agentName,
+      task,
+      runConfig,
+      delegationDepth,
+      systemPrompt,
+      skills,
+      modelTier,
+      onEvent
+    );
     this.storeOutput(output.run_id, agentName, output);
     return output;
   }

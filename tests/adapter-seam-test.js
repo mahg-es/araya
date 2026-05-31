@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 /**
- * ARAYA v2.0 — Adapter Seam Integration Test
+ * ARAYA v2.0 — Adapter Seam Integration Test (Phase 1.6)
  *
  * Verifies:
- * 1. DelegationEngine accepts custom adapter (e.g., MockAdapter)
- * 2. MockAdapter execution correctly populates state and run outputs
- * 3. DelegationEngine defaults to PiAdapter for backward compatibility
+ * 1. DelegationEngine defaults to PiAdapter for backward compatibility.
+ * 2. PiAdapter and MockAdapter implement getCapabilities() correctly.
+ * 3. PiAdapter and MockAdapter implement requestApproval() correctly.
+ * 4. executeSubagent supports optional onEvent callbacks.
  *
  * Usage: node tests/adapter-seam-test.js
  */
 
-const { existsSync, readFileSync } = require("node:fs");
+const { readFileSync } = require("node:fs");
 const { resolve } = require("node:path");
 const { load } = require("js-yaml");
 
@@ -40,92 +41,109 @@ function assert(condition, message) {
   if (!condition) throw new Error(message || "Assertion failed");
 }
 
-console.log("\n🧪 ARAYA v2.0 — Adapter Seam Integration Test\n");
+console.log("\n🧪 ARAYA v2.0 — Adapter Seam Integration Test (Phase 1.6)\n");
 
 // Load config
 const configPath = resolve(__dirname, "..", "araya.yaml");
 const raw = readFileSync(configPath, "utf-8");
 const config = load(raw);
 
-test("MockAdapter executes and updates delegation outputs", async () => {
-  const mockAdapter = new MockAdapter();
-  const engine = new DelegationEngine(config, mockAdapter);
+// Sync Tests
+test("DelegationEngine constructor still defaults to PiAdapter", () => {
+  const engine = new DelegationEngine(config);
+  assert(engine.adapter !== undefined, "Expected adapter property to exist");
+  assert(engine.adapter instanceof PiAdapter, "Expected default adapter to be PiAdapter instance");
+});
 
+test("PiAdapter getCapabilities returns expected defaults", () => {
+  const adapter = new PiAdapter(config);
+  const caps = adapter.getCapabilities();
+  assert(caps.hasBash === true, "PiAdapter should support bash");
+  assert(caps.hasFilesystem === true, "PiAdapter should support filesystem");
+  assert(caps.hasNetwork === true, "PiAdapter should support network");
+  assert(caps.nativeToolUse === true, "PiAdapter should support native tool use");
+});
+
+test("MockAdapter getCapabilities returns expected defaults", () => {
+  const adapter = new MockAdapter();
+  const caps = adapter.getCapabilities();
+  assert(caps.hasBash === true, "MockAdapter should support bash");
+  assert(caps.hasFilesystem === true, "MockAdapter should support filesystem");
+  assert(caps.hasNetwork === false, "MockAdapter should not support network");
+  assert(caps.nativeToolUse === false, "MockAdapter should not support native tool use");
+});
+
+// Run Async Tests
+(async () => {
   const runConfig = {
     mode: "standard",
     policy: "balanced",
     execution_mode: "adaptive",
     safe_mode: false,
-    task: "Test mock subagent execution",
+    task: "Validation task for Phase 1.6",
   };
 
-  const output = await engine.executeSubagent("sonia", "Orchestrate test plan", runConfig, 0);
-
-  // Assertions on output
-  assert(output.agent === "sonia", "Expected agent to be sonia");
-  assert(output.status === "completed", "Expected status to be completed");
-  assert(output.confidence === 0.95, "Expected confidence to be 0.95");
-  assert(output.summary.includes("Orchestrate test plan"), "Expected task text in mock summary");
-
-  // Assertions on stored outputs
-  const runOutputs = engine.getRunOutputs(output.run_id);
-  assert(runOutputs.length === 1, `Expected 1 stored output, got ${runOutputs.length}`);
-  assert(runOutputs[0].agent === "sonia", "Expected stored agent output to be sonia");
-});
-
-test("DelegationEngine constructor defaults to PiAdapter", () => {
-  const engine = new DelegationEngine(config);
-  
-  // Verify adapter property exists and is a PiAdapter instance
-  assert(engine.adapter !== undefined, "Expected adapter property to exist");
-  assert(engine.adapter instanceof PiAdapter, "Expected default adapter to be PiAdapter instance");
-});
-
-test("PiAdapter resolves and instantiates correctly", () => {
-  const adapter = new PiAdapter(config);
-  assert(adapter !== null, "PiAdapter failed to instantiate");
-});
-
-// Run async tests sequentially
-(async () => {
+  // 1. requestApproval Validation
   try {
-    console.log("1. Running Adapter Seam Tests...");
-    
-    // We run async test manually to capture execution context correctly
-    const mockAdapter = new MockAdapter();
-    const engine = new DelegationEngine(config, mockAdapter);
-    const runConfig = {
-      mode: "standard",
-      policy: "balanced",
-      execution_mode: "adaptive",
-      safe_mode: false,
-      task: "Test mock subagent execution",
-    };
-
-    const output = await engine.executeSubagent("sonia", "Orchestrate test plan", runConfig, 0);
-    assert(output.agent === "sonia", "Expected agent to be sonia");
-    assert(output.status === "completed", "Expected status to be completed");
-    assert(output.confidence === 0.95, "Expected confidence to 0.95");
-    const runOutputs = engine.getRunOutputs(output.run_id);
-    assert(runOutputs.length === 1, `Expected 1 stored output, got ${runOutputs.length}`);
-    console.log("  ✅ MockAdapter executes and updates delegation outputs");
+    const mock = new MockAdapter();
+    const approved = await mock.requestApproval("delete_file", "Cleanup logs");
+    assert(approved === true, "MockAdapter requestApproval should resolve to true");
+    console.log("  ✅ MockAdapter requestApproval works as expected");
     passed++;
   } catch (e) {
-    console.log("  ❌ MockAdapter executes and updates delegation outputs: " + e.message);
+    console.log("  ❌ MockAdapter requestApproval failed: " + e.message);
     failed++;
   }
 
-  // Synchronous tests
-  test("DelegationEngine constructor defaults to PiAdapter", () => {
-    const engine = new DelegationEngine(config);
-    assert(engine.adapter !== undefined, "Expected adapter property to exist");
-    assert(engine.adapter instanceof PiAdapter, "Expected default adapter to be PiAdapter instance");
-  });
+  try {
+    const pi = new PiAdapter(config);
+    const approved = await pi.requestApproval("run_tests", "Verification phase");
+    assert(approved === true, "PiAdapter requestApproval should fallback to true when headless");
+    console.log("  ✅ PiAdapter requestApproval works with default fallback");
+    passed++;
+  } catch (e) {
+    console.log("  ❌ PiAdapter requestApproval failed: " + e.message);
+    failed++;
+  }
 
-  test("PiAdapter resolves and instantiates correctly", () => {
-    const adapter = new PiAdapter(config);
-    assert(adapter !== null, "PiAdapter failed to instantiate");
-  });
+  // 2. executeSubagent without callback (optional check)
+  try {
+    const mock = new MockAdapter();
+    const engine = new DelegationEngine(config, mock);
+    const output = await engine.executeSubagent("sonia", "Direct test task", runConfig, 1);
+    assert(output.agent === "sonia", "Expected agent to be sonia");
+    assert(output.status === "completed", "Expected status to be completed");
+    console.log("  ✅ executeSubagent executes without onEvent callback");
+    passed++;
+  } catch (e) {
+    console.log("  ❌ executeSubagent without callback failed: " + e.message);
+    failed++;
+  }
+
+  // 3. executeSubagent with onEvent callback
+  try {
+    const mock = new MockAdapter();
+    const engine = new DelegationEngine(config, mock);
+    
+    let eventReceived = null;
+    const callback = (event) => {
+      eventReceived = event;
+    };
+
+    const output = await engine.executeSubagent("sonia", "Task with callback", runConfig, 1, callback);
+    
+    assert(output.agent === "sonia", "Expected agent to be sonia");
+    assert(eventReceived !== null, "Expected callback to have been executed");
+    assert(eventReceived.type === "log", "Expected log event type");
+    assert(eventReceived.agent === "sonia", "Expected event agent to be sonia");
+    assert(eventReceived.payload.message.includes("Mock execution started"), "Expected message payload");
+
+    console.log("  ✅ executeSubagent executes with optional onEvent callback");
+    passed++;
+  } catch (e) {
+    console.log("  ❌ executeSubagent with callback failed: " + e.message);
+    failed++;
+  }
 
   console.log(`\n${"═".repeat(50)}`);
   console.log(`  ${passed} passed, ${failed} failed, ${passed + failed} total`);

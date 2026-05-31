@@ -1,4 +1,4 @@
-import type { ArayaExecutionAdapter } from "../adapter";
+import type { ArayaExecutionAdapter, ExecutionEvent, HostCapabilities } from "../adapter";
 import type { StructuredOutput, RunConfig } from "../types";
 
 export class MockAdapter implements ArayaExecutionAdapter {
@@ -6,8 +6,20 @@ export class MockAdapter implements ArayaExecutionAdapter {
     agentName: string,
     task: string,
     runConfig: RunConfig,
-    delegationDepth: number = 0
+    delegationDepth: number = 0,
+    systemPrompt?: string,
+    skills?: string[],
+    modelTier?: string,
+    onEvent?: (event: ExecutionEvent) => void
   ): Promise<StructuredOutput> {
+    if (onEvent) {
+      onEvent({
+        type: "log",
+        agent: agentName,
+        payload: { message: `Mock execution started for ${agentName}` }
+      });
+    }
+
     return {
       run_id: "mock-run-id",
       trace_id: "mock-trace-id",
@@ -55,6 +67,19 @@ export class MockAdapter implements ArayaExecutionAdapter {
       summary: `Mock execution of ${agentName} for task: ${task}`,
       next_phase: "done",
       capabilities_used: [],
+    };
+  }
+
+  async requestApproval(action: string, reason: string): Promise<boolean> {
+    return true;
+  }
+
+  getCapabilities(): HostCapabilities {
+    return {
+      hasBash: true,
+      hasFilesystem: true,
+      hasNetwork: false,
+      nativeToolUse: false,
     };
   }
 }
