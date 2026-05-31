@@ -12,5 +12,6 @@ export { MockAdapter } from "./adapters/mock";
 export { resolveAdapter } from "./adapters/factory";
 export { ToolRegistry, ToolResult } from "./tools/registry";
 export { WorktreeSandboxManager } from "./sandbox/worktree";
+export { ProviderRegistry } from "./providers/registry";
 export * from "./types";
 
