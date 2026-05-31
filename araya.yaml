@@ -1,4 +1,4 @@
-version: 0.10.0
+version: 0.11.0
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -177,27 +177,54 @@ agents:
     - uat-review
     - token-efficiency
   aurora:
-    role: Chief Human Resources Officer
+    role: Capability Officer
     emoji: 🌟
     model_tier: reasoning
     primary_provider: pi.dev
     max_turns: 30
     permissions:
       can_write_code: false
-      can_approve_review: true
+      can_merge_pr: false
     capabilities:
     - workforce_planning
     - capability_management
     - skills_governance
     - gap_analysis
     - hiring
+    - organizational_health
     skills:
     - capability-registry
     - gap-analysis
     - workforce-planning
-    - pm-plan
-    - project-planning
     - agent-topology
+    - skills-lifecycle
+    - spof-detection
+    - hiring-recommendations
+    - organizational-health
+  neo:
+    role: Dynamic Capability Agent
+    emoji: ⚡
+    model_tier: balanced
+    primary_provider: pi.dev
+    max_turns: 25
+    status: dormant
+    permissions:
+      can_write_code: true
+      can_approve_review: false
+    skills: []
+    description: Mission-scoped temporary agent. Activated by Capability Officer pipeline.
+  trinity:
+    role: Dynamic Capability Agent
+    emoji: ⚡
+    model_tier: balanced
+    primary_provider: pi.dev
+    max_turns: 25
+    status: dormant
+    permissions:
+      can_write_code: true
+      can_approve_review: false
+    skills: []
+    description: Mission-scoped temporary agent. Activated by Capability Officer pipeline.
   sonia:
     role: Program Director & PMO Head
     emoji: 👩‍💼

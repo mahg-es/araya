@@ -4,7 +4,7 @@
 </div>
 
 <p align="center">
-    <strong>26 specialized AI agents. 120 skills. 12 domains. One pi session. Solo development becomes team development.</strong>
+    <strong>28 agents (26 active + 2 dormant). 120 skills. 12 domains. One pi session.</strong>
 </p>
 
 <p align="center">
@@ -293,10 +293,12 @@ cd araya
 | Agent | Role | Tier | Can Write | Skills |
 |-------|------|------|-----------|--------|
 | **Manu** | Product Owner (The Data Professor's proxy) | reasoning | ✍️ docs | sdd-vision, sdd-requirements, test-case, po-gap-questionnaire, definition-of-done |
-| **Aurora** | Chief Human Resources Officer | reasoning | ❌ | capability-registry, gap-analysis, workforce-planning, pm-plan |
+| **Aurora** | Capability Officer | reasoning | ❌ | capability-registry, gap-analysis, workforce-planning, agent-topology, skills-lifecycle, spof-detection, hiring-recommendations, organizational-health |
 | **Sonia** | Program Director & PMO Head | reasoning | ✍️ docs | pm-plan, pm-dependencies, pm-risk, pm-status, project-planning, drr-create, iar-generate, cr-generate |
 | **Elena** | Scrum Master + PM Auditor | balanced | ❌ | daily-standup, sprint-planning, retrospective, impediment, velocity, definition-of-done |
 | **Diana** | Cybersecurity Specialist | reasoning | ❌ | threat-model, secure-arch, secure-code, pentest, compliance, secrets |
+| **Neo** | Dynamic Capability Agent (dormant) | balanced | ✅ | (mission-assigned) |
+| **Trinity** | Dynamic Capability Agent (dormant) | balanced | ✅ | (mission-assigned) |
 
 ### 🏗 Architecture
 
@@ -442,7 +444,7 @@ ARAYA
 ├── Circuit Breaker Engine (failure thresholds, retry limits)
 ├── Delegation Engine (subagent spawning with isolated contexts)
 ├── DependencyAnalyzer (DAG-aware phase optimization)
-└── 26 Specialized Agents across 12 domains
+└── 28 Agents across 12 domains (26 active + 2 dormant)
 ```
 
 ### Governance Pipeline
@@ -473,7 +475,7 @@ Every artifact is traceable. Orphan detection via `/araya trace --validate`. Ful
 ### Constitutional Governance
 
 ```
-The Constitution — 100 rules, 4 types, 18 domains
+The Constitution — 167 rules, 4 types, 26 domains
 ```
 
 ARAYA is governed by a constitution — the highest authority below The Data Professor.
