@@ -62,13 +62,10 @@ if [ -f "$CANONICAL/extensions/araya-notifier.ts" ]; then
   echo "  [OK] notifier installed"
 fi
 
-# araya.yaml
-if [ "$FORCE" = true ] || [ ! -f "$EXT_DIR/araya.yaml" ]; then
-  cp "$CANONICAL/araya.yaml" "$EXT_DIR/araya.yaml"
-  echo "  [OK] araya.yaml installed"
-else
-  echo "  [SKIP] araya.yaml (exists)"
-fi
+# araya.yaml — always symlink, never copy
+rm -f "$EXT_DIR/araya.yaml" 2>/dev/null || true
+ln -sf "$CANONICAL/araya.yaml" "$EXT_DIR/araya.yaml"
+echo "  [OK] araya.yaml linked"
 
 # --- Agents ---
 echo ""
