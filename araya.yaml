@@ -1,4 +1,4 @@
-version: 0.9.3
+version: 0.10.0
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -199,7 +199,7 @@ agents:
     - project-planning
     - agent-topology
   sonia:
-    role: PM Head Orchestrator
+    role: Program Director & PMO Head
     emoji: 👩‍💼
     model_tier: reasoning
     reasoning_effort: high
@@ -215,9 +215,9 @@ agents:
     - governance
     - reporting
     - risk_management
+    - organizational_governance
     skills:
     - pm-plan
-    - pm-decompose
     - pm-dependencies
     - pm-risk
     - pm-status
@@ -225,8 +225,6 @@ agents:
     - drr-create
     - iar-generate
     - cr-generate
-    - ai-routing
-    - autonomous-execution
   valentina:
     role: Backend Developer
     emoji: 🔧

@@ -73,12 +73,12 @@ and governance are non-negotiable.
 
 ## Summary
 
-- **Total Rules:** 100
-- **Obligations:** 83
+- **Total Rules:** 147
+- **Obligations:** 127
 - **Prohibitions:** 9
-- **Permissions:** 4
-- **Escalations:** 4
-- **Domains:** 18
+- **Permissions:** 7
+- **Escalations:** 5
+- **Domains:** 24
 
 ## Violation Handling
 
@@ -258,3 +258,106 @@ amendments but may not enact them.
 | ART-008 | OBLIGATION | Compact must preserve context only — no repository restructuring |
 | ART-009 | OBLIGATION | Handoff must preserve project status only — no repository restructuring |
 | ART-010 | OBLIGATION | Archive is year-partitioned. No active artifact in archive. No archived artifact outside archive. |
+
+### Workstream Model (WSM)
+
+| ID | Type | Rule |
+|----|------|------|
+| WSM-001 | OBLIGATION | ARAYA SHALL operate through 10 permanent workstreams: Product Direction, Delivery Management, Security & Identity, Platform Engineering, Architecture, Software Engineering, Quality Engineering, Knowledge & Learning, Business Operations, People & Process |
+| WSM-002 | OBLIGATION | Every workstream SHALL have one accountable lead. Accountability SHALL NOT be shared. |
+| WSM-003 | OBLIGATION | Workstream boundaries SHALL NOT overlap. No domain SHALL belong to two workstreams. |
+| WSM-004 | OBLIGATION | Workstream leads SHALL report program-level status, risks, and dependencies to the Program Director |
+| WSM-005 | OBLIGATION | Workstream capacity and capability SHALL be reviewed quarterly by People & Process |
+| WSM-006 | OBLIGATION | Every workstream SHALL maintain a Workstream Charter containing: mission, scope, standards, active backlog, roadmap, risks, technical debt register, governance debt register |
+| WSM-007 | OBLIGATION | Every workstream SHALL conduct a health review at least quarterly, assessing: domain activity, backlog health, risk status, debt status, capability coverage, SPOF risk |
+| WSM-008 | OBLIGATION | Workstream health reviews SHALL produce a Health Score (0–100) based on: domain activity (25%), backlog health (20%), risk management (20%), debt management (15%), capability coverage (10%), governance compliance (10%) |
+| WSM-009 | OBLIGATION | Workstreams with Health Score below 60 for two consecutive quarters SHALL trigger a governance audit by the Program Director |
+| WSM-010 | OBLIGATION | Workstream leads SHALL report Health Score and key risks to the Program Director quarterly |
+
+### Review Model (REV)
+
+| ID | Type | Rule |
+|----|------|------|
+| REV-001 | OBLIGATION | Every material capability SHALL have defined blocker reviewers per the Mandatory Review Matrix |
+| REV-002 | OBLIGATION | Blocker reviewers MUST approve before UAT. No capability SHALL proceed to UAT with unresolved blocker findings. |
+| REV-003 | OBLIGATION | Required reviewers MUST be notified before implementation begins |
+| REV-004 | OBLIGATION | Advisory reviewers MAY be consulted at the workstream lead's discretion |
+| REV-005 | OBLIGATION | The Mandatory Review Matrix SHALL be maintained as a living document — updated when new capabilities or domains emerge |
+
+### Escalation Model (ESC)
+
+| ID | Type | Rule |
+|----|------|------|
+| ESC-001 | OBLIGATION | Escalation SHALL follow the chain: Agent → Workstream Lead → Program Director → Product Owner → The Data Professor |
+| ESC-002 | OBLIGATION | Security escalations SHALL route directly to the Security & Identity workstream lead regardless of chain |
+| ESC-003 | OBLIGATION | Any agent MAY escalate a governance violation directly to the Program Director |
+| ESC-004 | OBLIGATION | The Program Director MAY block any delivery that violates constitutional governance |
+| ESC-005 | OBLIGATION | Escalations SHALL be documented with rationale, timestamp, and resolution |
+
+### Program Management (PMO)
+
+| ID | Type | Rule |
+|----|------|------|
+| PMO-001 | OBLIGATION | The Program Director SHALL own delivery governance across all ARAYA-governed projects |
+| PMO-002 | OBLIGATION | The Program Director SHALL maintain the organizational risk register, capacity plan, and cross-project dependency map |
+| PMO-003 | OBLIGATION | The Program Director SHALL define and enforce delivery standards (SDD, BDD, TDD, review, validation) |
+| PMO-004 | OBLIGATION | The Program Director SHALL report program health, velocity, and risks to the Product Owner and The Data Professor |
+| PMO-005 | PERMISSION | The Program Director MAY override sprint scope for governance compliance. The Product Owner MAY countermand with documented rationale. |
+| PMO-006 | PERMISSION | The Program Director MAY escalate any delivery directly to The Data Professor |
+| PMO-007 | OBLIGATION | The Program Director SHALL own organizational governance — the constitution, its interpretation, its enforcement, and its evolution |
+| PMO-008 | OBLIGATION | The Program Director SHALL conduct governance compliance reviews per workstream on a monthly cadence |
+| PMO-009 | OBLIGATION | The Program Director SHALL maintain the organizational metrics dashboard and escalate deteriorating metrics to the Product Owner |
+| PMO-010 | PERMISSION | The Program Director MAY propose constitutional amendments. Only The Data Professor MAY approve them. |
+| PMO-011 | PERMISSION | The Program Director MAY initiate a governance audit of any workstream at any time |
+| PMO-012 | OBLIGATION | The Program Director SHALL own the Mandatory Review Matrix — its maintenance, enforcement, and evolution |
+
+### Organizational Metrics (MET)
+
+| ID | Type | Rule |
+|----|------|------|
+| MET-001 | OBLIGATION | ARAYA SHALL maintain an Organizational Metrics Dashboard measuring: Domain Health Score, Governance Compliance, Review Compliance, UAT Escaped Defects, Production Escaped Defects, Architectural Drift, Security Debt, Documentation Debt, Cross-Workstream Participation, Unowned Domain Count |
+| MET-002 | OBLIGATION | Governance Compliance SHALL be measured as: (rules with automated enforcement / total rules) × 100 |
+| MET-003 | OBLIGATION | Review Compliance SHALL be measured as: (capabilities with blocker sign-off before UAT / total capabilities delivered) × 100 |
+| MET-004 | OBLIGATION | UAT Escaped Defects SHALL count findings discovered during UAT that should have been caught by blocker reviewers |
+| MET-005 | OBLIGATION | Production Escaped Defects SHALL count incidents after deployment that should have been caught by UAT |
+| MET-006 | OBLIGATION | Unowned Domain Count SHALL count critical domains without an assigned workstream lead |
+| MET-007 | OBLIGATION | Knowledge Concentration Risk SHALL be measured as: domains where a single agent holds >80% of institutional knowledge |
+| MET-008 | OBLIGATION | Metrics SHALL be reviewed monthly by the Program Director and quarterly by the Product Owner |
+| MET-009 | OBLIGATION | Metrics with deteriorating trends for two consecutive periods SHALL trigger a governance audit |
+
+### Risk Management (RSK)
+
+| ID | Type | Rule |
+|----|------|------|
+| RSK-001 | OBLIGATION | ARAYA SHALL maintain an Organizational Risk Register covering: domain risk, governance risk, dependency risk, knowledge concentration risk, single-point-of-failure risk, ownership gap risk, technical debt risk, security debt risk |
+| RSK-002 | OBLIGATION | Every workstream SHALL contribute its top 5 risks to the Organizational Risk Register quarterly |
+| RSK-003 | OBLIGATION | Every risk SHALL carry: severity (Critical/High/Medium/Low), likelihood (Certain/High/Medium/Low), impact description, mitigation plan, owner, review date |
+| RSK-004 | OBLIGATION | Critical risks SHALL be reviewed monthly. High risks SHALL be reviewed quarterly. |
+| RSK-005 | OBLIGATION | Single-point-of-failure risks — where one agent is the sole capable resource for a critical domain — SHALL be flagged as Critical and SHALL have a mitigation plan |
+| RSK-006 | OBLIGATION | Unowned domain risks SHALL be flagged as Critical and SHALL be escalated to the Product Owner immediately |
+
+### Delivery Governance (GOV)
+
+| ID | Type | Rule |
+|----|------|------|
+| GOV-005 | OBLIGATION | Delivery completion SHALL require: all acceptance criteria met, all blocker reviews signed off, test suite green, artifacts follow naming convention, artifacts carry timestamps, evidence committed to dev-mahg |
+| GOV-006 | OBLIGATION | UAT entry SHALL require: implementation complete, self-review complete, blocker reviews complete, test suite green, documentation updated |
+
+### Human Resources (HR)
+
+| ID | Type | Rule |
+|----|------|------|
+| HR-005 | OBLIGATION | Separation of duties SHALL be preserved: QA executor SHALL NOT approve deliveries, architect SHALL NOT implement own designs without review, security reviewer SHALL NOT review own code |
+
+### Engineering (ENG)
+
+| ID | Type | Rule |
+|----|------|------|
+| ENG-005 | OBLIGATION | Engineering work SHALL reference the Mandatory Review Matrix before implementation begins |
+| ENG-006 | OBLIGATION | Cross-workstream dependencies SHALL be mapped before parallel work begins on dependent capabilities |
+
+### Ambiguity (AMB)
+
+| ID | Type | Rule |
+|----|------|------|
+| AMB-002 | ESCALATION | If a workstream lead and a blocker reviewer disagree on a finding, the dispute SHALL escalate to the Program Director for resolution |

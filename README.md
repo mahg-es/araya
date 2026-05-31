@@ -48,7 +48,7 @@ Solo development becomes **team development**. You are never alone:
 > — **Manuel Alejandro Hernández Giuliani**, The Data Professor
 
 - 👑 **Manu** owns product direction, requirements, and acceptance criteria — The Data Professor's proxy
-- 👩‍💼 **Sonia** manages the project — PMO + workflow orchestration + governance
+- 👩‍💼 **Sonia** manages the organization — Program Director + PMO + governance authority
 - 🔧 **Valentina** builds the backend. 🎨 **Alejandra** builds the frontend.
 - 🧪 **Clara** and **Priya** ensure quality. 🛡️ **Diana** guards security.
 - 💰 **Lidia** validates profitability methodology. ☁️ **Junia** architects data platforms.
@@ -294,7 +294,7 @@ cd araya
 |-------|------|------|-----------|--------|
 | **Manu** | Product Owner (The Data Professor's proxy) | reasoning | ✍️ docs | sdd-vision, sdd-requirements, test-case, po-gap-questionnaire, definition-of-done |
 | **Aurora** | Chief Human Resources Officer | reasoning | ❌ | capability-registry, gap-analysis, workforce-planning, pm-plan |
-| **Sonia** | PM Head Orchestrator | reasoning | ✍️ docs | pm-plan, pm-decompose, pm-dependencies, pm-risk, pm-status, sprint-planning, definition-of-done |
+| **Sonia** | Program Director & PMO Head | reasoning | ✍️ docs | pm-plan, pm-dependencies, pm-risk, pm-status, project-planning, drr-create, iar-generate, cr-generate |
 | **Elena** | Scrum Master + PM Auditor | balanced | ❌ | daily-standup, sprint-planning, retrospective, impediment, velocity, definition-of-done |
 | **Diana** | Cybersecurity Specialist | reasoning | ❌ | threat-model, secure-arch, secure-code, pentest, compliance, secrets |
 
@@ -434,7 +434,7 @@ Creates a Delivery Review Report (DRR) for post-delivery feedback. Sonia classif
 ```
 ARAYA
 ├── Manu: Product Owner (pre-implementation + pre-delivery gates)
-├── Sonia: PM Head Orchestrator (PMO + workflow + governance)
+├── Sonia: Program Director & PMO Head (organizational governance)
 ├── Workflow Policy Engine (auto / conservative / balanced / aggressive)
 ├── Model Selection Engine (capability tiers: fast / balanced / reasoning)
 ├── Quality Gate Engine (7 validation gates per agent output)
