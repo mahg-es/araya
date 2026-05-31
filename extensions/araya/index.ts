@@ -233,7 +233,7 @@ export default function (pi: ExtensionAPI) {
     description: "🤖 ARAYA v2 — /araya | /araya run | /araya <agent> <task>",
     handler: async (args, ctx) => {
       if (!args || args.trim().length === 0) {
-        const lines = [`🤖 **ARAYA v${config.version}** — ${agentNames.length} agents ready`];
+        const lines = [`🤖 **ARAYA v${readLiveVersion()}** — ${agentNames.length} agents ready`];
         if (isV2) {
           const modes = config.delivery_modes
             ? Object.keys(config.delivery_modes).join(" | ")
@@ -315,7 +315,7 @@ export default function (pi: ExtensionAPI) {
         ];
 
         ctx.ui.notify(
-          `🤖 **ARAYA v${config.version}** — ${config.description}\n\n` +
+          `🤖 **ARAYA v${readLiveVersion()}** — ${config.description}\n\n` +
             `**COMMANDS**\n` +
             `  /araya                         concise summary\n` +
             `  /araya:status                  full agent roster\n` +
@@ -882,7 +882,7 @@ export default function (pi: ExtensionAPI) {
       ] : [];
 
       ctx.ui.notify(
-        `🤖 **ARAYA v${config.version}** — ${agentNames.length} agents active\n\n` +
+        `🤖 **ARAYA v${readLiveVersion()}** — ${agentNames.length} agents active\n\n` +
           lines.join("\n") +
           v2Info.join("\n"),
         "info"
@@ -1781,7 +1781,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerCommand("araya:release-check", {
     description: "✅ Validate version compliance with MAHG Release Standard",
     handler: async (_args, ctx) => {
-      var v = config.version || "0.5.6";
+      var v = readLiveVersion();
       var parts = v.split(".").map(Number);
       var major = parts[0], rev = parts[1] || 0, hot = parts[2] || 0;
       var compliant = true;
@@ -1984,7 +1984,7 @@ export default function (pi: ExtensionAPI) {
 
   if (process.env.ARAYA_DEBUG) {
     console.error(
-      `[ARAYA v${config.version}] Loaded ${agentNames.length} agents from ${root}/araya.yaml`
+      `[ARAYA v${readLiveVersion()}] Loaded ${agentNames.length} agents from ${root}/araya.yaml`
     );
   }
 }
