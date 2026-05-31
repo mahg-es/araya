@@ -48,12 +48,14 @@ Solo development becomes **team development**. You are never alone:
 > — **Manuel Alejandro Hernández Giuliani**, The Data Professor
 
 - 👑 **Manu** owns product direction, requirements, and acceptance criteria — The Data Professor's proxy
-- 👩‍💼 **Sonia** manages the organization — Program Director + PMO + governance authority
+- 👩‍💼 **Sonia** governs delivery — Program Director + organizational authority
+- 🌟 **Aurora** manages organizational capability — workforce, skills, hiring
+- 🤖 **Daneel** verifies reality — independent audit and repository truth
 - 🔧 **Valentina** builds the backend. 🎨 **Alejandra** builds the frontend.
 - 🧪 **Clara** and **Priya** ensure quality. 🛡️ **Diana** guards security.
 - 💰 **Lidia** validates profitability methodology. ☁️ **Junia** architects data platforms.
 - 🧠 **María** deploys local LLMs. 📚 **Priscila** writes the documentation.
-- *And 13 more specialists across every domain.*
+- *And 18 more specialists across every domain.*
 
 ### How It Works
 
@@ -435,8 +437,10 @@ Creates a Delivery Review Report (DRR) for post-delivery feedback. Sonia classif
 
 ```
 ARAYA
-├── Manu: Product Owner (pre-implementation + pre-delivery gates)
-├── Sonia: Program Director & PMO Head (organizational governance)
+├── Manu: Product Authority (pre-implementation + pre-delivery gates)
+├── Sonia: Delivery Authority (organizational governance)
+├── Aurora: Capability Authority (workforce, skills, hiring)
+├── Daneel: Reality Authority (independent verification)
 ├── Workflow Policy Engine (auto / conservative / balanced / aggressive)
 ├── Model Selection Engine (capability tiers: fast / balanced / reasoning)
 ├── Quality Gate Engine (7 validation gates per agent output)
