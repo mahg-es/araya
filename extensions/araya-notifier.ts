@@ -72,23 +72,17 @@ function getArayaVersion(cwd: string): string | null {
 
 export default function (pi: ExtensionAPI) {
   pi.on("session_start", async (_event, ctx) => {
-    setTimeout(() => {
-      const cwd = process.cwd();
-      if (isHomePath(cwd)) {
-        setTitle("R. Daneel Olivaw");
-      } else {
-        setTitle(buildNormalTitle(cwd));
-      }
-      // Set footer with ARAYA version — walk up tree to find araya.yaml
-      const version = getArayaVersion(cwd);
-      if (version) {
-        // Primary: pi status bar
-        try { ctx.ui.setStatus("araya-version", `ARAYA v${version}`); } catch { /* fall through */ }
-        // Fallback: append to terminal title so it's always visible
-        const currentTitle = isHomePath(cwd) ? "R. Daneel Olivaw" : buildNormalTitle(cwd);
-        setTitle(`${currentTitle}  |  ARAYA v${version}`);
-      }
-    }, 200);
+    const cwd = process.cwd();
+    if (isHomePath(cwd)) {
+      setTitle("R. Daneel Olivaw");
+    } else {
+      setTitle(buildNormalTitle(cwd));
+    }
+    // ARAYA version in footer — no delay, no try/catch
+    const version = getArayaVersion(cwd);
+    if (version) {
+      ctx.ui.setStatus("araya-version", `ARAYA v${version}`);
+    }
   });
 
   pi.on("agent_start", async (_event, _ctx) => {
