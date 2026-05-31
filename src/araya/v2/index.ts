@@ -13,5 +13,6 @@ export { resolveAdapter } from "./adapters/factory";
 export { ToolRegistry, ToolResult } from "./tools/registry";
 export { WorktreeSandboxManager } from "./sandbox/worktree";
 export { ProviderRegistry } from "./providers/registry";
+export { TerminalApiAdapter } from "./adapters/terminal-api";
 export * from "./types";
 
