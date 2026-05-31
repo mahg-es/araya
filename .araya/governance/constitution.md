@@ -73,11 +73,12 @@ and governance are non-negotiable.
 
 ## Summary
 
-- **Total Rules:** 83
-- **Obligations:** 66
+- **Total Rules:** 90
+- **Obligations:** 73
 - **Prohibitions:** 9
 - **Permissions:** 4
 - **Escalations:** 4
+- **Domains:** 17
 
 ## Violation Handling
 
@@ -230,3 +231,15 @@ amendments but may not enact them.
 | ID | Type | Rule |
 |----|------|------|
 | AMB-001 | ESCALATION | When a request contains inconsistent or conflicting values, requirements, dates, versions, ports, branch names, or acceptance criteria, the receiving agent must not infer intent. The agent must tag the request as INCONSISTENCY, raise its hand, and escalate to the superior agent in its chain of command. The superior agent takes leadership and resolves the inconsistency before any work proceeds. |
+
+### Organizational Excellence (ORG)
+
+| ID | Type | Rule |
+|----|------|------|
+| ORG-001 | OBLIGATION | Organizational excellence commands must be executable on ARAYA itself and on every ARAYA-governed project |
+| ORG-002 | OBLIGATION | Proactive risk and governance drift detection is mandatory before each planning cycle |
+| ORG-003 | OBLIGATION | Alignment verification between vision, requirements, architecture, and implementation must precede delivery approval |
+| ORG-004 | OBLIGATION | Competing objectives must be surfaced as tradeoffs with documented rationale — harmonize before executing |
+| ORG-005 | OBLIGATION | Discovery must precede execution — understand before implement |
+| ORG-006 | OBLIGATION | Collaborative review must be available for architecture, security, and delivery decisions |
+| ORG-007 | OBLIGATION | Institutional learning is mandatory — ARAYA must continuously improve agents, skills, governance, and processes |

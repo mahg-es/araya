@@ -241,6 +241,19 @@ cd araya
 | `/araya spec:init` | Initialize specification structure |
 | `/araya spec:list` | List active specifications and changes |
 
+### Organizational Excellence (Covey's 7 Habits)
+
+| Command | Description |
+|---------|-------------|
+| `/araya anticipate` | Proactive risk, drift, and debt detection — ORG-002 |
+| `/araya align` | Vision→implementation alignment verification — ORG-003 |
+| `/araya prioritize` | Most-important-outcomes focus and critical path — ORG-001 |
+| `/araya harmonize` | Tradeoff resolution with documented rationale — ORG-004 |
+| `/araya understand` | Discovery before execution — find ambiguity proactively (AMB-001) — ORG-005 |
+| `/araya roundtable` | Collaborative expert review leveraging collective intelligence — ORG-006 |
+| `/araya sharpen [--scope]` | Institutional learning and continuous improvement — ORG-007 |
+|  | `--scope organization\|governance\|skills\|agents\|architecture\|delivery` |
+
 ### Run Flags
 
 | Flag | Values | Description |
@@ -459,7 +472,7 @@ Every artifact is traceable. Orphan detection via `/araya trace --validate`. Ful
 ### Constitutional Governance
 
 ```
-The Constitution — 83 rules, 4 types, 16 domains
+The Constitution — 90 rules, 4 types, 17 domains
 ```
 
 ARAYA is governed by a constitution — the highest authority below The Data Professor.

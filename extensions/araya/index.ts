@@ -354,6 +354,16 @@ export default function (pi: ExtensionAPI) {
             `  /araya team risk               workforce risk analysis\n` +
             `  /araya team list               active team formations\n` +
             `\n` +
+            `**ORGANIZATIONAL EXCELLENCE** (Covey's 7 Habits)\n` +
+            `  /araya anticipate              risk, drift & debt detection (ORG-002)\n` +
+            `  /araya align                   vision→implementation alignment (ORG-003)\n` +
+            `  /araya prioritize             most-important-outcomes focus (ORG-001)\n` +
+            `  /araya harmonize              tradeoff resolution & rationale (ORG-004)\n` +
+            `  /araya understand             discovery before execution (ORG-005)\n` +
+            `  /araya roundtable             collaborative expert review (ORG-006)\n` +
+            `  /araya sharpen [scope]        institutional learning (ORG-007)\n` +
+            `     --scope organization|governance|skills|agents|architecture|delivery\n` +
+            `\n` +
             `**SPEC & INSTALL**\n` +
             `  /araya spec:init               initialize spec structure\n` +
             `  /araya spec:list               list active specifications\n` +
@@ -604,6 +614,14 @@ export default function (pi: ExtensionAPI) {
         "spec:init": "inline",
         "spec:list": "inline",
         "graph:prepare": "inline",
+        // Organizational Excellence (ORG-001 through ORG-007)
+        "anticipate": { agent: "sonia", task: "## Organizational Excellence: Anticipate\n\nProactively identify risks, governance drift, technical debt, architectural erosion, skill gaps, missing capabilities, and delivery blockers before they impact delivery.\n\nProduce: risk register, technical debt register, governance drift report, architectural drift report, recommended mitigations.\n\nSave to .araya/excellence/anticipate/" },
+        "align": { agent: "manu", task: "## Organizational Excellence: Align\n\nVerify alignment between vision, mission, objectives, PRDs, requirements, acceptance criteria, architecture, roadmap, and current implementation.\n\nProduce: alignment report, contradictions, missing requirements, traceability gaps.\n\nSave to .araya/excellence/align/" },
+        "prioritize": { agent: "sonia", task: "## Organizational Excellence: Prioritize\n\nReview backlog, roadmap, strategic objectives, critical path, business value, and technical dependencies. Ensure effort is focused on the most important outcomes.\n\nProduce: priority matrix, recommended sequencing, deferred work list, critical path analysis.\n\nSave to .araya/excellence/prioritize/" },
+        "harmonize": { agent: "manu", task: "## Organizational Excellence: Harmonize\n\nResolve conflicts between competing objectives — Speed vs Quality, Security vs Usability, Cost vs Capability, Governance vs Agility, Architecture vs Delivery.\n\nProduce: tradeoff analysis, decision recommendations, documented rationale.\n\nSave to .araya/excellence/harmonize/" },
+        "understand": { agent: "manu", task: "## Organizational Excellence: Understand\n\nForce discovery before execution. Actively search for missing requirements, ambiguities, contradictions, hidden assumptions, and unvalidated decisions.\n\nThis command is the proactive form of AMB-001 — find ambiguity before it blocks delivery.\n\nProduce: clarification questionnaire, gap analysis, assumption register.\n\nSave to .araya/excellence/understand/" },
+        "roundtable": { agent: "sonia", task: "## Organizational Excellence: Roundtable\n\nAssemble relevant specialists for collaborative analysis. Leverage collective intelligence rather than isolated agent decisions.\n\nProduce: consolidated recommendations, consensus areas, minority opinions, escalations.\n\nSave to .araya/excellence/roundtable/" },
+        "sharpen": { agent: "esteban", task: "## Organizational Excellence: Sharpen\n\nInstitutional learning and continuous improvement. Review constitution, canonical context, ADRs, agent definitions, skills catalog, governance framework, SDLC framework, delivery processes, quality standards, security standards, and industry best practices.\n\nThis is ARAYA's organizational self-improvement mechanism — the 'Sharpen the Saw' habit.\n\nScoped review (use rest of command as scope): ${rest || 'organization'}\n\nProduce: new skills proposed, skills to retire, agent gaps, missing roles, governance improvements, architecture improvements, training recommendations, process improvements.\n\nSave to .araya/excellence/sharpen/" },
       };
 
       const route = SUBCOMMAND_ROUTES[firstWord];
