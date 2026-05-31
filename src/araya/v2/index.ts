@@ -10,5 +10,6 @@ export { ArayaExecutionAdapter, ExecutionEvent, HostCapabilities } from "./adapt
 export { PiAdapter } from "./adapters/pi";
 export { MockAdapter } from "./adapters/mock";
 export { resolveAdapter } from "./adapters/factory";
+export { ToolRegistry, ToolResult } from "./tools/registry";
 export * from "./types";
 
