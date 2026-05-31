@@ -101,3 +101,6 @@ When ARAYA executes a task for an agent (e.g. Sonia):
 
 * **Preserving pi.dev**: If `providers` is absent in `araya.yaml` or a provider is not specified, ARAYA falls back to a default hardcoded `pi` config, mapping `pi.dev` with standard default capabilities.
 * **Versioning**: Additions are non-intrusive and do not require changing the canonical ARAYA version `0.11.0`.
+
+<!-- Hygiene verified: 2026-05-31 23:22 UTC -->
+
