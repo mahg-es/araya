@@ -1,6 +1,7 @@
 ---
 name: etl-orchestration
 description: "Design and implement ETL orchestration — Airflow, Dagster, or Prefect workflows"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

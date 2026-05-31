@@ -36,6 +36,7 @@ and governance are non-negotiable.
 | DOC-002 | OBLIGATION | Commands must be documented |
 | DOC-003 | OBLIGATION | Examples must be maintained |
 | DOC-004 | OBLIGATION | Mermaid and SVG must remain synchronized |
+| DOC-005 | OBLIGATION | Every document must include a human-friendly timestamp with date and time, not date alone. ISO 8601 with timezone offset is canonical: `YYYY-MM-DD HH:MM:SS ±HH:MM`. Acceptable shorthand in collaborative contexts: `YYYY-MM-DD HH:MM TZ`. A date without a timestamp is ambiguous. |
 
 ### Security (SEC)
 
@@ -61,6 +62,7 @@ and governance are non-negotiable.
 | ENG-001 | OBLIGATION | Implementation follows approved specifications |
 | ENG-002 | OBLIGATION | Traceability must remain valid |
 | ENG-003 | PROHIBITION | Orphan artifacts are prohibited |
+| ENG-004 | OBLIGATION | All code must conform to the Engineering Excellence & Software Craftsmanship Standard (`.araya/governance/standards/engineering-excellence-standards.md`). Unix philosophy, component reuse, security-at-all-layers, and composition over duplication are mandatory. |
 
 ### Financial (FIN)
 
@@ -71,11 +73,11 @@ and governance are non-negotiable.
 
 ## Summary
 
-- **Total Rules:** 17
-- **Obligations:** 10
-- **Prohibitions:** 3
-- **Permissions:** 1
-- **Escalations:** 3
+- **Total Rules:** 83
+- **Obligations:** 66
+- **Prohibitions:** 9
+- **Permissions:** 4
+- **Escalations:** 4
 
 ## Violation Handling
 
@@ -222,3 +224,9 @@ amendments but may not enact them.
 | CMD-001 | OBLIGATION | No ARAYA command may be documented unless registered, executable, and verified |
 
 | CMD-002 | OBLIGATION | No command may be reported as operational unless executable, tested, and output validated — documentation alone is insufficient |
+
+### Ambiguity (AMB)
+
+| ID | Type | Rule |
+|----|------|------|
+| AMB-001 | ESCALATION | When a request contains inconsistent or conflicting values, requirements, dates, versions, ports, branch names, or acceptance criteria, the receiving agent must not infer intent. The agent must tag the request as INCONSISTENCY, raise its hand, and escalate to the superior agent in its chain of command. The superior agent takes leadership and resolves the inconsistency before any work proceeds. |

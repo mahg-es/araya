@@ -1,6 +1,7 @@
 ---
 name: api-design
 description: "Design REST and GraphQL APIs following OpenAPI 3.1 standards. Produce complete"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

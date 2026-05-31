@@ -1,6 +1,7 @@
 ---
 name: api-integration
 description: "Connect frontend to backend — type-safe API clients, request/response handling,"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: form-design
 description: "Design and implement accessible, validated forms with clear error states,"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: auth-middleware
 description: "Implement authentication and authorization middleware — JWT validation, role-based"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

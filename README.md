@@ -459,7 +459,7 @@ Every artifact is traceable. Orphan detection via `/araya trace --validate`. Ful
 ### Constitutional Governance
 
 ```
-The Constitution — 111 rules, 4 types, 14 domains
+The Constitution — 83 rules, 4 types, 16 domains
 ```
 
 ARAYA is governed by a constitution — the highest authority below The Data Professor.
@@ -541,7 +541,7 @@ Maximize useful work within available quotas — transparent for the entire pi e
 - **Auto-decomposition** at 8K tokens
 - Commands: `/araya budget-status`, `/araya optimize-task`, `/araya compress-context`, `/araya efficiency-report`
 
-### 108 Skills Across 12 Domains
+### 120 Skills Across 12 Domains
 
 From `definition-of-done` to `po-gap-questionnaire`, from `drr-create` to `cr-generate`, from `sdd-vision` to `whale-curve-analyze`, from `docker` to `llm-local-deploy`, from `threat-model` to `brand-compliance`.
 
