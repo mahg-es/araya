@@ -1,6 +1,7 @@
 ---
 name: component
 description: "Create reusable, accessible, and well-typed UI components following design system"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

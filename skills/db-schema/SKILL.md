@@ -1,6 +1,7 @@
 ---
 name: db-schema
 description: "Design database schemas — tables, columns, types, constraints, indexes, and"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

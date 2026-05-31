@@ -1,6 +1,7 @@
 ---
 name: error-handling
 description: "Design and implement standardized error handling patterns — consistent error"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

@@ -62,6 +62,7 @@ and governance are non-negotiable.
 | ENG-001 | OBLIGATION | Implementation follows approved specifications |
 | ENG-002 | OBLIGATION | Traceability must remain valid |
 | ENG-003 | PROHIBITION | Orphan artifacts are prohibited |
+| ENG-004 | OBLIGATION | All code must conform to the Engineering Excellence & Software Craftsmanship Standard (`.araya/governance/standards/engineering-excellence-standards.md`). Unix philosophy, component reuse, security-at-all-layers, and composition over duplication are mandatory. |
 
 ### Financial (FIN)
 
@@ -72,8 +73,8 @@ and governance are non-negotiable.
 
 ## Summary
 
-- **Total Rules:** 82
-- **Obligations:** 65
+- **Total Rules:** 83
+- **Obligations:** 66
 - **Prohibitions:** 9
 - **Permissions:** 4
 - **Escalations:** 4

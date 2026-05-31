@@ -1,6 +1,7 @@
 ---
 name: component-arch
 description: "Design scalable component architectures — design systems, component libraries,"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

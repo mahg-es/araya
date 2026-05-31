@@ -1,6 +1,7 @@
 ---
 name: endpoint
 description: "Implement REST API endpoints with validation, error handling, and database"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

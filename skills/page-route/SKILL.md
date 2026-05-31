@@ -1,6 +1,7 @@
 ---
 name: page-route
 description: "Design and implement page routing — URL structure, navigation, layouts,"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: spark-pipeline
 description: "Design and implement Apache Spark data pipelines — batch and streaming ETL"
+governance: "Constitution ENG-004: Engineering Excellence & Software Craftsmanship Standard"
 ---
 ---
 
