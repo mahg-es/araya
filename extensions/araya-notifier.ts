@@ -52,13 +52,21 @@ function buildNormalTitle(cwd: string): string {
 }
 
 function getArayaVersion(cwd: string): string | null {
-  try {
-    const yamlPath = resolve(cwd, "araya.yaml");
-    if (existsSync(yamlPath)) {
-      const config = load(readFileSync(yamlPath, "utf-8")) as any;
-      return config?.version ?? null;
-    }
-  } catch { /* not an ARAYA project */ }
+  // Walk up the directory tree to find araya.yaml
+  // This works from any ARAYA-governed project, not just the araya repo itself
+  let dir = cwd;
+  for (let i = 0; i < 10; i++) {
+    try {
+      const yamlPath = resolve(dir, "araya.yaml");
+      if (existsSync(yamlPath)) {
+        const config = load(readFileSync(yamlPath, "utf-8")) as any;
+        return config?.version ?? null;
+      }
+    } catch { /* continue walking up */ }
+    const parent = resolve(dir, "..");
+    if (parent === dir) break;
+    dir = parent;
+  }
   return null;
 }
 
@@ -71,10 +79,14 @@ export default function (pi: ExtensionAPI) {
       } else {
         setTitle(buildNormalTitle(cwd));
       }
-      // Set footer with ARAYA version
+      // Set footer with ARAYA version — walk up tree to find araya.yaml
       const version = getArayaVersion(cwd);
       if (version) {
-        try { ctx.ui.setStatus("araya-version", `ARAYA v${version}`); } catch { /* ignore */ }
+        // Primary: pi status bar
+        try { ctx.ui.setStatus("araya-version", `ARAYA v${version}`); } catch { /* fall through */ }
+        // Fallback: append to terminal title so it's always visible
+        const currentTitle = isHomePath(cwd) ? "R. Daneel Olivaw" : buildNormalTitle(cwd);
+        setTitle(`${currentTitle}  |  ARAYA v${version}`);
       }
     }, 200);
   });
@@ -84,7 +96,9 @@ export default function (pi: ExtensionAPI) {
     if (isHomePath(cwd)) {
       setTitle("R. Daneel Olivaw");
     } else {
-      setTitle(buildNormalTitle(cwd));
+      const baseTitle = buildNormalTitle(cwd);
+      const version = getArayaVersion(cwd);
+      setTitle(version ? `${baseTitle}  |  ARAYA v${version}` : baseTitle);
     }
   });
 
@@ -110,9 +124,11 @@ export default function (pi: ExtensionAPI) {
       bell();
       const cwd = process.cwd();
       const baseTitle = isHomePath(cwd) ? "R. Daneel Olivaw" : buildNormalTitle(cwd);
-      setTitle(`! ${baseTitle}`);
+      const version = getArayaVersion(cwd);
+      const finalTitle = version ? `${baseTitle}  |  ARAYA v${version}` : baseTitle;
+      setTitle(`! ${finalTitle}`);
       clearFlashTimer = setTimeout(() => {
-        setTitle(baseTitle);
+        setTitle(finalTitle);
         clearFlashTimer = null;
       }, FLASH_DURATION_MS);
     }
