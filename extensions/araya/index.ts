@@ -312,6 +312,52 @@ export default function (pi: ExtensionAPI) {
             `  /araya run <flags> "<task>"    orchestrate a full run\n` +
             `  /araya <agent>                 show agent info & skills\n` +
             `  /araya <agent> <task>          delegate task to agent\n` +
+            `\n` +
+            `**GOVERNANCE**\n` +
+            `  /araya version                 version & release path\n` +
+            `  /araya validate                validate delivery against ACs\n` +
+            `  /araya constitution            show constitutional rules\n` +
+            `  /araya release-check           validate version compliance\n` +
+            `  /araya usability-check         check usability evidence\n` +
+            `  /araya trace                   traceability tree (REQ→CR)\n` +
+            `  /araya metrics                 governance health score\n` +
+            `  /araya compact                 context capsule\n` +
+            `  /araya handoff                 delegation handoff\n` +
+            `  /araya reconstitute            reset to repository truth\n` +
+            `\n` +
+            `**DELIVERY & REVIEW**\n` +
+            `  /araya review-delivery <id>    DRR → IAR → CR\n` +
+            `  /araya generate-uat <id>       generate UAT package\n` +
+            `  /araya review-uat <id>         review UAT completeness\n` +
+            `  /araya uat-status <id>         UAT coverage report\n` +
+            `\n` +
+            `**KNOWLEDGE & GRAPH**\n` +
+            `  /araya knowledge               org knowledge summary\n` +
+            `  /araya learn "<lesson>"         capture lesson\n` +
+            `  /araya trajectory              golden trajectory summary\n` +
+            `  /araya improve                 process improvement recs\n` +
+            `  /araya graph                   knowledge graph summary\n` +
+            `  /araya ask "<question>"         graph-powered query\n` +
+            `  /araya graph:prepare           validate graph readiness\n` +
+            `\n` +
+            `**BUDGET & EFFICIENCY**\n` +
+            `  /araya budget-status           token & rate-limit status\n` +
+            `  /araya optimize-task "<task>"   token efficiency analysis\n` +
+            `  /araya efficiency-report       efficiency metrics report\n` +
+            `\n` +
+            `**ROUTING & TEAM**\n` +
+            `  /araya route "<task>"          recommend provider+model\n` +
+            `  /araya provider:list           registered AI providers\n` +
+            `  /araya model:list              model routing classes\n` +
+            `  /araya team recommend "<t>"    recommend optimal team\n` +
+            `  /araya team assemble "<t>"     assemble execution team\n` +
+            `  /araya team risk               workforce risk analysis\n` +
+            `  /araya team list               active team formations\n` +
+            `\n` +
+            `**SPEC & INSTALL**\n` +
+            `  /araya spec:init               initialize spec structure\n` +
+            `  /araya spec:list               list active specifications\n` +
+            `  /araya:install                 install ARAYA\n` +
             `\n**AGENTS** (${agentNames.length})\n${agentList}` +
             v2Help.join("\n"),
           "info"
@@ -516,6 +562,123 @@ export default function (pi: ExtensionAPI) {
           `**Proxy:** Traefik (PREF-003) | **Containers:** Docker mandatory`,
           ...(violations.length > 0 ? ["", "### 🔴 PROJECT-001 Violations", ...violations.map(v => `- ${v}`)] : []),
         ].join("\n"), violations.length > 0 ? "warning" : "info");
+        return;
+      }
+
+      // ═══════════════════════════════════════════════════════════════
+      // Space-form subcommand routing (before agent lookup)
+      // Maps /araya <cmd> → corresponding behavior
+      // ═══════════════════════════════════════════════════════════════
+      const SUBCOMMAND_ROUTES: Record<string, { agent: string; task: string } | "inline"> = {
+        // Governance & Validation
+        "validate": { agent: "sonia", task: "Validate delivery against acceptance criteria. Check all ACs, constitutional compliance, and evidence." },
+        "constitution": { agent: "sonia", task: "Show the ARAYA Constitution — all rules, types, and domains. Summarize key governance principles." },
+        "release-check": { agent: "sonia", task: "Validate version compliance with MAHG Release Standard. Check hotfix ≤ 5, revision ≤ 73." },
+        "usability-check": { agent: "sonia", task: "Check usability evidence coverage for all features. Report verified/unverified/not-implemented status per USE-002 and USE-003." },
+        "trace": { agent: "sonia", task: "Show end-to-end traceability tree from requirements to change requests. Detect orphan references." },
+        "metrics": { agent: "sonia", task: "Report governance metrics, delivery health score, violation counts, and compliance status." },
+        // Delivery & Review
+        "review-delivery": { agent: "sonia", task: "Create a DRR (Delivery Review Report), classify findings, generate IAR (Impact Analysis Report), and route to affected artifacts." },
+        "generate-uat": { agent: "sonia", task: "Generate complete UAT package with traceability matrix, test cases per AC, coverage matrix, and acceptance decision." },
+        "review-uat": { agent: "manu", task: "Review UAT package for completeness. Validate every req has AC, every AC has UAT test. Report READY | NEEDS FIXES | REJECTED." },
+        "uat-status": { agent: "sonia", task: "Show UAT status — coverage %, pass/fail/blocked, critical findings, acceptance decision, next steps." },
+        // Knowledge & Learning
+        "knowledge": { agent: "esteban", task: "Summarize organizational knowledge — standards, ADRs, lessons learned, technology preferences." },
+        "learn": { agent: "esteban", task: rest ? `Capture this organizational lesson: ${rest}` : "Capture a structured organizational lesson from recent experience." },
+        "trajectory": { agent: "esteban", task: "Show golden trajectory summary — successful delivery patterns available for reuse." },
+        "improve": { agent: "esteban", task: "Analyze trajectories for process improvement opportunities." },
+        "graph": { agent: "esteban", task: "Show organizational knowledge graph summary — entity relationships and impact analysis." },
+        "ask": { agent: "esteban", task: rest ? `Answer this organizational query using graph + capabilities: ${rest}` : "Answer organizational queries using graph and capability registry." },
+        // Budget & Efficiency
+        "budget-status": { agent: "sonia", task: "Report token efficiency and provider budget status — tokens consumed, rate-limit risk, provider efficiency." },
+        "optimize-task": { agent: "sonia", task: rest ? `Analyze and optimize this task for token efficiency: ${rest}` : "Analyze current task for token efficiency optimization." },
+        "efficiency-report": { agent: "sonia", task: "Generate token efficiency metrics report — context reuse, decomposition, capsule effectiveness." },
+        // Routing & Team
+        "route": { agent: "sonia", task: rest ? `Recommend optimal agent + provider + model for: ${rest.replace(/^--explain /, "")}. ${rest.startsWith("--explain") ? "EXPLAIN mode — show detailed reasoning." : "RECOMMEND mode."}` : "Recommend optimal agent, provider, and model for the current task." },
+        "team": { agent: "aurora", task: rest?.startsWith("recommend") ? `Recommend optimal team for: ${rest.slice(9).trim() || "current task"}` : rest?.startsWith("assemble") ? `Assemble execution team for: ${rest.slice(8).trim() || "current task"}` : rest === "risk" ? "Analyze workforce risks — single points of failure, coverage gaps, over/under-staffed areas." : "Show team capabilities and formations." },
+        // Inline commands (handled below, not delegated to agents)
+        "version": "inline",
+        "provider:list": "inline",
+        "model:list": "inline",
+        "team:list": "inline",
+        "spec:init": "inline",
+        "spec:list": "inline",
+        "graph:prepare": "inline",
+      };
+
+      const route = SUBCOMMAND_ROUTES[firstWord];
+      if (route) {
+        if (route === "inline") {
+          // Inline commands — handle directly
+          if (firstWord === "version") {
+            const v = config.version || "0.7.3";
+            const parts = v.split(".").map(Number);
+            const rev = parts[1] || 0, hot = parts[2] || 0;
+            const toMajor = 73 - rev;
+            const toHotfix = toMajor > 0 ? (5 - hot) : 0;
+            ctx.ui.notify(
+              `## ARAYA v${v}\n\n` +
+              `**MAJOR:** ${parts[0]} | **REVISION:** ${rev} | **HOTFIX:** ${hot}\n\n` +
+              `**Path to 1.0.0:** ${toMajor} revisions + ${Math.max(0, toHotfix)} hotfixes remaining\n` +
+              `**Active:** 83 rules | 16 domains | 120 skills | 25 agents\n` +
+              `**Rule:** 0.73.5 → 1.0.0 (MAHG Release Standard)`,
+              "info"
+            );
+          } else if (firstWord === "provider:list") {
+            ctx.ui.notify(
+              `## Registered Providers\n\n` +
+              `**pi.dev** — Coding Agent (primary)\n` +
+              `**OpenAI** — Codex (coding), GPT (general)\n` +
+              `**Anthropic** — Claude (reasoning, architecture)\n` +
+              `**Google** — Gemini (analysis, research)\n` +
+              `**DeepSeek** — DeepSeek (cost-efficient, long workflows)\n` +
+              `**GitHub Copilot** — Copilot (local implementation)\n\n` +
+              `Routing respects provider capabilities and organizational preferences.`,
+              "info"
+            );
+          } else if (firstWord === "model:list") {
+            ctx.ui.notify(
+              `## Model Routing Classes\n\n` +
+              `**FAST:** Documentation, formatting, simple tasks\n` +
+              `**BALANCED:** Development, testing, review\n` +
+              `**REASONING:** Architecture, security, planning\n` +
+              `**ECONOMY:** Simple tasks, drafts, summaries\n` +
+              `**ENTERPRISE:** Governance-first — respects all constitutional rules`,
+              "info"
+            );
+          } else if (firstWord === "team:list") {
+            ctx.ui.notify(
+              `## Active Team Formations\n\n` +
+              `**Templates:** Web Platform, CLI Tool, Data Platform, AI Product, Security Initiative, Architecture Program\n\n` +
+              `Use /araya team recommend for dynamic team assembly.`,
+              "info"
+            );
+          } else if (firstWord === "spec:init") {
+            const { mkdirSync, existsSync } = await import("node:fs");
+            const { resolve } = await import("node:path");
+            const cwd = process.cwd();
+            const specDir = resolve(cwd, ".araya/plan/spec");
+            if (!existsSync(specDir)) { mkdirSync(specDir, { recursive: true }); }
+            ctx.ui.notify("✅ Specification structure initialized at .araya/plan/spec/", "info");
+          } else if (firstWord === "spec:list") {
+            const { existsSync, readdirSync } = await import("node:fs");
+            const { resolve } = await import("node:path");
+            const cwd = process.cwd();
+            const specDir = resolve(cwd, ".araya/plan/spec");
+            const files = existsSync(specDir) ? readdirSync(specDir).filter(f => f.endsWith(".md")) : [];
+            ctx.ui.notify(files.length > 0 ? `## Active Specifications\n\n${files.map(f => `- ${f}`).join("\n")}` : "No active specifications. Use /araya spec:init to create.", "info");
+          } else if (firstWord === "graph:prepare") {
+            const { existsSync } = await import("node:fs");
+            const { resolve } = await import("node:path");
+            const cwd = process.cwd();
+            const graphReady = existsSync(resolve(cwd, ".araya/graph")) && existsSync(resolve(cwd, ".araya/knowledge"));
+            ctx.ui.notify(graphReady ? "✅ Graph builder ready for Batch 9 — .araya/graph/ and .araya/knowledge/ present." : "⚠️ Graph builder prerequisites missing. Run /araya spec:init to create governance structure.", graphReady ? "info" : "warning");
+          }
+        } else {
+          // Agent delegation commands
+          const prompt = buildAgentPrompt(config, route.agent, route.task);
+          pi.sendUserMessage(prompt);
+        }
         return;
       }
 
