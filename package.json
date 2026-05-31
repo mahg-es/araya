@@ -17,16 +17,26 @@
   "author": "The Data Professor",
   "license": "MIT",
   "pi": {
-    "extensions": ["./extensions/araya"],
-    "skills": ["./skills"],
-    "prompts": ["./prompts"]
+    "extensions": [
+      "./extensions/araya"
+    ],
+    "skills": [
+      "./skills"
+    ],
+    "prompts": [
+      "./prompts"
+    ]
   },
   "dependencies": {
+    "@types/blessed": "^0.1.27",
+    "blessed": "^0.1.81",
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.9.1",
+    "better-sqlite3": "^12.10.0",
     "typescript": "^6.0.3"
   },
   "scripts": {

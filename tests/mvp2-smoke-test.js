@@ -89,9 +89,9 @@ test("circuit_breakers are configured", () => {
   assert(typeof cb.max_retries === "number");
 });
 
-test("has 25 agents", () => {
+test("has 28 agents", () => {
   const agents = Object.keys(config.agents ?? {});
-  assert(agents.length === 25, `Expected 25, got ${agents.length}`);
+  assert(agents.length === 28, `Expected 28, got ${agents.length}`);
 });
 
 // ── 2. Agent Model Tier Resolution ───────────────────────────────────────
