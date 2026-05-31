@@ -516,9 +516,9 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
-      // /araya compact — context capsule
+      // /araya compact — context capsule (ART-008: preserve context only)
       if (firstWord === "compact") {
-        const { existsSync, readdirSync } = await import("node:fs");
+        const { existsSync, readdirSync, mkdirSync, writeFileSync } = await import("node:fs");
         const { resolve, basename } = await import("node:path");
         const { execSync } = await import("node:child_process");
         const cwd = process.cwd();
@@ -527,20 +527,21 @@ export default function (pi: ExtensionAPI) {
         const violations: string[] = [];
         if (existsSync(resolve(cwd, "memory"))) violations.push("memory/ → .araya/memory/ (PROJECT-001)");
         if (existsSync(resolve(cwd, "docs/agents"))) violations.push("docs/agents/ → .araya/agents/ (PROJECT-001)");
-        const hasAuthADR = existsSync(resolve(cwd, "docs/adr/ADR-0010-authentik-as-central-identity-provider.md"));
-        if (hasAuthADR) violations.push("ADR-0010 Authentik — conflicts with Authelia default");
         if (branch === "main") violations.push("Direct main — use dev-mahg (BRANCH-002)");
 
         const compactMsg = [
           `## Context Capsule — ${basename(cwd)}`,
+          `**Artifact ID:** cmp-${String(Date.now()).slice(-6)}-${basename(cwd)}`,
+          `**Status:** Active`,
+          `**Created:** ${new Date().toISOString().slice(0, 16).replace("T", " ")} +0200`,
           "",
           `**Branch:** ${branch}${branch === "main" ? " ⚠️" : ""}`,
           "",
           "### Active Standards",
           "- Docker + Traefik mandatory",
           "- Authelia default auth",
-          "- Authentik NOT default",
           "- feature/* → dev-mahg → main",
+          "- Artifact Governance: ART-001 through ART-010",
           "",
           "### Repository Truth",
           "- Workspace ≠ delivered",
@@ -550,39 +551,136 @@ export default function (pi: ExtensionAPI) {
         if (violations.length > 0) {
           compactMsg.push("", "### ⚠️ Active Violations", ...violations.map(v => `- ${v}`));
         }
-        compactMsg.push("", `**Rules:** 115 constitutional rules active`);
 
-        pi.sendUserMessage(`Sonia from ARAYA, here is the current context capsule for ${basename(cwd)}:\n\n${compactMsg.join("\n")}`);
+        // Write compact artifact per ART-008
+        const compactDir = resolve(cwd, ".araya/compact");
+        if (!existsSync(compactDir)) mkdirSync(compactDir, { recursive: true });
+        writeFileSync(resolve(compactDir, `cmp-${String(Date.now()).slice(-6)}-${basename(cwd)}.md`), compactMsg.join("\n"));
+
+        ctx.ui.notify(compactMsg.join("\n"), violations.length > 0 ? "warning" : "info");
         return;
       }
 
-      // /araya handoff — delegation handoff
+      // /araya handoff — delegation handoff (ART-009: project status only)
       if (firstWord === "handoff") {
         const { execSync } = await import("node:child_process");
-        const { basename } = await import("node:path");
+        const { basename, resolve } = await import("node:path");
+        const { existsSync, mkdirSync, writeFileSync } = await import("node:fs");
         const cwd = process.cwd();
         let branch = ""; try { branch = execSync("git branch --show-current", { cwd }).toString().trim(); } catch {}
-        pi.sendUserMessage(`Sonia from ARAYA, here is the delegation handoff for ${basename(cwd)}:\n\n## Agent Handoff\n**Project:** ${basename(cwd)}\n**Branch:** ${branch}\n**Protocol:** What was done → What's next → Open decisions → Active constraints\n**Active:** Docker + Traefik | Authelia default | feature → dev-mahg → main\n**Source:** Repository truth only (/araya reconstitute)`);
+        
+        const handoffMsg = [
+          `## Agent Handoff — ${basename(cwd)}`,
+          `**Artifact ID:** hdo-${String(Date.now()).slice(-6)}-${basename(cwd)}`,
+          `**Owner:** Sonia (ARAYA PM)`,
+          `**Status:** Active`,
+          `**Created:** ${new Date().toISOString().slice(0, 16).replace("T", " ")} +0200`,
+          "",
+          `**Project:** ${basename(cwd)}`,
+          `**Branch:** ${branch}`,
+          "",
+          "### Active Constraints",
+          "- Docker + Traefik mandatory",
+          "- Authelia default auth",
+          "- feature/* → dev-mahg → main",
+          "",
+          "### Protocol",
+          "1. What was done",
+          "2. What's next",
+          "3. Open decisions",
+          "4. Active risks and blockers",
+          "",
+          "**Source:** Repository truth only (/araya reconstitute)",
+        ];
+
+        const handoffDir = resolve(cwd, ".araya/handoff");
+        if (!existsSync(handoffDir)) mkdirSync(handoffDir, { recursive: true });
+        writeFileSync(resolve(handoffDir, `hdo-${String(Date.now()).slice(-6)}-${basename(cwd)}.md`), handoffMsg.join("\n"));
+
+        pi.sendUserMessage(`Sonia from ARAYA, here is the delegation handoff for ${basename(cwd)}:\n\n${handoffMsg.join("\n")}`);
         return;
       }
 
-      // /araya reconstitute — project context reset
+      // /araya reconstitute — organizational recovery (ART-007)
       if (firstWord === "reconstitute") {
-        const { existsSync, readdirSync } = await import("node:fs");
+        const { existsSync, readdirSync, mkdirSync, writeFileSync } = await import("node:fs");
         const { resolve, basename } = await import("node:path");
         const { execSync } = await import("node:child_process");
         const cwd = process.cwd();
         let branch = ""; try { branch = execSync("git branch --show-current", { cwd }).toString().trim(); } catch {}
+
+        // Inventory .araya artifacts
+        const arayaDir = resolve(cwd, ".araya");
         const violations: string[] = [];
-        if (existsSync(resolve(cwd, "memory"))) violations.push("memory/ → .araya/memory/");
-        if (existsSync(resolve(cwd, "docs/agents"))) violations.push("docs/agents/ → .araya/agents/");
-        ctx.ui.notify([
-          `## Project Reconstitution — ${basename(cwd)}`,
+        const inventory: string[] = [];
+
+        // PROJECT-001 violations
+        if (existsSync(resolve(cwd, "memory"))) violations.push("🔴 memory/ → should be .araya/memory/ (PROJECT-001)");
+        if (existsSync(resolve(cwd, "docs/agents"))) violations.push("🔴 docs/agents/ → should be .araya/agents/ (PROJECT-001)");
+
+        // ART-002: naming convention violations (free-form filenames)
+        if (existsSync(arayaDir)) {
+          const walkDir = (dir: string, prefix: string) => {
+            try {
+              for (const entry of readdirSync(dir, { withFileTypes: true })) {
+                const fullPath = resolve(dir, entry.name);
+                const relPath = fullPath.replace(cwd + "/", "");
+                if (entry.isDirectory() && entry.name !== "archive" && !entry.name.startsWith(".")) {
+                  walkDir(fullPath, prefix + "  ");
+                } else if (entry.isFile() && entry.name.endsWith(".md")) {
+                  inventory.push(relPath);
+                  // Check for free-form names (no prefix-NNN pattern)
+                  const hasPrefix = /^[a-z]+-\d{3}-/.test(entry.name);
+                  if (!hasPrefix && !entry.name.startsWith("ADR-") && !entry.name.startsWith("VIO-") && entry.name !== "README.md" && entry.name !== "constitution.md") {
+                    const prefixes = ["sdd", "bdd", "tdd", "adr", "cr", "drr", "iar", "plan", "spec", "run", "vio", "hdo", "cmp", "rec"];
+                    const hasAnyPrefix = prefixes.some(p => entry.name.toLowerCase().startsWith(p));
+                    if (!hasAnyPrefix) {
+                      violations.push(`🟡 ${relPath} — free-form name, should use prefix-NNN convention (ART-002)`);
+                    }
+                  }
+                }
+              }
+            } catch { /* ignore inaccessible dirs */ }
+          };
+          walkDir(arayaDir, "");
+        }
+
+        // Branch violations
+        if (branch === "main") violations.push("🔴 Direct main — use dev-mahg (BRANCH-002)");
+
+        const reportLines = [
+          `## Reconstitution Report — ${basename(cwd)}`,
+          `**Artifact ID:** rec-${String(Date.now()).slice(-6)}-${basename(cwd)}`,
+          `**Owner:** Sonia (ARAYA PM)`,
+          `**Status:** Active`,
+          `**Created:** ${new Date().toISOString().slice(0, 16).replace("T", " ")} +0200`,
           `**Branch:** ${branch}${branch === "main" ? " ⚠️ Use dev-mahg" : ""}`,
-          `**Auth:** Authelia default | Authentik NOT default`,
-          `**Proxy:** Traefik (PREF-003) | **Containers:** Docker mandatory`,
-          ...(violations.length > 0 ? ["", "### 🔴 PROJECT-001 Violations", ...violations.map(v => `- ${v}`)] : []),
-        ].join("\n"), violations.length > 0 ? "warning" : "info");
+          "",
+          `## Artifact Inventory (${inventory.length} files)`,
+          ...inventory.map(f => `- ${f}`),
+          "",
+          `## Governance Violations (${violations.length})`,
+          ...(violations.length > 0 ? violations : ["✅ No violations detected"]),
+          "",
+          "### Remediation Plan",
+          violations.some(v => v.includes("PROJECT-001")) ? "1. Move artifacts from project root into .araya/ (PROJECT-001)" : "",
+          violations.some(v => v.includes("ART-002")) ? `${violations.filter(v => v.includes("ART-002")).length + 1}. Rename free-form artifacts to prefix-NNN convention (ART-002)"` : "",
+          violations.some(v => v.includes("BRANCH-002")) ? "- Switch to dev-mahg branch (BRANCH-002)" : "",
+          "",
+          "### Standards Active",
+          "- Docker + Traefik mandatory",
+          "- Authelia default auth",
+          "- feature/* → dev-mahg → main",
+          "- Artifact Governance: ART-001 through ART-010",
+          "- Engineering Excellence: ENG-004",
+        ].filter(Boolean);
+
+        // Write reconstitution report per ART-007
+        const reconDir = resolve(cwd, ".araya/reconstitution");
+        if (!existsSync(reconDir)) mkdirSync(reconDir, { recursive: true });
+        writeFileSync(resolve(reconDir, `rec-${String(Date.now()).slice(-6)}-${basename(cwd)}.md`), reportLines.join("\n"));
+
+        ctx.ui.notify(reportLines.join("\n"), violations.length > 0 ? "warning" : "info");
         return;
       }
 

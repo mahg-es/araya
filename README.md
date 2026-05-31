@@ -472,7 +472,7 @@ Every artifact is traceable. Orphan detection via `/araya trace --validate`. Ful
 ### Constitutional Governance
 
 ```
-The Constitution — 90 rules, 4 types, 17 domains
+The Constitution — 100 rules, 4 types, 18 domains
 ```
 
 ARAYA is governed by a constitution — the highest authority below The Data Professor.

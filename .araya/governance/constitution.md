@@ -73,12 +73,12 @@ and governance are non-negotiable.
 
 ## Summary
 
-- **Total Rules:** 90
-- **Obligations:** 73
+- **Total Rules:** 100
+- **Obligations:** 83
 - **Prohibitions:** 9
 - **Permissions:** 4
 - **Escalations:** 4
-- **Domains:** 17
+- **Domains:** 18
 
 ## Violation Handling
 
@@ -243,3 +243,18 @@ amendments but may not enact them.
 | ORG-005 | OBLIGATION | Discovery must precede execution — understand before implement |
 | ORG-006 | OBLIGATION | Collaborative review must be available for architecture, security, and delivery decisions |
 | ORG-007 | OBLIGATION | Institutional learning is mandatory — ARAYA must continuously improve agents, skills, governance, and processes |
+
+### Artifact Governance (ART)
+
+| ID | Type | Rule |
+|----|------|------|
+| ART-001 | OBLIGATION | Every artifact must reside in its canonical location per the Artifact Governance Model |
+| ART-002 | OBLIGATION | Artifact names must follow the mandatory convention: prefix-NNN-short-description.md |
+| ART-003 | OBLIGATION | Sequential numbering per artifact type — numbers never reused |
+| ART-004 | OBLIGATION | Every artifact must carry mandatory metadata: ID, title, owner, status, created, updated |
+| ART-005 | OBLIGATION | Artifact lifecycle is: Draft → Active → Superseded → Archived. Status must be explicit. |
+| ART-006 | OBLIGATION | Superseded artifacts must be moved to archive with reference updates. No duplicate active artifacts. |
+| ART-007 | OBLIGATION | Reconstitution must inventory, detect duplicates, detect drift, detect violations, and propose remediation |
+| ART-008 | OBLIGATION | Compact must preserve context only — no repository restructuring |
+| ART-009 | OBLIGATION | Handoff must preserve project status only — no repository restructuring |
+| ART-010 | OBLIGATION | Archive is year-partitioned. No active artifact in archive. No archived artifact outside archive. |
