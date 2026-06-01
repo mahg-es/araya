@@ -42,7 +42,7 @@ function buildNormalTitle(cwd: string): string {
   const acronyms: Record<string, string> = {
     "mahg-ai-project-office": "MAHG-PO",
     "mahg_bigdata_training_lab": "MBTL",
-    "Modern-Analytics-Harmonized-Governance": "MAHG",
+    "mahg-es": "MAHG",
     "mahg-staticforge": "MSF",
     "mahg-pms": "PMS",
     "mahg_bigdata_cloud": "MBC",

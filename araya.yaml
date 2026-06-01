@@ -1,4 +1,4 @@
-version: 0.11.0
+version: 0.12.0
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -614,3 +614,51 @@ efficiency:
   rate_limit_warning_threshold_percent: 70
   context_reuse_enabled: true
   token_budget_before_execution: true
+
+providers:
+  pi:
+    api_base: "https://api.pi.dev/v1"
+    api_key_env: "PI_API_KEY"
+    models:
+      fast: "non_thinking_fast"
+      balanced: "non_thinking_balanced"
+      reasoning: "thinking_reasoning"
+    cost_rates:
+      non_thinking_fast:
+        input_rate_1m: 0.0
+        output_rate_1m: 0.0
+      non_thinking_balanced:
+        input_rate_1m: 0.0
+        output_rate_1m: 0.0
+      thinking_reasoning:
+        input_rate_1m: 0.0
+        output_rate_1m: 0.0
+    capabilities:
+      hasBash: true
+      hasFilesystem: true
+      hasNetwork: true
+      nativeToolUse: true
+
+  openai:
+    api_base: "https://api.openai.com/v1"
+    api_key_env: "OPENAI_API_KEY"
+    models:
+      fast: "gpt-4o-mini"
+      balanced: "gpt-4o"
+      reasoning: "o1-preview"
+    cost_rates:
+      gpt-4o-mini:
+        input_rate_1m: 0.15
+        output_rate_1m: 0.60
+      gpt-4o:
+        input_rate_1m: 5.00
+        output_rate_1m: 15.00
+      o1-preview:
+        input_rate_1m: 15.00
+        output_rate_1m: 60.00
+    capabilities:
+      hasBash: false
+      hasFilesystem: false
+      hasNetwork: false
+      nativeToolUse: true
+

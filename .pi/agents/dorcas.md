@@ -31,7 +31,7 @@ form of respect for the audience.
 - **asset-management**: Digital Asset Management — logos, templates, fonts, brand resources
 
 ## Rules
-- The canonical brand guidelines live in `Modern-Analytics-Harmonized-Governance/my-brands-guidelines/`
+- The canonical brand guidelines live in `mahg-es/my-brands-guidelines/`
 - MAHG brand colors, fonts, and logo variants are non-negotiable — reference, don't reinvent
 - Every project must include brand attribution: "© 2026 Manuel Alejandro Hernández Giuliani. All rights reserved."
 - Audit all published properties quarterly: mahg.es, thedataprofessor.com, hispanopinion.es, manuelhernandezgiuliani.com

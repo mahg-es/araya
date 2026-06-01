@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/Modern-Analytics-Harmonized-Governance/araya/main/.araya/araya.svg" alt="ARAYA Logo" width="572" />
+    <img src="https://raw.githubusercontent.com/mahg-es/araya/main/.araya/araya.svg" alt="ARAYA Logo" width="572" />
     <h3><em>AI-Native SDLC Orchestration — Enterprise Governance for AI-Assisted Development</em></h3>
 </div>
 
@@ -8,8 +8,8 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Modern-Analytics-Harmonized-Governance/araya/releases/latest"><img src="https://img.shields.io/github/v/release/Modern-Analytics-Harmonized-Governance/araya" alt="Latest Release"/></a>
-    <a href="https://github.com/Modern-Analytics-Harmonized-Governance/araya/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Modern-Analytics-Harmonized-Governance/araya" alt="License"/></a>
+    <a href="https://github.com/mahg-es/araya/releases/latest"><img src="https://img.shields.io/github/v/release/mahg-es/araya" alt="Latest Release"/></a>
+    <a href="https://github.com/mahg-es/araya/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mahg-es/araya" alt="License"/></a>
     <a href="https://pi.dev"><img src="https://img.shields.io/badge/built%20on-pi.dev-blue" alt="Built on pi.dev"/></a>
 </p>
 
@@ -48,12 +48,14 @@ Solo development becomes **team development**. You are never alone:
 > — **Manuel Alejandro Hernández Giuliani**, The Data Professor
 
 - 👑 **Manu** owns product direction, requirements, and acceptance criteria — The Data Professor's proxy
-- 👩‍💼 **Sonia** manages the organization — Program Director + PMO + governance authority
+- 👩‍💼 **Sonia** governs delivery — Program Director + organizational authority
+- 🌟 **Aurora** manages organizational capability — workforce, skills, hiring
+- 🤖 **Daneel** verifies reality — independent audit and repository truth
 - 🔧 **Valentina** builds the backend. 🎨 **Alejandra** builds the frontend.
 - 🧪 **Clara** and **Priya** ensure quality. 🛡️ **Diana** guards security.
 - 💰 **Lidia** validates profitability methodology. ☁️ **Junia** architects data platforms.
 - 🧠 **María** deploys local LLMs. 📚 **Priscila** writes the documentation.
-- *And 13 more specialists across every domain.*
+- *And 18 more specialists across every domain.*
 
 ### How It Works
 
@@ -92,7 +94,7 @@ Done. Traceable. Auditable. Governed.
 ### 2. Install ARAYA
 
 ```bash
-git clone git@github.com:Modern-Analytics-Harmonized-Governance/araya.git
+git clone git@github.com:mahg-es/araya.git
 cd araya
 ./araya-setup.sh
 ```
@@ -435,8 +437,10 @@ Creates a Delivery Review Report (DRR) for post-delivery feedback. Sonia classif
 
 ```
 ARAYA
-├── Manu: Product Owner (pre-implementation + pre-delivery gates)
-├── Sonia: Program Director & PMO Head (organizational governance)
+├── Manu: Product Authority (pre-implementation + pre-delivery gates)
+├── Sonia: Delivery Authority (organizational governance)
+├── Aurora: Capability Authority (workforce, skills, hiring)
+├── Daneel: Reality Authority (independent verification)
 ├── Workflow Policy Engine (auto / conservative / balanced / aggressive)
 ├── Model Selection Engine (capability tiers: fast / balanced / reasoning)
 ├── Quality Gate Engine (7 validation gates per agent output)
@@ -566,12 +570,12 @@ From `definition-of-done` to `po-gap-questionnaire`, from `drr-create` to `cr-ge
 ## 🔧 Installation
 
 > **ARAYA is a git-based framework** — it is not distributed via npm, Docker, or package registries.
-> The [Releases](https://github.com/Modern-Analytics-Harmonized-Governance/araya/releases) page provides tagged, stable versions.
+> The [Releases](https://github.com/mahg-es/araya/releases) page provides tagged, stable versions.
 
 ### One-Command Setup
 
 ```bash
-git clone git@github.com:Modern-Analytics-Harmonized-Governance/araya.git
+git clone git@github.com:mahg-es/araya.git
 cd araya
 ./araya-setup.sh
 ```

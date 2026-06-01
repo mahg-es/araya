@@ -7,6 +7,8 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { randomUUID } from "node:crypto";
 import type { ArayaV2Config, AgentV2Config, StructuredOutput, RunConfig } from "../types";
+import { ArayaExecutionAdapter } from "../adapter";
+import { PiAdapter } from "../adapters/pi";
 
 /** Find the ARAYA root containing araya.yaml */
 function findArayaRoot(startDir: string): string {
@@ -36,10 +38,45 @@ export class DelegationEngine {
   private root: string;
   private config: ArayaV2Config;
   private runOutputs: Map<string, StructuredOutput[]> = new Map();
+  private adapter: ArayaExecutionAdapter;
 
-  constructor(config: ArayaV2Config) {
+  constructor(config: ArayaV2Config, adapter?: ArayaExecutionAdapter) {
     this.config = config;
     this.root = findArayaRoot(dirname(__filename) || process.cwd());
+    this.adapter = adapter || new PiAdapter(this.config);
+  }
+
+  /**
+   * Execute a subagent delegation task via the registered adapter.
+   */
+  async executeSubagent(
+    agentName: string,
+    task: string,
+    runConfig: RunConfig,
+    delegationDepth: number = 0,
+    onEvent?: (event: any) => void
+  ): Promise<StructuredOutput> {
+    const agent = this.config.agents?.[agentName];
+    const skills = agent?.skills ?? [];
+    const modelTier = agent?.model_tier ?? "balanced";
+    
+    let systemPrompt = "";
+    try {
+      systemPrompt = loadPersonality(this.root, agentName);
+    } catch {}
+
+    const output = await this.adapter.executeSubagent(
+      agentName,
+      task,
+      runConfig,
+      delegationDepth,
+      systemPrompt,
+      skills,
+      modelTier,
+      onEvent
+    );
+    this.storeOutput(output.run_id, agentName, output);
+    return output;
   }
 
   /**

@@ -31,7 +31,7 @@ to audit.
 # Brand Compliance Audit: Q2 2026
 
 ## Canonical Brand Guidelines
-**Source:** `Modern-Analytics-Harmonized-Governance/my-brands-guidelines/`
+**Source:** `mahg-es/my-brands-guidelines/`
 
 ### Brand Assets
 | Asset | Canonical Location | Version |
