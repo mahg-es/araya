@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/Modern-Analytics-Harmonized-Governance/araya/main/.araya/araya.svg" alt="ARAYA Logo" width="572" />
+    <img src="https://raw.githubusercontent.com/mahg-es/araya/main/.araya/araya.svg" alt="ARAYA Logo" width="572" />
     <h3><em>AI-Native SDLC Orchestration — Enterprise Governance for AI-Assisted Development</em></h3>
 </div>
 
@@ -8,8 +8,8 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Modern-Analytics-Harmonized-Governance/araya/releases/latest"><img src="https://img.shields.io/github/v/release/Modern-Analytics-Harmonized-Governance/araya" alt="Latest Release"/></a>
-    <a href="https://github.com/Modern-Analytics-Harmonized-Governance/araya/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Modern-Analytics-Harmonized-Governance/araya" alt="License"/></a>
+    <a href="https://github.com/mahg-es/araya/releases/latest"><img src="https://img.shields.io/github/v/release/mahg-es/araya" alt="Latest Release"/></a>
+    <a href="https://github.com/mahg-es/araya/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mahg-es/araya" alt="License"/></a>
     <a href="https://pi.dev"><img src="https://img.shields.io/badge/built%20on-pi.dev-blue" alt="Built on pi.dev"/></a>
 </p>
 
@@ -94,7 +94,7 @@ Done. Traceable. Auditable. Governed.
 ### 2. Install ARAYA
 
 ```bash
-git clone git@github.com:Modern-Analytics-Harmonized-Governance/araya.git
+git clone git@github.com:mahg-es/araya.git
 cd araya
 ./araya-setup.sh
 ```
@@ -570,12 +570,12 @@ From `definition-of-done` to `po-gap-questionnaire`, from `drr-create` to `cr-ge
 ## 🔧 Installation
 
 > **ARAYA is a git-based framework** — it is not distributed via npm, Docker, or package registries.
-> The [Releases](https://github.com/Modern-Analytics-Harmonized-Governance/araya/releases) page provides tagged, stable versions.
+> The [Releases](https://github.com/mahg-es/araya/releases) page provides tagged, stable versions.
 
 ### One-Command Setup
 
 ```bash
-git clone git@github.com:Modern-Analytics-Harmonized-Governance/araya.git
+git clone git@github.com:mahg-es/araya.git
 cd araya
 ./araya-setup.sh
 ```
