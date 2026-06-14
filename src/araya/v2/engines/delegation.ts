@@ -75,8 +75,51 @@ export class DelegationEngine {
       modelTier,
       onEvent
     );
+
+    // ADR-0004 §3.2 — can_write_code emission block (Slice 1). An agent with
+    // can_write_code:false may plan, review, approve, question, and delegate,
+    // but may not itself be the source of a produced artifact. Enforced here,
+    // at the boundary where a produced deliverable would enter the system, so a
+    // blocked emission is never stored or returned.
+    this.enforceWritePermission(agentName, agent, output);
+
     this.storeOutput(output.run_id, agentName, output);
     return output;
+  }
+
+  /**
+   * ADR-0004 §3.2 enforcement (Slice 1): block a can_write_code:false agent
+   * from emitting a deliverable.
+   *
+   * The gate keys off the explicit `can_write_code` flag ONLY — the model tier
+   * is never consulted (e.g. isla/maria are reasoning-tier with
+   * can_write_code:true and are therefore unaffected). The predicate mirrors
+   * the existing display check (`can_write_code === false`): a missing flag or
+   * `true` is not gated, preserving current behavior for every other agent.
+   *
+   * "Emitting a deliverable" means the agent is the source of a produced
+   * artifact, detected from the output it returns (files changed or tests
+   * added). Non-producing outputs — plans, reviews, approvals, delegations —
+   * carry no artifacts and pass through unaffected.
+   */
+  private enforceWritePermission(
+    agentName: string,
+    agent: AgentV2Config | undefined,
+    output: StructuredOutput
+  ): void {
+    if (agent?.permissions?.can_write_code !== false) return; // true or unset → not gated
+
+    const filesChanged = output.files_changed?.length ?? 0;
+    const testsAdded = output.tests_added ?? 0;
+    const producedArtifact = filesChanged > 0 || testsAdded > 0;
+    if (!producedArtifact) return; // plan / review / approve / delegate — permitted
+
+    throw new Error(
+      `Delegation blocked (ADR-0004): agent '${agentName}' has ` +
+        `can_write_code:false and may not emit a deliverable ` +
+        `(produced ${filesChanged} file change(s) and ${testsAdded} test(s) added). ` +
+        `Permitted actions for this agent: plan, review, approve, question, delegate.`
+    );
   }
 
   /**
