@@ -16,6 +16,19 @@
   ],
   "author": "The Data Professor",
   "license": "MIT",
+  "files": [
+    "extensions/",
+    "skills/",
+    "prompts/",
+    ".pi/",
+    "src/",
+    "dist/",
+    "araya.yaml",
+    "araya-setup.sh",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
   "pi": {
     "extensions": [
       "./extensions/araya"
