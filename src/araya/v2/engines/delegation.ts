@@ -9,6 +9,27 @@ import { randomUUID } from "node:crypto";
 import type { ArayaV2Config, AgentV2Config, StructuredOutput, RunConfig } from "../types";
 import { ArayaExecutionAdapter } from "../adapter";
 import { PiAdapter } from "../adapters/pi";
+import { DispositionEngine } from "./disposition";
+import type { Disposition, Unit, MoveContext } from "./disposition";
+import { ScoreLedger, resolveScoreLedgerPath } from "../ledger/score-ledger";
+
+/**
+ * The typed outcome of one unit's live exit (ADR-0007). One per delegated unit.
+ * `emitted` is true only when a binding move was recorded to the score ledger.
+ * A success-class proposal is NEVER emitted in-loop: the producing agent is the
+ * only identity present, so emit() rejects it producer-is-emitter and the
+ * binding success is deferred to an independent emitter (protocol/Daneel now;
+ * structural Slice-8 emitter later). `pendingIndependentEmitter` marks exactly
+ * that deferral.
+ */
+export interface UnitExitOutcome {
+  unit: string;
+  producer: string;
+  proposed: Disposition;
+  emitted: boolean;
+  pendingIndependentEmitter: boolean;
+  rejection?: { kind: string; reason: string };
+}
 
 /** Find the ARAYA root containing araya.yaml */
 function findArayaRoot(startDir: string): string {
@@ -38,12 +59,21 @@ export class DelegationEngine {
   private root: string;
   private config: ArayaV2Config;
   private runOutputs: Map<string, StructuredOutput[]> = new Map();
+  private unitExits: Map<string, UnitExitOutcome[]> = new Map();
   private adapter: ArayaExecutionAdapter;
+  private disposition: DispositionEngine;
 
-  constructor(config: ArayaV2Config, adapter?: ArayaExecutionAdapter) {
+  /**
+   * @param scoreLedgerPath Optional ledger path. Defaults to
+   *   resolveScoreLedgerPath() — an env override or a repo-relative path, a
+   *   governance-location-agnostic value that hardcodes no private path. Tests
+   *   inject a temp path so they never touch the real ledger.
+   */
+  constructor(config: ArayaV2Config, adapter?: ArayaExecutionAdapter, scoreLedgerPath?: string) {
     this.config = config;
     this.root = findArayaRoot(dirname(__filename) || process.cwd());
     this.adapter = adapter || new PiAdapter(this.config);
+    this.disposition = new DispositionEngine(new ScoreLedger(scoreLedgerPath ?? resolveScoreLedgerPath()));
   }
 
   /**
@@ -83,6 +113,14 @@ export class DelegationEngine {
     // blocked emission is never stored or returned.
     this.enforceWritePermission(agentName, agent, output);
 
+    // ADR-0007 — live disposition exit. The unit's typed exit is computed and
+    // recorded HERE, at the canonical live boundary (after the Slice-1 emission
+    // block, before the output is stored). Additive and non-throwing: `output`
+    // and its `status` are left untouched, so the downstream readers of
+    // status:"completed" (quality-gate, persistRun overall_status, terminal-api
+    // cleanup, cli display) are unaffected.
+    this.recordUnitExit(agentName, agent, output, runConfig);
+
     this.storeOutput(output.run_id, agentName, output);
     return output;
   }
@@ -120,6 +158,138 @@ export class DelegationEngine {
         `(produced ${filesChanged} file change(s) and ${testsAdded} test(s) added). ` +
         `Permitted actions for this agent: plan, review, approve, question, delegate.`
     );
+  }
+
+  /**
+   * ADR-0007 — record the unit's typed live exit. Called once per delegated unit
+   * at the canonical exit. Computes exactly one typed disposition and records the
+   * move that may legitimately be recorded in-loop, WITHOUT ever auto-certifying
+   * the producer's own success.
+   *
+   * - A success-class proposal (status "completed", chosen BY SHAPE) is attempted
+   *   with the producing agent as emitter — the only identity the live loop has.
+   *   emit() therefore rejects it producer-is-emitter (the real ADR-0004 check
+   *   firing live; no emitter is fabricated), records nothing, and the binding
+   *   success is deferred to an independent emitter via awaitIndependentEmitter()
+   *   (protocol/Daneel now; structural Slice-8 emitter later).
+   * - A non-success disposition is not identity-gated: a producer may flag a
+   *   defect in its own work, so it is emitted and recorded as one ledger move.
+   * - An illegal-by-shape proposal (e.g. a producer proposing PASS on a
+   *   multi-gate unit via proposed_disposition) is rejected illegal-transition
+   *   and records nothing.
+   */
+  recordUnitExit(
+    agentName: string,
+    agent: AgentV2Config | undefined,
+    output: StructuredOutput,
+    runConfig?: RunConfig
+  ): UnitExitOutcome {
+    const unit: Unit = {
+      unit: this.unitIdFor(agentName, output),
+      declaredGates: this.declaredGatesFor(agentName, output, runConfig),
+      producer: agentName,
+    };
+    const proposed = output.proposed_disposition ?? this.proposeDisposition(output.status, unit);
+    const move = this.buildMove(agent, output);
+
+    // The producing agent is the only identity in the live loop; it is the
+    // emitter we pass. We never fabricate an independent (emitter !== producer)
+    // identity — doing so would make the producer-not-emitter check theatre.
+    const result = this.disposition.emit(unit, proposed, agentName, move);
+
+    let pendingIndependentEmitter = false;
+    if (!result.ok && result.rejection?.kind === "producer-is-emitter") {
+      // A legitimate success the producer may not self-emit. Defer the binding
+      // emission to an independent emitter. Named no-op seam until Slice 8.
+      this.awaitIndependentEmitter(unit, proposed, move);
+      pendingIndependentEmitter = true;
+    }
+
+    const outcome: UnitExitOutcome = {
+      unit: unit.unit,
+      producer: agentName,
+      proposed,
+      emitted: result.ok,
+      pendingIndependentEmitter,
+      rejection: result.rejection,
+    };
+    this.storeUnitExit(output.run_id, outcome);
+    return outcome;
+  }
+
+  /**
+   * Map a run status to the unit's proposed disposition. A "completed" unit
+   * proposes its legal success BY SHAPE (PASS for one declared gate, SUCCESS for
+   * more than one) — never a self-chosen success. Every other status proposes a
+   * non-success disposition, which a producer may legitimately record.
+   */
+  private proposeDisposition(status: StructuredOutput["status"], unit: Unit): Disposition {
+    switch (status) {
+      case "completed": return this.disposition.legalSuccessFor(unit);
+      case "failed": return "FIX";
+      case "partial": return "FIX";
+      case "timeout": return "BLOCK";
+      case "blocked": return "BLOCK";
+      case "needs_review": return "ASK";
+      case "cancelled": return "STOP";
+      default: return "AUDIT";
+    }
+  }
+
+  /**
+   * The unit's declared gates. A single delegated agent run is a leaf unit with
+   * one declared gate (→ PASS), per ADR-0007 §3c. Multi-gate composition is a
+   * later concern; the live loop delegates one agent per unit today.
+   */
+  private declaredGatesFor(agentName: string, output: StructuredOutput, runConfig?: RunConfig): string[] {
+    return [`${agentName}:${runConfig?.mode ?? output.mode ?? "unit"}`];
+  }
+
+  /** Stable per-unit identifier for the live exit. */
+  private unitIdFor(agentName: string, output: StructuredOutput): string {
+    return `${agentName}@${output.run_id || "run"}`;
+  }
+
+  /**
+   * Build the non-identity columns of the score move from runtime data. This is
+   * a delivery-time move, so the governance metadata (slice/adr_ids/contract_ids)
+   * is empty; it is grounded by the run/agent/status it references.
+   */
+  private buildMove(agent: AgentV2Config | undefined, output: StructuredOutput): MoveContext {
+    return {
+      timestamp: new Date().toISOString(),
+      spec: output.run_id ? `araya-run:${output.run_id}` : "araya-delivery",
+      slice: "",
+      adr_ids: [],
+      contract_ids: [],
+      commit: "",
+      skillset: agent?.skills ?? [],
+      evidence_ref: `run:${output.run_id || ""} agent:${output.agent} status:${output.status}`,
+    };
+  }
+
+  /**
+   * Slice-8 seam — INTENTIONALLY a no-op in this slice. A success the producer
+   * proposed but may not self-emit awaits an INDEPENDENT emitter. Until the
+   * verifier is a governed agent (Slice 8), that emitter is the protocol
+   * (human/Daneel), out of this loop. The signature is fixed here so the Slice-8
+   * structural emitter is a wrapper, not a rewrite — the same pattern as
+   * DispositionEngine.recordIllegalTransition().
+   */
+  private awaitIndependentEmitter(_unit: Unit, _proposed: Disposition, _move: MoveContext): void {
+    /* Independent (structural) emission lands in Slice 8. No-op here; no
+       fabricated emitter, no auto-SUCCESS. */
+  }
+
+  /** Store a unit's typed exit for later inspection / verification. */
+  private storeUnitExit(runId: string, outcome: UnitExitOutcome): void {
+    if (!this.unitExits.has(runId)) this.unitExits.set(runId, []);
+    this.unitExits.get(runId)!.push(outcome);
+  }
+
+  /** Get all typed unit exits recorded for a run. */
+  getUnitExits(runId: string): UnitExitOutcome[] {
+    return this.unitExits.get(runId) ?? [];
   }
 
   /**
