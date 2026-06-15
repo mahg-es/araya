@@ -14,5 +14,9 @@ export { ToolRegistry, ToolResult } from "./tools/registry";
 export { WorktreeSandboxManager } from "./sandbox/worktree";
 export { ProviderRegistry } from "./providers/registry";
 export { TerminalApiAdapter } from "./adapters/terminal-api";
+export { DispositionEngine, DISPOSITIONS } from "./engines/disposition";
+export type { Disposition, Unit, MoveContext, EmitResult } from "./engines/disposition";
+export { ScoreLedger, resolveScoreLedgerPath } from "./ledger/score-ledger";
+export type { ScoreEntry } from "./ledger/score-ledger";
 export * from "./types";
 
