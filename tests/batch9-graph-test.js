@@ -6,7 +6,7 @@ var passed = 0, failed = 0;
 function test(name, fn) { try { fn(); console.log("  ✅ " + name); passed++; } catch(e) { console.log("  ❌ " + name + ": " + e.message); failed++; } }
 
 console.log("\n🧪 ARAYA Batch 9 — Knowledge Graph\n");
-var cwd = process.cwd();
+var cwd = require("path").resolve(__dirname, "..");
 var graphDir = path.resolve(cwd, ".araya/graph");
 
 // 1. Graph structure

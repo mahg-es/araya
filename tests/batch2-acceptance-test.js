@@ -10,7 +10,7 @@ function test(name, fn) {
 function assert(c, m) { if (!c) throw new Error(m || "assertion failed"); }
 
 console.log("\n🧪 ARAYA Batch 2 — Acceptance Governance\n");
-var cwd = process.cwd();
+var cwd = require("path").resolve(__dirname, "..");
 
 // 1. Template has new sections
 console.log("1. Template Validation");
