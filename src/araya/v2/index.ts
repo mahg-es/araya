@@ -18,5 +18,9 @@ export { DispositionEngine, DISPOSITIONS } from "./engines/disposition";
 export type { Disposition, Unit, MoveContext, EmitResult } from "./engines/disposition";
 export { ScoreLedger, resolveScoreLedgerPath } from "./ledger/score-ledger";
 export type { ScoreEntry } from "./ledger/score-ledger";
+export { ArbiterEngine, MAX_STRIKES, FLAKY_RERUN_BUDGET, PROTOCOL_HUMAN } from "./engines/arbiter";
+export type { ViolationInput, ArbiterOutcome } from "./engines/arbiter";
+export { ArbiterLedger, resolveArbiterLedgerPath } from "./ledger/arbiter-ledger";
+export type { ArbiterEntry, Severity, ViolationType, ArbiterAction } from "./ledger/arbiter-ledger";
 export * from "./types";
 

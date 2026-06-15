@@ -10,6 +10,7 @@
 // recordIllegalTransition() seam below.
 
 import type { ScoreLedger, ScoreEntry } from "../ledger/score-ledger";
+import type { ArbiterEngine } from "./arbiter";
 
 /** The eight typed dispositions — the only ways a unit may exit. */
 export type Disposition =
@@ -57,7 +58,18 @@ export interface EmitResult {
 }
 
 export class DispositionEngine {
-  constructor(private readonly ledger?: ScoreLedger) {}
+  constructor(
+    private readonly ledger?: ScoreLedger,
+    private readonly arbiter?: ArbiterEngine
+  ) {}
+
+  /** Slice/scope the arbiter attributes seam strikes to (runtime ≈ the run). */
+  private arbiterScope = "default";
+
+  /** Set the slice/scope for subsequent seam strikes (ADR-0008 per-slice scope). */
+  setArbiterScope(slice: string): void {
+    this.arbiterScope = slice;
+  }
 
   /** PASS and SUCCESS are the two success dispositions. */
   isSuccess(d: Disposition): boolean {
@@ -93,14 +105,14 @@ export class DispositionEngine {
         const reason =
           `${proposed} is not the legal success for a unit with ` +
           `${unit.declaredGates.length} declared gate(s); only ${legal} is.`;
-        this.recordIllegalTransition(unit, proposed, emitter, reason);
+        this.recordIllegalTransition(unit, proposed, emitter, reason, "illegal-transition");
         return { ok: false, disposition: null, rejection: { kind: "illegal-transition", reason } };
       }
       if (emitter === unit.producer) {
         const reason =
           `producer '${unit.producer}' may not emit its own success disposition; ` +
           `an independent emitter is required.`;
-        this.recordIllegalTransition(unit, proposed, emitter, reason);
+        this.recordIllegalTransition(unit, proposed, emitter, reason, "producer-is-emitter");
         return { ok: false, disposition: null, rejection: { kind: "producer-is-emitter", reason } };
       }
     }
@@ -120,17 +132,35 @@ export class DispositionEngine {
   }
 
   /**
-   * Slice-3 seam — INTENTIONALLY a no-op in this slice. Slice 2 detects and
-   * rejects illegal transitions (above) but records no strike and writes no
-   * arbiter ledger. A later slice implements strike accounting against this
-   * hook; the signature is fixed here so that work is a wrapper, not a rewrite.
+   * Slice-3 seam — now FILLED. When an arbiter is present, an illegal transition
+   * is recorded as a real strike against the arbiter ledger (ADR-0008): the
+   * arbiter resolves severity from the violation kind (producer-is-emitter =
+   * zero-tolerance, illegal-by-shape = standard), counts per agent per slice, and
+   * may strike the identity out (ESCALATE-and-remove).
+   *
+   * When NO arbiter is present this stays the Slice-2 no-op, preserving existing
+   * behavior. This is deliberate, not incidental: the live ADR-0007 B-2 deferral
+   * loop wires NO arbiter, because there producer-is-emitter is the per-success
+   * deferral (no independent emitter yet), not a culpable act — striking it would
+   * strike out every legitimate success. Live producer-is-emitter enforcement
+   * converges with the Slice-8 independent emitter (ADR-0008, Slice-8 deferral).
    */
   private recordIllegalTransition(
-    _unit: Unit,
-    _proposed: Disposition,
-    _emitter: string,
-    _reason: string
+    unit: Unit,
+    proposed: Disposition,
+    emitter: string,
+    reason: string,
+    kind: "illegal-transition" | "producer-is-emitter"
   ): void {
-    /* Strike accounting + arbiter ledger live in a later slice. No-op here. */
+    if (!this.arbiter) return;
+    this.arbiter.recordViolation({
+      slice: this.arbiterScope,
+      unit: unit.unit,
+      agent: emitter,
+      gate: unit.unit,
+      violation_type: kind,
+      rule_violated: reason,
+      evidence_ref: `disposition:${kind} proposed:${proposed}`,
+    });
   }
 }
