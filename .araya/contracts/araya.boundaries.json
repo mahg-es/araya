@@ -1,0 +1,9 @@
+{
+  "project": "araya",
+  "base": "../..",
+  "roots": {
+    "ax:boundary:araya/v2/ledger": "src/araya/v2/ledger",
+    "ax:boundary:araya/v2": "src/araya/v2",
+    "ax:boundary:araya": "."
+  }
+}
