@@ -12,6 +12,8 @@ import { PiAdapter } from "../adapters/pi";
 import { DispositionEngine } from "./disposition";
 import type { Disposition, Unit, MoveContext } from "./disposition";
 import { ScoreLedger, resolveScoreLedgerPath } from "../ledger/score-ledger";
+import { Verifier, PRODUCER_IS_EMITTER_STRIKE_ARMED } from "./verifier";
+import type { VerificationEvidence, VerificationResult } from "./verifier";
 
 /**
  * The typed outcome of one unit's live exit (ADR-0007). One per delegated unit.
@@ -29,6 +31,12 @@ export interface UnitExitOutcome {
   emitted: boolean;
   pendingIndependentEmitter: boolean;
   rejection?: { kind: string; reason: string };
+  /** Slice 8: the independent verifier that emitted the binding move (≠ producer). */
+  emittedBy?: string;
+  /** Slice 8: whether the verifier found evidence substantiating the success. */
+  verified?: boolean;
+  /** Slice 8: the disposition actually emitted by the verifier (may differ from proposed). */
+  emittedDisposition?: Disposition;
 }
 
 /** Find the ARAYA root containing araya.yaml */
@@ -62,18 +70,37 @@ export class DelegationEngine {
   private unitExits: Map<string, UnitExitOutcome[]> = new Map();
   private adapter: ArayaExecutionAdapter;
   private disposition: DispositionEngine;
+  /** Slice 8: the governed independent emitter. Absent → the live loop defers a
+   *  producer's success to the protocol emitter (the ADR-0007 B-2 behavior). */
+  private verifier?: Verifier;
+
+  /**
+   * Built-but-NOT-armed (ADR-0011 §6): live zero-tolerance producer-is-emitter
+   * striking is gated behind this flag, which DEFAULTS OFF. Nothing in this loop
+   * strikes while it is false; arming is a separate future decision.
+   */
+  readonly producerIsEmitterStrikeArmed: boolean = PRODUCER_IS_EMITTER_STRIKE_ARMED;
 
   /**
    * @param scoreLedgerPath Optional ledger path. Defaults to
    *   resolveScoreLedgerPath() — an env override or a repo-relative path, a
    *   governance-location-agnostic value that hardcodes no private path. Tests
    *   inject a temp path so they never touch the real ledger.
+   * @param verifier Optional governed independent emitter (Slice 8). When
+   *   provided, a producer's self-proposed success is routed to it; when absent,
+   *   the binding success defers to the protocol emitter (behavior unchanged).
    */
-  constructor(config: ArayaV2Config, adapter?: ArayaExecutionAdapter, scoreLedgerPath?: string) {
+  constructor(config: ArayaV2Config, adapter?: ArayaExecutionAdapter, scoreLedgerPath?: string, verifier?: Verifier) {
     this.config = config;
     this.root = findArayaRoot(dirname(__filename) || process.cwd());
     this.adapter = adapter || new PiAdapter(this.config);
     this.disposition = new DispositionEngine(new ScoreLedger(scoreLedgerPath ?? resolveScoreLedgerPath()));
+    this.verifier = verifier;
+  }
+
+  /** Wire the governed verifier after construction (used by the live wiring/tests). */
+  setVerifier(verifier: Verifier): void {
+    this.verifier = verifier;
   }
 
   /**
@@ -198,20 +225,37 @@ export class DelegationEngine {
     const result = this.disposition.emit(unit, proposed, agentName, move);
 
     let pendingIndependentEmitter = false;
+    let emitted = result.ok;
+    let emittedBy: string | undefined = result.ok ? agentName : undefined;
+    let verified: boolean | undefined;
+    let emittedDisposition: Disposition | undefined = result.ok ? proposed : undefined;
+
     if (!result.ok && result.rejection?.kind === "producer-is-emitter") {
-      // A legitimate success the producer may not self-emit. Defer the binding
-      // emission to an independent emitter. Named no-op seam until Slice 8.
-      this.awaitIndependentEmitter(unit, proposed, move);
-      pendingIndependentEmitter = true;
+      // The producer may NOT self-emit its success — refused by emit() above
+      // (the machine guarantee, ADR-0004/ADR-0011 §5). Route the proposal to the
+      // governed independent verifier if one is wired; otherwise defer to the
+      // protocol emitter (the ADR-0007 B-2 behavior, unchanged).
+      const vr = this.awaitIndependentEmitter(unit, proposed, move, output);
+      if (vr) {
+        emitted = vr.emitted;
+        emittedBy = vr.emitted ? vr.emitter : undefined;
+        verified = vr.verified;
+        emittedDisposition = vr.disposition;
+      } else {
+        pendingIndependentEmitter = true;
+      }
     }
 
     const outcome: UnitExitOutcome = {
       unit: unit.unit,
       producer: agentName,
       proposed,
-      emitted: result.ok,
+      emitted,
       pendingIndependentEmitter,
       rejection: result.rejection,
+      emittedBy,
+      verified,
+      emittedDisposition,
     };
     this.storeUnitExit(output.run_id, outcome);
     return outcome;
@@ -269,16 +313,33 @@ export class DelegationEngine {
   }
 
   /**
-   * Slice-8 seam — INTENTIONALLY a no-op in this slice. A success the producer
-   * proposed but may not self-emit awaits an INDEPENDENT emitter. Until the
-   * verifier is a governed agent (Slice 8), that emitter is the protocol
-   * (human/Daneel), out of this loop. The signature is fixed here so the Slice-8
-   * structural emitter is a wrapper, not a rewrite — the same pattern as
-   * DispositionEngine.recordIllegalTransition().
+   * Slice-8 seam — now FILLED when a governed verifier is wired. A success the
+   * producer proposed but may not self-emit is routed to the INDEPENDENT verifier
+   * (`daneel`), which reads the attached executable evidence and emits the binding
+   * disposition under its OWN roster identity — making producer-not-emitter a
+   * machine guarantee (ADR-0011 §5). With NO verifier wired this stays the prior
+   * deferral (returns null → protocol emitter), so the live loop's pre-Slice-8
+   * behavior is preserved exactly.
    */
-  private awaitIndependentEmitter(_unit: Unit, _proposed: Disposition, _move: MoveContext): void {
-    /* Independent (structural) emission lands in Slice 8. No-op here; no
-       fabricated emitter, no auto-SUCCESS. */
+  private awaitIndependentEmitter(
+    unit: Unit,
+    proposed: Disposition,
+    move: MoveContext,
+    output: StructuredOutput
+  ): VerificationResult | null {
+    if (!this.verifier) return null;
+    return this.verifier.emit(unit, proposed, move, this.buildEvidence(output));
+  }
+
+  /**
+   * Extract the machine-readable, model-free evidence the verifier reads (ADR-0011
+   * §4) from a unit's structured output. The producer's assertion is never itself
+   * evidence — only concrete test/gate signals count.
+   */
+  private buildEvidence(output: StructuredOutput): VerificationEvidence {
+    const ev: VerificationEvidence = {};
+    if (output.tests_run > 0) ev.tests = { run: output.tests_run, passed: output.tests_passed };
+    return ev;
   }
 
   /** Store a unit's typed exit for later inspection / verification. */

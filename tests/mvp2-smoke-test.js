@@ -89,9 +89,12 @@ test("circuit_breakers are configured", () => {
   assert(typeof cb.max_retries === "number");
 });
 
-test("has 28 agents", () => {
+test("has 29 agents", () => {
+  // 29 since AX Slice 8 (ADR-0011) formalized the `daneel` verifier as a
+  // governed agent role. (Pre-existing README/CONTRIBUTING count drift is a
+  // separate reconciliation, out of this slice's scope.)
   const agents = Object.keys(config.agents ?? {});
-  assert(agents.length === 28, `Expected 28, got ${agents.length}`);
+  assert(agents.length === 29, `Expected 29, got ${agents.length}`);
 });
 
 // ── 2. Agent Model Tier Resolution ───────────────────────────────────────

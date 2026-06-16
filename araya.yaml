@@ -149,6 +149,24 @@ artifact_storage:
   approvals: .araya/approvals/
   memory: .araya/memory/
 agents:
+  daneel:
+    role: Reality Authority (Verifier)
+    emoji: 🛡️
+    model_tier: reasoning
+    primary_provider: pi.dev
+    max_turns: 20
+    permissions:
+      can_write_code: false
+      can_approve_review: true
+      can_emit_binding: true
+      can_produce_deliverables: false
+    capabilities:
+    - reality_verification
+    - evidence_inspection
+    - disposition_emission
+    skills:
+    - reality-verification
+    - ax-governance
   manu:
     role: Product Owner
     emoji: 👑
