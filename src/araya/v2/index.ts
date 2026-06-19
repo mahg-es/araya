@@ -38,5 +38,13 @@ export { walkChain } from "./contract/walk-chain";
 export type { ChainResult, PrescriptiveRule } from "./contract/walk-chain";
 export { spliceDescriptive, observeDescriptive, regenerateDescriptive } from "./contract/descriptive-generator";
 export { prescriptiveAsReadinessGates } from "./contract/gate-seam";
+export { extractTopLevelExports, extractSurface, observeSurface } from "./contract/surface";
+export {
+  PUBLISHED_INTERFACE_KIND, PUBLIC_CONTRACT_STRIKE_ARMED,
+  parsePromisedSurface, detectBreakingChange, checkPublishedInterface, renderInterfaceDescriptive,
+} from "./contract/published-interface";
+export type { BreakingChange, InterfaceCheck } from "./contract/published-interface";
+export { apiContractInvocation } from "./engines/certification/api-contract-target";
+export type { ApiContractTarget } from "./engines/certification/api-contract-target";
 export * from "./types";
 

@@ -9,6 +9,7 @@
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { DESCRIPTIVE_BEGIN, DESCRIPTIVE_END } from "./contract";
+import { extractTopLevelExports } from "./surface";
 
 /**
  * Replace the content between the descriptive markers in `raw` with `body`,
@@ -34,8 +35,7 @@ export function observeDescriptive(physicalRoot: string): string {
   const lines: string[] = [`_Generated from \`${physicalRoot.split("/").slice(-2).join("/")}\` — observed state, do not edit._`, ""];
   for (const f of files) {
     const src = readFileSync(join(physicalRoot, f), "utf-8");
-    const exports = Array.from(src.matchAll(/^export\s+(?:class|function|interface|type|const)\s+([A-Za-z0-9_]+)/gm))
-      .map(m => m[1]);
+    const exports = extractTopLevelExports(src);
     const size = statSync(join(physicalRoot, f)).size;
     lines.push(`- \`${f}\` (${size} bytes) — exports: ${exports.length ? exports.join(", ") : "(none)"}`);
   }

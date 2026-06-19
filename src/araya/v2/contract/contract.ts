@@ -32,6 +32,15 @@ export interface BoundaryFrontmatter {
   parent?: string;
   /** The ADR that governs prescriptive changes to this boundary. */
   adr?: string;
+  /** Boundary kind. "published-interface" marks the ADR-0012 overlay. */
+  kind?: string;
+  /** Published-interface overlay (ADR-0012): the pinned interface version
+   *  (MAJOR.REVISION.HOTFIX, reusing the araya.yaml standard). */
+  interfaceVersion?: string;
+  /** Published-interface overlay: the project-base-relative source file whose
+   *  exported surface is the promised contract. A declared pointer, not the
+   *  boundary identity (which stays logical). */
+  interfaceSource?: string;
 }
 
 export interface ParsedContract {
@@ -82,6 +91,12 @@ export class BoundaryResolver {
   get project(): string {
     return this.manifest.project;
   }
+
+  /** Resolve a project-base-relative path (e.g. a declared interface_source) to
+   *  an absolute path via the manifest base — portable, never cwd-derived. */
+  resolveFromBase(relPath: string): string {
+    return pathResolve(this.manifest.base, relPath);
+  }
 }
 
 /** Split an AGENTS.md string into frontmatter + the two layers. */
@@ -113,6 +128,9 @@ function parseFrontmatter(raw: string): BoundaryFrontmatter {
     boundary: data.boundary,
     parent: typeof data.parent === "string" ? data.parent : undefined,
     adr: typeof data.adr === "string" ? data.adr : undefined,
+    kind: typeof data.kind === "string" ? data.kind : undefined,
+    interfaceVersion: typeof data.interface_version === "string" ? data.interface_version : undefined,
+    interfaceSource: typeof data.interface_source === "string" ? data.interface_source : undefined,
   };
 }
 
