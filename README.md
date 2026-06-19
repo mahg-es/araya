@@ -4,7 +4,7 @@
 </div>
 
 <p align="center">
-    <strong>28 agents (26 active + 2 dormant). 120 skills. 12 domains. One pi session.</strong>
+    <strong>29 agents (27 active + 2 dormant). 120 skills. 12 domains. One pi session.</strong>
 </p>
 
 <p align="center">
@@ -448,7 +448,7 @@ ARAYA
 ├── Circuit Breaker Engine (failure thresholds, retry limits)
 ├── Delegation Engine (subagent spawning with isolated contexts)
 ├── DependencyAnalyzer (DAG-aware phase optimization)
-└── 28 Agents across 12 domains (26 active + 2 dormant)
+└── 29 Agents across 12 domains (27 active + 2 dormant)
 ```
 
 ### Governance Pipeline
@@ -593,7 +593,7 @@ Then `/reload` and you're ready.
 | Step | Action |
 |------|--------|
 | Extensions | Symlinks ARAYA + subagent + notifier to `~/.pi/agent/extensions/` |
-| Agents | Copies 24 agent definitions to `~/.pi/agent/agents/` |
+| Agents | Copies 28 agent definitions to `~/.pi/agent/agents/` |
 | Skills | Symlinks 120 skills to `~/.pi/agent/skills/araya/` |
 | Prompts | Symlinks prompt templates to `~/.pi/agent/prompts/araya/` |
 | Config | Copies `araya.yaml` (single source of truth for version) |
@@ -607,8 +607,8 @@ araya/
 ├── araya.yaml              # Configuration (single source of truth for version)
 ├── araya-setup.sh          # One-command installer
 ├── extensions/araya/       # ARAYA pi extension (command handlers)
-├── .pi/agents/             # 24 agent definitions (YAML frontmatter)
-├── prompts/agents/         # 24 personality prompt templates
+├── .pi/agents/             # 28 agent definitions (YAML frontmatter; daneel verifier defined in extensions/)
+├── prompts/agents/         # 26 personality prompt templates
 ├── skills/                 # 120 SKILL.md files across 12 domains
 ├── src/araya/v2/           # Orchestration engine (TypeScript)
 │   └── engines/            # Workflow, model, quality, budget, circuit, delegation

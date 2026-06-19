@@ -1,6 +1,8 @@
 // ARAYA v2 — Types
 // Shared type definitions for the orchestration framework.
 
+import type { Disposition } from "./engines/disposition";
+
 // ─── Core Types ──────────────────────────────────────────────────────────
 
 export interface ArayaV2Config {
@@ -165,6 +167,14 @@ export interface StructuredOutput {
   summary: string;
   next_phase: string;
   capabilities_used: string[];
+  /**
+   * ADR-0007 §3b — the disposition the producing agent PROPOSES for its unit.
+   * Optional and additive: when absent, the live wiring derives the proposed
+   * exit from `status` by unit shape. The producer proposes; an independent
+   * emitter emits (deferred to Slice 8). It is never used to auto-certify the
+   * producer's own success.
+   */
+  proposed_disposition?: Disposition;
 }
 
 export interface Risk {

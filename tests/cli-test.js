@@ -74,13 +74,13 @@ test("resolveAdapter throws on unsupported adapter names", () => {
 const cliPath = resolve(__dirname, "..", "dist", "cli.js");
 
 test("CLI prints help message when run with no arguments", () => {
-  const proc = spawnSync("node", [cliPath], { encoding: "utf-8" });
+  const proc = spawnSync("node", [cliPath], { encoding: "utf-8", cwd: resolve(__dirname, "..") });
   assert(proc.status === 1, "Exit status should be 1");
   assert(proc.stdout.includes("ARAYA Standalone CLI Runner"), "Should print banner");
 });
 
 test("CLI capabilities command executes successfully", () => {
-  const proc = spawnSync("node", [cliPath, "capabilities", "--adapter", "mock"], { encoding: "utf-8" });
+  const proc = spawnSync("node", [cliPath, "capabilities", "--adapter", "mock"], { encoding: "utf-8", cwd: resolve(__dirname, "..") });
   assert(proc.status === 0, `Exit status should be 0, got ${proc.status}. Stderr: ${proc.stderr}`);
   assert(proc.stdout.includes("Host Capabilities for adapter \"mock\""), "Should print capabilities header");
   assert(proc.stdout.includes("Bash execution: ✅ Enabled"), "Should list bash enabled");
@@ -88,7 +88,7 @@ test("CLI capabilities command executes successfully", () => {
 });
 
 test("CLI validate command executes successfully", () => {
-  const proc = spawnSync("node", [cliPath, "validate"], { encoding: "utf-8" });
+  const proc = spawnSync("node", [cliPath, "validate"], { encoding: "utf-8", cwd: resolve(__dirname, "..") });
   assert(proc.status === 0, `Exit status should be 0, got ${proc.status}. Stderr: ${proc.stderr}`);
   assert(proc.stdout.includes("Validating ARAYA environment..."), "Should print validating message");
   assert(proc.stdout.includes("Config found"), "Should validate config");

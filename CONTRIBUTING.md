@@ -49,7 +49,7 @@ ARAYA follows these principles:
 1. Fork and create a feature branch: `feature/your-feature`
 2. Follow the governance pipeline: SDD → BDD → TDD → Implementation
 3. Run the smoke test: `node tests/mvp2-smoke-test.js`
-4. Ensure all 23 agents resolve correctly
+4. Ensure all 29 agents resolve correctly
 5. Submit PR to `dev` branch with description
 
 ## Governance

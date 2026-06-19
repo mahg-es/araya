@@ -7,7 +7,7 @@ var passed = 0, failed = 0;
 function test(name, fn) { try { fn(); console.log("  ✅ " + name); passed++; } catch(e) { console.log("  ❌ " + name + ": " + e.message); failed++; } }
 
 console.log("\n🧪 ARAYA Batch 3 — Lifecycle & Traceability\n");
-var cwd = process.cwd();
+var cwd = require("path").resolve(__dirname, "..");
 
 // 1. Lifecycle diagram exists
 console.log("1. Diagrams");

@@ -1,4 +1,4 @@
-version: 0.12.0
+version: 0.13.0
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
 delivery_modes:
   full:
@@ -149,6 +149,23 @@ artifact_storage:
   approvals: .araya/approvals/
   memory: .araya/memory/
 agents:
+  daneel:
+    role: Reality Authority (Verifier)
+    emoji: 🛡️
+    model_tier: reasoning
+    primary_provider: pi.dev
+    max_turns: 20
+    permissions:
+      can_write_code: false
+      can_approve_review: true
+      can_emit_binding: true
+      can_produce_deliverables: false
+    capabilities:
+    - reality_verification
+    - evidence_inspection
+    - disposition_emission
+    skills:
+    - reality-verification
   manu:
     role: Product Owner
     emoji: 👑

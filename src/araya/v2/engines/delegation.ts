@@ -9,6 +9,35 @@ import { randomUUID } from "node:crypto";
 import type { ArayaV2Config, AgentV2Config, StructuredOutput, RunConfig } from "../types";
 import { ArayaExecutionAdapter } from "../adapter";
 import { PiAdapter } from "../adapters/pi";
+import { DispositionEngine } from "./disposition";
+import type { Disposition, Unit, MoveContext } from "./disposition";
+import { ScoreLedger, resolveScoreLedgerPath } from "../ledger/score-ledger";
+import { Verifier, PRODUCER_IS_EMITTER_STRIKE_ARMED } from "./verifier";
+import type { VerificationEvidence, VerificationResult } from "./verifier";
+
+/**
+ * The typed outcome of one unit's live exit (ADR-0007). One per delegated unit.
+ * `emitted` is true only when a binding move was recorded to the score ledger.
+ * A success-class proposal is NEVER emitted in-loop: the producing agent is the
+ * only identity present, so emit() rejects it producer-is-emitter and the
+ * binding success is deferred to an independent emitter (protocol/Daneel now;
+ * structural Slice-8 emitter later). `pendingIndependentEmitter` marks exactly
+ * that deferral.
+ */
+export interface UnitExitOutcome {
+  unit: string;
+  producer: string;
+  proposed: Disposition;
+  emitted: boolean;
+  pendingIndependentEmitter: boolean;
+  rejection?: { kind: string; reason: string };
+  /** Slice 8: the independent verifier that emitted the binding move (≠ producer). */
+  emittedBy?: string;
+  /** Slice 8: whether the verifier found evidence substantiating the success. */
+  verified?: boolean;
+  /** Slice 8: the disposition actually emitted by the verifier (may differ from proposed). */
+  emittedDisposition?: Disposition;
+}
 
 /** Find the ARAYA root containing araya.yaml */
 function findArayaRoot(startDir: string): string {
@@ -38,12 +67,40 @@ export class DelegationEngine {
   private root: string;
   private config: ArayaV2Config;
   private runOutputs: Map<string, StructuredOutput[]> = new Map();
+  private unitExits: Map<string, UnitExitOutcome[]> = new Map();
   private adapter: ArayaExecutionAdapter;
+  private disposition: DispositionEngine;
+  /** Slice 8: the governed independent emitter. Absent → the live loop defers a
+   *  producer's success to the protocol emitter (the ADR-0007 B-2 behavior). */
+  private verifier?: Verifier;
 
-  constructor(config: ArayaV2Config, adapter?: ArayaExecutionAdapter) {
+  /**
+   * Built-but-NOT-armed (ADR-0011 §6): live zero-tolerance producer-is-emitter
+   * striking is gated behind this flag, which DEFAULTS OFF. Nothing in this loop
+   * strikes while it is false; arming is a separate future decision.
+   */
+  readonly producerIsEmitterStrikeArmed: boolean = PRODUCER_IS_EMITTER_STRIKE_ARMED;
+
+  /**
+   * @param scoreLedgerPath Optional ledger path. Defaults to
+   *   resolveScoreLedgerPath() — an env override or a repo-relative path, a
+   *   governance-location-agnostic value that hardcodes no private path. Tests
+   *   inject a temp path so they never touch the real ledger.
+   * @param verifier Optional governed independent emitter (Slice 8). When
+   *   provided, a producer's self-proposed success is routed to it; when absent,
+   *   the binding success defers to the protocol emitter (behavior unchanged).
+   */
+  constructor(config: ArayaV2Config, adapter?: ArayaExecutionAdapter, scoreLedgerPath?: string, verifier?: Verifier) {
     this.config = config;
     this.root = findArayaRoot(dirname(__filename) || process.cwd());
     this.adapter = adapter || new PiAdapter(this.config);
+    this.disposition = new DispositionEngine(new ScoreLedger(scoreLedgerPath ?? resolveScoreLedgerPath()));
+    this.verifier = verifier;
+  }
+
+  /** Wire the governed verifier after construction (used by the live wiring/tests). */
+  setVerifier(verifier: Verifier): void {
+    this.verifier = verifier;
   }
 
   /**
@@ -75,8 +132,225 @@ export class DelegationEngine {
       modelTier,
       onEvent
     );
+
+    // ADR-0004 §3.2 — can_write_code emission block (Slice 1). An agent with
+    // can_write_code:false may plan, review, approve, question, and delegate,
+    // but may not itself be the source of a produced artifact. Enforced here,
+    // at the boundary where a produced deliverable would enter the system, so a
+    // blocked emission is never stored or returned.
+    this.enforceWritePermission(agentName, agent, output);
+
+    // ADR-0007 — live disposition exit. The unit's typed exit is computed and
+    // recorded HERE, at the canonical live boundary (after the Slice-1 emission
+    // block, before the output is stored). Additive and non-throwing: `output`
+    // and its `status` are left untouched, so the downstream readers of
+    // status:"completed" (quality-gate, persistRun overall_status, terminal-api
+    // cleanup, cli display) are unaffected.
+    this.recordUnitExit(agentName, agent, output, runConfig);
+
     this.storeOutput(output.run_id, agentName, output);
     return output;
+  }
+
+  /**
+   * ADR-0004 §3.2 enforcement (Slice 1): block a can_write_code:false agent
+   * from emitting a deliverable.
+   *
+   * The gate keys off the explicit `can_write_code` flag ONLY — the model tier
+   * is never consulted (e.g. isla/maria are reasoning-tier with
+   * can_write_code:true and are therefore unaffected). The predicate mirrors
+   * the existing display check (`can_write_code === false`): a missing flag or
+   * `true` is not gated, preserving current behavior for every other agent.
+   *
+   * "Emitting a deliverable" means the agent is the source of a produced
+   * artifact, detected from the output it returns (files changed or tests
+   * added). Non-producing outputs — plans, reviews, approvals, delegations —
+   * carry no artifacts and pass through unaffected.
+   */
+  private enforceWritePermission(
+    agentName: string,
+    agent: AgentV2Config | undefined,
+    output: StructuredOutput
+  ): void {
+    if (agent?.permissions?.can_write_code !== false) return; // true or unset → not gated
+
+    const filesChanged = output.files_changed?.length ?? 0;
+    const testsAdded = output.tests_added ?? 0;
+    const producedArtifact = filesChanged > 0 || testsAdded > 0;
+    if (!producedArtifact) return; // plan / review / approve / delegate — permitted
+
+    throw new Error(
+      `Delegation blocked (ADR-0004): agent '${agentName}' has ` +
+        `can_write_code:false and may not emit a deliverable ` +
+        `(produced ${filesChanged} file change(s) and ${testsAdded} test(s) added). ` +
+        `Permitted actions for this agent: plan, review, approve, question, delegate.`
+    );
+  }
+
+  /**
+   * ADR-0007 — record the unit's typed live exit. Called once per delegated unit
+   * at the canonical exit. Computes exactly one typed disposition and records the
+   * move that may legitimately be recorded in-loop, WITHOUT ever auto-certifying
+   * the producer's own success.
+   *
+   * - A success-class proposal (status "completed", chosen BY SHAPE) is attempted
+   *   with the producing agent as emitter — the only identity the live loop has.
+   *   emit() therefore rejects it producer-is-emitter (the real ADR-0004 check
+   *   firing live; no emitter is fabricated), records nothing, and the binding
+   *   success is deferred to an independent emitter via awaitIndependentEmitter()
+   *   (protocol/Daneel now; structural Slice-8 emitter later).
+   * - A non-success disposition is not identity-gated: a producer may flag a
+   *   defect in its own work, so it is emitted and recorded as one ledger move.
+   * - An illegal-by-shape proposal (e.g. a producer proposing PASS on a
+   *   multi-gate unit via proposed_disposition) is rejected illegal-transition
+   *   and records nothing.
+   */
+  recordUnitExit(
+    agentName: string,
+    agent: AgentV2Config | undefined,
+    output: StructuredOutput,
+    runConfig?: RunConfig
+  ): UnitExitOutcome {
+    const unit: Unit = {
+      unit: this.unitIdFor(agentName, output),
+      declaredGates: this.declaredGatesFor(agentName, output, runConfig),
+      producer: agentName,
+    };
+    const proposed = output.proposed_disposition ?? this.proposeDisposition(output.status, unit);
+    const move = this.buildMove(agent, output);
+
+    // The producing agent is the only identity in the live loop; it is the
+    // emitter we pass. We never fabricate an independent (emitter !== producer)
+    // identity — doing so would make the producer-not-emitter check theatre.
+    const result = this.disposition.emit(unit, proposed, agentName, move);
+
+    let pendingIndependentEmitter = false;
+    let emitted = result.ok;
+    let emittedBy: string | undefined = result.ok ? agentName : undefined;
+    let verified: boolean | undefined;
+    let emittedDisposition: Disposition | undefined = result.ok ? proposed : undefined;
+
+    if (!result.ok && result.rejection?.kind === "producer-is-emitter") {
+      // The producer may NOT self-emit its success — refused by emit() above
+      // (the machine guarantee, ADR-0004/ADR-0011 §5). Route the proposal to the
+      // governed independent verifier if one is wired; otherwise defer to the
+      // protocol emitter (the ADR-0007 B-2 behavior, unchanged).
+      const vr = this.awaitIndependentEmitter(unit, proposed, move, output);
+      if (vr) {
+        emitted = vr.emitted;
+        emittedBy = vr.emitted ? vr.emitter : undefined;
+        verified = vr.verified;
+        emittedDisposition = vr.disposition;
+      } else {
+        pendingIndependentEmitter = true;
+      }
+    }
+
+    const outcome: UnitExitOutcome = {
+      unit: unit.unit,
+      producer: agentName,
+      proposed,
+      emitted,
+      pendingIndependentEmitter,
+      rejection: result.rejection,
+      emittedBy,
+      verified,
+      emittedDisposition,
+    };
+    this.storeUnitExit(output.run_id, outcome);
+    return outcome;
+  }
+
+  /**
+   * Map a run status to the unit's proposed disposition. A "completed" unit
+   * proposes its legal success BY SHAPE (PASS for one declared gate, SUCCESS for
+   * more than one) — never a self-chosen success. Every other status proposes a
+   * non-success disposition, which a producer may legitimately record.
+   */
+  private proposeDisposition(status: StructuredOutput["status"], unit: Unit): Disposition {
+    switch (status) {
+      case "completed": return this.disposition.legalSuccessFor(unit);
+      case "failed": return "FIX";
+      case "partial": return "FIX";
+      case "timeout": return "BLOCK";
+      case "blocked": return "BLOCK";
+      case "needs_review": return "ASK";
+      case "cancelled": return "STOP";
+      default: return "AUDIT";
+    }
+  }
+
+  /**
+   * The unit's declared gates. A single delegated agent run is a leaf unit with
+   * one declared gate (→ PASS), per ADR-0007 §3c. Multi-gate composition is a
+   * later concern; the live loop delegates one agent per unit today.
+   */
+  private declaredGatesFor(agentName: string, output: StructuredOutput, runConfig?: RunConfig): string[] {
+    return [`${agentName}:${runConfig?.mode ?? output.mode ?? "unit"}`];
+  }
+
+  /** Stable per-unit identifier for the live exit. */
+  private unitIdFor(agentName: string, output: StructuredOutput): string {
+    return `${agentName}@${output.run_id || "run"}`;
+  }
+
+  /**
+   * Build the non-identity columns of the score move from runtime data. This is
+   * a delivery-time move, so the governance metadata (slice/adr_ids/contract_ids)
+   * is empty; it is grounded by the run/agent/status it references.
+   */
+  private buildMove(agent: AgentV2Config | undefined, output: StructuredOutput): MoveContext {
+    return {
+      timestamp: new Date().toISOString(),
+      spec: output.run_id ? `araya-run:${output.run_id}` : "araya-delivery",
+      slice: "",
+      adr_ids: [],
+      contract_ids: [],
+      commit: "",
+      skillset: agent?.skills ?? [],
+      evidence_ref: `run:${output.run_id || ""} agent:${output.agent} status:${output.status}`,
+    };
+  }
+
+  /**
+   * Slice-8 seam — now FILLED when a governed verifier is wired. A success the
+   * producer proposed but may not self-emit is routed to the INDEPENDENT verifier
+   * (`daneel`), which reads the attached executable evidence and emits the binding
+   * disposition under its OWN roster identity — making producer-not-emitter a
+   * machine guarantee (ADR-0011 §5). With NO verifier wired this stays the prior
+   * deferral (returns null → protocol emitter), so the live loop's pre-Slice-8
+   * behavior is preserved exactly.
+   */
+  private awaitIndependentEmitter(
+    unit: Unit,
+    proposed: Disposition,
+    move: MoveContext,
+    output: StructuredOutput
+  ): VerificationResult | null {
+    if (!this.verifier) return null;
+    return this.verifier.emit(unit, proposed, move, this.buildEvidence(output));
+  }
+
+  /**
+   * Extract the machine-readable, model-free evidence the verifier reads (ADR-0011
+   * §4) from a unit's structured output. The producer's assertion is never itself
+   * evidence — only concrete test/gate signals count.
+   */
+  private buildEvidence(output: StructuredOutput): VerificationEvidence {
+    const ev: VerificationEvidence = {};
+    if (output.tests_run > 0) ev.tests = { run: output.tests_run, passed: output.tests_passed };
+    return ev;
+  }
+
+  /** Store a unit's typed exit for later inspection / verification. */
+  private storeUnitExit(runId: string, outcome: UnitExitOutcome): void {
+    if (!this.unitExits.has(runId)) this.unitExits.set(runId, []);
+    this.unitExits.get(runId)!.push(outcome);
+  }
+
+  /** Get all typed unit exits recorded for a run. */
+  getUnitExits(runId: string): UnitExitOutcome[] {
+    return this.unitExits.get(runId) ?? [];
   }
 
   /**

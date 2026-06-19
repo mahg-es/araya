@@ -16,6 +16,19 @@
   ],
   "author": "The Data Professor",
   "license": "MIT",
+  "files": [
+    "extensions/",
+    "skills/",
+    "prompts/",
+    ".pi/",
+    "src/",
+    "dist/",
+    "araya.yaml",
+    "araya-setup.sh",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
   "pi": {
     "extensions": [
       "./extensions/araya"
@@ -37,10 +50,14 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.9.1",
     "better-sqlite3": "^12.10.0",
+    "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   },
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/cli.ts"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

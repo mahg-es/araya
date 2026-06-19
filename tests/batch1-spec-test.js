@@ -8,7 +8,7 @@ function test(name, fn) { try { fn(); console.log(`  ✅ ${name}`); passed++; } 
 
 console.log("\n🧪 ARAYA Batch 1 — Specification Layer\n");
 
-const cwd = process.cwd();
+const cwd = require("path").resolve(__dirname, "..");
 const templatesDir = resolve(cwd, ".araya/templates");
 
 // 1. Templates exist
