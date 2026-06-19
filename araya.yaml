@@ -166,7 +166,6 @@ agents:
     - disposition_emission
     skills:
     - reality-verification
-    - ax-governance
   manu:
     role: Product Owner
     emoji: 👑

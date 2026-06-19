@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What ARAYA is
 
-ARAYA is **not a standalone application** — it is an extension framework for [pi.dev](https://pi.dev) that turns a single pi session into a multi-agent AI SDLC organization (28 agents, 120 skills). It is installed by **symlinking/copying its files into `~/.pi/agent/`** (see `araya-setup.sh`); pi then loads the extension at runtime.
+ARAYA is **not a standalone application** — it is an extension framework for [pi.dev](https://pi.dev) that turns a single pi session into a multi-agent AI SDLC organization (29 agents, 120 skills). It is installed by **symlinking/copying its files into `~/.pi/agent/`** (see `araya-setup.sh`); pi then loads the extension at runtime.
 
 The system is overwhelmingly **configuration + markdown driven**. The TypeScript in `src/` is a secondary orchestration engine + standalone CLI; most behavior comes from `araya.yaml`, the agent prompts, and the skills.
 
@@ -25,7 +25,7 @@ Tests are CommonJS `.js` files that load `araya.yaml` and exercise the engines d
 
 ## Architecture: the layers and their flow
 
-1. **`araya.yaml` — single source of truth.** Defines version, all 28 agents (role, `model_tier`, permissions, skills), delivery modes, workflow policies, model tiers, execution budgets, circuit breakers, branch strategy, and provider configs. The extension reads this at runtime; changing agent capabilities or modes means editing YAML, not code.
+1. **`araya.yaml` — single source of truth.** Defines version, all 29 agents (role, `model_tier`, permissions, skills), delivery modes, workflow policies, model tiers, execution budgets, circuit breakers, branch strategy, and provider configs. The extension reads this at runtime; changing agent capabilities or modes means editing YAML, not code.
 
 2. **`extensions/araya/index.ts` — the pi extension.** At load it calls `findArayaRoot()` (walks up for `araya.yaml`, resolving symlinks), reads the YAML, and registers a slash command per agent plus `/araya run`. Agent prompts are assembled at call time from `araya.yaml` config + the personality file.
 
