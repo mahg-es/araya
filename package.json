@@ -41,9 +41,11 @@
     ]
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@types/blessed": "^0.1.27",
     "blessed": "^0.1.81",
-    "js-yaml": "^4.1.1"
+    "js-yaml": "^4.1.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
