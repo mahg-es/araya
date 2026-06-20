@@ -244,24 +244,25 @@ export default function (pi: ExtensionAPI) {
         } else {
           lines.push(`/araya:status → full roster | /araya <agent> <task> → delegate`);
         }
-              // PROJECT-001 — Repository hygiene check
-      const projectViolations: string[] = [];
-      if (existsSync(resolve(cwd, "memory"))) {
-        const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
-        if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
-      }
-      if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
-      if (existsSync(resolve(cwd, "docs/operations"))) {
-        const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
-        if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
-      }
-      if (projectViolations.length > 0) {
-        lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`), 
-          "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
-        authConflicts.push(...projectViolations);
-      }
+        // PROJECT-001 — Repository hygiene check
+        const cwd = process.cwd();
+        const { readdirSync } = await import("node:fs");
+        const projectViolations: string[] = [];
+        if (existsSync(resolve(cwd, "memory"))) {
+          const memFiles = readdirSync(resolve(cwd, "memory")).filter(f => f.endsWith(".md"));
+          if (memFiles.length > 0) projectViolations.push(`memory/ (${memFiles.length} files) → .araya/memory/`);
+        }
+        if (existsSync(resolve(cwd, "docs/agents"))) projectViolations.push("docs/agents/ → .araya/agents/");
+        if (existsSync(resolve(cwd, "docs/operations"))) {
+          const opsFiles = readdirSync(resolve(cwd, "docs/operations")).filter(f => f.includes("plan") || f.includes("playbook") || f.includes("integration"));
+          if (opsFiles.length > 0) projectViolations.push(`docs/operations/ (${opsFiles.length} planning files) → .araya/plan/`);
+        }
+        if (projectViolations.length > 0) {
+          lines.push("### 🔴 PROJECT-001 Violations", ...projectViolations.map(v => `- ${v}`),
+            "ARAYA operational artifacts must live under .araya/ — project root is for customer-facing assets.", "");
+        }
 
-      ctx.ui.notify(lines.join("\n"), "info");
+        ctx.ui.notify(lines.join("\n"), projectViolations.length > 0 ? "warning" : "info");
         return;
       }
 
