@@ -149,8 +149,8 @@ artifact_storage:
   approvals: .araya/approvals/
   memory: .araya/memory/
 agents:
-  daneel:
-    role: Reality Authority (Verifier)
+  rolando:
+    role: Reality Authority (Verifier) — renamed from Daneel 2026-07-19; reports to Giskard, not delivery ops
     emoji: 🛡️
     model_tier: reasoning
     primary_provider: pi.dev
@@ -166,6 +166,20 @@ agents:
     - disposition_emission
     skills:
     - reality-verification
+  daneel:
+    role: Delegated Executor — reports to Giskard, routes to the specialist bench per task; the sole cross-project execution identity across ARAYA Portfolio and every governed delivery project (added 2026-07-19)
+    emoji: 🔨
+    model_tier: balanced
+    primary_provider: pi.dev
+    max_turns: 30
+    permissions:
+      can_write_code: true
+      can_merge_pr: false
+    capabilities:
+    - task_execution
+    - specialist_routing
+    - pr_authoring
+    skills: []
   manu:
     role: Product Owner
     emoji: 👑
