@@ -5,7 +5,7 @@ Owner: Manuel Alejandro Hernández Giuliani
 Project: ARAYA
 GitHub Organization: mahg-es
 Canonical Repository Pattern: `github.com/mahg-es/<repo-name>`
-Canonical Date: 2026-06-01
+Canonical Date: 2026-07-20
 
 This is the single canonical context file for ARAYA. It prevents context drift, duplicate instructions, obsolete capsules, and conflicting governance. All other ARAYA documents are classified here as CANONICAL, ACTIVE_REFERENCE, ACTIVE_DRAFT, RESEARCH_REFERENCE, SUPERSEDED, DEPRECATED, or ARCHIVED. If not registered here, not authoritative.
 
@@ -25,6 +25,7 @@ This is the single canonical context file for ARAYA. It prevents context drift, 
 - **Capability-Driven:** Capabilities delivered > Workstreams completed > AWUs implemented. Capability not delivered until User Journey passes UAT.
 - **Delivery Modes:** full, standard, quick, review, repair. Typo fix MUST NOT require 17-phase lifecycle.
 - **ADR-007:** Formalizes capability-driven delivery, complexity scoring, model-aware batching, traceability chain.
+- **ADR-008 (2026-07-20):** Universal Agent Tool Access — all agents have permanent read, bash, and PostOffice read/write access. Governed by ADR-008 + Constitution TOOL section + agent-tool-access-standard.md. Subject to security, destructive operations, secrets, scope, and main-branch governance restrictions.
 - **Public/Private:** Public Framework defines governance. Private Go Core enforces it.
 - **Strategic:** Do not optimize ARAYA endlessly. Success = real project delivery (mahg-pms).
 - **Multi-project coordination model (canonical, 2026-07-19):** one terminal/session per project, each anchored in that project's own repo, `AGENTS.md`, and PostOffice channel — never one terminal invoking multiple projects. Giskard is the single cross-project coordinator, working through each project's file-based PostOffice (`.araya/postoffice/`), not by operating inside each project's terminal. The Professor runs the human side of each project's terminal when he chooses to advance it; Giskard reviews/dispatches/verifies via PostOffice in between. When Giskard needs the Professor's direct attention on something, it must name the exact terminal/project to switch to, explicitly — never leave it implicit.

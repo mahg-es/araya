@@ -1,0 +1,87 @@
+{
+  "contract": "araya.tool-access",
+  "version": "1.0.0",
+  "status": "CANONICAL",
+  "authority": "ADR-008 + Constitution TOOL",
+  "decided_by": "Manuel Alejandro Hernández Giuliani (The Data Professor)",
+  "decided_at": "2026-07-20",
+  "description": "Permanent, universal baseline tool access for all ARAYA agents across all governed projects.",
+
+  "baseline_tools": {
+    "read": {
+      "granted": true,
+      "permanent": true,
+      "scope": "All repository files except secrets (.env, credentials)",
+      "includes": ["read", "grep", "rg", "find"],
+      "restrictions": ["SEC-001: No secrets", "Repository boundaries only"]
+    },
+    "bash": {
+      "granted": true,
+      "permanent": true,
+      "scope": "Commands, Git, tests, validation, scripts, authorized automation",
+      "restrictions": [
+        "BRANCH-002: No direct main modifications",
+        "SEC-001: No secret exposure",
+        "Destructive ops require governance",
+        "Production changes require approval",
+        "Circuit breakers active"
+      ]
+    },
+    "postoffice_read": {
+      "granted": true,
+      "permanent": true,
+      "scope": ".araya/postoffice/ — inbox, outbox, thread.md, index.jsonl",
+      "capabilities": ["pending", "list", "read", "summary", "inspect"],
+      "restrictions": [
+        "Read-only — no message modification of others' messages",
+        "Respect lifecycle states"
+      ]
+    },
+    "postoffice_write": {
+      "granted": true,
+      "permanent": true,
+      "scope": ".araya/postoffice/ — post, mark-read, mark-claimed, mark-replied, mark-blocked",
+      "message_types": ["ACK", "STATUS", "QUESTION", "BLOCKED", "EVIDENCE", "RESPONSE", "CLOSURE"],
+      "restrictions": [
+        "Follow PROTOCOL.md format",
+        "Max body size: 65536 bytes",
+        "No spam — meaningful updates only",
+        "Do not modify other agents' messages"
+      ]
+    }
+  },
+
+  "permanent_restrictions": {
+    "no_main_modifications": "BRANCH-002 — feature/* → dev-mahg → main. Direct main commits = violation.",
+    "no_secret_exposure": "SEC-001 — Never expose hardcoded secrets, credentials, or .env contents.",
+    "no_destructive_without_governance": "Destructive ops (DROP, DELETE without WHERE, rm -rf) require explicit approval.",
+    "no_production_without_governance": "Production changes require governance gates and explicit authorization.",
+    "scope_enforcement": "Agents operate within their domain boundaries per araya.yaml role assignments."
+  },
+
+  "applies_to": {
+    "agents": "ALL agents in araya.yaml — current and future",
+    "projects": "ALL ARAYA-governed projects",
+    "priority": ["mahg-pms", "mahg-platform", "all-others"],
+    "subagents": true,
+    "dynamic_agents": true,
+    "temporary_agents": true
+  },
+
+  "enforcement": {
+    "extension": "extensions/araya/index.ts — ensures baseline tools at agent invocation",
+    "postoffice_loop": "src/postoffice_loop.py — CLI tool for PostOffice lifecycle",
+    "governance_review": "Monthly by Sonia (Program Director), quarterly by Aurora (Capability Officer)",
+    "reality_verification": "Independent verification by Rolando (Reality Authority)",
+    "violation_recording": ".araya/governance/violations/VIO-*.md"
+  },
+
+  "related": {
+    "adr": ".araya/governance/adrs/adr-008-agent-tool-access.md",
+    "constitution": ".araya/governance/constitution.md#agent-tool-access-tool",
+    "standard": ".araya/governance/standards/agent-tool-access-standard.md",
+    "postoffice_protocol": ".araya/postoffice/PROTOCOL.md",
+    "adr_002": ".araya/governance/adrs/adr-002-core-binary-ipc.md",
+    "adr_003": ".araya/governance/adrs/adr-003-public-private-boundary.md"
+  }
+}

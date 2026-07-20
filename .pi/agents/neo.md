@@ -4,6 +4,7 @@ role: Dynamic Capability Agent
 emoji: ⚡
 model_tier: balanced
 status: dormant
+tools: read, write, edit, bash, grep, find
 skills: []
 ---
 

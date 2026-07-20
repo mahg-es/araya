@@ -1,7 +1,7 @@
 ---
 name: pablo
 description: "ARAYA agent: BI & Analytics Lead. Model tier: balanced."
-tools: read, grep, find
+tools: read, grep, find, bash
 model_tier: balanced
 ---
 
