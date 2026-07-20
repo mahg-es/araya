@@ -144,7 +144,7 @@ if [ -n "$PROJECT_PATH" ]; then
   mkdir -p "$TOOLS_DIR"
   for tool in postoffice_loop.py session_identity.py loop_silence_guard.py ax_audit.py; do
     if [ -f "$CANONICAL/src/$tool" ]; then
-      ln -sf "$CANONICAL/src/$tool" "$TOOLS_DIR/$tool"
+      cp "$CANONICAL/src/$tool" "$TOOLS_DIR/$tool"
       echo "  [OK] $tool"
     else
       echo "  [WARN] $tool not found in Framework src/"

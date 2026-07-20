@@ -92,11 +92,12 @@ def archive_target_dir(root: Path, message_id: str) -> Path:
 
 
 def repo_root() -> Path:
-    start = Path(__file__).resolve().parent
+    """Locate repository root by walking up from cwd (not script location)."""
+    start = Path.cwd().resolve()
     for candidate in (start, *start.parents):
         if (candidate / ".git").exists():
             return candidate
-    raise PostOfficeError("RepositoryRootNotFound", "tool must run from this repository checkout")
+    raise PostOfficeError("RepositoryRootNotFound", "no .git found above current directory")
 
 
 def sync_postoffice(root: Path) -> bool:

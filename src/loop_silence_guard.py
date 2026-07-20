@@ -144,7 +144,8 @@ def pending_count_via_postoffice(root: Path, to_role: str, no_sync: bool) -> int
     It is discovered relative to the project root so that the guard
     works from any project without hardcoded absolute paths.
     """
-    script = root / ".araya" / "tools" / "postoffice_loop.py"
+    guard_dir = Path(__file__).resolve().parent
+    script = guard_dir / "postoffice_loop.py"
     cmd = [sys.executable, str(script)]
     if no_sync:
         cmd.append("--no-sync")
