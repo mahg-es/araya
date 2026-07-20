@@ -140,13 +140,11 @@ def evaluate(
 def pending_count_via_postoffice(root: Path, to_role: str, no_sync: bool) -> int:
     """Count pending messages for a role via postoffice_loop.py (subprocess).
 
-    The PostOffice tool lives in the ARAYA Framework (REQ-003).
-    It is discovered relative to this script's own location so that the guard
-    works from any project without requiring a local copy of postoffice_loop.py.
+    The PostOffice tool is installed in .araya/tools/ (REQ-003).
+    It is discovered relative to the project root so that the guard
+    works from any project without hardcoded absolute paths.
     """
-    # Discover the Framework's postoffice_loop.py relative to this script
-    guard_dir = Path(__file__).resolve().parent
-    script = guard_dir / "postoffice_loop.py"
+    script = root / ".araya" / "tools" / "postoffice_loop.py"
     cmd = [sys.executable, str(script)]
     if no_sync:
         cmd.append("--no-sync")

@@ -4,7 +4,13 @@ set -e
 CANONICAL="$(cd "$(dirname "$0")" && pwd)"
 TARGET="$HOME/.pi/agent"
 FORCE=false
+PROJECT_PATH=""
 [ "$1" = "--force" ] && FORCE=true
+# Parse --project <path>
+if [ "$1" = "--project" ]; then
+  PROJECT_PATH="$2"
+  shift 2
+fi
 
 echo ""
 echo "ARAYA v0.3.3 - Setup"
@@ -128,6 +134,23 @@ echo ""
 echo "=== Project-local Agents ==="
 if [ -d "$CANONICAL/.pi/agents" ]; then
   echo "  [OK] $(ls "$CANONICAL/.pi/agents"/*.md 2>/dev/null | wc -l) agents in .pi/agents/"
+fi
+
+# --- Project tools (--project flag) ---
+if [ -n "$PROJECT_PATH" ]; then
+  echo ""
+  echo "=== Project Tools -> $PROJECT_PATH ==="
+  TOOLS_DIR="$PROJECT_PATH/.araya/tools"
+  mkdir -p "$TOOLS_DIR"
+  for tool in postoffice_loop.py session_identity.py loop_silence_guard.py ax_audit.py; do
+    if [ -f "$CANONICAL/src/$tool" ]; then
+      ln -sf "$CANONICAL/src/$tool" "$TOOLS_DIR/$tool"
+      echo "  [OK] $tool"
+    else
+      echo "  [WARN] $tool not found in Framework src/"
+    fi
+  done
+  echo "  Tools installed in .araya/tools/ — invoke as: python3 .araya/tools/<tool>.py"
 fi
 
 # --- Done ---
