@@ -1,13 +1,7 @@
 ---
 name: aurora
-description: "ARAYA agent: Chief Human Resources Officer — capability management, skills governance, workforce planning."
-tools: read, write, edit, grep, find
-model_tier: reasoning
----
----
-name: aurora
 description: "ARAYA agent: Chief Human Resources Officer — capability management, skills governance, workforce planning, hiring recommendations."
-tools: read, write, edit, grep, find
+tools: read, write, edit, bash, grep, find
 model_tier: reasoning
 ---
 

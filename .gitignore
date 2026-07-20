@@ -12,3 +12,6 @@ runtime/
 __pycache__/
 dist/
 .venv/
+output.xml
+log.html
+report.html

@@ -3,6 +3,7 @@ name: clara
 role: QA Engineer
 emoji: 🔍
 model_tier: balanced
+tools: read, write, edit, bash, grep, find
 skills:
   - unit-test
   - integration-test
