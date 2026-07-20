@@ -73,12 +73,12 @@ and governance are non-negotiable.
 
 ## Summary
 
-- **Total Rules:** 167
-- **Obligations:** 145
-- **Prohibitions:** 9
-- **Permissions:** 9
+- **Total Rules:** 179
+- **Obligations:** 152
+- **Prohibitions:** 12
+- **Permissions:** 13
 - **Escalations:** 5
-- **Domains:** 26
+- **Domains:** 27
 
 ## Violation Handling
 
@@ -405,3 +405,22 @@ amendments but may not enact them.
 | TMP-006 | OBLIGATION | The mission sponsor SHALL inherit ownership of all artifacts produced upon mission close |
 | TMP-007 | OBLIGATION | If the same capability gap is filled by Dynamic Capability Agents three or more times within six months, the Capability Officer SHALL propose a permanent hire |
 | TMP-008 | OBLIGATION | Activation SHALL follow the pipeline: (1) Capability Officer assesses gap and proposes activation, (2) Delivery Authority confirms capacity and assigns sponsor, (3) Product Authority confirms alignment. Each step MAY block. Pipeline SHALL be documented. |
+
+### Agent Tool Access (TOOL)
+
+**Authority:** ADR-008 — Manuel Alejandro Hernández Giuliani (The Data Professor), 2026-07-20
+
+| ID | Type | Rule |
+|----|------|------|
+| TOOL-001 | PERMISSION | ALL ARAYA agents, across ALL governed projects, have permanent, canonical access to read (`read`, `grep`, `find`) for file inspection |
+| TOOL-002 | PERMISSION | ALL ARAYA agents, across ALL governed projects, have permanent, canonical access to `bash` for executing commands, Git, tests, validation, scripts, and authorized automation |
+| TOOL-003 | PERMISSION | ALL ARAYA agents, across ALL governed projects, have permanent, canonical access to PostOffice read — reading messages, instructions, context, responses, blockers, and relevant history from `.araya/postoffice/` |
+| TOOL-004 | PERMISSION | ALL ARAYA agents, across ALL governed projects, have permanent, canonical access to PostOffice write — sending ACK, STATUS, questions, blockers, evidence, responses, and closure messages |
+| TOOL-005 | OBLIGATION | Baseline tool access (TOOL-001 through TOOL-004) SHALL NOT be removed from any agent. Project or role configurations MAY add restrictions but MUST NOT remove baseline access. |
+| TOOL-006 | PROHIBITION | No agent may modify `main` branch directly regardless of tool access — BRANCH-002 remains in force |
+| TOOL-007 | PROHIBITION | No agent may expose secrets or credentials regardless of tool access — SEC-001 remains in force |
+| TOOL-008 | PROHIBITION | No agent may execute destructive actions, production changes, or operate outside authorized scope without governance — existing constitutional rules remain in force |
+| TOOL-009 | OBLIGATION | All tool usage (read, bash, PostOffice read/write) MUST be logged, traceable, and auditable |
+| TOOL-010 | OBLIGATION | Every ARAYA-governed project MUST maintain a `.araya/postoffice/` directory following the PostOffice Protocol for inter-agent communication |
+| TOOL-011 | OBLIGATION | Agents SHOULD check PostOffice at the start of each invocation and SHOULD send ACK upon receiving tasks and CLOSURE upon completion |
+| TOOL-012 | OBLIGATION | This tool access authorization is permanent, universal, and does not require per-agent or per-invocation re-approval. It is the default behavior for all ARAYA agents.

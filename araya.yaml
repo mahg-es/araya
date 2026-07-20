@@ -1,5 +1,38 @@
 version: 0.13.0
 description: ARAYA — AI-Native SDLC Orchestration Framework with Enterprise Governance
+
+# ─── Agent Tool Access (ADR-008 / Constitution TOOL) ───────────────────
+# All ARAYA agents have permanent, universal access to read, bash,
+# and PostOffice read/write. These are baseline rights — not per-agent grants.
+# Only The Data Professor may amend. See .araya/contracts/araya.tool-access.json
+agent_tool_access:
+  permanent: true
+  authority: ADR-008
+  decided_by: Manuel Alejandro Hernández Giuliani (The Data Professor)
+  decided_at: 2026-07-20
+  baseline:
+    read:
+      granted: true
+      tools: [read, grep, find]
+      scope: Repository files (excludes secrets per SEC-001)
+    bash:
+      granted: true
+      scope: Commands, Git, tests, validation, scripts, authorized automation
+    postoffice:
+      read: true
+      write: true
+      message_types: [ACK, STATUS, QUESTION, BLOCKED, EVIDENCE, RESPONSE, CLOSURE]
+  permanent_restrictions:
+    - No direct main branch modifications (BRANCH-002)
+    - No secret or credential exposure (SEC-001)
+    - No destructive operations without governance
+    - No production changes without governance
+    - Domain scope boundaries remain in force
+  applies_to: All agents, all projects, all subagents, all dynamic/temporary agents
+  priority_projects: [mahg-pms, mahg-platform]
+
+# ═══════════════════════════════════════════════════════════════════════════
+
 delivery_modes:
   full:
     description: All gates — new features, architecture changes, data model changes,

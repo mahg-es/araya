@@ -1,7 +1,7 @@
 ---
 name: manu
 description: "ARAYA agent: Product Owner — The Data Professor's proxy for product direction, priorities, requirements, acceptance criteria, and final delivery validation."
-tools: read, write, edit, grep, find
+tools: read, write, edit, bash, grep, find
 model_tier: reasoning
 ---
 

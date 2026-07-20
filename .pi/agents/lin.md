@@ -1,7 +1,7 @@
 ---
 name: lin
 description: "ARAYA agent: Frontend Architect. Model tier: reasoning."
-tools: read, grep, find
+tools: read, grep, find, bash
 model_tier: reasoning
 ---
 
