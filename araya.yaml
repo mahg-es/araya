@@ -23,11 +23,11 @@ agent_tool_access:
       write: true
       message_types: [ACK, STATUS, QUESTION, BLOCKED, EVIDENCE, RESPONSE, CLOSURE]
   permanent_restrictions:
-    - No direct main branch modifications (BRANCH-002)
-    - No secret or credential exposure (SEC-001)
-    - No destructive operations without governance
-    - No production changes without governance
-    - Domain scope boundaries remain in force
+  - No direct main branch modifications (BRANCH-002)
+  - No secret or credential exposure (SEC-001)
+  - No destructive operations without governance
+  - No production changes without governance
+  - Domain scope boundaries remain in force
   applies_to: All agents, all projects, all subagents, all dynamic/temporary agents
   priority_projects: [mahg-pms, mahg-platform]
 
@@ -35,8 +35,7 @@ agent_tool_access:
 
 delivery_modes:
   full:
-    description: All gates — new features, architecture changes, data model changes,
-      security-sensitive, large refactors
+    description: All gates — new features, architecture changes, data model changes, security-sensitive, large refactors
     phases:
     - sdd
     - bdd
@@ -118,8 +117,7 @@ model_tiers:
     - google
     reasoning_effort: medium
   reasoning:
-    purpose: Architecture, security analysis, complex debugging, SDD, planning, risk
-      analysis
+    purpose: Architecture, security analysis, complex debugging, SDD, planning, risk analysis
     primary_provider: pi.dev
     primary_capability: thinking_reasoning
     allowed_fallback_providers:
@@ -199,6 +197,7 @@ agents:
     - disposition_emission
     skills:
     - reality-verification
+    - ax3
   daneel:
     role: Delegated Executor — reports to Giskard, routes to the specialist bench per task; the sole cross-project execution identity across ARAYA Portfolio and every governed delivery project (added 2026-07-19)
     emoji: 🔨
@@ -212,7 +211,8 @@ agents:
     - task_execution
     - specialist_routing
     - pr_authoring
-    skills: []
+    skills:
+    - ax3
   manu:
     role: Product Owner
     emoji: 👑
@@ -240,6 +240,7 @@ agents:
     - drr-create
     - uat-review
     - token-efficiency
+    - ax3
   aurora:
     role: Capability Officer
     emoji: 🌟
@@ -276,7 +277,8 @@ agents:
     permissions:
       can_write_code: true
       can_approve_review: false
-    skills: []
+    skills:
+    - ax3
     description: Mission-scoped temporary agent. Activated by Capability Officer pipeline.
   trinity:
     role: Dynamic Capability Agent
@@ -288,7 +290,8 @@ agents:
     permissions:
       can_write_code: true
       can_approve_review: false
-    skills: []
+    skills:
+    - ax3
     description: Mission-scoped temporary agent. Activated by Capability Officer pipeline.
   sonia:
     role: Program Director & PMO Head
@@ -363,6 +366,7 @@ agents:
     skills:
     - uat-review
     - token-efficiency
+    - ax3
     description: Board-level. Advisory. The Professor's mother-in-law.
   clara:
     role: QA Engineer
@@ -399,6 +403,7 @@ agents:
     - cache-strategy
     - message-queue
     - db-optimization
+    - ax3
   lin:
     role: Frontend Architect
     emoji: 🎨
@@ -414,6 +419,7 @@ agents:
     - performance
     - accessibility
     - state-management
+    - ax3
   priya:
     role: QA Lead
     emoji: 🧪
@@ -429,6 +435,7 @@ agents:
     - cicd-quality
     - uat-review
     - token-efficiency
+    - ax3
   diana:
     role: Cybersecurity Specialist
     emoji: 🛡️
@@ -445,6 +452,7 @@ agents:
     - pentest
     - compliance
     - secrets
+    - ax3
   isla:
     role: Infra Architect
     emoji: 🖥️
@@ -486,7 +494,8 @@ agents:
     primary_provider: pi.dev
     max_turns: 20
     description: General-purpose AI assistant — delegates to specialist agents
-    skills: []
+    skills:
+    - ax3
   junia:
     role: Data Platform Architect
     emoji: ☁️
@@ -502,6 +511,7 @@ agents:
     - cloud-provision
     - data-modeling
     - data-governance
+    - ax3
   bernabe:
     role: Data Engineer
     emoji: ⚙️
@@ -515,6 +525,7 @@ agents:
     - etl-orchestration
     - data-quality
     - medallion-architecture
+    - ax3
   maria:
     role: AI/ML Engineer
     emoji: 🧠
@@ -529,6 +540,7 @@ agents:
     - vector-search
     - agent-design
     - model-fine-tuning
+    - ax3
   lucas:
     role: Content Strategist
     emoji: ✍️
@@ -542,6 +554,7 @@ agents:
     - geo-branding
     - multi-platform-publish
     - content-calendar
+    - ax3
   priscila:
     role: Technical Writer
     emoji: 📚
@@ -571,6 +584,7 @@ agents:
     - whale-curve-analyze
     - cost-to-serve
     - profitability-lineage
+    - ax3
   pablo:
     role: BI & Analytics Lead
     emoji: 📊
@@ -584,6 +598,7 @@ agents:
     - data-visualization
     - kpi-framework
     - analytics-report
+    - ax3
   mateo:
     role: FinOps Specialist
     emoji: 📈
@@ -598,6 +613,7 @@ agents:
     - resource-rightsizing
     - budget-forecasting
     - token-efficiency
+    - ax3
   eunice:
     role: Educational Designer
     emoji: 🎓
@@ -611,6 +627,7 @@ agents:
     - student-assessment
     - training-module
     - curriculum-planning
+    - ax3
   esteban:
     role: Chief Knowledge Officer & Graph Builder Steward
     emoji: 🗂️
@@ -626,6 +643,7 @@ agents:
     - pkm-workflow
     - organizational-knowledge
     - trajectory-management
+    - ax3
     capabilities:
     - organizational_queries
     - graph_stewardship
@@ -642,6 +660,7 @@ agents:
     - theme-design
     - seo-optimize
     - deployment-automation
+    - ax3
   dorcas:
     role: Brand Governance Lead
     emoji: 🎯
@@ -655,6 +674,7 @@ agents:
     - visual-identity
     - brand-audit
     - asset-management
+    - ax3
 provider_optimization:
   codex:
     optimize_for: small prompts, incremental, frequent checkpoints
