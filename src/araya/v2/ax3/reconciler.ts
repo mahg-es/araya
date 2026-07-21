@@ -255,6 +255,45 @@ function generateRootTemplate(projectRoot: string): string {
   const projectName = projectRoot.split(sep).pop() || "project";
   return `# ${projectName} — AX3 Project Contract
 
+- AX3 is an ARAYA AX (cross-cutting) feature providing a hierarchy of \`AX3.md\` files
+- This file is the **root contract** — it governs the entire repository
+- **Every agent working in this project MUST follow this contract**
+
+## Core Contract
+
+- \`AX3.md\` files are **binding work contracts** for their subtrees
+- No child \`AX3.md\` may weaken a rule from a parent. Children may concretize — never weaken.
+
+## Read Before Editing (Preflight — MANDATORY)
+
+1. Read this root \`AX3.md\`
+2. Identify every file or folder you expect to touch
+3. Walk from the repository root to each target path
+4. Read every \`AX3.md\` found along each route
+5. Use the nearest \`AX3.md\` as the local contract and parent docs for repo-wide rules
+6. Do not rely on memory — re-read the applicable AX3 chain before editing
+
+## Update After Editing (Postflight — MANDATORY)
+
+Update the closest owning \`AX3.md\` after changes affecting: purpose, scope, ownership, structure, contracts, workflows, inputs/outputs, permissions, constraints, user preferences, or \`AX3.md\` creation/deletion/move. Update parent docs when indexes change. Small edits may skip, but the AX3 pass still must happen.
+
+## Hierarchy
+
+- Root \`AX3.md\` (this file): project-wide instructions and top-level Child AX3 Index
+- Child \`AX3.md\` files: domain-specific instructions and their own Child AX3 Index
+- The closer a doc is to the work, the more specific it must be
+
+## Child Doc Shape
+
+Create a child when a folder becomes a durable boundary. Sections: Purpose, Ownership, Local Contracts, Work Guidance, Verification, Child AX3 Index.
+
+## Closeout
+
+1. Re-check changed paths against the AX3 chain
+2. Update owning docs and affected parents/children
+3. Refresh Child AX3 Indexes
+4. Remove stale or contradictory text
+
 ## Purpose
 
 ${projectName} project root. This AX3.md is the top-level contract governing the entire repository.
