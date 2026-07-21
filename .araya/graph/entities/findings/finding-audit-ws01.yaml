@@ -1,0 +1,101 @@
+# finding-audit-ws01 — Key Audit Findings (WS-01)
+entity_id: "finding-audit-ws01"
+entity_type: "Evidence"
+name: "WS-01 Audit Findings — REQ-001 Gap Analysis"
+source_artifact: "audit"
+source_path: ".araya/plan/spec/req-001-audit.md"
+description: >
+  Hallazgos clave de la auditoría WS-01 ejecutada por Esteban el 2026-07-22.
+  7 categorías de findings que bloquean REQ-001.
+
+findings:
+  - finding_id: "F-001"
+    severity: "critical"
+    category: "command_discovery"
+    title: "No existe /araya:man ni --help auto-generado"
+    detail: >
+      La única ayuda es una cadena hardcodeada de ~100 líneas en extensions/araya/index.ts
+      que diverge de las fuentes reales. No hay búsqueda, no hay ayuda contextual,
+      no hay errores inteligentes.
+    ac_affected: ["AC-2", "AC-3", "AC-4", "AC-5", "AC-6", "AC-7", "AC-8"]
+    remediation: "WS-09: Implementar /araya:man con 7 modos de ayuda"
+
+  - finding_id: "F-002"
+    severity: "critical"
+    category: "delegation_violations"
+    title: "Sonia concentra 57% de rutas y ejecuta trabajo de especialistas"
+    detail: >
+      7 de 28 rutas de subcomando son incorrectas: Sonia ejecuta generate-uat (debe
+      ser Clara), budget-status/optimize-task/efficiency-report (debe ser Mateo),
+      route (debe ser Aurora), validate (debe ser Rolando), usability-check (debe
+      ser Manu).
+    ac_affected: ["AC-13", "AC-14"]
+    remediation: "WS-10 + WS-11: Redistribuir SUBCOMMAND_ROUTES e implementar broker"
+
+  - finding_id: "F-003"
+    severity: "critical"
+    category: "runtime_dependency"
+    title: "Delegación depende de subagent tool (pi-specific)"
+    detail: >
+      La delegación usa la herramienta subagent de pi. En Codex, Claude CLI o AGY
+      no existe este mecanismo. Viola DI-002.
+    di_affected: ["DI-002"]
+    remediation: "WS-08 + WS-10: Broker runtime-agnostic con AgentDispatcher interface"
+
+  - finding_id: "F-004"
+    severity: "high"
+    category: "orphan_skills"
+    title: "4 skills de Aurora huérfanas (44% de sus capacidades)"
+    detail: >
+      hiring-recommendations, organizational-health, skills-lifecycle, spof-detection
+      están en araya.yaml pero sin directorio en skills/. Aurora opera al 56%.
+    remediation: "Crear los 4 SKILL.md faltantes para Aurora"
+
+  - finding_id: "F-005"
+    severity: "medium"
+    category: "undeclared_skills"
+    title: "4 skills con directorio pero sin asignación en araya.yaml"
+    detail: >
+      ai-routing, autonomous-execution, ax-postoffice, pm-decompose existen en
+      skills/ pero ningún agente las tiene asignadas. Son 'dead code' organizacional.
+    remediation: "Asignar: ai-routing→Aurora, pm-decompose→Sonia, autonomous-execution→Sonia, ax-postoffice→Manu"
+
+  - finding_id: "F-006"
+    severity: "high"
+    category: "prompt_drift"
+    title: "13 discrepancias entre prompt de Sonia y araya.yaml"
+    detail: >
+      9 skills en el prompt de Sonia no están en araya.yaml. 4 skills en araya.yaml
+      no están en el prompt de Sonia. Sonia cree que tiene 14 skills; en realidad
+      tiene 9.
+    remediation: "WS-11: Reescribir prompt de Sonia para reflejar solo skills de araya.yaml"
+
+  - finding_id: "F-007"
+    severity: "high"
+    category: "bare_agents"
+    title: "5 agentes bare con ≤1 skill no-ax3"
+    detail: >
+      daneel (0 skills, sin prompt), rolando (1 skill, sin prompt), neo (0 skills,
+      dormant), trinity (0 skills, dormant), sofia (0 skills, por diseño).
+      daneel y rolando son críticos — agregados 2026-07-19 pero nunca equipados.
+    remediation: "Crear prompts para daneel y rolando. Evaluar si neo/trinity se mantienen."
+
+  - finding_id: "F-008"
+    severity: "medium"
+    category: "delegation_infrastructure"
+    title: "Sin broker, sin IDs de correlación, sin protección anti-recursión"
+    detail: >
+      Los 6 requisitos DI-001 a DI-006 no existen. No hay broker/orquestador,
+      sin independencia del runtime, sin capacidades mínimas de delegación,
+      sin protección contra ciclos, sin separación orden/ejecución.
+    di_affected: ["DI-001", "DI-003", "DI-004", "DI-005", "DI-006"]
+    remediation: "WS-08: Diseñar arquitectura. WS-10: Implementar broker completo."
+
+total_findings: 8
+critical: 3
+high: 4
+medium: 1
+auditor: "esteban"
+audit_date: "2026-07-22"
+created_at: "2026-07-22"
+updated_at: "2026-07-22"

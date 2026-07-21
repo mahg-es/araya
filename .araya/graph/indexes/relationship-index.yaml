@@ -1,0 +1,130 @@
+# Relationship Index — ARAYA Knowledge Graph
+# Auto-generated: 2026-07-22 by Esteban (CKO) as part of WS-11b
+
+relationships:
+  - relationship_id: "rel-sonia-owns-pm-plan"
+    type: "OWNS"
+    source: "agent-sonia"
+    target: "skill-pm-plan"
+    file: "relationships/agent-skill.yaml"
+
+  - relationship_id: "rel-cmd-generate-uat-routes-sonia"
+    type: "ROUTES_TO"
+    source: "command-generate-uat"
+    target: "agent-sonia"
+    file: "relationships/command-agent.yaml"
+    status: "incorrect"
+    correct_target: "agent-clara"
+
+  - relationship_id: "rel-cmd-budget-status-routes-sonia"
+    type: "ROUTES_TO"
+    source: "command-budget-status"
+    target: "agent-sonia"
+    file: "relationships/command-agent.yaml"
+    status: "incorrect"
+    correct_target: "agent-mateo"
+
+  - relationship_id: "rel-cmd-optimize-task-routes-sonia"
+    type: "ROUTES_TO"
+    source: "command-optimize-task"
+    target: "agent-sonia"
+    file: "relationships/command-agent.yaml"
+    status: "incorrect"
+    correct_target: "agent-mateo"
+
+  - relationship_id: "rel-cmd-efficiency-report-routes-sonia"
+    type: "ROUTES_TO"
+    source: "command-efficiency-report"
+    target: "agent-sonia"
+    file: "relationships/command-agent.yaml"
+    status: "incorrect"
+    correct_target: "agent-mateo"
+
+  - relationship_id: "rel-cmd-route-routes-sonia"
+    type: "ROUTES_TO"
+    source: "command-route"
+    target: "agent-sonia"
+    file: "relationships/command-agent.yaml"
+    status: "incorrect"
+    correct_target: "agent-aurora"
+
+  - relationship_id: "rel-cmd-validate-routes-sonia"
+    type: "ROUTES_TO"
+    source: "command-validate"
+    target: "agent-sonia"
+    file: "relationships/command-agent.yaml"
+    status: "incorrect"
+    correct_target: "agent-rolando"
+
+  - relationship_id: "rel-cmd-usability-check-routes-sonia"
+    type: "ROUTES_TO"
+    source: "command-usability-check"
+    target: "agent-sonia"
+    file: "relationships/command-agent.yaml"
+    status: "incorrect"
+    correct_target: "agent-manu"
+
+  - relationship_id: "rel-req001-requires-broker"
+    type: "REQUIRES"
+    source: "project-req-001"
+    target: "capability-broker-delegation"
+    file: "relationships/project-requirements.yaml"
+
+  - relationship_id: "rel-req001-requires-catalog"
+    type: "REQUIRES"
+    source: "project-req-001"
+    target: "capability-catalog-system"
+    file: "relationships/project-requirements.yaml"
+
+  - relationship_id: "rel-req001-requires-araya-man"
+    type: "REQUIRES"
+    source: "project-req-001"
+    target: "command-araya-man"
+    file: "relationships/project-requirements.yaml"
+
+  - relationship_id: "rel-aurora-orphan-hiring-recommendations"
+    type: "OWNS"
+    source: "agent-aurora"
+    target: "skill-hiring-recommendations"
+    file: "relationships/agent-skill.yaml"
+    status: "orphan"
+
+  - relationship_id: "rel-sonia-drift-pm-decompose"
+    type: "RELATED_TO"
+    source: "agent-sonia"
+    target: "skill-pm-decompose"
+    file: "relationships/agent-skill.yaml"
+    status: "drift"
+
+  - relationship_id: "rel-token-efficiency-in-domain-finops"
+    type: "BELONGS_TO"
+    source: "skill-token-efficiency"
+    target: "domain-finops"
+    file: "relationships/skill-domain.yaml"
+
+  - relationship_id: "rel-ai-routing-in-domain-ax"
+    type: "BELONGS_TO"
+    source: "skill-ai-routing"
+    target: "domain-ax"
+    file: "relationships/skill-domain.yaml"
+    status: "undeclared"
+
+  - relationship_id: "rel-broker-delegation-in-domain-delegation"
+    type: "BELONGS_TO"
+    source: "capability-broker-delegation"
+    target: "domain-delegation"
+    file: "relationships/skill-domain.yaml"
+    status: "new"
+
+statistics:
+  total_relationships: 72
+  verified: 45
+  incorrect: 7
+  orphan: 4
+  drift: 9
+  undeclared: 4
+  recommended: 7
+  new: 3
+
+created_at: "2026-07-22"
+updated_at: "2026-07-22"

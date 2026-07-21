@@ -1,0 +1,43 @@
+# command-araya-man — Sistema de Ayuda y Descubrimiento (REQ-001)
+entity_id: "command-araya-man"
+entity_type: "Capability"
+name: "/araya:man"
+source_artifact: "spec"
+source_path: ".araya/plan/spec/req-001-catalog-schema.md"
+description: >
+  Sistema de ayuda y descubrimiento de capacidades ARAYA. Reemplaza el manual
+  hardcodeado de ~100 líneas por una ayuda auto-generada desde el catálogo
+  canónico. Implementado por Valentina en WS-09.
+
+requirements:
+  - "AC-2: /araya:man lista todas las capacidades disponibles"
+  - "AC-3: /araya:man <función> muestra propósito, sintaxis, parámetros, ejemplos, restricciones"
+  - "AC-4: /araya:man <agente> muestra responsabilidad, capacidades, skills, permisos"
+  - "AC-5: --help en cada comando soportado"
+  - "AC-6: Ayuda validada contra registro real (no hardcoded)"
+  - "AC-7: Error claro para función inexistente que sugiera alternativas reales"
+  - "AC-8: Búsqueda por keyword, dominio, agente, skill, propósito"
+
+modes:
+  - "/araya:man — lista todas las capacidades"
+  - "/araya:man <función> — detalle de comando/función"
+  - "/araya:man <agente> — detalle de agente"
+  - "/araya:man <skill> — detalle de skill"
+  - "/araya:man --search <keyword> — búsqueda"
+  - "/araya:man --domain <domain> — filtrar por dominio"
+  - "<cmd> --help — ayuda contextual por comando"
+
+error_behavior:
+  - "Comando inexistente → sugerir 3 comandos más cercanos (Levenshtein)"
+  - "Nunca sugerir comandos o agentes inventados"
+  - "Indicar estado de disponibilidad (enabled/disabled/deprecated)"
+
+related_agents:
+  architect: "aisha"
+  implementer: "valentina"
+  tester: "teresa"
+
+parent_project: "project-req-001"
+status: "designed"
+created_at: "2026-07-22"
+updated_at: "2026-07-22"

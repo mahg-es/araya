@@ -1,0 +1,302 @@
+# skill-domain — Skill→Domain mapping
+# Source: WS-01 audit domain coverage analysis
+# Generated: 2026-07-22 by Esteban (CKO)
+
+relationships:
+  # ── Backend ──────────────────────────────────────────────────
+  - relationship_id: "rel-api-design-in-domain-backend"
+    source_entity_id: "skill-api-design"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-backend"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-db-schema-in-domain-backend"
+    source_entity_id: "skill-db-schema"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-backend"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-endpoint-in-domain-backend"
+    source_entity_id: "skill-endpoint"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-backend"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-auth-middleware-in-domain-backend"
+    source_entity_id: "skill-auth-middleware"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-backend"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-error-handling-in-domain-backend"
+    source_entity_id: "skill-error-handling"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-backend"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  # ── FinOps (critical delegation violations) ──────────────────
+  - relationship_id: "rel-token-efficiency-in-domain-finops"
+    source_entity_id: "skill-token-efficiency"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-finops"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "Mateo owns this. Sonia incorrectly routes budget/optimize/efficiency commands."
+
+  - relationship_id: "rel-cost-analysis-in-domain-finops"
+    source_entity_id: "skill-cost-analysis"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-finops"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-usage-metering-in-domain-finops"
+    source_entity_id: "skill-usage-metering"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-finops"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-resource-rightsizing-in-domain-finops"
+    source_entity_id: "skill-resource-rightsizing"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-finops"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-budget-forecasting-in-domain-finops"
+    source_entity_id: "skill-budget-forecasting"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-finops"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  # ── CHRO (partial coverage) ──────────────────────────────────
+  - relationship_id: "rel-capability-registry-in-domain-chro"
+    source_entity_id: "skill-capability-registry"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-chro"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "verified"
+
+  - relationship_id: "rel-gap-analysis-in-domain-chro"
+    source_entity_id: "skill-gap-analysis"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-chro"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "verified"
+
+  - relationship_id: "rel-workforce-planning-in-domain-chro"
+    source_entity_id: "skill-workforce-planning"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-chro"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "verified"
+
+  - relationship_id: "rel-agent-topology-in-domain-chro"
+    source_entity_id: "skill-agent-topology"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-chro"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "verified"
+
+  - relationship_id: "rel-hiring-recommendations-in-domain-chro"
+    source_entity_id: "skill-hiring-recommendations"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-chro"
+    source_artifact: "araya.yaml"
+    source_path: "araya.yaml"
+    confidence: 1.0
+    status: "orphan"
+    note: "Declarada en araya.yaml pero sin SKILL.md"
+
+  - relationship_id: "rel-organizational-health-in-domain-chro"
+    source_entity_id: "skill-organizational-health"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-chro"
+    source_artifact: "araya.yaml"
+    source_path: "araya.yaml"
+    confidence: 1.0
+    status: "orphan"
+
+  - relationship_id: "rel-skills-lifecycle-in-domain-chro"
+    source_entity_id: "skill-skills-lifecycle"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-chro"
+    source_artifact: "araya.yaml"
+    source_path: "araya.yaml"
+    confidence: 1.0
+    status: "orphan"
+
+  - relationship_id: "rel-spof-detection-in-domain-chro"
+    source_entity_id: "skill-spof-detection"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-chro"
+    source_artifact: "araya.yaml"
+    source_path: "araya.yaml"
+    confidence: 1.0
+    status: "orphan"
+
+  # ── AX (partial coverage) ────────────────────────────────────
+  - relationship_id: "rel-ax3-in-domain-ax"
+    source_entity_id: "skill-ax3"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-ax"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "verified"
+
+  - relationship_id: "rel-token-efficiency-in-domain-ax"
+    source_entity_id: "skill-token-efficiency"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-ax"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 0.8
+    note: "Also belongs to FinOps domain"
+
+  - relationship_id: "rel-ai-routing-in-domain-ax"
+    source_entity_id: "skill-ai-routing"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-ax"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "undeclared"
+    note: "Existe en skills/ pero sin asignar en araya.yaml"
+
+  - relationship_id: "rel-autonomous-execution-in-domain-ax"
+    source_entity_id: "skill-autonomous-execution"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-ax"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "undeclared"
+
+  - relationship_id: "rel-ax-postoffice-in-domain-ax"
+    source_entity_id: "skill-ax-postoffice"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-ax"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "undeclared"
+
+  # ── Gobernanza/PM ───────────────────────────────────────────
+  - relationship_id: "rel-pm-decompose-in-domain-governance-pm"
+    source_entity_id: "skill-pm-decompose"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-governance-pm"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "undeclared"
+    note: "Existe en skills/ pero sin asignar. Sonia la referencia en su prompt."
+
+  - relationship_id: "rel-reality-verification-in-domain-governance-pm"
+    source_entity_id: "skill-reality-verification"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-governance-pm"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    status: "verified"
+    note: "Rolando la tiene pero sin prompt"
+
+  # ── Conocimiento ────────────────────────────────────────────
+  - relationship_id: "rel-daily-note-in-domain-knowledge"
+    source_entity_id: "skill-daily-note"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-knowledge"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-knowledge-graph-in-domain-knowledge"
+    source_entity_id: "skill-knowledge-graph"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-knowledge"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-pkm-workflow-in-domain-knowledge"
+    source_entity_id: "skill-pkm-workflow"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-knowledge"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-organizational-knowledge-in-domain-knowledge"
+    source_entity_id: "skill-organizational-knowledge"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-knowledge"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  - relationship_id: "rel-trajectory-management-in-domain-knowledge"
+    source_entity_id: "skill-trajectory-management"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-knowledge"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+
+  # ── Delegation (new domain) ─────────────────────────────────
+  - relationship_id: "rel-broker-delegation-in-domain-delegation"
+    source_entity_id: "capability-broker-delegation"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-delegation"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-delegation-architecture.md"
+    confidence: 1.0
+    status: "new"
+
+  - relationship_id: "rel-catalog-system-in-domain-delegation"
+    source_entity_id: "capability-catalog-system"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-delegation"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-catalog-schema.md"
+    confidence: 0.9
+    status: "new"
+    note: "Catalog feeds man system which feeds delegation decisions"
+
+  - relationship_id: "rel-araya-man-in-domain-delegation"
+    source_entity_id: "command-araya-man"
+    relationship_type: "BELONGS_TO"
+    target_entity_id: "domain-delegation"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-catalog-schema.md"
+    confidence: 0.9
+    status: "new"
+
+created_at: "2026-07-22"
+updated_at: "2026-07-22"
