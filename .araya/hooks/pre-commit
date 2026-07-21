@@ -40,4 +40,16 @@ if [ -n "$(git status --porcelain=v1)" ]; then
   echo "⚠️  WARNING: Working tree has uncommitted changes."
 fi
 
+# ─── Rule 6: Worktree must be in canonical location (canon-rule-001) ──
+WT_PATH=$(git rev-parse --show-toplevel 2>/dev/null)
+WT_EXPECTED="$HOME/github/mahg-es/worktrees"
+WT_REAL=$(realpath "$WT_PATH" 2>/dev/null)
+if echo "$WT_REAL" | grep -q "$WT_EXPECTED"; then
+  : # OK — worktree is in canonical location
+elif echo "$WT_REAL" | grep -q "$HOME/github/mahg-es/"; then
+  echo "❌ BLOCKED: Worktree at $WT_REAL is in repo directory, not $WT_EXPECTED."
+  echo "   per canon-rule-001: all worktrees must be under $WT_EXPECTED"
+  exit 1
+fi
+
 exit 0

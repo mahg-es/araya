@@ -56,10 +56,20 @@ console.log("\n🧪 ARAYA AX3 Feature Test Suite\n");
 
 console.log("(a) Root Discovery");
 
-test("findProjectRoot returns this repo", () => {
+test("findProjectRoot returns this repo (works in worktrees with any name)", () => {
   const root = findProjectRoot(__dirname);
-  assert.ok(root.endsWith("araya"), `Expected .../araya, got ${root}`);
+  // The root is found by araya.yaml, not by directory name — works in worktrees
   assert.ok(existsSync(join(root, "araya.yaml")), "araya.yaml not found at root");
+  assert.ok(root.length > 0, "root should not be empty");
+});
+
+test("findProjectRoot works from worktree subdirectory", () => {
+  const root = findProjectRoot(__dirname);
+  const subDir = join(root, "src", "araya", "v2");
+  if (existsSync(subDir)) {
+    const fromSub = findProjectRoot(subDir);
+    assert.equal(fromSub, root, "should find same root from subdirectory");
+  }
 });
 
 test("findRootAx3 returns null when no AX3.md exists", () => {
