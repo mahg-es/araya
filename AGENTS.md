@@ -16,19 +16,8 @@
 
 The `AX3.md` files themselves are self-describing. Read the root `AX3.md` first and it will tell you everything you need to know.
 
-## ARAYA Cross-Cutting Skills
-
-Every agent in this project MUST apply the following skills on every task:
-
-- **Command & Delegation:** before executing any task, run the `araya-command-and-delegation-expert` preflight and apply its delegation protocol. See `skills/araya-command-and-delegation-expert/SKILL.md`.
-- **AX3:** read the AX3.md chain before editing, update after meaningful changes. See `skills/araya-ax3/SKILL.md` (or `skills/ax3/SKILL.md`).
-- **Postoffice:** consult `.araya/postoffice/thread.md` at cycle start, append your entry at cycle end (advisory, never a gate). See the `ax-postoffice` skill.
-- **Token Efficiency:** optimize token consumption before large tasks. See the `token-efficiency` skill.
-
 ## Related Commands
 
 - `/araya:ax3` — reconcile the entire AX3 contract hierarchy
 - `/araya:ax3 --check` — detect drift (exit 0 = clean, 1 = drift)
 - `/araya:ax3 --dry-run` — preview changes without writing
-- `/araya:man` — consult the ARAYA catalog
-- `/araya:man --search <term>` — search capabilities by keyword

@@ -15,7 +15,6 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { readFileSync, existsSync, realpathSync } from "node:fs";
 import { resolve, dirname } from "node:path";
-import { createHash } from "node:crypto";
 import { load } from "js-yaml";
 
 // ─── Types ────────────────────────────────────────────────────────────────
@@ -53,38 +52,17 @@ interface ArayaV2Config {
 function findArayaRoot(): string {
   let dir = dirname(__filename);
   for (let i = 0; i < 10; i++) {
-    if (existsSync(resolve(dir, "araya.yaml"))) {
-      // H3 FIX: Resolve araya.yaml symlink to real repo, validate sentinel
-      const realYaml = realpathSync(resolve(dir, "araya.yaml"));
-      const realDir = dirname(realYaml);
-      if (!existsSync(resolve(realDir, ".araya"))) {
-        throw new Error(
-          `SECURITY: araya.yaml found at ${dir} but .araya/ sentinel missing. ` +
-          `Cowardly refusing to use a potentially symlink-hijacked root.`
-        );
-      }
-      return realDir;
-    }
+    if (existsSync(resolve(dir, "araya.yaml"))) return dir;
     const parent = resolve(dir, "..");
     if (parent === dir) break;
     dir = parent;
   }
 
-  // Fallback: try via realpath of the extension file itself
   try {
     const realFile = realpathSync(__filename);
     dir = dirname(realFile);
     for (let i = 0; i < 10; i++) {
-      if (existsSync(resolve(dir, "araya.yaml"))) {
-        const realYaml = realpathSync(resolve(dir, "araya.yaml"));
-        const realDir = dirname(realYaml);
-        if (!existsSync(resolve(realDir, ".araya"))) {
-          throw new Error(
-            `SECURITY: araya.yaml found at ${dir} but .araya/ sentinel missing.`
-          );
-        }
-        return realDir;
-      }
+      if (existsSync(resolve(dir, "araya.yaml"))) return dir;
       const parent = resolve(dir, "..");
       if (parent === dir) break;
       dir = parent;
@@ -240,24 +218,6 @@ export default function (pi: ExtensionAPI) {
   // Detect v2+ features by presence of delivery_modes (backward compatible)
   const isV2 = config.delivery_modes !== undefined;
 
-  // ── WS-10 Broker Initialization (lazy) ──────────────────────────────────
-  let brokerHandle: any = null;
-  async function getBroker(): Promise<any> {
-    if (brokerHandle) return brokerHandle;
-    const { initBroker } = await import(resolve(root, "dist/araya/delegation/broker"));
-    brokerHandle = initBroker({
-      arayaRoot: root,
-      evidenceBasePath: ".araya/runs",
-      maxConcurrentDelegations: 10,
-      defaultTimeoutMs: 300_000,
-      maxDepth: 3,
-      circuitBreakerThreshold: 5,
-      circuitBreakerWindowMs: 60_000,
-      circuitBreakerCooldownMs: 30_000,
-    });
-    return brokerHandle;
-  }
-
   // ── Identity Injection ─────────────────────────────────────────────────
   // Ensure all agents know they are speaking with The Data Professor
   pi.on("before_agent_start", async (event: any, _ctx) => {
@@ -360,7 +320,7 @@ export default function (pi: ExtensionAPI) {
             `**COMMANDS**\n` +
             `  /araya                         concise summary\n` +
             `  /araya:status                  full agent roster\n` +
-            `  /araya:man                     browse commands, agents, skills\n  /araya help                    this manual\n` +
+            `  /araya help                    this manual\n` +
             `  /araya run <flags> "<task>"    orchestrate a full run\n` +
             `  /araya:ax3                     reconcile AX3 contract hierarchy\n` +
             `  /araya:ax3 --check             check AX3 tree for drift\n` +
@@ -741,17 +701,17 @@ export default function (pi: ExtensionAPI) {
       // ═══════════════════════════════════════════════════════════════
       const SUBCOMMAND_ROUTES: Record<string, { agent: string; task: string } | "inline"> = {
         // Governance & Validation
-        "validate": { agent: "rolando", task: "Validate delivery against acceptance criteria. Check all ACs, constitutional compliance, and evidence." },
+        "validate": { agent: "sonia", task: "Validate delivery against acceptance criteria. Check all ACs, constitutional compliance, and evidence." },
         "constitution": { agent: "sonia", task: "Show the ARAYA Constitution — all rules, types, and domains. Summarize key governance principles." },
         "release-check": { agent: "sonia", task: "Validate version compliance with MAHG Release Standard. Check hotfix ≤ 5, revision ≤ 73." },
-        "usability-check": { agent: "priya", task: "Check usability evidence coverage for all features. Report verified/unverified/not-implemented status per USE-002 and USE-003." },
+        "usability-check": { agent: "sonia", task: "Check usability evidence coverage for all features. Report verified/unverified/not-implemented status per USE-002 and USE-003." },
         "trace": { agent: "sonia", task: "Show end-to-end traceability tree from requirements to change requests. Detect orphan references." },
         "metrics": { agent: "sonia", task: "Report governance metrics, delivery health score, violation counts, and compliance status." },
         // Delivery & Review
         "review-delivery": { agent: "sonia", task: "Create a DRR (Delivery Review Report), classify findings, generate IAR (Impact Analysis Report), and route to affected artifacts." },
-        "generate-uat": { agent: "clara", task: "Generate complete UAT package with traceability matrix, test cases per AC, coverage matrix, and acceptance decision." },
+        "generate-uat": { agent: "sonia", task: "Generate complete UAT package with traceability matrix, test cases per AC, coverage matrix, and acceptance decision." },
         "review-uat": { agent: "manu", task: "Review UAT package for completeness. Validate every req has AC, every AC has UAT test. Report READY | NEEDS FIXES | REJECTED." },
-        "uat-status": { agent: "clara", task: "Show UAT status — coverage %, pass/fail/blocked, critical findings, acceptance decision, next steps." },
+        "uat-status": { agent: "sonia", task: "Show UAT status — coverage %, pass/fail/blocked, critical findings, acceptance decision, next steps." },
         // Knowledge & Learning
         "knowledge": { agent: "esteban", task: "Summarize organizational knowledge — standards, ADRs, lessons learned, technology preferences." },
         "learn": { agent: "esteban", task: rest ? `Capture this organizational lesson: ${rest}` : "Capture a structured organizational lesson from recent experience." },
@@ -760,11 +720,11 @@ export default function (pi: ExtensionAPI) {
         "graph": { agent: "esteban", task: "Show organizational knowledge graph summary — entity relationships and impact analysis." },
         "ask": { agent: "esteban", task: rest ? `Answer this organizational query using graph + capabilities: ${rest}` : "Answer organizational queries using graph and capability registry." },
         // Budget & Efficiency
-        "budget-status": { agent: "mateo", task: "Report token efficiency and provider budget status — tokens consumed, rate-limit risk, provider efficiency." },
-        "optimize-task": { agent: "mateo", task: rest ? `Analyze and optimize this task for token efficiency: ${rest}` : "Analyze current task for token efficiency optimization." },
-        "efficiency-report": { agent: "mateo", task: "Generate token efficiency metrics report — context reuse, decomposition, capsule effectiveness." },
+        "budget-status": { agent: "sonia", task: "Report token efficiency and provider budget status — tokens consumed, rate-limit risk, provider efficiency." },
+        "optimize-task": { agent: "sonia", task: rest ? `Analyze and optimize this task for token efficiency: ${rest}` : "Analyze current task for token efficiency optimization." },
+        "efficiency-report": { agent: "sonia", task: "Generate token efficiency metrics report — context reuse, decomposition, capsule effectiveness." },
         // Routing & Team
-        "route": { agent: "aurora", task: rest ? `Recommend optimal agent + provider + model for: ${rest.replace(/^--explain /, "")}. ${rest.startsWith("--explain") ? "EXPLAIN mode — show detailed reasoning." : "RECOMMEND mode."}` : "Recommend optimal agent, provider, and model for the current task." },
+        "route": { agent: "sonia", task: rest ? `Recommend optimal agent + provider + model for: ${rest.replace(/^--explain /, "")}. ${rest.startsWith("--explain") ? "EXPLAIN mode — show detailed reasoning." : "RECOMMEND mode."}` : "Recommend optimal agent, provider, and model for the current task." },
         "team": { agent: "aurora", task: rest?.startsWith("recommend") ? `Recommend optimal team for: ${rest.slice(9).trim() || "current task"}` : rest?.startsWith("assemble") ? `Assemble execution team for: ${rest.slice(8).trim() || "current task"}` : rest === "risk" ? "Analyze workforce risks — single points of failure, coverage gaps, over/under-staffed areas." : "Show team capabilities and formations." },
         // Inline commands (handled below, not delegated to agents)
         "version": "inline",
@@ -953,30 +913,10 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
-      // C1 FIX: Compute script hash for integrity check
-      const scriptContent = readFileSync(setupScript, "utf-8");
-      const scriptHash = createHash("sha256").update(scriptContent).digest("hex");
-
-      // C1 FIX: Require explicit user confirmation
-      const confirmed = await ctx.ui.confirm(
-        `⚠️  **Security Confirmation Required**\n\n` +
-        `ARAYA will execute the setup script:\n` +
-        `- **Path:** \`${setupScript}\`\n` +
-        `- **SHA-256:** \`${scriptHash.slice(0, 16)}...\`\n\n` +
-        `This script will run with your user privileges and may modify your system.\n\n` +
-        `Type **yes** to proceed:`
-      );
-
-      if (!confirmed) {
-        ctx.ui.notify("❌ Installation cancelled by user.", "warning");
-        return;
-      }
-
       ctx.ui.notify(`🔧 Running ARAYA setup from ${root}...`, "info");
 
       try {
-        // C1 FIX: Run WITHOUT --force — let the script handle its own confirmation
-        const result = await pi.exec("bash", [setupScript]);
+        const result = await pi.exec("bash", [setupScript, "--force"]);
         ctx.ui.notify(
           `✅ **ARAYA installed successfully**\n\n${result.stdout.slice(-500)}`,
           "info"
@@ -1021,13 +961,13 @@ export default function (pi: ExtensionAPI) {
     description: "📋 Generate UAT package from requirements, ACs, BDD, TDD",
     handler: async (args, ctx) => {
       const deliveryId = args?.trim() || "latest";
-      const claraPrompt = buildAgentPrompt(config, "clara", [
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
         `## Generate UAT Package`,
         `**Delivery ID:** ${deliveryId}`,
         `Generate complete UAT with traceability matrix, test cases per AC, coverage matrix, findings register, and acceptance decision.`,
         `Save to .araya/reviews/uat/uat-${deliveryId}.md`,
       ].join("\n"));
-      pi.sendUserMessage(claraPrompt);
+      pi.sendUserMessage(soniaPrompt);
     },
   });
 
@@ -1048,12 +988,12 @@ export default function (pi: ExtensionAPI) {
     description: "📊 Show UAT status for a delivery",
     handler: async (args, ctx) => {
       const uatId = args?.trim() || "latest";
-      const claraPrompt = buildAgentPrompt(config, "clara", [
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
         `## UAT Status Report`,
         `**UAT ID:** ${uatId}`,
         `Report: coverage %, pass/fail/blocked, critical findings, acceptance status, next steps.`,
       ].join("\n"));
-      pi.sendUserMessage(claraPrompt);
+      pi.sendUserMessage(soniaPrompt);
     },
   });
 
@@ -1062,12 +1002,12 @@ export default function (pi: ExtensionAPI) {
   pi.registerCommand("araya:budget-status", {
     description: "💰 Show token efficiency and provider budget status",
     handler: async (_args, ctx) => {
-      const mateoPrompt = buildAgentPrompt(config, "mateo", [
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
         `## Token Efficiency & Budget Status`,
         `Report: session tokens consumed, rate-limit risk, provider efficiency score,`,
         `context reuse ratio, pending optimizations.`,
       ].join("\n"));
-      pi.sendUserMessage(mateoPrompt);
+      pi.sendUserMessage(soniaPrompt);
     },
   });
 
@@ -1075,12 +1015,12 @@ export default function (pi: ExtensionAPI) {
     description: "⚡ Analyze and optimize a task for token efficiency",
     handler: async (args, ctx) => {
       const task = args?.trim() || "current task";
-      const mateoPrompt = buildAgentPrompt(config, "mateo", [
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
         `## Optimize Task for Token Efficiency`,
         `**Task:** ${task}`,
         `Analyze: estimate tokens, detect oversize risk, recommend decomposition, apply provider profile, suggest context capsules.`,
       ].join("\n"));
-      pi.sendUserMessage(mateoPrompt);
+      pi.sendUserMessage(soniaPrompt);
     },
   });
 
@@ -1099,13 +1039,13 @@ export default function (pi: ExtensionAPI) {
   pi.registerCommand("araya:efficiency-report", {
     description: "📊 Generate token efficiency and provider optimization report",
     handler: async (_args, ctx) => {
-      const mateoPrompt = buildAgentPrompt(config, "mateo", [
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
         `## Efficiency Report`,
         `Generate: avg tokens/task, compression ratio, context reuse ratio,`,
         `delegation efficiency, rate-limit events, cost/delivery, provider scores.`,
         `Save to .araya/efficiency/reports/.`,
       ].join("\n"));
-      pi.sendUserMessage(mateoPrompt);
+      pi.sendUserMessage(soniaPrompt);
     },
   });
 
@@ -1550,32 +1490,8 @@ export default function (pi: ExtensionAPI) {
   pi.registerCommand("araya:learn", {
     description: "📝 Capture a structured organizational lesson",
     handler: async (args, ctx) => {
-      const raw = args?.trim() || "";
-      if (!raw) { ctx.ui.notify("Usage: /araya learn \"<lesson>\"", "warning"); return; }
-
-      // H2 FIX: Input sanitization
-      const MAX_LESSON_LENGTH = 10240; // 10KB
-
-      if (raw.length > MAX_LESSON_LENGTH) {
-        ctx.ui.notify(
-          `❌ Lesson too long (${raw.length} chars). Maximum is ${MAX_LESSON_LENGTH} characters.`,
-          "error"
-        );
-        return;
-      }
-
-      // Strip HTML tags and dangerous Markdown/URL constructs
-      const lesson = raw
-        .replace(/<[^>]*>/g, "")           // strip HTML tags
-        .replace(/```(?:javascript|js|html|css)/gi, "```text") // neutralize code block language hints
-        .replace(/\[([^\]]*)\]\(javascript:[^)]*\)/gi, "[$1](blocked-link)") // strip javascript: URLs
-        .trim();
-
-      if (!lesson) {
-        ctx.ui.notify("❌ Lesson content is empty after sanitization.", "warning");
-        return;
-      }
-
+      const lesson = args?.trim() || "";
+      if (!lesson) { ctx.ui.notify("Usage: /araya learn \"<lesson>\"", "warning"); return; }
       const cwd = process.cwd();
       const { writeFileSync, existsSync, mkdirSync, readdirSync } = await import("node:fs");
       const { resolve } = await import("node:path");
@@ -1584,7 +1500,7 @@ export default function (pi: ExtensionAPI) {
       const count = readdirSync(dir).length + 1;
       const id = `LESSON-${String(count).padStart(3, "0")}`;
       writeFileSync(resolve(dir, `${id}.md`), `# ${id}\n\n${lesson}\n\n**Captured:** ${new Date().toISOString().slice(0, 10)}`);
-      ctx.ui.notify(`✅ ${id} captured: ${lesson.slice(0, 80)}${lesson.length > 80 ? '...' : ''}`, "info");
+      ctx.ui.notify(`✅ ${id} captured: ${lesson.slice(0, 80)}...`, "info");
     },
   });
 
@@ -1913,14 +1829,14 @@ export default function (pi: ExtensionAPI) {
       const explain = args?.startsWith("--explain");
       if (!task && !explain) { ctx.ui.notify("Usage: /araya route \"<task>\" or /araya route --explain \"<task>\"", "warning"); return; }
 
-      const auroraPrompt = buildAgentPrompt(config, "aurora", [
+      const soniaPrompt = buildAgentPrompt(config, "sonia", [
         `## AI Routing Request`,
         `**Task:** ${task || "current task"}`,
         explain ? `**Mode:** EXPLAIN — show detailed reasoning for routing decision.` : `**Mode:** RECOMMEND — suggest optimal agent, provider, and model.`,
         `Consider: agent capabilities, historical trajectories, technology preferences, cost governance, and constitutional rules.`,
         `Output: Recommended Agent → Provider → Model → Strategy → Cost Class → Reasoning.`,
       ].join("\n"));
-      pi.sendUserMessage(auroraPrompt);
+      pi.sendUserMessage(soniaPrompt);
     },
   });
 
@@ -2100,24 +2016,6 @@ export default function (pi: ExtensionAPI) {
       try {
         const arayaYamlReal = realpathSync(resolve(findArayaRoot(), "araya.yaml"));
         const arayaRoot = dirname(arayaYamlReal);
-
-        // H1 FIX: workspace boundary validation — ensure arayaRoot is within cwd and has .araya/ sentinel
-        const cwdReal = realpathSync(cwd);
-        if (!arayaRoot.startsWith(cwdReal + "/") && arayaRoot !== cwdReal) {
-          throw new Error(
-            `SECURITY: araya.yaml resolved outside workspace.\n` +
-            `  Resolved: ${arayaRoot}\n` +
-            `  Workspace: ${cwdReal}\n` +
-            `  This may indicate a symlink attack. Refusing to load.`
-          );
-        }
-        if (!existsSync(resolve(arayaRoot, ".araya"))) {
-          throw new Error(
-            `SECURITY: araya.yaml at ${arayaRoot} does not appear to be a valid ARAYA project. ` +
-            `Missing .araya/ sentinel directory. Refusing to load.`
-          );
-        }
-
         const { check: ax3Check, dryRun: ax3DryRun, reconcile: ax3Reconcile } = await import(resolve(arayaRoot, "dist/araya/v2/ax3"));
         const projectRoot = cwd;
 
@@ -2181,332 +2079,6 @@ export default function (pi: ExtensionAPI) {
         }
       } catch (e: any) {
         ctx.ui.notify(`❌ AX3 command failed: ${e.message}`, "error");
-      }
-    },
-  });
-
-  // ── /araya:man ──────────────────────────────────────────────────────────
-
-  pi.registerCommand("araya:man", {
-    description: "📚 ARAYA Manual & Discovery — browse commands, agents, and skills",
-    handler: async (args, ctx) => {
-      const raw = (args ?? "").trim();
-
-      // Dynamically import help provider from the real araya root
-      try {
-        const arayaYamlReal = realpathSync(resolve(findArayaRoot(), "araya.yaml"));
-        const arayaRoot = dirname(arayaYamlReal);
-
-        // H1 FIX: workspace boundary validation — ensure arayaRoot is within cwd and has .araya/ sentinel
-        const cwdReal2 = realpathSync(process.cwd());
-        if (!arayaRoot.startsWith(cwdReal2 + "/") && arayaRoot !== cwdReal2) {
-          throw new Error(
-            `SECURITY: araya.yaml resolved outside workspace.\n` +
-            `  Resolved: ${arayaRoot}\n` +
-            `  Workspace: ${cwdReal2}\n` +
-            `  This may indicate a symlink attack. Refusing to load.`
-          );
-        }
-        if (!existsSync(resolve(arayaRoot, ".araya"))) {
-          throw new Error(
-            `SECURITY: araya.yaml at ${arayaRoot} does not appear to be a valid ARAYA project. ` +
-            `Missing .araya/ sentinel directory. Refusing to load.`
-          );
-        }
-
-        const {
-          man, manAgent, manSkill, manSearch, manHelp,
-          listAll, listByType, help,
-          formatCommand,
-        } = await import(resolve(arayaRoot, "dist/araya/catalog/help-provider"));
-
-        // ── Parse flags ──
-        if (!raw) {
-          ctx.ui.notify(listAll(), "info");
-          return;
-        }
-
-        // --help
-        if (raw === "--help" || raw === "-h") {
-          ctx.ui.notify(manHelp(), "info");
-          return;
-        }
-
-        // --agent <name>
-        if (raw.startsWith("--agent ")) {
-          const name = raw.slice(8).trim().replace(/"/g, "");
-          ctx.ui.notify(manAgent(name), name ? "info" : "warning");
-          return;
-        }
-        if (raw === "--agent") {
-          ctx.ui.notify("Usage: /araya:man --agent <name>", "warning");
-          return;
-        }
-
-        // --skill <name>
-        if (raw.startsWith("--skill ")) {
-          const name = raw.slice(8).trim().replace(/"/g, "");
-          ctx.ui.notify(manSkill(name), name ? "info" : "warning");
-          return;
-        }
-        if (raw === "--skill") {
-          ctx.ui.notify("Usage: /araya:man --skill <name>", "warning");
-          return;
-        }
-
-        // --command <name>
-        if (raw.startsWith("--command ")) {
-          const name = raw.slice(10).trim().replace(/"/g, "");
-          if (!name) {
-            ctx.ui.notify("Usage: /araya:man --command <name>", "warning");
-            return;
-          }
-          const catalog = await import(resolve(arayaRoot, "dist/araya/catalog"));
-          const cat = catalog.getCatalog();
-          const slashQuery = name.startsWith("/") ? name : `/${name}`;
-          const cmd = cat.commands.find(
-            (c: any) => c.slash_command === slashQuery || c.name === slashQuery
-          );
-          if (cmd) {
-            ctx.ui.notify(formatCommand(cmd), "info");
-          } else {
-            ctx.ui.notify(man(name), "info");
-          }
-          return;
-        }
-        if (raw === "--command") {
-          ctx.ui.notify("Usage: /araya:man --command <name>", "warning");
-          return;
-        }
-
-        // --search <keyword>
-        if (raw.startsWith("--search ")) {
-          const keyword = raw.slice(9).trim().replace(/"/g, "");
-          ctx.ui.notify(manSearch(keyword), keyword ? "info" : "warning");
-          return;
-        }
-        if (raw === "--search") {
-          ctx.ui.notify("Usage: /araya:man --search <keyword>", "warning");
-          return;
-        }
-
-        // --list <type>
-        if (raw.startsWith("--list ")) {
-          const type = raw.slice(7).trim();
-          ctx.ui.notify(listByType(type), "info");
-          return;
-        }
-        if (raw === "--list") {
-          ctx.ui.notify("Usage: /araya:man --list agents|commands|skills", "warning");
-          return;
-        }
-
-        // Default: try as query (unified lookup)
-        ctx.ui.notify(man(raw), "info");
-      } catch (e: any) {
-        ctx.ui.notify(`❌ /araya:man failed: ${e.message}`, "error");
-      }
-    },
-  });
-
-  // ── /araya:delegate ────────────────────────────────────────────────────
-  // WS-10 Broker API Layer — delegate task to agent via broker
-
-  pi.registerCommand("araya:delegate", {
-    description: "🔗 Delegate a task to a specialist agent via the delegation broker",
-    handler: async (args, ctx) => {
-      const raw = (args ?? "").trim();
-      // Parse: /araya:delegate <agent> "<task>"
-      const match = raw.match(/^(\S+)\s+"([\s\S]*)"$/);
-      if (!match) {
-        ctx.ui.notify("Usage: /araya:delegate <agent> \"<task>\"", "warning");
-        return;
-      }
-      const targetAgent = match[1].toLowerCase();
-      const task = match[2];
-
-      // Validate agent exists
-      if (!config.agents[targetAgent]) {
-        ctx.ui.notify(
-          `❌ Unknown agent: '${targetAgent}'. Known agents: ${agentNames.join(", ")}`,
-          "error"
-        );
-        return;
-      }
-
-      try {
-        const broker = await getBroker();
-        const { delegate } = await import(resolve(root, "dist/araya/delegation/broker"));
-
-        const response = delegate(broker, {
-          targetAgent,
-          requestedBy: "valentina",
-          task,
-        });
-
-        if (!response.accepted) {
-          ctx.ui.notify(`❌ Delegation rejected: ${response.reason}`, "error");
-          return;
-        }
-
-        // Dispatch the task to the agent via pi.sendUserMessage
-        const agentPrompt = buildAgentPrompt(config, targetAgent, [
-          `## Delegated Task (ID: ${response.delegationId})`,
-          ``,
-          task,
-        ].join("\n"));
-
-        ctx.ui.notify(
-          `✅ **Delegation Accepted**\n\n` +
-          `- **ID:** \`${response.delegationId}\`\n` +
-          `- **Correlation:** \`${response.correlationId}\`\n` +
-          `- **Agent:** ${targetAgent}\n` +
-          `- **Status:** ${response.status}\n\n` +
-          `Dispatching task to ${targetAgent}...`,
-          "info"
-        );
-
-        pi.sendUserMessage(agentPrompt);
-      } catch (e: any) {
-        ctx.ui.notify(`❌ Delegate failed: ${e?.message ?? "unknown error"}`, "error");
-      }
-    },
-  });
-
-  // ── /araya:delegate-status ──────────────────────────────────────────────
-
-  pi.registerCommand("araya:delegate-status", {
-    description: "📊 Query delegation status by ID",
-    handler: async (args, ctx) => {
-      const delegationId = (args ?? "").trim();
-      if (!delegationId) {
-        ctx.ui.notify("Usage: /araya:delegate-status <delegation-id>", "warning");
-        return;
-      }
-
-      try {
-        const broker = await getBroker();
-        const { getStatus } = await import(resolve(root, "dist/araya/delegation/broker"));
-        const status = getStatus(broker, delegationId);
-
-        if (!status) {
-          ctx.ui.notify(`❌ Delegation not found: \`${delegationId}\``, "error");
-          return;
-        }
-
-        ctx.ui.notify(
-          `## Delegation Status: \`${status.delegationId}\`\n\n` +
-          `**Status:** ${status.status}\n` +
-          `**From:** ${status.requestedBy} → **To:** ${status.dispatchedTo}\n` +
-          `**Task:** ${status.task.slice(0, 100)}${status.task.length > 100 ? '...' : ''}\n` +
-          `**Depth:** ${status.depth}\n` +
-          `**Session:** ${status.sessionId ?? "N/A"}\n` +
-          `**Created:** ${status.createdAt ? new Date(status.createdAt).toISOString() : "N/A"}\n` +
-          `**Completed:** ${status.completedAt ? new Date(status.completedAt).toISOString() : "N/A"}`,
-          "info"
-        );
-      } catch (e: any) {
-        ctx.ui.notify(`❌ Status query failed: ${e?.message ?? "unknown error"}`, "error");
-      }
-    },
-  });
-
-  // ── /araya:delegate-list ────────────────────────────────────────────────
-
-  pi.registerCommand("araya:delegate-list", {
-    description: "📋 List all delegations with optional filters",
-    handler: async (args, ctx) => {
-      const raw = (args ?? "").trim();
-      const filter: any = {};
-
-      // Parse optional filters: --agent <name> --status <status> --limit <n>
-      const parts = raw.split(/\s+/);
-      for (let i = 0; i < parts.length; i++) {
-        if (parts[i] === "--agent" && i + 1 < parts.length) filter.agent = parts[++i];
-        else if (parts[i] === "--status" && i + 1 < parts.length) filter.status = parts[++i];
-        else if (parts[i] === "--limit" && i + 1 < parts.length) filter.limit = parseInt(parts[++i], 10);
-        else if (parts[i] === "--session" && i + 1 < parts.length) filter.sessionId = parts[++i];
-      }
-
-      try {
-        const broker = await getBroker();
-        const { listDelegations } = await import(resolve(root, "dist/araya/delegation/broker"));
-        const delegations = listDelegations(broker, Object.keys(filter).length > 0 ? filter : undefined);
-
-        if (delegations.length === 0) {
-          ctx.ui.notify("No delegations found.", "info");
-          return;
-        }
-
-        const lines = [`## Delegations (${delegations.length})`, ""];
-        for (const d of delegations) {
-          const statusIcon = d.status === "completed" ? "✅" :
-            d.status === "failed" ? "❌" :
-            d.status === "dispatched" ? "📤" :
-            d.status === "running" ? "🔄" : "⏳";
-          lines.push(
-            `${statusIcon} \`${d.delegationId}\` | ${d.requestedBy} → ${d.dispatchedTo} | ${d.status}`,
-            `   ${d.task.slice(0, 80)}${d.task.length > 80 ? '...' : ''}`
-          );
-        }
-
-        ctx.ui.notify(lines.join("\n"), "info");
-      } catch (e: any) {
-        ctx.ui.notify(`❌ List failed: ${e?.message ?? "unknown error"}`, "error");
-      }
-    },
-  });
-
-  // ── /araya:delegate-result ──────────────────────────────────────────────
-
-  pi.registerCommand("araya:delegate-result", {
-    description: "📄 Get full delegation result and output",
-    handler: async (args, ctx) => {
-      const delegationId = (args ?? "").trim();
-      if (!delegationId) {
-        ctx.ui.notify("Usage: /araya:delegate-result <delegation-id>", "warning");
-        return;
-      }
-
-      try {
-        const broker = await getBroker();
-        const { getResult } = await import(resolve(root, "dist/araya/delegation/broker"));
-        const result = getResult(broker, delegationId);
-
-        if (!result) {
-          ctx.ui.notify(`❌ Delegation not found: \`${delegationId}\``, "error");
-          return;
-        }
-
-        const lines = [
-          `## Delegation Result: \`${result.delegationId}\``,
-          "",
-          `**Status:** ${result.status}`,
-          `**From:** ${result.requestedBy} → **To:** ${result.dispatchedTo}`,
-          `**Confidence:** ${result.confidence ?? "N/A"}`,
-          `**Duration:** ${result.durationMs ? `${result.durationMs}ms` : "N/A"}`,
-          `**Depth:** ${result.depth}`,
-        ];
-
-        if (result.risks && result.risks.length > 0) {
-          lines.push("", "### Risks");
-          for (const r of result.risks) lines.push(`- ⚠️ ${r.description ?? r}`);
-        }
-
-        if (result.blockers && result.blockers.length > 0) {
-          lines.push("", "### Blockers");
-          for (const b of result.blockers) lines.push(`- 🚫 ${b.description ?? b}`);
-        }
-
-        if (result.output) {
-          lines.push("", "### Output");
-          lines.push(result.output.slice(0, 2000));
-          if (result.output.length > 2000) lines.push("... (truncated)");
-        }
-
-        ctx.ui.notify(lines.join("\n"), result.status === "completed" ? "info" : "warning");
-      } catch (e: any) {
-        ctx.ui.notify(`❌ Result query failed: ${e?.message ?? "unknown error"}`, "error");
       }
     },
   });

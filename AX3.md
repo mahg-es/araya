@@ -12,9 +12,6 @@
 
 ## Read Before Editing (Preflight — MANDATORY)
 
-0. If the `araya-command-and-delegation-expert` skill is assigned to you, apply its
-   preflight protocol BEFORE the AX3 preflight: consult catalog, identify capabilities,
-   verify availability. See `skills/araya-command-and-delegation-expert/SKILL.md`.
 1. Read this root `AX3.md`
 2. Identify every file or folder you expect to touch
 3. Walk from the repository root to each target path
@@ -120,7 +117,6 @@ Manuel Alejandro Hernández Giuliani (The Data Professor) — all architectural 
 
 <!-- BEGIN ARAYA MANAGED: Child AX3 Index -->
 - `.araya/AX3.md` — .araya
-- `docs/AX3.md` — docs
 - `extensions/AX3.md` — extensions
 - `prompts/AX3.md` — prompts
 - `skills/AX3.md` — skills

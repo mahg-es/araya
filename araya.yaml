@@ -23,11 +23,11 @@ agent_tool_access:
       write: true
       message_types: [ACK, STATUS, QUESTION, BLOCKED, EVIDENCE, RESPONSE, CLOSURE]
   permanent_restrictions:
-    - No direct main branch modifications (BRANCH-002)
-    - No secret or credential exposure (SEC-001)
-    - No destructive operations without governance
-    - No production changes without governance
-    - Domain scope boundaries remain in force
+  - No direct main branch modifications (BRANCH-002)
+  - No secret or credential exposure (SEC-001)
+  - No destructive operations without governance
+  - No production changes without governance
+  - Domain scope boundaries remain in force
   applies_to: All agents, all projects, all subagents, all dynamic/temporary agents
   priority_projects: [mahg-pms, mahg-platform]
 
@@ -37,40 +37,40 @@ delivery_modes:
   full:
     description: All gates — new features, architecture changes, data model changes, security-sensitive, large refactors
     phases:
-      - sdd
-      - bdd
-      - tdd
-      - implementation
-      - review
-      - security
-      - validation
-      - documentation
+    - sdd
+    - bdd
+    - tdd
+    - implementation
+    - review
+    - security
+    - validation
+    - documentation
     requires_approval: true
   standard:
     description: Normal feature work
     phases:
-      - plan
-      - tests
-      - implementation
-      - review
-      - validation
+    - plan
+    - tests
+    - implementation
+    - review
+    - validation
     requires_approval: false
   quick:
     description: Documentation, naming fixes, UI text, minor config
     phases:
-      - review
+    - review
     requires_approval: false
   review:
     description: Code review, PR review, architecture review
     phases:
-      - review
-      - security
+    - review
+    - security
     requires_approval: false
   repair:
     description: Fixing failed tests, broken builds, lint issues, regressions
     phases:
-      - tests
-      - validation
+    - tests
+    - validation
     requires_approval: false
 workflow_policies:
   auto:
@@ -85,18 +85,18 @@ workflow_policies:
   balanced:
     description: Standard enterprise workflow
     default_gates:
-      - plan
-      - tests
-      - implementation
-      - review
-      - validation
+    - plan
+    - tests
+    - implementation
+    - review
+    - validation
     require_security_review: false
     require_architect_review: false
   aggressive:
     description: Optimized for speed, reduced approvals
     default_gates:
-      - implementation
-      - review
+    - implementation
+    - review
     require_security_review: false
     require_architect_review: false
 model_tiers:
@@ -105,24 +105,24 @@ model_tiers:
     primary_provider: pi.dev
     primary_capability: non_thinking_fast
     allowed_fallback_providers:
-      - openai
-      - google
+    - openai
+    - google
     reasoning_effort: low
   balanced:
     purpose: Standard development, code review, test generation, BDD features
     primary_provider: pi.dev
     primary_capability: non_thinking_balanced
     allowed_fallback_providers:
-      - openai
-      - google
+    - openai
+    - google
     reasoning_effort: medium
   reasoning:
     purpose: Architecture, security analysis, complex debugging, SDD, planning, risk analysis
     primary_provider: pi.dev
     primary_capability: thinking_reasoning
     allowed_fallback_providers:
-      - openai
-      - google
+    - openai
+    - google
     reasoning_effort: high
 execution_budget:
   max_cost_usd: 2.0
@@ -144,9 +144,9 @@ execution_modes:
 safe_mode:
   description: Dry-run — no writes to disk, no shell execution, no git operations
   restrictions:
-    - no_write_to_disk
-    - no_shell_execution
-    - no_git_operations
+  - no_write_to_disk
+  - no_shell_execution
+  - no_git_operations
 branch_strategy:
   main:
     type: protected
@@ -167,11 +167,11 @@ branch_strategy:
     description: Read-only validation
     pattern: review/*
 human_approval_required_for:
-  - destructive_operations
-  - schema_changes
-  - infrastructure_changes
-  - dependency_upgrades
-  - security_sensitive
+- destructive_operations
+- schema_changes
+- infrastructure_changes
+- dependency_upgrades
+- security_sensitive
 artifact_storage:
   runs: .araya/runs/
   reports: .araya/reports/
@@ -192,14 +192,12 @@ agents:
       can_emit_binding: true
       can_produce_deliverables: false
     capabilities:
-      - reality_verification
-      - evidence_inspection
-      - disposition_emission
+    - reality_verification
+    - evidence_inspection
+    - disposition_emission
     skills:
-      - reality-verification
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - reality-verification
+    - ax3
   daneel:
     role: Delegated Executor — reports to Giskard, routes to the specialist bench per task; the sole cross-project execution identity across ARAYA Portfolio and every governed delivery project (added 2026-07-19)
     emoji: 🔨
@@ -210,13 +208,11 @@ agents:
       can_write_code: true
       can_merge_pr: false
     capabilities:
-      - task_execution
-      - specialist_routing
-      - pr_authoring
+    - task_execution
+    - specialist_routing
+    - pr_authoring
     skills:
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - ax3
   manu:
     role: Product Owner
     emoji: 👑
@@ -227,26 +223,24 @@ agents:
       can_write_code: false
       can_approve_review: true
     capabilities:
-      - product_ownership
-      - requirements
-      - acceptance_criteria
-      - scope_management
-      - release_gate
+    - product_ownership
+    - requirements
+    - acceptance_criteria
+    - scope_management
+    - release_gate
     skills:
-      - sdd-vision
-      - sdd-requirements
-      - test-case
-      - bdd-feature
-      - pm-status
-      - project-planning
-      - po-gap-questionnaire
-      - definition-of-done
-      - drr-create
-      - uat-review
-      - token-efficiency
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - sdd-vision
+    - sdd-requirements
+    - test-case
+    - bdd-feature
+    - pm-status
+    - project-planning
+    - po-gap-questionnaire
+    - definition-of-done
+    - drr-create
+    - uat-review
+    - token-efficiency
+    - ax3
   aurora:
     role: Capability Officer
     emoji: 🌟
@@ -257,25 +251,22 @@ agents:
       can_write_code: false
       can_merge_pr: false
     capabilities:
-      - workforce_planning
-      - capability_management
-      - skills_governance
-      - gap_analysis
-      - hiring
-      - organizational_health
+    - workforce_planning
+    - capability_management
+    - skills_governance
+    - gap_analysis
+    - hiring
+    - organizational_health
     skills:
-      - capability-registry
-      - gap-analysis
-      - workforce-planning
-      - agent-topology
-      - skills-lifecycle
-      - spof-detection
-      - hiring-recommendations
-      - organizational-health
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
-      - ai-routing
+    - capability-registry
+    - gap-analysis
+    - workforce-planning
+    - agent-topology
+    - skills-lifecycle
+    - spof-detection
+    - hiring-recommendations
+    - organizational-health
+    - ax3
   neo:
     role: Dynamic Capability Agent
     emoji: ⚡
@@ -287,9 +278,7 @@ agents:
       can_write_code: true
       can_approve_review: false
     skills:
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - ax3
     description: Mission-scoped temporary agent. Activated by Capability Officer pipeline.
   trinity:
     role: Dynamic Capability Agent
@@ -302,9 +291,7 @@ agents:
       can_write_code: true
       can_approve_review: false
     skills:
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - ax3
     description: Mission-scoped temporary agent. Activated by Capability Officer pipeline.
   sonia:
     role: Program Director & PMO Head
@@ -319,25 +306,21 @@ agents:
       can_merge_pr: false
       can_approve_review: true
     capabilities:
-      - orchestration
-      - governance
-      - reporting
-      - risk_management
-      - organizational_governance
+    - orchestration
+    - governance
+    - reporting
+    - risk_management
+    - organizational_governance
     skills:
-      - pm-plan
-      - pm-dependencies
-      - pm-risk
-      - pm-status
-      - project-planning
-      - drr-create
-      - iar-generate
-      - cr-generate
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
-      - autonomous-execution
-      - pm-decompose
+    - pm-plan
+    - pm-dependencies
+    - pm-risk
+    - pm-status
+    - project-planning
+    - drr-create
+    - iar-generate
+    - cr-generate
+    - ax3
   valentina:
     role: Backend Developer
     emoji: 🔧
@@ -348,14 +331,12 @@ agents:
       can_write_code: true
       can_merge_pr: false
     skills:
-      - api-design
-      - db-schema
-      - endpoint
-      - auth-middleware
-      - error-handling
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - api-design
+    - db-schema
+    - endpoint
+    - auth-middleware
+    - error-handling
+    - ax3
   alejandra:
     role: Frontend Developer
     emoji: 🎨
@@ -366,14 +347,12 @@ agents:
       can_write_code: true
       can_merge_pr: false
     skills:
-      - component
-      - form-design
-      - page-route
-      - api-integration
-      - responsive
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - component
+    - form-design
+    - page-route
+    - api-integration
+    - responsive
+    - ax3
   teresa:
     role: Chief Culinary Officer (CCO)
     emoji: 👩‍🍳
@@ -385,11 +364,9 @@ agents:
       can_merge_pr: false
       can_approve_review: true
     skills:
-      - uat-review
-      - token-efficiency
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - uat-review
+    - token-efficiency
+    - ax3
     description: Board-level. Advisory. The Professor's mother-in-law.
   clara:
     role: QA Engineer
@@ -401,18 +378,16 @@ agents:
       can_write_code: true
       can_merge_pr: false
     skills:
-      - unit-test
-      - integration-test
-      - test-case
-      - regression
-      - coverage
-      - tdd-generate
-      - tdd-execute
-      - uat-generate
-      - token-efficiency
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - unit-test
+    - integration-test
+    - test-case
+    - regression
+    - coverage
+    - tdd-generate
+    - tdd-execute
+    - uat-generate
+    - token-efficiency
+    - ax3
   aisha:
     role: Backend Architect
     emoji: 🔷
@@ -423,14 +398,12 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - microservice
-      - api-gateway
-      - cache-strategy
-      - message-queue
-      - db-optimization
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - microservice
+    - api-gateway
+    - cache-strategy
+    - message-queue
+    - db-optimization
+    - ax3
   lin:
     role: Frontend Architect
     emoji: 🎨
@@ -441,14 +414,12 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - component-arch
-      - animation
-      - performance
-      - accessibility
-      - state-management
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - component-arch
+    - animation
+    - performance
+    - accessibility
+    - state-management
+    - ax3
   priya:
     role: QA Lead
     emoji: 🧪
@@ -459,14 +430,12 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - performance-test
-      - e2e-strategy
-      - cicd-quality
-      - uat-review
-      - token-efficiency
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - performance-test
+    - e2e-strategy
+    - cicd-quality
+    - uat-review
+    - token-efficiency
+    - ax3
   diana:
     role: Cybersecurity Specialist
     emoji: 🛡️
@@ -477,15 +446,13 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - threat-model
-      - secure-arch
-      - secure-code
-      - pentest
-      - compliance
-      - secrets
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - threat-model
+    - secure-arch
+    - secure-code
+    - pentest
+    - compliance
+    - secrets
+    - ax3
   isla:
     role: Infra Architect
     emoji: 🖥️
@@ -496,14 +463,12 @@ agents:
       can_write_code: true
       can_merge_pr: false
     skills:
-      - docker
-      - kubernetes
-      - cicd-pipeline
-      - cloud-deploy
-      - monitoring
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - docker
+    - kubernetes
+    - cicd-pipeline
+    - cloud-deploy
+    - monitoring
+    - ax3
   elena:
     role: Scrum Master + PM Auditor
     emoji: 📋
@@ -514,16 +479,14 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - daily-standup
-      - sprint-planning
-      - retrospective
-      - impediment
-      - velocity
-      - definition-of-done
-      - reality-verification
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - daily-standup
+    - sprint-planning
+    - retrospective
+    - impediment
+    - velocity
+    - definition-of-done
+    - reality-verification
+    - ax3
   sofia:
     role: AI Assistant
     emoji: 💬
@@ -532,9 +495,7 @@ agents:
     max_turns: 20
     description: General-purpose AI assistant — delegates to specialist agents
     skills:
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - ax3
   junia:
     role: Data Platform Architect
     emoji: ☁️
@@ -545,14 +506,12 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - data-lakehouse-design
-      - spark-pipeline
-      - cloud-provision
-      - data-modeling
-      - data-governance
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - data-lakehouse-design
+    - spark-pipeline
+    - cloud-provision
+    - data-modeling
+    - data-governance
+    - ax3
   bernabe:
     role: Data Engineer
     emoji: ⚙️
@@ -562,13 +521,11 @@ agents:
     permissions:
       can_write_code: true
     skills:
-      - spark-pipeline
-      - etl-orchestration
-      - data-quality
-      - medallion-architecture
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - spark-pipeline
+    - etl-orchestration
+    - data-quality
+    - medallion-architecture
+    - ax3
   maria:
     role: AI/ML Engineer
     emoji: 🧠
@@ -578,14 +535,12 @@ agents:
     permissions:
       can_write_code: true
     skills:
-      - llm-local-deploy
-      - rag-pipeline
-      - vector-search
-      - agent-design
-      - model-fine-tuning
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - llm-local-deploy
+    - rag-pipeline
+    - vector-search
+    - agent-design
+    - model-fine-tuning
+    - ax3
   lucas:
     role: Content Strategist
     emoji: ✍️
@@ -595,13 +550,11 @@ agents:
     permissions:
       can_write_code: false
     skills:
-      - seo-optimize
-      - geo-branding
-      - multi-platform-publish
-      - content-calendar
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - seo-optimize
+    - geo-branding
+    - multi-platform-publish
+    - content-calendar
+    - ax3
   priscila:
     role: Technical Writer
     emoji: 📚
@@ -611,14 +564,12 @@ agents:
     permissions:
       can_write_code: true
     skills:
-      - adr-write
-      - api-document
-      - architecture-diagram
-      - slide-deck-generate
-      - technical-book
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - adr-write
+    - api-document
+    - architecture-diagram
+    - slide-deck-generate
+    - technical-book
+    - ax3
   lidia:
     role: Profitability Domain Expert
     emoji: 💰
@@ -629,13 +580,11 @@ agents:
       can_write_code: false
       can_approve_review: true
     skills:
-      - abc-costing-model
-      - whale-curve-analyze
-      - cost-to-serve
-      - profitability-lineage
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - abc-costing-model
+    - whale-curve-analyze
+    - cost-to-serve
+    - profitability-lineage
+    - ax3
   pablo:
     role: BI & Analytics Lead
     emoji: 📊
@@ -645,13 +594,11 @@ agents:
     permissions:
       can_write_code: false
     skills:
-      - dashboard-design
-      - data-visualization
-      - kpi-framework
-      - analytics-report
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - dashboard-design
+    - data-visualization
+    - kpi-framework
+    - analytics-report
+    - ax3
   mateo:
     role: FinOps Specialist
     emoji: 📈
@@ -661,14 +608,12 @@ agents:
     permissions:
       can_write_code: false
     skills:
-      - cost-analysis
-      - usage-metering
-      - resource-rightsizing
-      - budget-forecasting
-      - token-efficiency
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - cost-analysis
+    - usage-metering
+    - resource-rightsizing
+    - budget-forecasting
+    - token-efficiency
+    - ax3
   eunice:
     role: Educational Designer
     emoji: 🎓
@@ -678,13 +623,11 @@ agents:
     permissions:
       can_write_code: true
     skills:
-      - lab-scenario-design
-      - student-assessment
-      - training-module
-      - curriculum-planning
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - lab-scenario-design
+    - student-assessment
+    - training-module
+    - curriculum-planning
+    - ax3
   esteban:
     role: Chief Knowledge Officer & Graph Builder Steward
     emoji: 🗂️
@@ -694,18 +637,16 @@ agents:
     permissions:
       can_write_code: true
     skills:
-      - daily-note
-      - knowledge-graph
-      - project-planning
-      - pkm-workflow
-      - organizational-knowledge
-      - trajectory-management
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - daily-note
+    - knowledge-graph
+    - project-planning
+    - pkm-workflow
+    - organizational-knowledge
+    - trajectory-management
+    - ax3
     capabilities:
-      - organizational_queries
-      - graph_stewardship
+    - organizational_queries
+    - graph_stewardship
   aquila:
     role: Static Site Engineer
     emoji: 🏗️
@@ -715,13 +656,11 @@ agents:
     permissions:
       can_write_code: true
     skills:
-      - static-site-generate
-      - theme-design
-      - seo-optimize
-      - deployment-automation
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - static-site-generate
+    - theme-design
+    - seo-optimize
+    - deployment-automation
+    - ax3
   dorcas:
     role: Brand Governance Lead
     emoji: 🎯
@@ -731,13 +670,11 @@ agents:
     permissions:
       can_write_code: false
     skills:
-      - brand-compliance
-      - visual-identity
-      - brand-audit
-      - asset-management
-      - ax3
-      - araya-command-and-delegation-expert
-      - ax-postoffice
+    - brand-compliance
+    - visual-identity
+    - brand-audit
+    - asset-management
+    - ax3
 provider_optimization:
   codex:
     optimize_for: small prompts, incremental, frequent checkpoints

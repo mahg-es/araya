@@ -10,8 +10,7 @@
 
 ## Local Contracts
 
-- Every agent prompt in `agents/` MUST reference the mandatory cross-cutting skill `araya-command-and-delegation-expert`.
-- Agent prompts are the canonical identity + charter source for each agent. They complement (never contradict) the agent definition in `araya.yaml`.
+<!-- Binding rules for this subtree. Must not weaken parent rules. -->
 
 ## Work Guidance
 

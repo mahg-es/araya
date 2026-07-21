@@ -10,8 +10,7 @@
 
 ## Local Contracts
 
-- Every agent prompt in this directory MUST apply the `araya-command-and-delegation-expert` skill before executing any task.
-- Agent prompts that lack this reference are incomplete.
+<!-- Binding rules for this subtree. Must not weaken parent rules. -->
 
 ## Work Guidance
 

@@ -167,12 +167,6 @@ cd araya
 | `/araya run --mode <mode> "<task>"` | Orchestrate a full SDLC delivery |
 | `/araya <agent> "<task>"` | Delegate a task to a specialist agent |
 | `/araya:status` | Full agent roster with tiers and skills |
-| `/araya:man` | Browse commands, agents, and skills — the canonical discovery system |
-| `/araya:man --search <term>` | Search catalog by keyword, domain, agent, or purpose |
-| `/araya:man --agent <name>` | View agent profile — role, skills, permissions, constraints |
-| `/araya:man --skill <name>` | View skill reference — purpose, scope, assigned agents |
-| `/araya:man --command <name>` | View command reference — syntax, flags, examples |
-| `/araya:man --list agents\|commands\|skills` | List all entries of a type |
 | `/araya:install` | Install ARAYA on this machine |
 | `/araya help` | Complete command manual |
 | `/araya version` | Show version and release path |
@@ -606,51 +600,6 @@ Then `/reload` and you're ready.
 
 ---
 
-## 📖 Command Discovery — `/araya:man`
-
-ARAYA includes a **canonical discovery system** that lets every agent browse, search, and inspect all registered commands, agents, and skills. The catalog is auto-generated from repository sources — never hand-edited.
-
-### Why it matters
-
-Without `/araya:man`, agents risk three failure modes:
-- **Discovery gap:** agent doesn't know a capability exists → writes duplicate code
-- **Authority violation:** agent executes specialist work instead of delegating
-- **Command invention:** agent fabricates a command that doesn't exist
-
-The `araya-command-and-delegation-expert` skill (assigned to **every** ARAYA agent) mandates catalog consultation before the first tool call of every task.
-
-### Quick Reference
-
-```bash
-# Browse everything (summary view)
-/araya:man
-
-# Unified lookup — finds command, agent, or skill by name
-/araya:man ax3              # find the AX3 command
-/araya:man valentina        # show Valentina's profile
-/araya:man api-design       # show API design skill
-
-# Detailed profiles
-/araya:man --agent sonia    # agent: role, skills, permissions, constraints
-/araya:man --skill threat-model  # skill: purpose, scope, assigned agents
-/araya:man --command /araya:validate  # command: syntax, flags, examples
-
-# Search and list
-/araya:man --search security    # find all security-related entries
-/araya:man --list agents        # list all 28 agents
-/araya:man --list commands      # list all commands
-/araya:man --list skills        # list all 120 skills
-
-# Fuzzy matching — misspelled queries get suggestions
-/araya:man securty          # → "Did you mean: secure-arch, secrets, diana?"
-```
-
-**Powered by:** Canonical catalog at `.araya/catalog/catalog.json`, auto-generated from `araya.yaml`, `skills/`, and extension command registrations. Validated by Daneel for repository truth.
-
-📚 **Full reference:** [`docs/commands/araya-man.md`](docs/commands/araya-man.md)
-
----
-
 ## 📁 Repository Structure
 
 ```
@@ -661,9 +610,6 @@ araya/
 ├── .pi/agents/             # 28 agent definitions (YAML frontmatter; daneel verifier defined in extensions/)
 ├── prompts/agents/         # 26 personality prompt templates
 ├── skills/                 # 120 SKILL.md files across 12 domains
-├── docs/                   # User-facing documentation
-│   ├── commands/           # Command references (e.g., /araya:man)
-│   └── agents/             # Agent integration and onboarding guides
 ├── src/araya/v2/           # Orchestration engine (TypeScript)
 │   └── engines/            # Workflow, model, quality, budget, circuit, delegation
 ├── tests/                  # Smoke tests
