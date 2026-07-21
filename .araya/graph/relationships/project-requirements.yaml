@@ -1,0 +1,187 @@
+# project-requires-capability — REQ-001 project requirements
+# Generated: 2026-07-22 by Esteban (CKO)
+
+relationships:
+  - relationship_id: "rel-req001-audited-by-esteban"
+    source_entity_id: "project-req-001"
+    relationship_type: "DEPENDS_ON"
+    target_entity_id: "agent-esteban"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-workstreams.md"
+    confidence: 1.0
+    note: "WS-01: Esteban ejecutó la auditoría fundacional"
+
+  - relationship_id: "rel-req001-requires-broker"
+    source_entity_id: "project-req-001"
+    relationship_type: "REQUIRES"
+    target_entity_id: "capability-broker-delegation"
+    source_artifact: "requirements"
+    source_path: ".araya/plan/requirements/req-001.md"
+    confidence: 1.0
+    note: "DI-001 a DI-006"
+
+  - relationship_id: "rel-req001-requires-catalog"
+    source_entity_id: "project-req-001"
+    relationship_type: "REQUIRES"
+    target_entity_id: "capability-catalog-system"
+    source_artifact: "requirements"
+    source_path: ".araya/plan/requirements/req-001.md"
+    confidence: 1.0
+    note: "AC-1, AC-6, AC-21, AC-23"
+
+  - relationship_id: "rel-req001-requires-araya-man"
+    source_entity_id: "project-req-001"
+    relationship_type: "REQUIRES"
+    target_entity_id: "command-araya-man"
+    source_artifact: "requirements"
+    source_path: ".araya/plan/requirements/req-001.md"
+    confidence: 1.0
+    note: "AC-2 a AC-8"
+
+  - relationship_id: "rel-broker-designed-by-isla"
+    source_entity_id: "capability-broker-delegation"
+    relationship_type: "DEPENDS_ON"
+    target_entity_id: "agent-isla"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-workstreams.md"
+    confidence: 1.0
+    note: "WS-08: Isla diseñó la arquitectura del broker"
+
+  - relationship_id: "rel-catalog-designed-by-aisha"
+    source_entity_id: "capability-catalog-system"
+    relationship_type: "DEPENDS_ON"
+    target_entity_id: "agent-aisha"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-workstreams.md"
+    confidence: 1.0
+    note: "WS-04: Aisha diseñó el schema del catálogo"
+
+  - relationship_id: "rel-req001-governed-by-manu"
+    source_entity_id: "project-req-001"
+    relationship_type: "GOVERNS"
+    target_entity_id: "agent-manu"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-workstreams.md"
+    confidence: 1.0
+    note: "Manu es Product Owner — SPEC_APPROVED gate"
+
+  - relationship_id: "rel-req001-coordinated-by-sonia"
+    source_entity_id: "project-req-001"
+    relationship_type: "DEPENDS_ON"
+    target_entity_id: "agent-sonia"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-workstreams.md"
+    confidence: 1.0
+    note: "Sonia planificó y coordina los 16 workstreams"
+
+  - relationship_id: "rel-req001-chro-reviewed-by-aurora"
+    source_entity_id: "project-req-001"
+    relationship_type: "DEPENDS_ON"
+    target_entity_id: "agent-aurora"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-workstreams.md"
+    confidence: 1.0
+    note: "WS-03: Aurora validó capability coverage y elegibilidad"
+
+  - relationship_id: "rel-broker-verified-by-diana"
+    source_entity_id: "capability-broker-delegation"
+    relationship_type: "REQUIRES"
+    target_entity_id: "agent-diana"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-workstreams.md"
+    confidence: 1.0
+    note: "WS-12: Diana ejecuta security review del broker"
+
+  - relationship_id: "rel-broker-evidence-in-araya-runs"
+    source_entity_id: "capability-broker-delegation"
+    relationship_type: "GENERATED"
+    target_entity_id: "domain-delegation"
+    source_artifact: "spec"
+    source_path: ".araya/plan/spec/req-001-delegation-architecture.md"
+    confidence: 1.0
+    note: "Broker persiste evidencia en .araya/runs/{delegation_id}/"
+
+  # ── Finding → Entity ────────────────────────────────────────
+  - relationship_id: "rel-finding-f001-affects-araya-man"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "command-araya-man"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-001: No existe /araya:man"
+
+  - relationship_id: "rel-finding-f002-affects-sonia"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-002: Sonia concentra 57% de rutas con 7 violaciones"
+
+  - relationship_id: "rel-finding-f003-affects-broker"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "capability-broker-delegation"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-003: Delegación depende de subagent tool (pi-specific)"
+
+  - relationship_id: "rel-finding-f004-affects-aurora"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "agent-aurora"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-004: 4 skills huérfanas de Aurora"
+
+  - relationship_id: "rel-finding-f004-affects-orphan-skills"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "skill-orphan-aurora-group"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-004: 4 skills huérfanas"
+
+  - relationship_id: "rel-finding-f005-affects-undeclared-skills"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "skill-undeclared-group"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-005: 4 skills no asignadas en araya.yaml"
+
+  - relationship_id: "rel-finding-f006-affects-sonia"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-006: 13 discrepancias prompt de Sonia ↔ araya.yaml"
+
+  - relationship_id: "rel-finding-f007-affects-bare-agents"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "finding-bare-agents"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-007: 5 agentes bare"
+
+  - relationship_id: "rel-finding-f008-affects-broker"
+    source_entity_id: "finding-audit-ws01"
+    relationship_type: "RELATED_TO"
+    target_entity_id: "capability-broker-delegation"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 1.0
+    note: "F-008: Sin broker, sin IDs de correlación, sin protección anti-recursión"
+
+created_at: "2026-07-22"
+updated_at: "2026-07-22"

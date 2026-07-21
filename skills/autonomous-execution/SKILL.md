@@ -5,42 +5,103 @@ description: "Reduce manual intervention — autonomous natural language executi
 
 # Autonomous Execution
 
-Natural language should trigger ARAYA execution. Commands become optional.
-Delegation progress is visible. Run records persist for audit.
+ARAYA execution should start from natural language, not commands. Delegation
+progress is visible during execution. Every run persists for audit. This skill
+defines the autonomous execution layer — triggers, observability, and persistence.
 
-## IMP-01: Natural Language Triggers
+## What problem this solves
+
+ARAYA agents are capable but require explicit `/araya run` commands. The
+Professor must type commands to start workflows. Execution is invisible until
+complete. Failed runs leave no trace. This skill makes ARAYA reactive to
+natural language, transparent during execution, and auditable afterward.
+
+## When to Use
+
+- Always — this is a cross-cutting capability that affects all workflows
+- When designing new workflow triggers
+- When debugging a failed or stalled run
+- When auditing past executions
+
+## Natural Language Triggers
 
 ARAYA recognizes intent from natural language and starts the appropriate
-workflow without `/araya run`:
+workflow without requiring `/araya run`:
 
-| Natural Language | Triggers |
+| Natural Language Pattern | Triggers |
 |---|---|
-| "Manu, assess mahg-pms" | PO assessment workflow |
-| "Sonia, review this project" | Delivery review workflow |
-| "Aurora, identify capability gaps" | GAR generation |
-| "I want to reconstitute mahg-pms" | Reconstitution workflow |
-| "Help me prepare a release" | Release readiness workflow |
+| "Assess {project}" / "Evaluate {project}" | PO assessment workflow |
+| "Review {project}" / "Audit {delivery}" | Delivery review workflow |
+| "Identify capability gaps" / "What skills are missing?" | GAR generation |
+| "Reconstitute {project}" | Reconstitution workflow |
+| "Prepare a release" / "Ship {feature}" | Release readiness workflow |
+| "What's the team doing?" / "Status update" | Daily standup |
+| "Plan sprint for {goal}" | Sprint planning |
 
-## IMP-02: Delegation Observability
+## Delegation Observability
 
-During execution, The Professor sees:
-- Current run ID
-- Current phase
-- Current agent
+During execution, the following is visible:
+
+- Current run ID and workflow name
+- Current phase and agent
 - Completed tasks / total tasks
-- Blocked tasks (if any)
+- Blocked tasks and their owners
+- Elapsed time and estimated remaining
 
-## IMP-03: Run Persistence
+## Run Persistence
 
 Every run creates `.araya/runs/{run_id}/run.json`:
-- Run ID, start/end time, workflow, agents, status, artifacts, errors, outcome
 
-## IMP-04: Provider-Aware Routing
+```json
+{
+  "run_id": "run-2026-05-28-001",
+  "workflow": "delivery-review",
+  "trigger": "natural-language",
+  "start_time": "2026-05-28T10:00:00Z",
+  "end_time": "2026-05-28T10:45:00Z",
+  "agents": ["sonia", "elena", "diana"],
+  "phases": [...],
+  "status": "completed",
+  "artifacts": ["spec.md", "gar.md"],
+  "errors": [],
+  "outcome": "delivery-accepted"
+}
+```
 
-Before delegation, check: rate-limit history, recent usage, known failures.
-Avoid selecting providers near TPM quota.
+## Input
 
-## IMP-05: Usability Gate
+- Natural language message from The Data Professor
+- Agent capability registry (for routing)
+- Provider availability state
 
-A feature is complete only when it can be used, solves a real problem,
-can be demonstrated end-to-end, and reduces manual work.
+## Output
+
+- Triggered workflow (started automatically)
+- Run record in `.araya/runs/{run_id}/`
+- Observability stream during execution
+
+## Steps
+
+1. Receive natural language input
+2. Match intent against trigger patterns
+3. Verify required agents are available and capable
+4. Route to appropriate workflow via provider-aware routing
+5. Start run with observability stream
+6. Persist run record on completion (or failure)
+
+## Rules
+
+- Natural language triggers must not require command syntax
+- Every run creates a persistent record — no execution without an audit trail
+- Provider-aware routing checks rate limits before delegation
+- A feature is complete only when it: can be used, solves a real problem, can be demonstrated end-to-end, and reduces manual work
+- Failed runs must persist their error state for debugging
+- Observability is non-negotiable — no silent execution
+
+## Done Criteria
+
+- [ ] Natural language triggers recognized and routed
+- [ ] Run record persisted with full metadata
+- [ ] Observability stream active during execution
+- [ ] Provider routing respected rate limits
+- [ ] Usability gate passed (usable, solves problem, demonstrable, reduces work)

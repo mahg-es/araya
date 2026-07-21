@@ -1,0 +1,113 @@
+# domain-taxonomy — ARAYA Domain Taxonomy (post-REQ-001 audit)
+entity_id: "domain-taxonomy"
+entity_type: "Domain"
+name: "ARAYA Domain Taxonomy"
+source_artifact: "audit"
+source_path: ".araya/plan/spec/req-001-audit.md"
+description: >
+  Taxonomía de dominios funcionales de ARAYA, mapeando cada skill y capacidad
+  a su dominio correspondiente. Actualizada post-auditoría WS-01.
+
+domains:
+  - entity_id: "domain-backend"
+    name: "Backend"
+    skills: ["api-design", "db-schema", "endpoint", "auth-middleware", "error-handling"]
+    coverage: "complete"
+
+  - entity_id: "domain-frontend"
+    name: "Frontend"
+    skills: ["component", "form-design", "page-route", "api-integration", "responsive", "animation", "performance", "accessibility", "state-management"]
+    coverage: "complete"
+
+  - entity_id: "domain-architecture"
+    name: "Arquitectura"
+    skills: ["microservice", "api-gateway", "cache-strategy", "message-queue", "db-optimization", "component-arch"]
+    coverage: "complete"
+
+  - entity_id: "domain-qa-testing"
+    name: "QA/Testing"
+    skills: ["unit-test", "integration-test", "test-case", "regression", "coverage", "tdd-generate", "tdd-execute", "uat-generate", "uat-review", "performance-test", "e2e-strategy", "cicd-quality"]
+    coverage: "complete"
+
+  - entity_id: "domain-security"
+    name: "Seguridad"
+    skills: ["threat-model", "secure-arch", "secure-code", "pentest", "compliance", "secrets"]
+    coverage: "complete"
+
+  - entity_id: "domain-infra-devops"
+    name: "Infra/DevOps"
+    skills: ["docker", "kubernetes", "cicd-pipeline", "cloud-deploy", "cloud-provision", "monitoring", "deployment-automation"]
+    coverage: "complete"
+
+  - entity_id: "domain-data-ai"
+    name: "Datos/AI"
+    skills: ["data-lakehouse-design", "spark-pipeline", "data-modeling", "data-governance", "data-quality", "etl-orchestration", "medallion-architecture", "llm-local-deploy", "rag-pipeline", "vector-search", "agent-design", "model-fine-tuning"]
+    coverage: "complete"
+
+  - entity_id: "domain-bi-analytics"
+    name: "BI/Analytics"
+    skills: ["dashboard-design", "data-visualization", "kpi-framework", "analytics-report"]
+    coverage: "complete"
+
+  - entity_id: "domain-finops"
+    name: "FinOps"
+    skills: ["cost-analysis", "usage-metering", "resource-rightsizing", "budget-forecasting", "token-efficiency"]
+    coverage: "complete"
+    owner: "mateo"
+
+  - entity_id: "domain-profitability"
+    name: "Rentabilidad"
+    skills: ["abc-costing-model", "whale-curve-analyze", "cost-to-serve", "profitability-lineage"]
+    coverage: "complete"
+
+  - entity_id: "domain-education"
+    name: "Educación"
+    skills: ["lab-scenario-design", "student-assessment", "training-module", "curriculum-planning"]
+    coverage: "complete"
+
+  - entity_id: "domain-content-brand"
+    name: "Contenido/Marca"
+    skills: ["seo-optimize", "geo-branding", "multi-platform-publish", "content-calendar", "brand-compliance", "visual-identity", "brand-audit", "asset-management"]
+    coverage: "complete"
+
+  - entity_id: "domain-documentation"
+    name: "Documentación"
+    skills: ["adr-write", "api-document", "architecture-diagram", "slide-deck-generate", "technical-book"]
+    coverage: "complete"
+
+  - entity_id: "domain-governance-pm"
+    name: "Gobernanza/PM"
+    skills: ["pm-plan", "pm-dependencies", "pm-risk", "pm-status", "project-planning", "drr-create", "iar-generate", "cr-generate", "daily-standup", "sprint-planning", "retrospective", "impediment", "velocity", "definition-of-done", "reality-verification"]
+    coverage: "complete"
+
+  - entity_id: "domain-knowledge"
+    name: "Conocimiento"
+    skills: ["daily-note", "knowledge-graph", "pkm-workflow", "organizational-knowledge", "trajectory-management"]
+    coverage: "complete"
+    owner: "esteban"
+
+  - entity_id: "domain-chro"
+    name: "CHRO / Workforce"
+    skills: ["capability-registry", "gap-analysis", "workforce-planning", "agent-topology"]
+    skills_orphan: ["hiring-recommendations", "organizational-health", "skills-lifecycle", "spof-detection"]
+    coverage: "partial"
+    owner: "aurora"
+    note: "4 de 9 skills huérfanas — Aurora opera al 56%"
+
+  - entity_id: "domain-ax"
+    name: "AX (Transversal)"
+    skills: ["ax3", "ax-postoffice", "autonomous-execution", "ai-routing", "token-efficiency"]
+    skills_undeclared: ["ax-postoffice", "autonomous-execution", "ai-routing"]
+    coverage: "partial"
+    note: "3 skills con directorio pero sin asignación en araya.yaml"
+
+  - entity_id: "domain-delegation"
+    name: "Delegación (NUEVO — REQ-001)"
+    skills: []
+    capabilities: ["capability-broker-delegation"]
+    commands: ["command-araya-man"]
+    coverage: "new"
+    note: "Dominio creado por REQ-001. Sin skills asignadas aún."
+
+created_at: "2026-07-22"
+updated_at: "2026-07-22"

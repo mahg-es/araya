@@ -23,5 +23,6 @@
 ## Child AX3 Index
 
 <!-- BEGIN ARAYA MANAGED: Child AX3 Index -->
+- `delegation/` — Delegation broker core (WS-10 Part 1): types, state machine, circuit breaker, broker engine
 - `v2/AX3.md` — v2
 <!-- END ARAYA MANAGED:

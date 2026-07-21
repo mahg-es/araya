@@ -1,0 +1,402 @@
+# command-agent — Command→Agent routing relationships
+# Source: extensions/araya/index.ts SUBCOMMAND_ROUTES + WS-01 delegation audit
+# Generated: 2026-07-22 by Esteban (CKO)
+
+relationships:
+  # ── Current Routes (from extensions/araya/index.ts) ─────────
+
+  # Sonia routes (16 de 28)
+  - relationship_id: "rel-cmd-validate-routes-sonia"
+    source_entity_id: "command-validate"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "current"
+    correct: false
+    correct_agent: "agent-rolando"
+    reason: "Rolando tiene reality-verification; Sonia no"
+
+  - relationship_id: "rel-cmd-constitution-routes-sonia"
+    source_entity_id: "command-constitution"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "current"
+    correct: false
+    correct_agent: "agent-manu"
+    reason: "Manu es governance owner"
+
+  - relationship_id: "rel-cmd-release-check-routes-sonia"
+    source_entity_id: "command-release-check"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "current"
+    correct: false
+    correct_agent: "agent-manu"
+    reason: "Manu es release gate"
+
+  - relationship_id: "rel-cmd-usability-check-routes-sonia"
+    source_entity_id: "command-usability-check"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "current"
+    correct: false
+    correct_agent: "agent-manu"
+    reason: "Manu/Priya son revisores de quality"
+
+  - relationship_id: "rel-cmd-review-delivery-routes-sonia"
+    source_entity_id: "command-review-delivery"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "current"
+    correct: false
+    correct_agent: "agent-sonia"
+    note: "DRR ok para Sonia, pero IAR y routing a especialistas debe ser explícito"
+
+  - relationship_id: "rel-cmd-generate-uat-routes-sonia"
+    source_entity_id: "command-generate-uat"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "incorrect"
+    correct: false
+    correct_agent: "agent-clara"
+    reason: "Clara tiene uat-generate; Sonia no tiene esta skill"
+    severity: "high"
+
+  - relationship_id: "rel-cmd-uat-status-routes-sonia"
+    source_entity_id: "command-uat-status"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "current"
+    correct: false
+    note: "Podría ser directo, no requiere delegación"
+
+  - relationship_id: "rel-cmd-budget-status-routes-sonia"
+    source_entity_id: "command-budget-status"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "incorrect"
+    correct: false
+    correct_agent: "agent-mateo"
+    reason: "Mateo tiene token-efficiency y es FinOps specialist; Sonia no tiene esta skill"
+    severity: "high"
+
+  - relationship_id: "rel-cmd-optimize-task-routes-sonia"
+    source_entity_id: "command-optimize-task"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "incorrect"
+    correct: false
+    correct_agent: "agent-mateo"
+    reason: "Mateo es FinOps specialist"
+    severity: "high"
+
+  - relationship_id: "rel-cmd-efficiency-report-routes-sonia"
+    source_entity_id: "command-efficiency-report"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "incorrect"
+    correct: false
+    correct_agent: "agent-mateo"
+    reason: "Mateo es FinOps specialist"
+    severity: "high"
+
+  - relationship_id: "rel-cmd-route-routes-sonia"
+    source_entity_id: "command-route"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "incorrect"
+    correct: false
+    correct_agent: "agent-aurora"
+    reason: "Aurora es Capability Officer con dominio de ai-routing"
+    severity: "high"
+
+  - relationship_id: "rel-cmd-anticipate-routes-sonia"
+    source_entity_id: "command-anticipate"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "current"
+    correct: false
+    note: "Podría ser Elena (risk) o Esteban (organizational)"
+
+  - relationship_id: "rel-cmd-trace-routes-sonia"
+    source_entity_id: "command-trace"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-metrics-routes-sonia"
+    source_entity_id: "command-metrics"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-prioritize-routes-sonia"
+    source_entity_id: "command-prioritize"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-roundtable-routes-sonia"
+    source_entity_id: "command-roundtable"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-sonia"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  # Esteban routes (7 de 28)
+  - relationship_id: "rel-cmd-knowledge-routes-esteban"
+    source_entity_id: "command-knowledge"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-esteban"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-learn-routes-esteban"
+    source_entity_id: "command-learn"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-esteban"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-trajectory-routes-esteban"
+    source_entity_id: "command-trajectory"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-esteban"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-improve-routes-esteban"
+    source_entity_id: "command-improve"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-esteban"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-graph-routes-esteban"
+    source_entity_id: "command-graph"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-esteban"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-ask-routes-esteban"
+    source_entity_id: "command-ask"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-esteban"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-sharpen-routes-esteban"
+    source_entity_id: "command-sharpen"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-esteban"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  # Manu routes (4 de 28)
+  - relationship_id: "rel-cmd-review-uat-routes-manu"
+    source_entity_id: "command-review-uat"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-manu"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-align-routes-manu"
+    source_entity_id: "command-align"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-manu"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-harmonize-routes-manu"
+    source_entity_id: "command-harmonize"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-manu"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  - relationship_id: "rel-cmd-understand-routes-manu"
+    source_entity_id: "command-understand"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-manu"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  # Aurora routes (1 de 28)
+  - relationship_id: "rel-cmd-team-routes-aurora"
+    source_entity_id: "command-team"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-aurora"
+    source_artifact: "code"
+    source_path: "extensions/araya/index.ts"
+    confidence: 1.0
+    status: "correct"
+    correct: true
+
+  # ── Corrective Routes (REQ-001 recommended) ────────────────
+
+  - relationship_id: "rel-cmd-generate-uat-recommends-clara"
+    source_entity_id: "command-generate-uat"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-clara"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 0.95
+    status: "recommended"
+    note: "Clara tiene uat-generate. Sonia no."
+
+  - relationship_id: "rel-cmd-budget-status-recommends-mateo"
+    source_entity_id: "command-budget-status"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-mateo"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 0.95
+    status: "recommended"
+    note: "Mateo es FinOps specialist con token-efficiency"
+
+  - relationship_id: "rel-cmd-optimize-task-recommends-mateo"
+    source_entity_id: "command-optimize-task"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-mateo"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 0.95
+    status: "recommended"
+    note: "Mateo es FinOps specialist"
+
+  - relationship_id: "rel-cmd-efficiency-report-recommends-mateo"
+    source_entity_id: "command-efficiency-report"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-mateo"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 0.95
+    status: "recommended"
+    note: "Mateo es FinOps specialist"
+
+  - relationship_id: "rel-cmd-route-recommends-aurora"
+    source_entity_id: "command-route"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-aurora"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 0.90
+    status: "recommended"
+    note: "Aurora es Capability Officer con dominio de ai-routing"
+
+  - relationship_id: "rel-cmd-validate-recommends-rolando"
+    source_entity_id: "command-validate"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-rolando"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 0.90
+    status: "recommended"
+    note: "Rolando tiene reality-verification"
+
+  - relationship_id: "rel-cmd-usability-check-recommends-manu"
+    source_entity_id: "command-usability-check"
+    relationship_type: "ROUTES_TO"
+    target_entity_id: "agent-manu"
+    source_artifact: "audit"
+    source_path: ".araya/plan/spec/req-001-audit.md"
+    confidence: 0.85
+    status: "recommended"
+    note: "Manu es Product Owner — usability review"
+
+summary:
+  total_routes: 28
+  routes_to_sonia: 16
+  routes_to_esteban: 7
+  routes_to_manu: 4
+  routes_to_aurora: 1
+  incorrect_routes: 7
+  incorrect_pct: 25.0
+  sonia_concentration_pct: 57.1
+
+created_at: "2026-07-22"
+updated_at: "2026-07-22"

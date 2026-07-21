@@ -1,0 +1,31 @@
+# agent-aurora — Capability Officer / CHRO
+entity_id: "agent-aurora"
+entity_type: "Agent"
+name: "Aurora"
+source_artifact: "araya.yaml"
+source_path: "araya.yaml"
+description: >
+  Chief Human Resources Officer & Capability Authority. Responsible for agent
+  eligibility determination (AC-16), workforce planning, capability coverage,
+  and agent topology. Severely limited operationally: 4 of 9 skills are orphan
+  (declared but no SKILL.md directory exists).
+tier: "reasoning"
+can_write_code: false
+skills_assigned:
+  - agent-topology
+  - capability-registry
+  - gap-analysis
+  - workforce-planning
+  - ax3
+skills_orphan:
+  - hiring-recommendations
+  - organizational-health
+  - skills-lifecycle
+  - spof-detection
+prompt_file: "prompts/agents/aurora.md"
+prompt_exists: true
+status: "active"
+orphan_skills_count: 4
+capability_health: "degraded"
+created_at: "2026-07-22"
+updated_at: "2026-07-22"

@@ -1,0 +1,54 @@
+# capability-broker-delegation — Delegation Broker (REQ-001 DI-001 a DI-006)
+entity_id: "capability-broker-delegation"
+entity_type: "Capability"
+name: "Broker de Delegación"
+source_artifact: "spec"
+source_path: ".araya/plan/spec/req-001-delegation-architecture.md"
+description: >
+  Infraestructura de delegación runtime-agnostic que permite a cualquier agente
+  ARAYA delegar trabajo a un especialista con correlación completa, tracking de
+  estados, validación de permisos, protección anti-recursión y evidencia verificable.
+  Diseñado por Isla (Infra Architect) en WS-08, implementado por Valentina en WS-10.
+
+requirements:
+  - "DI-001: Broker/Orquestador de delegación"
+  - "DI-002: Independencia del runtime (pi, Codex, Claude CLI, AGY)"
+  - "DI-003: Capacidades mínimas: correlación, sesiones, permisos, estados, resultados, evidencia"
+  - "DI-004: Protección contra recursión (3 capas: self-block, cycle-detection, max-depth)"
+  - "DI-005: Separación orden/ejecución — Sonia ordena, broker despacha"
+  - "DI-006: Criterios de verificación de infraestructura (7 verification points)"
+
+architecture:
+  api_surface:
+    - "initBroker(config) → BrokerHandle"
+    - "delegate(handle, request) → DelegateAck"
+    - "getStatus(handle, id) → DelegationStatus"
+    - "listDelegations(handle, filter) → DelegationSummary[]"
+    - "getResult(handle, id) → DelegationResult"
+    - "cancel(handle, id, reason) → boolean"
+    - "healthCheck(handle) → BrokerHealth"
+  state_machine:
+    states: ["PENDING", "DISPATCHED", "RUNNING", "BLOCKED", "COMPLETED", "FAILED", "TIMEOUT", "CANCELLED"]
+    terminal: ["COMPLETED", "FAILED", "TIMEOUT", "CANCELLED"]
+  recursion_defense:
+    layer_1: "Self-delegation block"
+    layer_2: "Active chain cycle detection"
+    layer_3: "Maximum depth limit (default: 3)"
+  circuit_breaker:
+    states: ["CLOSED", "OPEN", "HALF_OPEN"]
+    threshold: 5
+    window_ms: 60000
+    cooldown_ms: 30000
+  evidence_layout: ".araya/runs/{delegation_id}/metadata.json, output.md, artifacts/, audit.jsonl"
+
+related_agents:
+  architect: "isla"
+  implementer: "valentina"
+  security_reviewer: "diana"
+  orchestrator: "sonia"
+  chro_approver: "aurora"
+
+parent_project: "project-req-001"
+status: "designed"
+created_at: "2026-07-22"
+updated_at: "2026-07-22"
