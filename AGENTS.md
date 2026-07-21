@@ -32,3 +32,28 @@ Every agent in this project MUST apply the following skills on every task:
 - `/araya:ax3 --dry-run` — preview changes without writing
 - `/araya:man` — consult the ARAYA catalog
 - `/araya:man --search <term>` — search capabilities by keyword
+
+## Workspace Hygiene (canon-rule-001)
+
+**All Git worktrees MUST be created exclusively under:**
+
+```text
+~/github/mahg-es/worktrees/<repository>/<worktree-name>
+```
+
+**Never create worktrees alongside repositories** (e.g., `~/github/mahg-es/araya-something`).
+
+Before creating a worktree, run preflight:
+```bash
+git worktree list
+git branch --show-current
+mkdir -p ~/github/mahg-es/worktrees/<repo>
+```
+
+After completing work:
+```bash
+git worktree remove <path>
+git worktree prune
+```
+
+Violations are BLOCK-level incidents.
