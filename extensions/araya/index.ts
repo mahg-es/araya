@@ -2012,9 +2012,10 @@ export default function (pi: ExtensionAPI) {
         else if (!part.startsWith("--")) { if (!scope && !flags.check && !flags["dry-run"] && !flags.repair) scope = part; }
       }
 
-      // Load AX3 runtime — resolve real path (symlinks break relative imports)
+      // Load AX3 runtime — resolve through araya.yaml symlink to real repo
       try {
-        const arayaRoot = realpathSync(findArayaRoot());
+        const arayaYamlReal = realpathSync(resolve(findArayaRoot(), "araya.yaml"));
+        const arayaRoot = dirname(arayaYamlReal);
         const { check: ax3Check, dryRun: ax3DryRun, reconcile: ax3Reconcile } = await import(resolve(arayaRoot, "dist/araya/v2/ax3"));
         const projectRoot = cwd;
 
