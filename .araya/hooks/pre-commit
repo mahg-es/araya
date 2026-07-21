@@ -1,0 +1,43 @@
+#!/bin/bash
+# ARAYA Branch Governance Pre-Commit Hook
+# Blocks commits that violate branch governance policy.
+# See: .araya/governance/policies/branch-governance.md
+
+BRANCH=$(git branch --show-current)
+COMMIT_MSG=$(cat "$1" 2>/dev/null)
+
+# ─── Rule 1: No commits on main ───────────────────────────────────────
+if [ "$BRANCH" = "main" ]; then
+  echo "❌ BLOCKED: Commits on 'main' are forbidden."
+  echo "   Create a feature/* branch from dev-mahg and submit a PR."
+  exit 1
+fi
+
+# ─── Rule 2: No direct commits on integration branch ──────────────────
+if [ "$BRANCH" = "dev-mahg" ]; then
+  echo "❌ BLOCKED: Direct commits on 'dev-mahg' are forbidden."
+  echo "   Create a feature/* branch and submit a PR."
+  exit 1
+fi
+
+# ─── Rule 3: Feature branches must follow naming convention ────────────
+if [[ "$BRANCH" != feature/* ]] && [[ "$BRANCH" != hotfix/* ]]; then
+  echo "❌ BLOCKED: Branch '$BRANCH' does not follow naming convention."
+  echo "   Use feature/<name> or hotfix/<name>."
+  exit 1
+fi
+
+# ─── Rule 4: No Co-authored-by trailers for AI agents ─────────────────
+if echo "$COMMIT_MSG" | grep -qi "Co-authored-by.*agent\|Co-authored-by.*ia\|Co-authored-by.*gpt\|Co-authored-by.*claude\|Co-authored-by.*sonia\|Co-authored-by.*aurora\|Co-authored-by.*daneel\|Co-authored-by.*manu"; then
+  echo "❌ BLOCKED: Co-authored-by trailers for AI agents are forbidden."
+  echo "   Remove Co-authored-by lines from commit message."
+  exit 1
+fi
+
+# ─── Rule 5: Working tree must be clean relative to feature base ──────
+# (warning only — does not block)
+if [ -n "$(git status --porcelain=v1)" ]; then
+  echo "⚠️  WARNING: Working tree has uncommitted changes."
+fi
+
+exit 0
