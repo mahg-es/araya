@@ -46,5 +46,8 @@ export {
 export type { BreakingChange, InterfaceCheck } from "./contract/published-interface";
 export { apiContractInvocation } from "./engines/certification/api-contract-target";
 export type { ApiContractTarget } from "./engines/certification/api-contract-target";
+// AX3 — Agent Execution Contract Hierarchy (AX Feature)
+export { preflight, postflight, reconcile, check, dryRun } from "./ax3";
+export type { Ax3Doc, Ax3IndexEntry, Ax3Chain, Ax3Change, Ax3ReconcileResult, Ax3CheckResult } from "./ax3";
 export * from "./types";
 

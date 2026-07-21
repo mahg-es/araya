@@ -322,6 +322,9 @@ export default function (pi: ExtensionAPI) {
             `  /araya:status                  full agent roster\n` +
             `  /araya help                    this manual\n` +
             `  /araya run <flags> "<task>"    orchestrate a full run\n` +
+            `  /araya:ax3                     reconcile AX3 contract hierarchy\n` +
+            `  /araya:ax3 --check             check AX3 tree for drift\n` +
+            `  /araya:ax3 --dry-run           preview AX3 changes\n` +
             `  /araya <agent>                 show agent info & skills\n` +
             `  /araya <agent> <task>          delegate task to agent\n` +
             `\n` +
@@ -380,6 +383,13 @@ export default function (pi: ExtensionAPI) {
             `  /araya spec:init               initialize spec structure\n` +
             `  /araya spec:list               list active specifications\n` +
             `  /araya:install                 install ARAYA\n` +
+            `\n` +
+            `**AX CONTRACTS**\n` +
+            `  /araya:ax3                     reconcile AX3.md contract tree\n` +
+            `  /araya:ax3 --check             verify tree (exit 0=clean, 1=drift)\n` +
+            `  /araya:ax3 --dry-run           preview without writing\n` +
+            `  /araya:ax3 --scope <path>       reconcile specific subtree\n` +
+            `  /araya:ax3 --repair            fix safe inconsistencies\n` +
             `\n**AGENTS** (${agentNames.length})\n${agentList}` +
             v2Help.join("\n"),
           "info"
@@ -1978,6 +1988,96 @@ export default function (pi: ExtensionAPI) {
         `**Handoff Protocol:** What was done → What's next → Open decisions → Active constraints`,
         "info"
       );
+    },
+  });
+
+  // ── /araya:ax3 ──────────────────────────────────────────────────────────
+
+  pi.registerCommand("araya:ax3", {
+    description: "📋 AX3 contract hierarchy — reconcile, check, or repair AX3.md tree",
+    handler: async (args, ctx) => {
+      const cwd = process.cwd();
+      const trimmed = (args ?? "").trim();
+
+      // Parse flags
+      const flags: Record<string, string> = {};
+      const parts = trimmed.split(/\s+/);
+      let scope: string | undefined;
+      for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        if (part === "--check") flags.check = "true";
+        else if (part === "--dry-run") flags["dry-run"] = "true";
+        else if (part === "--repair") flags.repair = "true";
+        else if (part === "--scope") { if (i + 1 < parts.length) { scope = parts[i + 1]; i++; } }
+        else if (!part.startsWith("--")) { if (!scope && !flags.check && !flags["dry-run"] && !flags.repair) scope = part; }
+      }
+
+      // Load AX3 runtime
+      try {
+        const { check: ax3Check, dryRun: ax3DryRun, reconcile: ax3Reconcile } = await import("../../src/araya/v2/ax3");
+        const projectRoot = cwd;
+
+        if (flags.check) {
+          const result = ax3Check(projectRoot, scope);
+          if (result.drift) {
+            ctx.ui.notify(
+              `## AX3 Check — 🔴 DRIFT DETECTED\n\n` +
+              `**Violations:** ${result.violationCount}\n\n` +
+              result.violations.slice(0, 20).map((v: string) => `- ${v}`).join("\n") +
+              (result.violations.length > 20 ? `\n... and ${result.violations.length - 20} more` : ""),
+              "warning"
+            );
+          } else {
+            ctx.ui.notify("## AX3 Check — ✅ Clean\n\nAX3 tree is fully reconciled. No drift detected.", "info");
+          }
+        } else if (flags["dry-run"]) {
+          const result = ax3DryRun(projectRoot, scope);
+          const lines = [
+            `## AX3 Dry Run — ${result.changes.length} planned changes\n`,
+            ...result.changes.map((c: any) => `- **${c.type}**: ${c.path} — ${c.description}`),
+          ];
+          if (result.issues.length > 0) {
+            lines.push("", "### Issues", ...result.issues.map((i: string) => `- ⚠️ ${i}`));
+          }
+          if (result.changes.length === 0) {
+            lines.push("✅ No changes needed — AX3 tree is clean.");
+          }
+          ctx.ui.notify(lines.join("\n"), result.changes.length > 0 ? "info" : "info");
+        } else if (flags.repair) {
+          const result = ax3Reconcile(projectRoot, scope, false, true);
+          const lines = [
+            `## AX3 Repair — Complete\n`,
+            `**Documents:** ${result.docCount} | **Changes:** ${result.changes.length}`,
+          ];
+          if (result.changes.length > 0) {
+            lines.push("", ...result.changes.map((c: any) => `- ${c.type}: ${c.path}`));
+          } else {
+            lines.push("✅ No issues to repair.");
+          }
+          if (result.issues.length > 0) {
+            lines.push("", "### Remaining Issues", ...result.issues.map((i: string) => `- ⚠️ ${i}`));
+          }
+          ctx.ui.notify(lines.join("\n"), "info");
+        } else {
+          // Default: reconcile
+          ctx.ui.notify(`🔧 Reconciling AX3 tree from ${projectRoot}...`, "info");
+          const result = ax3Reconcile(projectRoot, scope, false, false);
+          const lines = [
+            `## AX3 Reconciliation — Complete`,
+            `**Documents:** ${result.docCount} | **Changes:** ${result.changes.length}`,
+            `**Status:** ${result.changed ? "🔄 Tree updated" : "✅ Already reconciled"}`,
+          ];
+          if (result.changes.length > 0) {
+            lines.push("", "### Changes Applied", ...result.changes.map((c: any) => `- **${c.type}**: \`${c.path}\` — ${c.description}`));
+          }
+          if (result.issues.length > 0) {
+            lines.push("", "### Issues", ...result.issues.map((i: string) => `- ⚠️ ${i}`));
+          }
+          ctx.ui.notify(lines.join("\n"), result.issues.length > 0 ? "warning" : "info");
+        }
+      } catch (e: any) {
+        ctx.ui.notify(`❌ AX3 command failed: ${e.message}`, "error");
+      }
     },
   });
 

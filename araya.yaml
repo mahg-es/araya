@@ -265,6 +265,7 @@ agents:
     - spof-detection
     - hiring-recommendations
     - organizational-health
+    - ax3
   neo:
     role: Dynamic Capability Agent
     emoji: ⚡
@@ -316,6 +317,7 @@ agents:
     - drr-create
     - iar-generate
     - cr-generate
+    - ax3
   valentina:
     role: Backend Developer
     emoji: 🔧
@@ -331,6 +333,7 @@ agents:
     - endpoint
     - auth-middleware
     - error-handling
+    - ax3
   alejandra:
     role: Frontend Developer
     emoji: 🎨
@@ -346,6 +349,7 @@ agents:
     - page-route
     - api-integration
     - responsive
+    - ax3
   teresa:
     role: Chief Culinary Officer (CCO)
     emoji: 👩‍🍳
@@ -379,6 +383,7 @@ agents:
     - tdd-execute
     - uat-generate
     - token-efficiency
+    - ax3
   aisha:
     role: Backend Architect
     emoji: 🔷
@@ -455,6 +460,7 @@ agents:
     - cicd-pipeline
     - cloud-deploy
     - monitoring
+    - ax3
   elena:
     role: Scrum Master + PM Auditor
     emoji: 📋
@@ -472,6 +478,7 @@ agents:
     - velocity
     - definition-of-done
     - reality-verification
+    - ax3
   sofia:
     role: AI Assistant
     emoji: 💬
@@ -549,6 +556,7 @@ agents:
     - architecture-diagram
     - slide-deck-generate
     - technical-book
+    - ax3
   lidia:
     role: Profitability Domain Expert
     emoji: 💰
