@@ -11,6 +11,33 @@ Governed by: ARAYA Constitution TOOL section + ADR-008 + agent-tool-access-stand
 
 ---
 
+## 2026-07-25 Teresa | PR #78 Relay Protocol — Design Review (ponny-express-0009)
+
+**Task:** Design review of Framework Relay Protocol (feature/relay-protocol @ bd7fc0b).
+No implementation. Motor not yet built. Reviewed 8 design artifacts.
+
+**Verdict: FIX** — 3 path inconsistencies, 3 non-blocking observations.
+
+**FIX items (must resolve before implementation):**
+- task-schema.json description path missing `runtime/` segment
+- event-schema.json description path missing `runtime/` segment
+- claim-contract.md pseudocode path missing `runtime/` segment
+
+**Structural assessment:** 11/11 criteria PASS. Happy path complete. Single owner
+enforced. No state skipping. No self-approval (5 conflict checks). FAIL/DISCREPANCY/REJECT
+paths defined with cycle limits. ASK/BLOCK with suspended owner (Daneel never functional).
+Claim lifecycle complete (ACK timeout, force-release, no re-claim). Concurrency correct
+(flock + version check + atomic rename). Idempotency via idempotency_key. Portfolio
+independence verified.
+
+**33 acceptance tests** cover all paths and edge cases.
+
+**Report:** .araya/plan/spec/ponny-express-0009-teresa-review.md
+
+**Design is IMPLEMENTATION-READY after 3 FIX items resolved.**
+
+---
+
 ## 2026-07-21 Teresa | REQ-001 Final Test Suite Execution (AWU-C3)
 
 **Task:** Update and execute ALL REQ-001 test suites reflecting:

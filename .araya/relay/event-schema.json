@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://araya.es/relay/event-schema.json",
   "title": "ARAYA Relay Event",
-  "description": "Immutable event record for every transition in the ARAYA Relay state machine. Events are append-only, stored in .araya/relay/events/<task-id>.jsonl in each governed project. Defined and governed by the ARAYA Framework (mahg-es/araya).",
+  "description": "Immutable event record for every transition in the ARAYA Relay state machine. Events are append-only, stored in .araya/relay/runtime/events/<task-id>.jsonl in each governed project. Defined and governed by the ARAYA Framework (mahg-es/araya).",
   "type": "object",
   "required": [
     "event_id",

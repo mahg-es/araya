@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://araya.es/relay/task-schema.json",
   "title": "ARAYA Relay Task",
-  "description": "Canonical task schema for ARAYA Relay. A task file is the single source of live state. Lives at .araya/relay/tasks/<task-id>.json in each governed project. Defined and governed by the ARAYA Framework (mahg-es/araya).",
+  "description": "Canonical task schema for ARAYA Relay. A task file is the single source of live state. Lives at .araya/relay/runtime/tasks/<task-id>.json in each governed project. Defined and governed by the ARAYA Framework (mahg-es/araya).",
   "type": "object",
   "required": [
     "task_id",

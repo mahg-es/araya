@@ -44,7 +44,7 @@ A task can have **at most one** active or acknowledged claim at any time. The gu
 
 ```text
 Before reading or writing task file:
-  acquire exclusive flock on .araya/relay/tasks/<task-id>.json
+  acquire exclusive flock on .araya/relay/runtime/tasks/<task-id>.json
   (blocking with timeout)
 
 After read/write complete:
@@ -72,8 +72,8 @@ The version check catches logical races where a writer reads, another writer mod
 ### 3. Atomic Temporary-Write-and-Rename
 
 ```text
-write path:  .araya/relay/tasks/<task-id>.json.tmp.<uuid>
-target path: .araya/relay/tasks/<task-id>.json
+write path:  .araya/relay/runtime/tasks/<task-id>.json.tmp.<uuid>
+target path: .araya/relay/runtime/tasks/<task-id>.json
 
 1. Write complete new task state to .tmp file
 2. fsync the .tmp file
