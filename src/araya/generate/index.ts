@@ -67,6 +67,24 @@ export async function main(args: string[] = process.argv.slice(2)): Promise<void
     results.push(result);
   }
 
+  // Sync .pi/agents/ from generated pi adapter output
+  if (!options.dry_run && adapters.includes("pi")) {
+    const piAgentsDir = path.join(root, ".pi", "agents");
+    fs.mkdirSync(piAgentsDir, { recursive: true });
+    const piGenDir = path.join(root, ".araya", "generated", "pi");
+    for (const agent of agents) {
+      if (agent.runtime?.targets && !agent.runtime.targets.includes("pi")) continue;
+      const srcFile = path.join(piGenDir, `${agent.name}.md`);
+      if (!fs.existsSync(srcFile)) continue;
+      const dstFile = path.join(piAgentsDir, `${agent.name}.md`);
+      const content = fs.readFileSync(srcFile, "utf-8");
+      const tmpPath = dstFile + ".tmp";
+      fs.writeFileSync(tmpPath, content, "utf-8");
+      fs.renameSync(tmpPath, dstFile);
+    }
+    console.log(`  ✓ .pi/agents/ synced`);
+  }
+
   // Step 5: Report
   reportResults(results, options.dry_run);
 

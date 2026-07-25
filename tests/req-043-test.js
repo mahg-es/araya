@@ -545,6 +545,81 @@ test("every active agent has a prompt file", () => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
+// Relay config is set by inferRelay() during generation — check generated pi profiles
+const yaml = require("js-yaml");
+const arayaConfig = yaml.load(fs.readFileSync(YAML_PATH, "utf-8"));
+
+function getGenPi(name) {
+  return fs.readFileSync(path.join(GENERATED_DIR, "pi", `${name}.md`), "utf-8");
+}
+
+test("Clara (TEST_AUTOMATION): EXECUTING only, results=[DONE,ASK,BLOCK]", () => {
+  const content = getGenPi("clara");
+  assert(content.includes("**Authority:** TEST_AUTOMATION"), "Clara authority should be TEST_AUTOMATION");
+  // Check relay section in generated file
+  const relaySection = content.split("## Relay")[1] || "";
+  assert(relaySection.includes("EXECUTING"), "Clara must have EXECUTING state");
+  assert(!relaySection.includes("TESTING"), "Clara must NOT have TESTING state");
+  assert(relaySection.includes("DONE"), "Clara must have DONE result");
+  assert(!relaySection.includes("PASS"), "Clara must NOT have PASS result");
+});
+
+test("Teresa (TEST_GATE): TESTING only, results=[PASS,FAIL,ASK,BLOCK]", () => {
+  const content = getGenPi("teresa");
+  assert(content.includes("**Authority:** TEST_GATE"), "Teresa authority should be TEST_GATE");
+  const relaySection = content.split("## Relay")[1] || "";
+  assert(relaySection.includes("TESTING"), "Teresa must have TESTING state");
+  assert(!relaySection.includes("EXECUTING"), "Teresa must NOT have EXECUTING state");
+  assert(relaySection.includes("PASS"), "Teresa must have PASS result");
+  assert(relaySection.includes("FAIL"), "Teresa must have FAIL result");
+});
+
+test("Rolando (REALITY_AUTHORITY): VERIFYING only, results=[VERIFIED,DISCREPANCY,ASK,BLOCK]", () => {
+  const content = getGenPi("rolando");
+  assert(content.includes("**Authority:** REALITY_AUTHORITY"), "Rolando authority should be REALITY_AUTHORITY");
+  const relaySection = content.split("## Relay")[1] || "";
+  assert(relaySection.includes("VERIFYING"), "Rolando must have VERIFYING state");
+  assert(!relaySection.includes("TESTING"), "Rolando must NOT have TESTING state");
+  assert(relaySection.includes("VERIFIED"), "Rolando must have VERIFIED result");
+  assert(relaySection.includes("DISCREPANCY"), "Rolando must have DISCREPANCY result");
+});
+
+test("Aurora: hiring-recommendations absent, workforce-planning+3 skills present", () => {
+  const aur = arayaConfig.agents.aurora;
+  assert(aur, "aurora should exist");
+  const skills = aur.skills || [];
+  assert(!skills.includes("hiring-recommendations"), "hiring-recommendations should be absent");
+  assert(skills.includes("workforce-planning"), "workforce-planning should be present");
+  assert(skills.includes("skills-lifecycle"), "skills-lifecycle should be present");
+  assert(skills.includes("spof-detection"), "spof-detection should be present");
+  assert(skills.includes("organizational-health"), "organizational-health should be present");
+  for (const skill of ["workforce-planning","skills-lifecycle","spof-detection","organizational-health"]) {
+    assert(fs.existsSync(path.join(SKILLS_DIR, skill, "SKILL.md")), `${skill} SKILL.md should exist`);
+  }
+});
+
+test("Daneel: exact cross-cutting skills [relay-participant, ax3, araya-command-and-delegation-expert, ax-postoffice]", () => {
+  const d = arayaConfig.agents.daneel;
+  assert(d, "daneel should exist");
+  const expected = ["relay-participant", "ax3", "araya-command-and-delegation-expert", "ax-postoffice"].sort();
+  const actual = (d.skills || []).slice().sort();
+  assertEqual(JSON.stringify(actual), JSON.stringify(expected),
+    `Daneel skills: ${JSON.stringify(actual)}`);
+});
+
+test("Neo+Trinity: dormant, cross-cutting skills preserved, .pi/agents/ generated", () => {
+  for (const name of ["neo", "trinity"]) {
+    const agent = arayaConfig.agents[name];
+    assert(agent, `${name} should exist`);
+    assert(agent.status === "dormant", `${name} should be dormant, got ${agent.status}`);
+    const skills = agent.skills || [];
+    assert(skills.includes("ax3"), `${name} should have ax3`);
+    assert(skills.includes("araya-command-and-delegation-expert"), `${name} should have araya-command-and-delegation-expert`);
+    const piProfile = path.join(ROOT, ".pi", "agents", `${name}.md`);
+    assert(fs.existsSync(piProfile), `${name} should have .pi/agents/ profile`);
+  }
+});
+
 // SUMMARY
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -553,44 +628,6 @@ console.log(`Results: ${passed} passed, ${failed} failed, ${passed + failed} tot
 console.log(`${"═".repeat(50)}\n`);
 
 // ─── Relay State Mapping Tests ───────────────────────────────────────────
-// Read relay config from generated runtime files (where authority is set)
-const generatedPi = path.join(ROOT, ".araya", "generated", "pi");
-
-test("Clara (TEST_AUTOMATION): EXECUTING only, cannot return PASS", () => {
-  const content = fs.readFileSync(path.join(generatedPi, "clara.md"), "utf-8");
-  assert(content.includes("**Authority:** TEST_AUTOMATION"), "Clara should have Authority: TEST_AUTOMATION");
-  assert(content.includes("can_receive_states"), "Clara should have relay config");
-  assert(!content.includes("PASS") || content.includes("cannot return PASS"), "Clara should not return PASS");
-});
-
-test("Teresa (TEST_GATE): TESTING only, can return PASS/FAIL, cannot return VERIFIED", () => {
-  const content = fs.readFileSync(path.join(generatedPi, "teresa.md"), "utf-8");
-  assert(content.includes("**Authority:** TEST_GATE"), "Teresa should have Authority: TEST_GATE");
-  assert(content.includes("PASS"), "Teresa must be able to return PASS");
-  assert(content.includes("FAIL"), "Teresa must be able to return FAIL");
-  assert(!content.includes("VERIFIED") || content.includes("cannot verify"), "Teresa should not return VERIFIED");
-});
-
-test("Rolando (REALITY_AUTHORITY): VERIFYING only, can return VERIFIED/DISCREPANCY", () => {
-  const content = fs.readFileSync(path.join(generatedPi, "rolando.md"), "utf-8");
-  assert(content.includes("**Authority:** REALITY_AUTHORITY"), "Rolando should have Authority: REALITY_AUTHORITY");
-  assert(content.includes("VERIFIED"), "Rolando must be able to return VERIFIED");
-  assert(content.includes("DISCREPANCY"), "Rolando must be able to return DISCREPANCY");
-});
-
-// Aurora: skills audit
-test("Aurora: hiring-recommendations absent, workforce-planning + 3 new skills present", () => {
-  // Verify Aurora's skills exist on disk
-  const skillsDir = path.join(ROOT, "skills");
-  const skillList = ["workforce-planning", "skills-lifecycle", "spof-detection", "organizational-health"];
-  for (const skill of skillList) {
-    const skillPath = path.join(skillsDir, skill, "SKILL.md");
-    assert(fs.existsSync(skillPath), skill + " should have SKILL.md");
-  }
-  // Verify hiring-recommendations is NOT a directory (was replaced by workforce-planning)
-  const hiringDir = path.join(skillsDir, "hiring-recommendations");
-  assert(!fs.existsSync(hiringDir), "hiring-recommendations should not exist as skill dir");
-});
 if (failed > 0) {
   console.log("FAILURES:");
   for (const f of failures) {
