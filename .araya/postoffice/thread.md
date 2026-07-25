@@ -62,3 +62,25 @@ independence verified.
 
 **3 non-blocking findings:** Sonia tasks_must_delegate not enforced;
 /araya:provider:list has no delegated_agent; Sonia prompt has 98 extra skills.
+
+## 2026-07-25 Rolando | PR #78 Relay Protocol — Reality Verification Report (ponny-express-0009)
+
+**From:** rolando (executor → po-proxy)
+**Status:** done
+**Direction:** executor→po-proxy
+
+Re-verification of PR #78 merge (SHA: c269780) completed.
+
+**Disposition: VERIFIED WITH OBSERVATION**
+
+- 6/7 criteria VERIFIED: schemas valid JSON Schema 2020-12, Daneel never functional,
+  no self-approval, concurrency correct, events with sequence/causation/idempotency,
+  Giskard not operational
+- 1/7 DISCREPANCY: 9 artifacts present, not 10 (filesystem-layout.md declares 9)
+- Teresa's 3 FIX items: all RESOLVED in commit 92a4e5b
+
+**Report:** .araya/plan/spec/ponny-express-0009-rolando-verification.md (committed: b7994b6)
+**Design is IMPLEMENTATION-READY.**
+
+No blocking findings. No governance acts emitted in this postoffice entry.
+Rolando — Reality Authority
