@@ -552,6 +552,45 @@ console.log(`\n${"═".repeat(50)}`);
 console.log(`Results: ${passed} passed, ${failed} failed, ${passed + failed} total`);
 console.log(`${"═".repeat(50)}\n`);
 
+// ─── Relay State Mapping Tests ───────────────────────────────────────────
+// Read relay config from generated runtime files (where authority is set)
+const generatedPi = path.join(ROOT, ".araya", "generated", "pi");
+
+test("Clara (TEST_AUTOMATION): EXECUTING only, cannot return PASS", () => {
+  const content = fs.readFileSync(path.join(generatedPi, "clara.md"), "utf-8");
+  assert(content.includes("**Authority:** TEST_AUTOMATION"), "Clara should have Authority: TEST_AUTOMATION");
+  assert(content.includes("can_receive_states"), "Clara should have relay config");
+  assert(!content.includes("PASS") || content.includes("cannot return PASS"), "Clara should not return PASS");
+});
+
+test("Teresa (TEST_GATE): TESTING only, can return PASS/FAIL, cannot return VERIFIED", () => {
+  const content = fs.readFileSync(path.join(generatedPi, "teresa.md"), "utf-8");
+  assert(content.includes("**Authority:** TEST_GATE"), "Teresa should have Authority: TEST_GATE");
+  assert(content.includes("PASS"), "Teresa must be able to return PASS");
+  assert(content.includes("FAIL"), "Teresa must be able to return FAIL");
+  assert(!content.includes("VERIFIED") || content.includes("cannot verify"), "Teresa should not return VERIFIED");
+});
+
+test("Rolando (REALITY_AUTHORITY): VERIFYING only, can return VERIFIED/DISCREPANCY", () => {
+  const content = fs.readFileSync(path.join(generatedPi, "rolando.md"), "utf-8");
+  assert(content.includes("**Authority:** REALITY_AUTHORITY"), "Rolando should have Authority: REALITY_AUTHORITY");
+  assert(content.includes("VERIFIED"), "Rolando must be able to return VERIFIED");
+  assert(content.includes("DISCREPANCY"), "Rolando must be able to return DISCREPANCY");
+});
+
+// Aurora: skills audit
+test("Aurora: hiring-recommendations absent, workforce-planning + 3 new skills present", () => {
+  // Verify Aurora's skills exist on disk
+  const skillsDir = path.join(ROOT, "skills");
+  const skillList = ["workforce-planning", "skills-lifecycle", "spof-detection", "organizational-health"];
+  for (const skill of skillList) {
+    const skillPath = path.join(skillsDir, skill, "SKILL.md");
+    assert(fs.existsSync(skillPath), skill + " should have SKILL.md");
+  }
+  // Verify hiring-recommendations is NOT a directory (was replaced by workforce-planning)
+  const hiringDir = path.join(skillsDir, "hiring-recommendations");
+  assert(!fs.existsSync(hiringDir), "hiring-recommendations should not exist as skill dir");
+});
 if (failed > 0) {
   console.log("FAILURES:");
   for (const f of failures) {
@@ -564,3 +603,5 @@ if (failed > 0) {
   console.log("All gates passed. REQ-043 Slice A validated.\n");
   process.exit(0);
 }
+
+

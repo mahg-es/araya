@@ -16,7 +16,7 @@ skills:
   - araya-command-and-delegation-expert
   - ax-postoffice
 relay:
-  can_receive_states: [VERIFYING]
+  can_receive_states: [TESTING]
   allowed_results: [PASS, FAIL, ASK, BLOCK]
 ---
 

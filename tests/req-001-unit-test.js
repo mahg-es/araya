@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * REQ-001 Unit Tests — WS-14
- * Teresa, QA Engineer
+ * Teresa, Test Automation Engineer
  *
  * Tests AC-1 through AC-4, AC-7, AC-8:
  *   AC-1: Catálogo canónico existe y es válido
@@ -279,11 +279,11 @@ test("AC-4.1: agent clara exists in catalog", () => {
   assert.ok(agent, "Agent clara not found in catalog");
 });
 
-test("AC-4.2: clara has role containing 'QA Engineer'", () => {
+test("AC-4.2: clara has role containing 'Test Automation Engineer'", () => {
   const agent = catalog.agents.find(a => a.name === "clara");
   assert.ok(agent, "Agent clara not found");
-  assert.ok(agent.role.toLowerCase().includes("qa"),
-    `clara role should be QA-related, got: "${agent.role}"`);
+  assert.ok(agent.role.toLowerCase().includes("test automation"),
+    `clara role should be Test Automation Engineer, got: "${agent.role}"`);
 });
 
 test("AC-4.3: clara has tier", () => {
