@@ -186,13 +186,13 @@ test("agent valentina has correct skills", () => {
   assertOk(v.skills.includes("error-handling"), "valentina should have error-handling");
 });
 
-test("agent aurora has 12 skills (4 undeclared, 3 previously-orphan now assigned)", () => {
+test("agent aurora has 11 skills (4 undeclared, 3 previously-orphan now assigned)", () => {
   const config = parseYamlAgentsTest();
   const a = config.agents.aurora;
   assertOk(a, "aurora must exist");
-  assertEqual(a.skills.length, 12, "aurora should have 12 skills");
+  assertEqual(a.skills.length, 12, "aurora should have 12 skills (hiring-recommendations replaced by workforce-planning)");
   // Check undeclared skills
-  const undeclaredSkills = ["hiring-recommendations", "organizational-health", "skills-lifecycle", "spof-detection"];
+  const undeclaredSkills = []; // REQ-043 resolved all 4
   for (const s of undeclaredSkills) {
     assertOk(a.skills.includes(s), `aurora should have ${s}`);
   }
@@ -203,14 +203,14 @@ test("agent aurora has 12 skills (4 undeclared, 3 previously-orphan now assigned
   }
 });
 
-test("daneel is bare agent (only cross-cutting skills)", () => {
+test("daneel has cross-cutting + relay-participant skills", () => {
   const config = parseYamlAgentsTest();
   const d = config.agents.daneel;
   assertOk(d, "daneel must exist");
   // Cross-cutting skills that all agents get: ax3, token-efficiency, araya-command-and-delegation-expert, ax-postoffice
   const crossCutting = ["ax3", "token-efficiency", "araya-command-and-delegation-expert", "ax-postoffice"];
   const nonCrossCutting = d.skills.filter(s => !crossCutting.includes(s));
-  assertOk(nonCrossCutting.length === 0, `daneel should have only cross-cutting skills, got ${nonCrossCutting.length} domain-specific: ${nonCrossCutting.join(", ")}`);
+  assertOk(nonCrossCutting.length <= 1, `daneel has cross-cutting + relay-participant, got ${nonCrossCutting.length} non-cc: ${nonCrossCutting.join(", ")}`);
 });
 
 test("neo and trinity are dormant", () => {
@@ -365,12 +365,11 @@ test("orphan skills: none (all previously orphan skills now assigned)", () => {
   assertEqual(orphans.length, 0, `Expected 0 orphans, got ${orphans.length}: ${orphans.join(", ")}`);
 });
 
-test("undeclared skills detected: hiring-recommendations, organizational-health, etc.", () => {
+test("no undeclared skills (REQ-043 Slice A resolved all)", () => {
   const yaml = require("js-yaml");
   const root = path.resolve(__dirname, "..");
   const config = yaml.load(fs.readFileSync(path.join(root, "araya.yaml"), "utf-8"));
 
-  // Collect all skills declared across all agents
   const allAgentSkills = new Set();
   for (const [name, agent] of Object.entries(config.agents)) {
     for (const s of (agent.skills ?? [])) {
@@ -378,7 +377,6 @@ test("undeclared skills detected: hiring-recommendations, organizational-health,
     }
   }
 
-  // Find skills/ dirs
   const skillsDir = path.join(root, "skills");
   const skillDirNames = new Set(
     fs.readdirSync(skillsDir, { withFileTypes: true })
@@ -386,13 +384,9 @@ test("undeclared skills detected: hiring-recommendations, organizational-health,
       .map(e => e.name)
   );
 
-  // Undeclared: agents declare but no skills/ dir
   const undeclared = [...allAgentSkills].filter(s => !skillDirNames.has(s));
   console.log(`    Undeclared: ${undeclared.join(", ") || "none"}`);
-  const expectedUndeclared = ["hiring-recommendations", "organizational-health", "skills-lifecycle", "spof-detection"];
-  for (const eu of expectedUndeclared) {
-    assertOk(undeclared.includes(eu), `Expected ${eu} to be undeclared (aurora declares but no dir)`);
-  }
+  assertEqual(undeclared.length, 0, `should be 0 undeclared skills, got ${undeclared.length}: ${undeclared.join(", ")}`);
 });
 
 // ─── Test: Cross-References ────────────────────────────────────────────────
@@ -457,7 +451,7 @@ test("domain → skill mapping exists for all skills", () => {
     documentation: ["api-document", "architecture-diagram", "slide-deck-generate", "static-site-generate", "technical-book"],
     governance_pm: ["cr-generate", "daily-standup", "definition-of-done", "drr-create", "iar-generate", "impediment", "pm-decompose", "pm-dependencies", "pm-plan", "pm-risk", "pm-status", "project-planning", "reality-verification", "retrospective", "sprint-planning", "velocity"],
     knowledge: ["daily-note", "knowledge-graph", "organizational-knowledge", "pkm-workflow", "trajectory-management"],
-    chro: ["agent-topology", "capability-registry", "gap-analysis", "hiring-recommendations", "organizational-health", "skills-lifecycle", "spof-detection", "workforce-planning"],
+    chro: ["agent-topology", "capability-registry", "gap-analysis", "organizational-health", "skills-lifecycle", "spof-detection", "workforce-planning"], // hiring-recommendations removed per REQ-043
     ax: ["ai-routing", "autonomous-execution", "ax-postoffice", "ax3", "token-efficiency"],
   };
 

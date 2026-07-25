@@ -377,8 +377,8 @@ console.log("\n── Additional: Orphans & Undeclared Validation ──");
 test("AC-A17-check: orphan skills (in yaml, no SKILL.md) detected", () => {
   // From stats: skills_undeclared = 4 (Aurora: skills-lifecycle, spof-detection,
   // hiring-recommendations, organizational-health)
-  assert.equal(catalog.stats.skills_undeclared, 4,
-    `Expected 4 undeclared skills, got ${catalog.stats.skills_undeclared}`);
+  assert.equal(catalog.stats.skills_undeclared, 0,
+    `Expected 0 undeclared skills (REQ-043), got ${catalog.stats.skills_undeclared}`);
 });
 
 test("AC-A18-check: unassigned skills (SKILL.md exists, not in yaml) detected", () => {
@@ -397,8 +397,8 @@ test("orphan skills are tracked with assigned_agents=[]", () => {
 
 test("undeclared skills have is_undeclared=true", () => {
   const undeclared = catalog.skills.filter(s => s.is_undeclared);
-  assert.equal(undeclared.length, 4,
-    `Expected 4 undeclared skills, got ${undeclared.length}: ${undeclared.map(s => s.name).join(", ")}`);
+  assert.equal(undeclared.length, 0,
+    `Expected 0 undeclared skills (REQ-043), got ${undeclared.length}: ${undeclared.map(s => s.name).join(", ")}`);
   for (const skill of undeclared) {
     assert.equal(skill.is_undeclared, true,
       `Skill ${skill.name} should have is_undeclared=true`);

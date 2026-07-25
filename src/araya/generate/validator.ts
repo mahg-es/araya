@@ -184,7 +184,7 @@ export function validateProfiles(
   }
 
   return {
-    clean: entries.length === 0,
+    clean: !entries.some(e => e.severity === "error" || e.severity === "warning"),
     entries,
     source_hash_canonical: sourceManifest.combined_hash,
     source_hash_generated: generatedHash || "(missing)",
@@ -257,7 +257,7 @@ function validateSkillRefs(
         field: `skill.${skill}`,
         canonical_value: skill,
         generated_value: "(skill not referenced in generated profile)",
-        severity: "warning",
+        severity: "warning",  // pi_runtime_file — required for pi target
       });
     }
   }

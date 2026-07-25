@@ -159,5 +159,6 @@ export interface GenerateOptions {
 export type AdapterFn = (
   agent: CanonicalAgent,
   skills: CanonicalSkill[],
-  narrativePrompt?: string,
+  narrativePrompt: string | undefined,
+  sourceHash: string,
 ) => RuntimeProfile;

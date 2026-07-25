@@ -67,6 +67,24 @@ export async function main(args: string[] = process.argv.slice(2)): Promise<void
     results.push(result);
   }
 
+  // Sync .pi/agents/ from generated pi adapter output
+  if (!options.dry_run && adapters.includes("pi")) {
+    const piAgentsDir = path.join(root, ".pi", "agents");
+    fs.mkdirSync(piAgentsDir, { recursive: true });
+    const piGenDir = path.join(root, ".araya", "generated", "pi");
+    for (const agent of agents) {
+      if (agent.runtime?.targets && !agent.runtime.targets.includes("pi")) continue;
+      const srcFile = path.join(piGenDir, `${agent.name}.md`);
+      if (!fs.existsSync(srcFile)) continue;
+      const dstFile = path.join(piAgentsDir, `${agent.name}.md`);
+      const content = fs.readFileSync(srcFile, "utf-8");
+      const tmpPath = dstFile + ".tmp";
+      fs.writeFileSync(tmpPath, content, "utf-8");
+      fs.renameSync(tmpPath, dstFile);
+    }
+    console.log(`  ✓ .pi/agents/ synced`);
+  }
+
   // Step 5: Report
   reportResults(results, options.dry_run);
 
@@ -254,15 +272,13 @@ function inferRelay(agent: CanonicalAgent): CanonicalAgent["relay"] | undefined 
         evidence_required: false,
       };
     case "TEST_AUTOMATION":
+      return {
+        can_receive_states: ["EXECUTING"],
+        allowed_results: ["DONE", "ASK", "BLOCK"],
+        cannot_select_next_owner: true,
+        evidence_required: true,
+      };
     case "SPECIALIST":
-      if (agent.skills.includes("unit-test") || agent.skills.includes("integration-test")) {
-        return {
-          can_receive_states: ["TESTING"],
-          allowed_results: ["DONE", "ASK", "BLOCK"],
-          cannot_select_next_owner: true,
-          evidence_required: true,
-        };
-      }
       return {
         can_receive_states: ["EXECUTING"],
         allowed_results: ["DONE", "ASK", "BLOCK"],
@@ -271,7 +287,7 @@ function inferRelay(agent: CanonicalAgent): CanonicalAgent["relay"] | undefined 
       };
     case "TEST_GATE":
       return {
-        can_receive_states: ["VERIFYING"],
+        can_receive_states: ["TESTING"],
         allowed_results: ["PASS", "FAIL", "ASK", "BLOCK"],
         cannot_select_next_owner: true,
         evidence_required: true,
@@ -501,10 +517,10 @@ function generateProfiles(
         : undefined;
 
       // Set provenance hash before adapter uses it
-      if (!agent.provenance) agent.provenance = {};
+      if (!agent.provenance) agent.provenance = { registry: "araya.yaml" };
       agent.provenance.generated_hash = manifest.combined_hash;
 
-      const profile = adapterFn(agent, skills, narrative);
+      const profile = adapterFn(agent, skills, narrative, manifest.combined_hash);
 
       if (!dryRun) {
         // Atomic write: .tmp file then rename
@@ -560,11 +576,11 @@ function getAdapterFn(adapter: string): AdapterFn | null {
   }
 }
 
-function piAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative?: string): RuntimeProfile {
+function piAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative: string | undefined, sourceHash: string): RuntimeProfile {
   const lines: string[] = [];
 
   lines.push(DO_NOT_EDIT_MARKER);
-  lines.push(`# Source hash: ${agent.provenance.generated_hash || manifest.combined_hash || "unset"}`);
+  lines.push(`# Source hash: ${agent.provenance.generated_hash || sourceHash}`);
   lines.push();
   lines.push(`# ${agent.emoji} ${agent.name} — ${agent.role.title}`);
   lines.push("");
@@ -640,11 +656,11 @@ function piAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative?: 
   };
 }
 
-function codexAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative?: string): RuntimeProfile {
+function codexAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative: string | undefined, sourceHash: string): RuntimeProfile {
   // Codex uses YAML frontmatter
   const lines: string[] = [];
   lines.push(DO_NOT_EDIT_MARKER);
-  lines.push(`# Source hash: ${agent.provenance.generated_hash || manifest.combined_hash || "unset"}`);
+  lines.push(`# Source hash: ${agent.provenance.generated_hash || sourceHash}`);
   lines.push();
   lines.push("---");
   lines.push(`agent: ${agent.name}`);
@@ -679,10 +695,10 @@ function codexAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative
   };
 }
 
-function claudeCliAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative?: string): RuntimeProfile {
+function claudeCliAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative: string | undefined, sourceHash: string): RuntimeProfile {
   const lines: string[] = [];
   lines.push(DO_NOT_EDIT_MARKER);
-  lines.push(`# Source hash: ${agent.provenance.generated_hash || manifest.combined_hash || "unset"}`);
+  lines.push(`# Source hash: ${agent.provenance.generated_hash || sourceHash}`);
   lines.push();
   lines.push(`# Agent: ${agent.name} (${agent.role.title})`);
   lines.push(`# Authority: ${agent.role.authority} | Tier: ${agent.model.tier} | Status: ${agent.status}`);
@@ -711,10 +727,10 @@ function claudeCliAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narra
   };
 }
 
-function agyAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative?: string): RuntimeProfile {
+function agyAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative: string | undefined, sourceHash: string): RuntimeProfile {
   const lines: string[] = [];
   lines.push(DO_NOT_EDIT_MARKER);
-  lines.push(`# Source hash: ${agent.provenance.generated_hash || manifest.combined_hash || "unset"}`);
+  lines.push(`# Source hash: ${agent.provenance.generated_hash || sourceHash}`);
   lines.push();
   lines.push(`# ${agent.emoji} ${agent.name} — ${agent.role.title}`);
   lines.push("");
