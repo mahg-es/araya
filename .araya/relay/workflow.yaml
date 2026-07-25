@@ -1,0 +1,127 @@
+# ARAYA Relay — Workflow Definition
+# Canonical home: mahg-es/araya (ARAYA Framework)
+# Status: MVP design (standard-delivery only)
+# Part of: ponny-express-0008 (PR B — Framework Relay Protocol)
+#
+# MVP scope: standard-delivery only.
+# governance-delivery and quick-fix are deferred to future extensions
+# after standard-delivery is proven end-to-end.
+
+workflows:
+
+  standard-delivery:
+    description: >
+      Full path from requirement intent through specialist execution,
+      Teresa testing, Rolando verification, Manu acceptance, Sonia closing.
+      Daneel coordinates all handoffs as Relay Controller.
+      Daneel does not implement, test, verify, or accept — he passes the ball.
+    states:
+      - state: INTENT
+        owner_role: MANU
+        allowed_events: [DONE, ASK, BLOCK]
+        next:
+          DONE: { state: ROUTING, owner_role: AURORA }
+
+      - state: ROUTING
+        owner_role: AURORA
+        allowed_events: [DONE, ASK, BLOCK]
+        next:
+          DONE: { state: PLANNING, owner_role: SONIA }
+
+      - state: PLANNING
+        owner_role: SONIA
+        allowed_events: [DONE, ASK, BLOCK]
+        next:
+          DONE: { state: EXECUTING, owner_role: SPECIALIST }
+
+      - state: EXECUTING
+        owner_role: SPECIALIST
+        allowed_events: [DONE, ASK, BLOCK]
+        next:
+          DONE: { state: TESTING, owner_role: TERESA }
+
+      - state: TESTING
+        owner_role: TERESA
+        allowed_events: [PASS, FAIL, ASK, BLOCK]
+        next:
+          PASS: { state: VERIFYING, owner_role: ROLANDO }
+          FAIL: { state: EXECUTING, owner_role: SPECIALIST, action: increment_attempts }
+
+      - state: VERIFYING
+        owner_role: ROLANDO
+        allowed_events: [VERIFIED, DISCREPANCY, ASK, BLOCK]
+        next:
+          VERIFIED: { state: ACCEPTING, owner_role: MANU }
+          DISCREPANCY: { state: PLANNING, owner_role: SONIA, action: increment_replanning }
+
+      - state: ACCEPTING
+        owner_role: MANU
+        allowed_events: [ACCEPT, REJECT, ASK, BLOCK]
+        next:
+          ACCEPT: { state: CLOSING, owner_role: SONIA }
+          REJECT: { state: PLANNING, owner_role: SONIA, action: increment_replanning }
+
+      - state: CLOSING
+        owner_role: SONIA
+        allowed_events: [CLOSE]
+        next:
+          CLOSE: { state: CLOSED }
+
+      - state: CLOSED
+        terminal: true
+        action: daneel_sends_consolidated_report
+
+    exceptional_states:
+      ASK:
+        description: >
+          Functional owner suspended. Daneel dispatches to authority (waiting_on).
+          Daneel does NOT become functional owner. The suspended owner remains in task.owner.
+          RESOLVE returns ball to suspended_from_state with suspended owner.
+        resolve_event: RESOLVE
+        escalate_event: ESCALATE
+        owner_model:
+          # Daneel does NOT become owner. Functional owner is suspended.
+          owner_is_suspended: true
+          controller_dispatches_to: waiting_on.actor
+
+      BLOCKED:
+        description: >
+          Functional owner suspended. Daneel dispatches to authority (waiting_on).
+          Same owner model as ASK.
+        resolve_event: RESOLVE
+        escalate_event: ESCALATE
+        owner_model:
+          owner_is_suspended: true
+          controller_dispatches_to: waiting_on.actor
+
+    config:
+      max_attempts: 2
+      max_replanning: 2
+      claim_timeout_seconds: 3600
+      ack_timeout_seconds: 300
+      lock_timeout_seconds: 30
+
+    # Concurrency control
+    concurrency:
+      mechanism:
+        - file_lock:            # flock(LOCK_EX) on task file
+        - optimistic_version:   # expected_version check on write
+        - atomic_rename:        # write to .tmp then rename
+
+    # Event integrity
+    events:
+      append_only: true
+      idempotency: idempotency_key
+      sequencing:
+        field: sequence
+        monotonic: true
+        no_gaps: true
+      versioning:
+        field: task_version_before / task_version_after
+        state_changing: version_after == version_before + 1
+        invalid: version_after == version_before
+
+# Attribution
+# Generated-by: R. Daneel Olivaw
+# Model: deepseek-v4-pro/DeepSeek | runtime-reported
+# Repository: mahg-es/araya (ARAYA Framework)

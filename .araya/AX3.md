@@ -29,6 +29,7 @@
 - `learning/AX3.md` — learning
 - `plan/AX3.md` — plan
 - `postoffice/AX3.md` — postoffice
+- `relay/AX3.md` — relay
 - `reports/AX3.md` — reports
 - `topology/AX3.md` — topology
 - `trajectories/AX3.md` — trajectories
