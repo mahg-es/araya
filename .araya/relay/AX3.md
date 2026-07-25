@@ -31,6 +31,7 @@ R. Daneel Olivaw — Relay Controller, protocol steward.
 - Validate task-schema.json and event-schema.json against JSON Schema 2020-12 meta-schema.
 - Verify transition table completeness against state machine.
 - Verify claim contract against concurrency requirements.
+- Validate participant contract against agent relay profiles.
 - Acceptance tests in acceptance-test-spec.md define motor compliance criteria.
 
 ## Child AX3 Index

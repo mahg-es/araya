@@ -28,4 +28,5 @@
 - `autonomous-execution/SKILL.md` — Autonomous natural language triggers, delegation observability, run persistence.
 - `ax-postoffice/SKILL.md` — Operational-directive channel: consult at cycle start, append at cycle end, advisory never a gate.
 - `pm-decompose/SKILL.md` — Task decomposition into Atomic Work Units (AWUs) with clear dependencies and acceptance criteria.
+- `relay-participant/SKILL.md` — Relay protocol participation: claim, execute, return tasks with valid events and evidence.
 <!-- END ARAYA MANAGED:
