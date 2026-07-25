@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://araya.es/relay/event-schema.json",
+  "title": "ARAYA Relay Event",
+  "description": "Immutable event record for every transition in the ARAYA Relay state machine. Events are append-only, stored in .araya/relay/events/<task-id>.jsonl in each governed project. Defined and governed by the ARAYA Framework (mahg-es/araya).",
+  "type": "object",
+  "required": [
+    "event_id",
+    "task_id",
+    "sequence",
+    "event_type",
+    "actor",
+    "actor_role",
+    "timestamp",
+    "task_version_before",
+    "task_version_after",
+    "from_state",
+    "to_state",
+    "correlation_id",
+    "causation_id",
+    "idempotency_key"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Unique event identifier, e.g. EVT-20260725-001",
+      "pattern": "^EVT-\\d{8}-\\d{3,}$"
+    },
+    "task_id": {
+      "type": "string",
+      "description": "Task this event belongs to",
+      "pattern": "^RELAY-\\d{3,}$"
+    },
+    "sequence": {
+      "type": "integer",
+      "description": "Monotonic sequence number within this task's event stream. Gaps are violations.",
+      "minimum": 1
+    },
+    "event_type": {
+      "type": "string",
+      "description": "The event that triggered this transition",
+      "enum": [
+        "ASSIGN", "CLAIM", "ACK", "DONE", "PASS", "FAIL",
+        "ASK", "BLOCK", "DISCREPANCY", "VERIFIED", "ACCEPT",
+        "REJECT", "CLOSE", "RELEASE", "EXPIRE", "ESCALATE",
+        "RESOLVE", "NOTE"
+      ]
+    },
+    "actor": {
+      "type": "string",
+      "description": "actor_id of the agent who emitted this event"
+    },
+    "actor_role": {
+      "type": "string",
+      "description": "Functional role of the emitting agent",
+      "enum": ["PROFESSOR", "MANU", "AURORA", "SONIA", "SPECIALIST", "TERESA", "ROLANDO", "DANEEL"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the event was emitted"
+    },
+    "task_version_before": {
+      "type": "integer",
+      "description": "Task version before this event was processed. Used for optimistic concurrency control.",
+      "minimum": 1
+    },
+    "task_version_after": {
+      "type": "integer",
+      "description": "Task version after this event was processed. Must equal task_version_before + 1 for state-changing events. Equal to task_version_before for invalid/rejected events.",
+      "minimum": 1
+    },
+    "from_state": {
+      "type": "string",
+      "description": "State before this event was processed",
+      "enum": [
+        "INTENT", "ROUTING", "PLANNING", "EXECUTING",
+        "TESTING", "VERIFYING", "ACCEPTING", "CLOSING",
+        "CLOSED", "ASK", "BLOCKED"
+      ]
+    },
+    "to_state": {
+      "type": "string",
+      "description": "State after this event was processed. Equal to from_state for invalid/rejected events.",
+      "enum": [
+        "INTENT", "ROUTING", "PLANNING", "EXECUTING",
+        "TESTING", "VERIFYING", "ACCEPTING", "CLOSING",
+        "CLOSED", "ASK", "BLOCKED"
+      ]
+    },
+    "correlation_id": {
+      "type": "string",
+      "description": "Groups related events across tasks. A task's entire lifecycle shares one correlation_id. ASK/BLOCK resolution chains share a sub-correlation_id."
+    },
+    "causation_id": {
+      "type": "string",
+      "description": "event_id of the event that directly caused this event. For initial events, equals own event_id."
+    },
+    "idempotency_key": {
+      "type": "string",
+      "description": "Client-generated unique key. Replaying the same key produces no side effects. Format: <actor>-<uuid>."
+    },
+    "next_owner": {
+      "type": "object",
+      "description": "The owner who receives the ball next (set by controller)",
+      "properties": {
+        "actor": { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+    "waiting_on": {
+      "type": "object",
+      "description": "For ASK/BLOCK events: the authority Daneel dispatches to",
+      "properties": {
+        "actor": { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Evidence references accompanying this event. Required for DONE, PASS, VERIFIED, ACCEPT.",
+      "items": {
+        "type": "object",
+        "required": ["type", "ref"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["commit", "test_report", "audit_log", "file_diff", "acceptance_letter", "screenshot", "log_output"]
+          },
+          "ref": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "message": {
+      "type": "string",
+      "description": "Required for FAIL, ASK, BLOCK, DISCREPANCY, REJECT. Free-text explanation."
+    },
+    "claim_id": {
+      "type": "string",
+      "description": "Required for CLAIM, ACK, RELEASE, EXPIRE events. Associated claim identifier.",
+      "pattern": "^CLM-\\d{3,}$"
+    },
+    "attempt_number": {
+      "type": "integer",
+      "description": "Current attempt number, relevant for FAIL events"
+    },
+    "model": {
+      "type": "string",
+      "description": "Model/vendor of the agent that emitted this event (provenance)"
+    },
+    "model_source": {
+      "type": "string",
+      "enum": ["runtime", "config", "user-declared", "tool-reported", "unknown"]
+    }
+  },
+
+  "allOf": [
+    {
+      "description": "DONE, PASS, VERIFIED, ACCEPT require evidence",
+      "if": {
+        "properties": { "event_type": { "enum": ["DONE", "PASS", "VERIFIED", "ACCEPT"] } }
+      },
+      "then": {
+        "required": ["evidence"],
+        "properties": {
+          "evidence": { "minItems": 1 }
+        }
+      }
+    },
+    {
+      "description": "FAIL, ASK, BLOCK, DISCREPANCY, REJECT require message",
+      "if": {
+        "properties": { "event_type": { "enum": ["FAIL", "ASK", "BLOCK", "DISCREPANCY", "REJECT"] } }
+      },
+      "then": {
+        "required": ["message"],
+        "properties": {
+          "message": { "minLength": 1 }
+        }
+      }
+    },
+    {
+      "description": "CLAIM, ACK, RELEASE, EXPIRE require claim_id",
+      "if": {
+        "properties": { "event_type": { "enum": ["CLAIM", "ACK", "RELEASE", "EXPIRE"] } }
+      },
+      "then": {
+        "required": ["claim_id"]
+      }
+    },
+    {
+      "description": "ASK and BLOCK require waiting_on",
+      "if": {
+        "properties": { "event_type": { "enum": ["ASK", "BLOCK"] } }
+      },
+      "then": {
+        "required": ["waiting_on"]
+      }
+    },
+    {
+      "description": "State-changing events increment version; invalid events do not",
+      "if": {
+        "properties": {
+          "event_type": { "enum": ["DONE", "PASS", "FAIL", "VERIFIED", "DISCREPANCY", "ACCEPT", "REJECT", "CLOSE", "ASK", "BLOCK", "RESOLVE", "ESCALATE"] }
+        }
+      },
+      "then": {
+        "properties": {
+          "task_version_after": {
+            "description": "Must equal task_version_before + 1"
+          }
+        }
+      }
+    },
+    {
+      "description": "Invalid events do not change version or state",
+      "if": {
+        "properties": {
+          "event_type": { "const": "NOTE" }
+        }
+      },
+      "then": {
+        "properties": {
+          "to_state": {
+            "description": "NOTE events do not change state"
+          }
+        }
+      }
+    }
+  ],
+
+  "examples": [
+    {
+      "event_id": "EVT-20260725-001",
+      "task_id": "RELAY-001",
+      "sequence": 1,
+      "event_type": "DONE",
+      "actor": "manu",
+      "actor_role": "MANU",
+      "timestamp": "2026-07-25T12:30:00Z",
+      "task_version_before": 1,
+      "task_version_after": 2,
+      "from_state": "INTENT",
+      "to_state": "ROUTING",
+      "correlation_id": "CORR-relay-001",
+      "causation_id": "EVT-20260725-001",
+      "idempotency_key": "manu-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "next_owner": { "actor": "aurora", "role": "AURORA" },
+      "evidence": [
+        { "type": "file_diff", "ref": "requirements/req-042.md", "description": "Classified as FUNCTIONAL_DELIVERY" }
+      ],
+      "model": "deepseek-v4-pro/DeepSeek",
+      "model_source": "runtime"
+    },
+    {
+      "event_id": "EVT-20260725-004",
+      "task_id": "RELAY-001",
+      "sequence": 4,
+      "event_type": "PASS",
+      "actor": "teresa",
+      "actor_role": "TERESA",
+      "timestamp": "2026-07-25T15:00:00Z",
+      "task_version_before": 6,
+      "task_version_after": 7,
+      "from_state": "TESTING",
+      "to_state": "VERIFYING",
+      "correlation_id": "CORR-relay-001",
+      "causation_id": "EVT-20260725-003",
+      "idempotency_key": "teresa-b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "next_owner": { "actor": "rolando", "role": "ROLANDO" },
+      "evidence": [
+        { "type": "test_report", "ref": "evidence/relay-001-test-report.txt", "description": "Full test suite: 12/12 passed" }
+      ],
+      "attempt_number": 1,
+      "model": "deepseek-v4-pro/DeepSeek",
+      "model_source": "runtime"
+    },
+    {
+      "event_id": "EVT-20260725-005",
+      "task_id": "RELAY-001",
+      "sequence": 5,
+      "event_type": "FAIL",
+      "actor": "teresa",
+      "actor_role": "TERESA",
+      "timestamp": "2026-07-25T14:30:00Z",
+      "task_version_before": 4,
+      "task_version_after": 5,
+      "from_state": "TESTING",
+      "to_state": "EXECUTING",
+      "correlation_id": "CORR-relay-001",
+      "causation_id": "EVT-20260725-004",
+      "idempotency_key": "teresa-c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "next_owner": { "actor": "valentina", "role": "SPECIALIST" },
+      "evidence": [
+        { "type": "test_report", "ref": "evidence/relay-001-test-report.txt", "description": "Test suite: 10/12 passed, 2 failed" }
+      ],
+      "message": "Integration tests for handoff contract fail: missing ACK timeout enforcement",
+      "attempt_number": 1,
+      "model": "deepseek-v4-pro/DeepSeek",
+      "model_source": "runtime"
+    },
+    {
+      "event_id": "EVT-20260725-007",
+      "task_id": "RELAY-001",
+      "sequence": 7,
+      "event_type": "ASK",
+      "actor": "sonia",
+      "actor_role": "SONIA",
+      "timestamp": "2026-07-25T13:15:00Z",
+      "task_version_before": 3,
+      "task_version_after": 4,
+      "from_state": "PLANNING",
+      "to_state": "ASK",
+      "correlation_id": "CORR-relay-001",
+      "causation_id": "EVT-20260725-002",
+      "idempotency_key": "sonia-d4e5f6a7-b8c9-0123-defa-123456789012",
+      "waiting_on": { "actor": "aurora", "role": "AURORA" },
+      "message": "Specialist valentina is at capacity until 2026-07-26. Alternatives: aisha (available) or delay 1 day. Decision required.",
+      "model": "deepseek-v4-pro/DeepSeek",
+      "model_source": "runtime"
+    }
+  ]
+}

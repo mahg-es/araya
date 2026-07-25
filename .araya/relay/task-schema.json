@@ -1,0 +1,323 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://araya.es/relay/task-schema.json",
+  "title": "ARAYA Relay Task",
+  "description": "Canonical task schema for ARAYA Relay. A task file is the single source of live state. Lives at .araya/relay/tasks/<task-id>.json in each governed project. Defined and governed by the ARAYA Framework (mahg-es/araya).",
+  "type": "object",
+  "required": [
+    "task_id",
+    "workflow",
+    "created_at",
+    "created_by",
+    "version",
+    "state",
+    "state_entered_at",
+    "owner",
+    "relay_controller"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Unique task identifier, e.g. RELAY-001",
+      "pattern": "^RELAY-\\d{3,}$"
+    },
+    "workflow": {
+      "type": "string",
+      "description": "Workflow type. MVP: standard-delivery only.",
+      "enum": ["standard-delivery"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp, immutable"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "actor_id of creator"
+    },
+    "version": {
+      "type": "integer",
+      "description": "Incremented on each state change. Used for optimistic concurrency control.",
+      "minimum": 1
+    },
+    "state": {
+      "type": "string",
+      "description": "Current state of the task",
+      "enum": [
+        "INTENT",
+        "ROUTING",
+        "PLANNING",
+        "EXECUTING",
+        "TESTING",
+        "VERIFYING",
+        "ACCEPTING",
+        "CLOSING",
+        "CLOSED",
+        "ASK",
+        "BLOCKED"
+      ]
+    },
+    "state_entered_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when current state was entered"
+    },
+    "owner": {
+      "type": "object",
+      "description": "Current functional owner of the task. For ASK/BLOCKED, this is the suspended functional owner.",
+      "required": ["actor", "role", "assigned_at"],
+      "properties": {
+        "actor": {
+          "type": "string",
+          "description": "actor_id of current owner"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["MANU", "AURORA", "SONIA", "SPECIALIST", "TERESA", "ROLANDO"]
+        },
+        "assigned_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "relay_controller": {
+      "type": "object",
+      "description": "Relay controller. Always Daneel for MVP. Must never equal functional owner.",
+      "required": ["actor", "role"],
+      "properties": {
+        "actor": {
+          "type": "string",
+          "const": "daneel"
+        },
+        "role": {
+          "type": "string",
+          "const": "COORDINATOR"
+        }
+      }
+    },
+    "waiting_on": {
+      "type": "object",
+      "description": "Present only when state is ASK or BLOCKED. The authority Daneel dispatches to.",
+      "required": ["actor"],
+      "properties": {
+        "actor": {
+          "type": "string",
+          "description": "actor_id of the authority (manu, aurora, sonia, professor)",
+          "enum": ["manu", "aurora", "sonia", "professor"]
+        }
+      }
+    },
+    "suspended_from_state": {
+      "type": "string",
+      "description": "Present only when state is ASK or BLOCKED. The functional state from which the task was suspended.",
+      "enum": [
+        "INTENT",
+        "ROUTING",
+        "PLANNING",
+        "EXECUTING",
+        "TESTING",
+        "VERIFYING",
+        "ACCEPTING",
+        "CLOSING"
+      ]
+    },
+    "previous_owner": {
+      "type": "object",
+      "description": "Previous owner for audit trail and self-approval prevention",
+      "properties": {
+        "actor": { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "description": "Active claim on this task. At most one active claim at any time.",
+      "required": ["id", "actor", "status", "claimed_at", "lease_seconds", "expires_at"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Claim identifier, e.g. CLM-001",
+          "pattern": "^CLM-\\d{3,}$"
+        },
+        "actor": {
+          "type": "string",
+          "description": "actor_id of claimant"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "acknowledged", "released", "expired", "superseded"]
+        },
+        "claimed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "acknowledged_at": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Set when ACK event received. Null until acknowledged."
+        },
+        "lease_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "description": "Result of the last state transition event",
+      "properties": {
+        "event": {
+          "type": "string",
+          "enum": ["DONE", "PASS", "FAIL", "VERIFIED", "DISCREPANCY", "ACCEPT", "REJECT", "ASK", "BLOCK", "CLOSE"]
+        },
+        "actor": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "ref"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["commit", "test_report", "audit_log", "file_diff", "acceptance_letter", "screenshot", "log_output"]
+              },
+              "ref": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "message": {
+          "type": "string",
+          "description": "Required for FAIL, ASK, BLOCK, DISCREPANCY, REJECT"
+        }
+      }
+    },
+    "next": {
+      "type": "object",
+      "description": "Next computed state and owner (set by controller after event processing)",
+      "properties": {
+        "state": { "type": "string" },
+        "owner": { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+    "attempts": {
+      "type": "object",
+      "description": "Cycle tracking for TESTING → FAIL → EXECUTING",
+      "required": ["current", "max"],
+      "properties": {
+        "current": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "replanning": {
+      "type": "object",
+      "description": "Cycle tracking for DISCREPANCY/REJECT → PLANNING",
+      "required": ["current", "max"],
+      "properties": {
+        "current": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "notifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["inbox", "escalation", "report"] },
+          "to": { "type": "string" },
+          "sent_at": { "type": "string", "format": "date-time" },
+          "acknowledged": { "type": "boolean" }
+        }
+      }
+    }
+  },
+
+  "allOf": [
+    {
+      "if": {
+        "properties": { "state": { "enum": ["ASK", "BLOCKED"] } }
+      },
+      "then": {
+        "required": ["waiting_on", "suspended_from_state"]
+      }
+    }
+  ],
+
+  "examples": [
+    {
+      "task_id": "RELAY-001",
+      "workflow": "standard-delivery",
+      "created_at": "2026-07-25T12:00:00Z",
+      "created_by": "professor",
+      "version": 4,
+      "state": "EXECUTING",
+      "state_entered_at": "2026-07-25T13:00:00Z",
+      "owner": {
+        "actor": "valentina",
+        "role": "SPECIALIST",
+        "assigned_at": "2026-07-25T13:00:00Z"
+      },
+      "relay_controller": {
+        "actor": "daneel",
+        "role": "COORDINATOR"
+      },
+      "previous_owner": {
+        "actor": "sonia",
+        "role": "SONIA"
+      },
+      "claim": {
+        "id": "CLM-001",
+        "actor": "valentina",
+        "status": "acknowledged",
+        "claimed_at": "2026-07-25T12:55:00Z",
+        "acknowledged_at": "2026-07-25T12:55:30Z",
+        "lease_seconds": 3600,
+        "expires_at": "2026-07-25T13:55:30Z"
+      },
+      "next": {
+        "state": "TESTING",
+        "owner": "teresa",
+        "role": "TERESA"
+      },
+      "attempts": { "current": 1, "max": 2 },
+      "replanning": { "current": 0, "max": 2 }
+    },
+    {
+      "task_id": "RELAY-002",
+      "workflow": "standard-delivery",
+      "created_at": "2026-07-25T14:00:00Z",
+      "created_by": "professor",
+      "version": 5,
+      "state": "ASK",
+      "state_entered_at": "2026-07-25T15:00:00Z",
+      "owner": {
+        "actor": "valentina",
+        "role": "SPECIALIST",
+        "assigned_at": "2026-07-25T14:30:00Z"
+      },
+      "relay_controller": {
+        "actor": "daneel",
+        "role": "COORDINATOR"
+      },
+      "waiting_on": {
+        "actor": "sonia"
+      },
+      "suspended_from_state": "EXECUTING",
+      "result": {
+        "event": "ASK",
+        "actor": "valentina",
+        "timestamp": "2026-07-25T15:00:00Z",
+        "message": "External API dependency unavailable — need alternative approach decision"
+      },
+      "attempts": { "current": 1, "max": 2 },
+      "replanning": { "current": 0, "max": 2 }
+    }
+  ]
+}
