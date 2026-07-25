@@ -500,6 +500,10 @@ function generateProfiles(
         ? fs.readFileSync(narrativePath, "utf-8")
         : undefined;
 
+      // Set provenance hash before adapter uses it
+      if (!agent.provenance) agent.provenance = {};
+      agent.provenance.generated_hash = manifest.combined_hash;
+
       const profile = adapterFn(agent, skills, narrative);
 
       if (!dryRun) {
@@ -560,7 +564,7 @@ function piAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative?: 
   const lines: string[] = [];
 
   lines.push(DO_NOT_EDIT_MARKER);
-  lines.push(`# Source hash: ${agent.provenance.generated_hash || "unset"}`);
+  lines.push(`# Source hash: ${agent.provenance.generated_hash || manifest.combined_hash || "unset"}`);
   lines.push();
   lines.push(`# ${agent.emoji} ${agent.name} — ${agent.role.title}`);
   lines.push("");
@@ -640,7 +644,7 @@ function codexAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative
   // Codex uses YAML frontmatter
   const lines: string[] = [];
   lines.push(DO_NOT_EDIT_MARKER);
-  lines.push(`# Source hash: ${agent.provenance.generated_hash || "unset"}`);
+  lines.push(`# Source hash: ${agent.provenance.generated_hash || manifest.combined_hash || "unset"}`);
   lines.push();
   lines.push("---");
   lines.push(`agent: ${agent.name}`);
@@ -678,13 +682,13 @@ function codexAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative
 function claudeCliAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative?: string): RuntimeProfile {
   const lines: string[] = [];
   lines.push(DO_NOT_EDIT_MARKER);
-  lines.push(`# Source hash: ${agent.provenance.generated_hash || "unset"}`);
+  lines.push(`# Source hash: ${agent.provenance.generated_hash || manifest.combined_hash || "unset"}`);
   lines.push();
   lines.push(`# Agent: ${agent.name} (${agent.role.title})`);
   lines.push(`# Authority: ${agent.role.authority} | Tier: ${agent.model.tier} | Status: ${agent.status}`);
   lines.push("");
   lines.push(`You are ${agent.name}, ${agent.role.title}.`);
-  lines.push(`Permissions: can_write_code=${agent.permissions.can_write_code}`);
+  lines.push(`Permissions: can_write_code: ${agent.permissions.can_write_code}`);
   lines.push(`Skills: ${agent.skills.join(", ")}`);
 
   if (agent.relay) {
@@ -710,7 +714,7 @@ function claudeCliAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narra
 function agyAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative?: string): RuntimeProfile {
   const lines: string[] = [];
   lines.push(DO_NOT_EDIT_MARKER);
-  lines.push(`# Source hash: ${agent.provenance.generated_hash || "unset"}`);
+  lines.push(`# Source hash: ${agent.provenance.generated_hash || manifest.combined_hash || "unset"}`);
   lines.push();
   lines.push(`# ${agent.emoji} ${agent.name} — ${agent.role.title}`);
   lines.push("");

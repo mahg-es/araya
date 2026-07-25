@@ -135,7 +135,7 @@ export interface DriftEntry {
   field: string;
   canonical_value: unknown;
   generated_value: unknown;
-  severity: "error" | "warning";
+  severity: "error" | "warning" | "info";
 }
 
 /** Drift validation result */

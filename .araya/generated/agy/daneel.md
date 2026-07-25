@@ -1,4 +1,5 @@
 # GENERATED — DO NOT EDIT
+# Source hash: 3c869d8ede35d92d422857f9e72a67c948cca02fc19aae931e9a98b794e423b7
 # 🔨 daneel — Delegated Executor — reports to The Data Professor, routes to the specialist bench per task; the sole cross-project execution identity across ARAYA Portfolio and every governed delivery project (added 2026-07-19)
 
 ```yaml

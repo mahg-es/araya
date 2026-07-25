@@ -290,7 +290,7 @@ export function piAdapterValidator(
         field: "pi_runtime_file",
         canonical_value: `.pi/agents/${agent.name}.md`,
         generated_value: "(missing)",
-        severity: "warning",
+        severity: "info", // Non-blocking
       });
     }
   }
