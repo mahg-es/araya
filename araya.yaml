@@ -181,7 +181,7 @@ artifact_storage:
   memory: .araya/memory/
 agents:
   rolando:
-    role: Reality Authority (Verifier) — renamed from Daneel 2026-07-19; reports to Giskard, not delivery ops
+    role: Reality Authority (Verifier) — reports to The Data Professor
     emoji: 🛡️
     model_tier: reasoning
     primary_provider: pi.dev
@@ -197,23 +197,25 @@ agents:
       - disposition_emission
     skills:
       - reality-verification
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
   daneel:
-    role: Delegated Executor — reports to Giskard, routes to the specialist bench per task; the sole cross-project execution identity across ARAYA Portfolio and every governed delivery project (added 2026-07-19)
+    role: Delegated Executor — reports to The Data Professor, routes to the specialist bench per task; the sole cross-project execution identity across ARAYA Portfolio and every governed delivery project (added 2026-07-19)
     emoji: 🔨
     model_tier: balanced
     primary_provider: pi.dev
     max_turns: 30
     permissions:
-      can_write_code: true
+      can_write_code: false
       can_merge_pr: false
     capabilities:
       - task_execution
       - specialist_routing
       - pr_authoring
     skills:
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -244,6 +246,7 @@ agents:
       - drr-create
       - uat-review
       - token-efficiency
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -270,8 +273,8 @@ agents:
       - agent-topology
       - skills-lifecycle
       - spof-detection
-      - hiring-recommendations
       - organizational-health
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -333,6 +336,7 @@ agents:
       - drr-create
       - iar-generate
       - cr-generate
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -353,6 +357,7 @@ agents:
       - endpoint
       - auth-middleware
       - error-handling
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -371,11 +376,12 @@ agents:
       - page-route
       - api-integration
       - responsive
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
   teresa:
-    role: Chief Culinary Officer (CCO)
+    role: Independent Test Gate
     emoji: 👩‍🍳
     model_tier: balanced
     primary_provider: pi.dev
@@ -387,12 +393,13 @@ agents:
     skills:
       - uat-review
       - token-efficiency
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
-    description: Board-level. Advisory. The Professor's mother-in-law.
+    description: Independent Test Gate authority. Advisory board member. The Professor's mother-in-law.
   clara:
-    role: QA Engineer
+    role: Test Automation Engineer
     emoji: 🔍
     model_tier: balanced
     primary_provider: pi.dev
@@ -410,6 +417,7 @@ agents:
       - tdd-execute
       - uat-generate
       - token-efficiency
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -428,6 +436,7 @@ agents:
       - cache-strategy
       - message-queue
       - db-optimization
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -483,6 +492,7 @@ agents:
       - pentest
       - compliance
       - secrets
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -501,6 +511,7 @@ agents:
       - cicd-pipeline
       - cloud-deploy
       - monitoring
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -521,6 +532,7 @@ agents:
       - velocity
       - definition-of-done
       - reality-verification
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -616,6 +628,7 @@ agents:
       - architecture-diagram
       - slide-deck-generate
       - technical-book
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
@@ -700,6 +713,7 @@ agents:
       - pkm-workflow
       - organizational-knowledge
       - trajectory-management
+      - relay-participant
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice

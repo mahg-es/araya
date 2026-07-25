@@ -84,3 +84,32 @@ Re-verification of PR #78 merge (SHA: c269780) completed.
 
 No blocking findings. No governance acts emitted in this postoffice entry.
 Rolando — Reality Authority
+
+---
+
+## 2026-07-25 Rolando | PR #80 Re-Verification After DISCREPANCY Fix (req-043-functional-baseline)
+
+**From:** rolando (executor → po-proxy)
+**Status:** done
+**Direction:** executor→po-proxy
+
+Re-verification of PR #80 at SHA 582e7b7 ("fix(req-043): add source hash headers to generated files, fix claude-cli format").
+
+**Disposition: DISCREPANCY** — Fix is incomplete. Two defects persist:
+
+1. **Source hash header (Gate 3):** 120 errors across all 4 adapters. Generator writes
+   `# Source hash: unset` (because `generated_hash` is always null, never populated
+   from the manifest). Validator regex `^# Source hash: ([a-f0-9]+)$` rejects "unset"
+   as non-hex. Line IS present but treated as "missing."
+
+2. **claude-cli `can_write_code` format (Gate 6):** 30 errors. Generator writes
+   `Permissions: can_write_code=false` (with `=`) but validator checks for
+   `can_write_code: false` (with `: `). Pi/codex/agy pass; only claude-cli fails.
+
+**`--check` exit code: 1** (must be 0). Generated files regenerated during verification
+and still fail.
+
+**Report:** .araya/plan/spec/pr-80-reverify-rolando-report.md
+
+No governance acts emitted in this postoffice entry.
+Rolando — Reality Authority
