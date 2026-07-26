@@ -112,8 +112,8 @@ function findGateReports(runsDir: string, agentRe: RegExp, candidate: string): G
         // verified/candidate/evaluated keywords (tolerates markdown/emojis).
         let fullSha = "";
         for (const line of text.split("\n")) {
-          if (!/verified.?sha|candidate.?sha|evaluated.?sha|^\s*\*\*?sha\*\*?/i.test(line)) continue;
-          const m = line.match(/([0-9a-f]{40})/i);
+          if (!/verified.?sha|candidate|full.?sha|evaluated.?sha|^\s*\*+\s*sha\b/i.test(line)) continue;
+          const m = line.match(/([0-9a-f]{40})(?![0-9a-f])/i);
           if (m) { fullSha = m[1]; break; }
         }
         if (!fullSha) {
