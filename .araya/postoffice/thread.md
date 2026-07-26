@@ -22,3 +22,11 @@ Agents must not read thread.md by default. Use inspect, summary, list, pending -
 - Subject: RE-ROUTED: Reality Audit v2 — BLOCK disposition (ponny-express-0007) [supersedes MSG-20260725-183610-271c5427]
 - Message: `.araya/postoffice/outbox/MSG-20260726-083823-4d3ad179.md`
 - Status: `new`
+## #3 2026-07-26T12:11:33Z - MSG-20260726-121133-3af7d259
+- Seq: `3`
+- Direction: `outbound`
+- From: `teresa`
+- To: `daneel`
+- Subject: CLOSURE: GATE TASK v2 — PR #88 candidate 79d9b87 — PASS
+- Message: `.araya/postoffice/outbox/MSG-20260726-121133-3af7d259.md`
+- Status: `new`

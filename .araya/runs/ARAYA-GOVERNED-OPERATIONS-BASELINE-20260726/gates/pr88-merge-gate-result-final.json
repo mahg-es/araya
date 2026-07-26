@@ -1,0 +1,119 @@
+{
+  "operation_id": "git.merge-gate",
+  "operation_version": "1.0.0",
+  "passed": true,
+  "status": "PASS",
+  "subject": {
+    "repo": "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline",
+    "pr": "88",
+    "candidate": "217e282cc9ff2b49ffd15f0c529910806d6f4c9a",
+    "base": "dev-mahg"
+  },
+  "checks": [
+    {
+      "id": "base_is_integration",
+      "passed": true,
+      "blocking": true,
+      "detail": "base=dev-mahg"
+    },
+    {
+      "id": "main_not_target",
+      "passed": true,
+      "blocking": true,
+      "detail": "main target forbidden"
+    },
+    {
+      "id": "candidate_resolves",
+      "passed": true,
+      "blocking": true,
+      "detail": "candidate=217e282cc9ff2b49ffd15f0c529910806d6f4c9a"
+    },
+    {
+      "id": "head_current_remote",
+      "passed": true,
+      "blocking": true,
+      "detail": "remote PR head=e6bf7f12c7e1 vs expected=e6bf7f1"
+    },
+    {
+      "id": "teresa_exact_sha",
+      "passed": true,
+      "blocking": true,
+      "detail": "reports=15",
+      "evidence": [
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/GISKARD-RETIREMENT-ENFORCEMENT-20260726/gates/teresa-gate-pr85.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/GISKARD-RETIREMENT-ENFORCEMENT-20260726/gates/teresa-gate-v2.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/GISKARD-RETIREMENT-ENFORCEMENT-20260726/gates/teresa-gate.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/BATCH-TRUTH-CONTINUITY-20260726/pr-f2/teresa-gate.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/BATCH-TRUTH-CONTINUITY-20260726/pr-f1/teresa-gate.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr86-teresa-gate.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr87-teresa-dogfood-v4.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr87-teresa-gate-v2.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr87-teresa-gate-v3.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr87-teresa-gate-v4.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr87-teresa-gate.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-teresa-gate-v2.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-teresa-gate-v3.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-teresa-gate-v4.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-teresa-gate.md"
+      ]
+    },
+    {
+      "id": "rolando_exact_sha",
+      "passed": true,
+      "blocking": true,
+      "detail": "reports=13",
+      "evidence": [
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/GISKARD-RETIREMENT-ENFORCEMENT-20260726/gates/rolando-verification-pr85.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/GISKARD-RETIREMENT-ENFORCEMENT-20260726/gates/rolando-verification-v2.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/GISKARD-RETIREMENT-ENFORCEMENT-20260726/gates/rolando-verification.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/BATCH-TRUTH-CONTINUITY-20260726/pr-f2/rolando-verification.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/BATCH-TRUTH-CONTINUITY-20260726/pr-f1/rolando-verification.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr86-rolando-verification.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr87-rolando-verification-v2.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr87-rolando-verification-v3.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr87-rolando-verification.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-rolando-verification-v2.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-rolando-verification-v3.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-rolando-verification-v4.md",
+        "/home/thedataprofessor/github/mahg-es/worktrees/araya/governed-operations-baseline/.araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-rolando-verification.md"
+      ]
+    },
+    {
+      "id": "evidence_only_diff",
+      "passed": true,
+      "blocking": true,
+      "detail": "2 evidence path(s)",
+      "evidence": [
+        ".araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-rolando-verification-v4.md",
+        ".araya/runs/ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726/gates/pr88-teresa-gate-v4.md"
+      ]
+    },
+    {
+      "id": "pr_mergeable",
+      "passed": true,
+      "blocking": true,
+      "detail": "mergeable=true"
+    },
+    {
+      "id": "pr_base_matches",
+      "passed": true,
+      "blocking": true,
+      "detail": "base=true"
+    },
+    {
+      "id": "no_ai_coauthor",
+      "passed": true,
+      "blocking": true,
+      "detail": "candidate commit trailers clean"
+    }
+  ],
+  "failed_checks": [],
+  "blocking_reasons": [],
+  "warnings": [],
+  "evidence": [],
+  "side_effects": [],
+  "evaluated_sha": "217e282cc9ff2b49ffd15f0c529910806d6f4c9a",
+  "started_at": "2026-07-26T12:29:52.500Z",
+  "completed_at": "2026-07-26T12:29:54.586Z",
+  "duration_ms": 2086
+}
