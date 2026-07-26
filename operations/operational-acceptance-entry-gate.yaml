@@ -1,0 +1,37 @@
+operation_id: "operational-acceptance.entry-gate"
+version: "1.0.0"
+status: "active"
+domain: "operational-acceptance"
+title: "Operational Acceptance Entry Gate"
+description: "Composition gate authorizing the start of ponny-express-10009 (zero-counts, drift, catalog, skill, operations, main untouched)."
+canonical_handler: "src/araya/operations/misc-handlers.ts#operationalAcceptanceEntryGate"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects: []
+risk_level: "read-only"
+required_authority: "any"
+preconditions:
+  - "repository truth fetched when required"
+postconditions:
+  - "OperationResult contract-valid"
+evidence:
+  - "checks[]"
+  - "evidence[]"
+  - "evaluated_sha"
+idempotency: "safe to re-run; see side_effects"
+rollback: "no writes to roll back"
+adapters:
+  - "cli"
+aliases:
+  - "entry gate"
+  - "acceptance gate"
+intents:
+  - "may we start operational acceptance"
+  - "start ponny-express-10009"
+tests:
+  - "tests/operations-test.js"
+owner: "daneel"
+source_provenance: "ponny-express-10010 (ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726)"

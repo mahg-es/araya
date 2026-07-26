@@ -1,0 +1,39 @@
+operation_id: "git.repository-sanity"
+version: "1.0.0"
+status: "active"
+domain: "git"
+title: "Repository Sanity"
+description: "Read-only inspection of repository existence, remotes, branches, divergence, worktrees, in-progress operations."
+canonical_handler: "src/araya/operations/git-handlers.ts#gitRepositorySanity"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects: []
+risk_level: "read-only"
+required_authority: "any"
+preconditions:
+  - "repository truth fetched when required"
+postconditions:
+  - "OperationResult contract-valid"
+evidence:
+  - "checks[]"
+  - "evidence[]"
+  - "evaluated_sha"
+idempotency: "safe to re-run; see side_effects"
+rollback: "no writes to roll back"
+adapters:
+  - "cli"
+  - "pi-custom-tool"
+  - "pi-slash-command"
+aliases:
+  - "repo sanity"
+  - "sanity"
+intents:
+  - "check repository state"
+  - "is the repository sane"
+tests:
+  - "tests/git-operations-test.js"
+owner: "daneel"
+source_provenance: "ponny-express-10010 (ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726)"

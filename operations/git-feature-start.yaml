@@ -1,0 +1,38 @@
+operation_id: "git.feature-start"
+version: "1.0.0"
+status: "active"
+domain: "git"
+title: "Feature Start"
+description: "Create an authorized worktree and feature branch from the fetched integration head. Supports dry-run."
+canonical_handler: "src/araya/operations/git-handlers.ts#gitFeatureStart"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects:
+  - "creates worktree + branch when preconditions pass and not dry-run"
+risk_level: "low"
+required_authority: "any"
+preconditions:
+  - "repository truth fetched when required"
+postconditions:
+  - "OperationResult contract-valid"
+evidence:
+  - "checks[]"
+  - "evidence[]"
+  - "evaluated_sha"
+idempotency: "safe to re-run; see side_effects"
+rollback: "documented per operation"
+adapters:
+  - "cli"
+aliases:
+  - "feature start"
+  - "start feature"
+intents:
+  - "create a feature worktree"
+  - "start a new feature branch"
+tests:
+  - "tests/git-operations-test.js"
+owner: "daneel"
+source_provenance: "ponny-express-10010 (ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726)"

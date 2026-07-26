@@ -190,7 +190,7 @@ test("agent aurora has 11 skills (4 undeclared, 3 previously-orphan now assigned
   const config = parseYamlAgentsTest();
   const a = config.agents.aurora;
   assertOk(a, "aurora must exist");
-  assertEqual(a.skills.length, 12, "aurora should have 12 skills (hiring-recommendations replaced by workforce-planning)");
+  assertEqual(a.skills.length, 13, "aurora should have 13 skills (hiring-recommendations replaced by workforce-planning + araya-operation-runtime AX skill)");
   // Check undeclared skills
   const undeclaredSkills = []; // REQ-043 resolved all 4
   for (const s of undeclaredSkills) {
@@ -207,8 +207,8 @@ test("daneel has cross-cutting + relay-participant skills", () => {
   const config = parseYamlAgentsTest();
   const d = config.agents.daneel;
   assertOk(d, "daneel must exist");
-  // Cross-cutting skills that all agents get: ax3, token-efficiency, araya-command-and-delegation-expert, ax-postoffice
-  const crossCutting = ["ax3", "token-efficiency", "araya-command-and-delegation-expert", "ax-postoffice"];
+  // Cross-cutting skills that all agents get: ax3, token-efficiency, araya-command-and-delegation-expert, ax-postoffice, araya-operation-runtime
+  const crossCutting = ["ax3", "token-efficiency", "araya-command-and-delegation-expert", "ax-postoffice", "araya-operation-runtime"];
   const nonCrossCutting = d.skills.filter(s => !crossCutting.includes(s));
   assertOk(nonCrossCutting.length <= 1, `daneel has cross-cutting + relay-participant, got ${nonCrossCutting.length} non-cc: ${nonCrossCutting.join(", ")}`);
 });

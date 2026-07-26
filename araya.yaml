@@ -201,6 +201,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   daneel:
     role: Delegated Executor — reports to The Data Professor, routes to the specialist bench per task; the sole cross-project execution identity across ARAYA Portfolio and every governed delivery project (added 2026-07-19)
     emoji: 🔨
@@ -219,6 +220,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   manu:
     role: Product Owner
     emoji: 👑
@@ -250,6 +252,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   aurora:
     role: Capability Officer
     emoji: 🌟
@@ -278,6 +281,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
       - ai-routing
   neo:
     role: Dynamic Capability Agent
@@ -340,6 +344,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
       - autonomous-execution
       - pm-decompose
   valentina:
@@ -361,6 +366,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   alejandra:
     role: Frontend Developer
     emoji: 🎨
@@ -380,6 +386,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   teresa:
     role: Independent Test Gate
     emoji: 👩‍🍳
@@ -397,6 +404,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
     description: Independent Test Gate authority. Advisory board member. The Professor's mother-in-law.
   clara:
     role: Test Automation Engineer
@@ -421,6 +429,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   aisha:
     role: Backend Architect
     emoji: 🔷
@@ -440,6 +449,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   lin:
     role: Frontend Architect
     emoji: 🎨
@@ -458,6 +468,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   priya:
     role: QA Lead
     emoji: 🧪
@@ -476,6 +487,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   diana:
     role: Cybersecurity Specialist
     emoji: 🛡️
@@ -496,6 +508,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   isla:
     role: Infra Architect
     emoji: 🖥️
@@ -515,6 +528,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   elena:
     role: Scrum Master + PM Auditor
     emoji: 📋
@@ -536,6 +550,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   sofia:
     role: AI Assistant
     emoji: 💬
@@ -547,6 +562,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   junia:
     role: Data Platform Architect
     emoji: ☁️
@@ -565,6 +581,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   bernabe:
     role: Data Engineer
     emoji: ⚙️
@@ -581,6 +598,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   maria:
     role: AI/ML Engineer
     emoji: 🧠
@@ -598,6 +616,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   lucas:
     role: Content Strategist
     emoji: ✍️
@@ -614,6 +633,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   priscila:
     role: Technical Writer
     emoji: 📚
@@ -632,6 +652,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   lidia:
     role: Profitability Domain Expert
     emoji: 💰
@@ -649,6 +670,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   pablo:
     role: BI & Analytics Lead
     emoji: 📊
@@ -665,6 +687,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   mateo:
     role: FinOps Specialist
     emoji: 📈
@@ -682,6 +705,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   eunice:
     role: Educational Designer
     emoji: 🎓
@@ -698,6 +722,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   esteban:
     role: Chief Knowledge Officer & Graph Builder Steward
     emoji: 🗂️
@@ -717,6 +742,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
     capabilities:
       - organizational_queries
       - graph_stewardship
@@ -736,6 +762,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
   dorcas:
     role: Brand Governance Lead
     emoji: 🎯
@@ -752,6 +779,7 @@ agents:
       - ax3
       - araya-command-and-delegation-expert
       - ax-postoffice
+      - araya-operation-runtime
 provider_optimization:
   codex:
     optimize_for: small prompts, incremental, frequent checkpoints

@@ -22,6 +22,7 @@ const AX_SKILLS = new Set([
   "ax-postoffice",
   "token-efficiency",
   "relay-participant",
+  "araya-operation-runtime",
 ]);
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
@@ -598,10 +599,10 @@ test("Aurora: hiring-recommendations absent, workforce-planning+3 skills present
   }
 });
 
-test("Daneel: exact cross-cutting skills [relay-participant, ax3, araya-command-and-delegation-expert, ax-postoffice]", () => {
+test("Daneel: exact cross-cutting skills [relay-participant, ax3, araya-command-and-delegation-expert, ax-postoffice, araya-operation-runtime]", () => {
   const d = arayaConfig.agents.daneel;
   assert(d, "daneel should exist");
-  const expected = ["relay-participant", "ax3", "araya-command-and-delegation-expert", "ax-postoffice"].sort();
+  const expected = ["relay-participant", "ax3", "araya-command-and-delegation-expert", "ax-postoffice", "araya-operation-runtime"].sort();
   const actual = (d.skills || []).slice().sort();
   assertEqual(JSON.stringify(actual), JSON.stringify(expected),
     `Daneel skills: ${JSON.stringify(actual)}`);

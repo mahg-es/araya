@@ -30,6 +30,13 @@ Commands:
   run <task>          Orchestrate execution of a task across agents.
   capabilities        Print environment capabilities for the active adapter.
   validate            Self-verify the configuration and state directories.
+  operation resolve "<intent>"   Resolve an intent to a governed operation (--json).
+  operation describe <id>        Show an operation contract (--json).
+  operation list                 List registered operations (--json).
+  operation execute <id>         Execute a governed operation (--json, key=value args).
+  gate merge-pr --pr <n>         Evaluate git.merge-gate for a PR (--json).
+  git sanity [--repo <path>]     Evaluate git.repository-sanity (--json).
+  test <suite-op-id>             Run a test.* operation wrapper (--json).
 
 Options:
   -a, --adapter <name>   Adapter to use ("pi" or "mock"). Default: "pi".
@@ -44,6 +51,12 @@ Options:
 
 async function main() {
   const args = process.argv.slice(2);
+  // Governed-operations subcommands (ponny-express-10010) — handled before legacy parsing.
+  if (args[0] === "operation" || args[0] === "gate" || args[0] === "git" || (args[0] === "test" && args[1]?.startsWith("test."))) {
+    const { operationsCliMain } = await import("./araya/operations/cli");
+    const code = await operationsCliMain(args, findArayaRoot(process.cwd()));
+    process.exit(code);
+  }
   let command = "";
   let task = "";
   let adapterName = "pi";

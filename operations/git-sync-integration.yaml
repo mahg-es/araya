@@ -1,0 +1,38 @@
+operation_id: "git.sync-integration"
+version: "1.0.0"
+status: "active"
+domain: "git"
+title: "Sync Integration"
+description: "Fast-forward-only synchronization of a clean local integration checkout with its fetched remote. Fail closed on any unmet precondition."
+canonical_handler: "src/araya/operations/git-handlers.ts#gitSyncIntegration"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects:
+  - "fast-forward merge when all preconditions pass"
+risk_level: "low"
+required_authority: "any"
+preconditions:
+  - "repository truth fetched when required"
+postconditions:
+  - "OperationResult contract-valid"
+evidence:
+  - "checks[]"
+  - "evidence[]"
+  - "evaluated_sha"
+idempotency: "safe to re-run; see side_effects"
+rollback: "documented per operation"
+adapters:
+  - "cli"
+aliases:
+  - "sync integration"
+  - "sync dev"
+intents:
+  - "synchronize integration branch"
+  - "update dev checkout"
+tests:
+  - "tests/git-operations-test.js"
+owner: "daneel"
+source_provenance: "ponny-express-10010 (ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726)"

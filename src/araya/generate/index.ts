@@ -625,7 +625,7 @@ function piAdapter(agent: CanonicalAgent, skills: CanonicalSkill[], narrative: s
   lines.push("");
   for (const skillName of agent.skills) {
     const skill = skills.find(s => s.name === skillName);
-    const desc = skill ? ` — ${skill.description}` : "";
+    const desc = skill && skill.description ? ` — ${skill.description}` : "";
     lines.push(`- \`${skillName}\`${desc}`);
   }
   lines.push("");
