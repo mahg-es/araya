@@ -1,0 +1,11 @@
+{
+  "name": "araya-extension",
+  "version": "1.0.0",
+  "description": "ARAYA pi.dev extension — runtime dependencies",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "argparse": "^2.0.1"
+  }
+}
