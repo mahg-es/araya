@@ -1,3 +1,7 @@
+---
+name: "relay-participant"
+description: "Participates in the ARAYA Relay state machine and enforces state ownership, allowed transitions, evidence requirements, and handoffs."
+---
 # relay-participant
 
 - **Name:** relay-participant
