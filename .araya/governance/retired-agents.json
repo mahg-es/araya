@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-07-26",
+  "authority": "The Data Professor (ponny-express-10008)",
+  "description": "Single canonical source of operationally retired ARAYA agents. Read by the PostOffice tool (postoffice_loop.py), the runtime generator validator (src/araya/governance/retired-agents.ts), and the operational-reference validator. A retired agent has zero operational authority: no routing, no ownership, no execution, no verification, no message eligibility. References are permitted only as clearly-marked historical evidence, memorial records, superseded documents, negative test fixtures, or explicitly archived/cancelled/superseded messages.",
+  "retired_agents": [
+    {
+      "id": "giskard",
+      "name": "R. Giskard Reventlov",
+      "retired_at": "2026-07-20",
+      "reason": "terminated by The Data Professor; succeeded by Daneel (execution) and direct Professor authority (governance)",
+      "operational_authority": "none",
+      "routing_authority": "none",
+      "execution_authority": "none",
+      "verification_authority": "none",
+      "message_eligibility": "none"
+    }
+  ]
+}

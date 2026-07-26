@@ -1,0 +1,9 @@
+# 06 — Open Questions — GISKARD-RETIREMENT-ENFORCEMENT-20260726
+
+| # | Question | Evidence | Status |
+|---|---|---|---|
+| Q1 | Portfolio-side remediation: `src/postoffice_loop.py` (portfolio copy) lacks the supersede mechanism + guard; portfolio fixtures still use Giskard actors; governance line C-01 "Giskard decides tags by durable delegation" (`index.md`, `REQ-MANIFEST.md`) is an active governance route to a retired agent; libexec copy (`~/.pi/agent/libexec/araya/postoffice_loop.py`) drifts from both repo copies | FASE 1 cross-repo scan; portfolio AGENTS.md conventions | OPEN — requires follow-up governed PR to `dev-araya-portfolio` + libexec sync decision (Professor) |
+| Q2 | Framework `main` still contains the pre-enforcement state (hooks, PROTOCOL, fixtures). Acceptable until release per BRANCH-010? | `git merge-base` checks | OPEN — release decision (Professor) |
+| Q3 | The original MSG's `to: "giskard"` field remains in frontmatter (status now `superseded`). Sufficient as "explicitly marked non-operational", or should the recipient field itself be rewritten to `former_recipient:`? Current choice preserves byte-level evidence honesty with structural non-operational status (validator accepts; T-031-compliant). | validator PASS; FASE 2.3 "El mensaje original no debe permanecer procesable como new" — satisfied | OPEN — Professor may prefer field rewrite in a future pass |
+| Q4 | `.araya/ax/ledger/score.ndjson` (disposition ledger) is newly written by the tool during the replacement post; untracked previously. Include as tracked artifact (current choice: yes, tool-standard ledger). | git status | decided in this PR (documented) |
+| Q5 | Efficiency capsules: banners mark non-operational status, but a future capsule-consistency pass may want their CANONICAL labels reclassified (they describe pre-retirement authority). | banners in this PR | OPEN — low priority |

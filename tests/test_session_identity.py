@@ -176,7 +176,7 @@ class PostOfficeIntegrationTests(unittest.TestCase):
     def test_create_message_without_session(self) -> None:
         """Backward compatibility: no session.json -> from_session_id is null."""
         result = postoffice_loop.create_message(
-            from_actor="Giskard", to="Daneel",
+            from_actor="Sonia", to="Daneel",
             subject="test no session", body="Body.",
             model="test", model_source="test",
         )
@@ -195,7 +195,7 @@ class PostOfficeIntegrationTests(unittest.TestCase):
             provider="moonshotai", model="kimi-k3",
         )
         result = postoffice_loop.create_message(
-            from_actor="Daneel", to="Giskard",
+            from_actor="Daneel", to="Sonia",
             subject="test with session", body="Body.\n",
             model="kimi-k3", model_source="tool-reported",
         )
@@ -346,7 +346,7 @@ class RoutingTests(unittest.TestCase):
         postoffice_loop.repo_root = lambda: self.root
         try:
             result = postoffice_loop.create_message(
-                from_actor="Giskard", to="Daneel",
+                from_actor="Sonia", to="Daneel",
                 subject="routed", body="Body.",
                 model="test", model_source="test",
                 to_session_id=self.s_high["session_id"],
