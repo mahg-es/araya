@@ -1,0 +1,73 @@
+{
+  "operation_id": "operational-acceptance.entry-gate",
+  "operation_version": "1.0.0",
+  "passed": true,
+  "status": "PASS",
+  "subject": {
+    "cycle": "ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726"
+  },
+  "checks": [
+    {
+      "id": "framework_giskard_zero",
+      "passed": true,
+      "blocking": true,
+      "detail": "framework validator exit 0"
+    },
+    {
+      "id": "portfolio_giskard_zero",
+      "passed": true,
+      "blocking": true,
+      "detail": "portfolio validator exit 0"
+    },
+    {
+      "id": "postoffice_source_drift_zero",
+      "passed": true,
+      "blocking": true,
+      "detail": "portfolio tool hash == sync manifest"
+    },
+    {
+      "id": "installed_runtime_drift_zero",
+      "passed": true,
+      "blocking": true,
+      "detail": "installed hashes match canonical sources"
+    },
+    {
+      "id": "operation_catalog_valid",
+      "passed": true,
+      "blocking": true,
+      "detail": "registry loads + contracts validate"
+    },
+    {
+      "id": "mandatory_operation_skill",
+      "passed": true,
+      "blocking": true,
+      "detail": "all active agents carry araya-operation-runtime"
+    },
+    {
+      "id": "merge_gate_operational",
+      "passed": true,
+      "blocking": true,
+      "detail": "git.merge-gate returns contract-valid results"
+    },
+    {
+      "id": "test_operations_operational",
+      "passed": true,
+      "blocking": true,
+      "detail": "test.relay-* wrappers return counts"
+    },
+    {
+      "id": "main_untouched",
+      "passed": true,
+      "blocking": true,
+      "detail": "origin/main=8928c1d4b76d (no merges to main this cycle)"
+    }
+  ],
+  "failed_checks": [],
+  "blocking_reasons": [],
+  "warnings": [],
+  "evidence": [],
+  "side_effects": [],
+  "started_at": "2026-07-26T12:33:09.219Z",
+  "completed_at": "2026-07-26T12:33:11.653Z",
+  "duration_ms": 2434
+}
