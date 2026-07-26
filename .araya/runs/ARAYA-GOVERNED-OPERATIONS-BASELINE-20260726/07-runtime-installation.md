@@ -35,3 +35,11 @@ The installed extension was a **symlink into the canonical checkout** (`~/github
 - Installed helper drift: **0** (hash match recorded).
 - Installed skills drift: **0** for relay-participant (prior) and araya-operation-runtime (new); full-tree sync recommended next install cycle.
 - Canonical checkout (framework): remains stale by design — **Q5, Professor decision**; runtime no longer depends on it for the extension (D-R1).
+
+## Incident + repair (same day, honestly recorded)
+
+During sync, I copied the repo's generated `.pi/agents/*.md` over `~/.pi/agent/agents/`, wrongly assuming they were the same artifact class. They are not: the repo's `.pi/agents/` are pi *project-agent* runtime profiles (no YAML frontmatter), while `~/.pi/agent/agents/` are *subagent user profiles* which the subagent loader (`extensions/subagent/agents.ts`) only accepts when `name` + `description` frontmatter exist. Result: "Available agents: none" — subagent runtime down.
+
+**Repair (from canonical sources, no manual invention):** restored all 30 profiles from `prompts/agents/*.md` (the L1 canonical persona prompts) and synthesized the missing frontmatter for the 28 prompts lacking it from `araya.yaml` (name from filename, description from the canonical role, `tools: read, write, edit, grep, find, bash` per ADR-008 baseline, model_tier from yaml). Post-repair: 31/31 profiles loader-compatible; Rolando smoke test OK (`ee23d58`).
+
+**Lesson recorded for the install procedure:** `.pi/agents/` (project runtime) and `~/.pi/agent/agents/` (subagent profiles) are distinct layers with distinct contracts; never sync one onto the other. The subagent-profile source of truth is `prompts/agents/` + `araya.yaml` frontmatter synthesis (this is now the documented resync procedure for that layer).
