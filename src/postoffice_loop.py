@@ -1402,6 +1402,12 @@ def cmd_supersede(args: argparse.Namespace) -> dict[str, Any]:
     path, meta, body = load_message(root, args.message_id)
     current_status = str(meta.get("status") or "")
     validate_transition(current_status, "superseded")
+    if meta.get("supersedes") and not args.by:
+        raise PostOfficeError(
+            "ValidationFailure",
+            f"{args.message_id} is itself a replacement (supersedes {meta['supersedes']}); "
+            "superseding it requires --by <successor> so the supersession chain is never left without a live carrier",
+        )
     if args.by:
         # replacement must exist and must not itself be superseded
         _, rmeta, _ = load_message(root, args.by)

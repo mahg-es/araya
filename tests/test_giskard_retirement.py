@@ -152,6 +152,12 @@ class SupersessionFlowTests(unittest.TestCase):
         os.chdir(self.cwd)
         shutil.rmtree(self.tmp, ignore_errors=True)
 
+    def test_16_replacement_requires_successor_for_chain_integrity(self):
+        # superseding a message that carries `supersedes` without --by must fail
+        with self.assertRaises(po.PostOfficeError) as ctx:
+            po.cmd_supersede(type("A", (), {"message_id": self.replacement_id, "by": None, "reason": "chain break attempt"})())
+        self.assertIn("live carrier", str(ctx.exception))
+
     def test_09_superseded_cannot_be_claimed(self):
         with self.assertRaises(po.PostOfficeError):
             po.validate_transition("superseded", "claimed")
