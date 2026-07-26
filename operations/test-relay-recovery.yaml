@@ -1,0 +1,39 @@
+operation_id: "test.relay-recovery"
+version: "1.0.0"
+status: "active"
+domain: "test"
+title: "Relay Recovery Suite"
+description: "Wrap the canonical interruption/recovery suite (test_sync_postoffice.py)."
+canonical_handler: "src/araya/operations/misc-handlers.ts#testRelayWrapper"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects: []
+risk_level: "read-only"
+required_authority: "any"
+preconditions:
+  - "repository truth fetched when required"
+postconditions:
+  - "OperationResult contract-valid"
+evidence:
+  - "checks[]"
+  - "evidence[]"
+  - "evaluated_sha"
+idempotency: "safe to re-run; see side_effects"
+rollback: "no writes to roll back"
+adapters:
+  - "cli"
+  - "pi-custom-tool"
+  - "pi-slash-command"
+aliases:
+  - "relay-recovery"
+  - "relay-recovery"
+intents:
+  - "run relay recovery suite"
+  - "execute test.relay-recovery"
+tests:
+  - "tests/test-operations-test.js"
+owner: "daneel"
+source_provenance: "ponny-express-10010 (ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726)"

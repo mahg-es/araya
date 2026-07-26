@@ -1,0 +1,42 @@
+operation_id: "git.merge-gate"
+version: "1.0.0"
+status: "active"
+domain: "git"
+title: "Merge Gate"
+description: "Determine whether a PR may be merged into an integration branch. Predicate — does not merge."
+canonical_handler: "src/araya/operations/git-handlers.ts#gitMergeGate"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects: []
+risk_level: "read-only"
+required_authority: "any"
+preconditions:
+  - "repository truth fetched when required"
+postconditions:
+  - "OperationResult contract-valid"
+evidence:
+  - "checks[]"
+  - "evidence[]"
+  - "evaluated_sha"
+idempotency: "safe to re-run; see side_effects"
+rollback: "no writes to roll back"
+adapters:
+  - "cli"
+  - "pi-custom-tool"
+  - "pi-slash-command"
+aliases:
+  - "merge gate"
+  - "merge-gate"
+  - "gate"
+intents:
+  - "validate whether a PR may be merged"
+  - "can I merge this PR"
+  - "merge pr"
+tests:
+  - "tests/operations-test.js"
+  - "tests/git-operations-test.js"
+owner: "daneel"
+source_provenance: "ponny-express-10010 (ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726)"

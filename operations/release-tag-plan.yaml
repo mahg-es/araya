@@ -1,0 +1,29 @@
+operation_id: "release.tag-plan"
+version: "0.1.0"
+status: "design-only"
+domain: "release"
+title: "Release Tag Plan"
+description: "Release Tag Plan — DESIGN-ONLY contract. Non-writing until explicitly authorized in a future requirement."
+canonical_handler: "none (design-only)"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects: []
+risk_level: "high"
+required_authority: "professor"
+preconditions:
+  - "explicit future authorization"
+postconditions:
+  - "non-writing until authorized"
+evidence:
+  - "contract only"
+idempotency: "n/a"
+rollback: "n/a"
+adapters: []
+aliases: []
+intents: []
+tests: []
+owner: "daneel"
+source_provenance: "ponny-express-10010 (design-only future operations)"

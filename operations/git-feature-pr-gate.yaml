@@ -1,0 +1,37 @@
+operation_id: "git.feature-pr-gate"
+version: "1.0.0"
+status: "active"
+domain: "git"
+title: "Feature PR Gate"
+description: "Validate a feature branch before creating a PR to integration (diff, checks, tests, drift, secrets, co-author, base)."
+canonical_handler: "src/araya/operations/git-handlers.ts#gitFeaturePrGate"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects: []
+risk_level: "read-only"
+required_authority: "any"
+preconditions:
+  - "repository truth fetched when required"
+postconditions:
+  - "OperationResult contract-valid"
+evidence:
+  - "checks[]"
+  - "evidence[]"
+  - "evaluated_sha"
+idempotency: "safe to re-run; see side_effects"
+rollback: "no writes to roll back"
+adapters:
+  - "cli"
+aliases:
+  - "pr gate"
+  - "feature gate"
+intents:
+  - "validate feature branch before PR"
+  - "prepare PR"
+tests:
+  - "tests/git-operations-test.js"
+owner: "daneel"
+source_provenance: "ponny-express-10010 (ARAYA-GOVERNED-OPERATIONS-BASELINE-20260726)"

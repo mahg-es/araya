@@ -27,7 +27,7 @@ Evidence > Claims. Workspace ≠ Delivered. Uncommitted ≠ Progress. Reports de
 Every `skills/<name>/SKILL.md` MUST carry YAML frontmatter with non-empty `name` and `description` plus non-empty body. Missing `description` FAILS validation. Enforcement: `tests/skill-frontmatter-test.js` (637 checks, exit 0 at candidate 4073e3e). Repo is the corrected source; sync to `~/.pi/agent/skills/araya/` is install-time copy.
 
 ## 9. Cross-Cutting Skills (MANDATORY)
-`araya-command-and-delegation-expert`, `ax3`, `ax-postoffice`, `token-efficiency` for every agent; `relay-participant` additionally for every Relay-capable actor.
+`araya-command-and-delegation-expert`, `ax3`, `ax-postoffice`, `token-efficiency` for every agent; `relay-participant` additionally for every Relay-capable actor; `araya-operation-runtime` for every ACTIVE operational agent (REQ-046, 2026-07-26 — operation-first protocol; dormant agents excluded).
 
 ## 10. Delivery Modes (CANONICAL)
 full / standard / quick / review / repair — unchanged from v1.

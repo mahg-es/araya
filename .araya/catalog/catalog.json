@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "generated_at": "2026-07-26 00:44:20",
-  "sources_hash": "1f7d2f0f18fb742dee2b4201332ecd35fa8204610b584d2761d52d32fb92db0f",
+  "generated_at": "2026-07-26 11:14:33",
+  "sources_hash": "9f05cd214eac23ea3861bfe16b3168d45cc4d02db48498bae5203ca8f62f6aea",
   "source_files": [
     "araya.yaml",
     "extensions/araya/index.ts",
@@ -18,6 +18,7 @@
     "skills/api-gateway/SKILL.md",
     "skills/api-integration/SKILL.md",
     "skills/araya-command-and-delegation-expert/SKILL.md",
+    "skills/araya-operation-runtime/SKILL.md",
     "skills/architecture-diagram/SKILL.md",
     "skills/asset-management/SKILL.md",
     "skills/auth-middleware/SKILL.md",
@@ -164,21 +165,21 @@
     "prompts/agents/dorcas.md"
   ],
   "stats": {
-    "total_entries": 230,
+    "total_entries": 231,
     "commands_count": 73,
     "commands_enabled": 73,
     "commands_disabled": 0,
     "commands_deprecated": 0,
-    "skills_count": 127,
+    "skills_count": 128,
     "skills_orphan": 0,
     "skills_undeclared": 0,
     "agents_count": 30,
-    "agents_active": 27,
+    "agents_active": 28,
     "agents_dormant": 2,
-    "agents_bare": 1,
+    "agents_bare": 0,
     "orphans_total": 0,
     "drift_detected": false,
-    "last_validated": "2026-07-26 00:44:20"
+    "last_validated": "2026-07-26 11:14:33"
   },
   "commands": [
     {
@@ -209,7 +210,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya",
       "syntax": "/araya",
@@ -303,7 +304,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:status",
       "syntax": "/araya:status",
@@ -345,7 +346,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:install",
       "syntax": "/araya:install",
@@ -389,7 +390,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:review-delivery",
       "syntax": "/araya:review-delivery",
@@ -432,7 +433,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:generate-uat",
       "syntax": "/araya:generate-uat",
@@ -476,7 +477,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:review-uat",
       "syntax": "/araya:review-uat",
@@ -519,7 +520,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:uat-status",
       "syntax": "/araya:uat-status",
@@ -564,7 +565,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:budget-status",
       "syntax": "/araya:budget-status",
@@ -608,7 +609,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:optimize-task",
       "syntax": "/araya:optimize-task",
@@ -652,7 +653,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:compress-context",
       "syntax": "/araya:compress-context",
@@ -697,7 +698,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:efficiency-report",
       "syntax": "/araya:efficiency-report",
@@ -743,7 +744,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:spec:init",
       "syntax": "/araya:spec:init",
@@ -786,7 +787,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:spec:list",
       "syntax": "/araya:spec:list",
@@ -829,7 +830,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:validate",
       "syntax": "/araya:validate",
@@ -880,7 +881,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:trace",
       "syntax": "/araya:trace",
@@ -931,7 +932,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:metrics",
       "syntax": "/araya:metrics",
@@ -980,7 +981,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:constitution",
       "syntax": "/araya:constitution",
@@ -1029,7 +1030,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:knowledge",
       "syntax": "/araya:knowledge",
@@ -1079,7 +1080,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:learn",
       "syntax": "/araya:learn",
@@ -1124,7 +1125,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:reconstitute",
       "syntax": "/araya:reconstitute",
@@ -1174,7 +1175,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:trajectory",
       "syntax": "/araya:trajectory",
@@ -1234,7 +1235,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:improve",
       "syntax": "/araya:improve",
@@ -1277,7 +1278,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:graph",
       "syntax": "/araya:graph",
@@ -1339,7 +1340,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:ask",
       "syntax": "/araya:ask",
@@ -1384,7 +1385,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:graph:prepare",
       "syntax": "/araya:graph:prepare",
@@ -1426,7 +1427,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:version",
       "syntax": "/araya:version",
@@ -1471,7 +1472,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:release-check",
       "syntax": "/araya:release-check",
@@ -1516,7 +1517,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:route",
       "syntax": "/araya:route",
@@ -1566,7 +1567,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:provider:list",
       "syntax": "/araya:provider:list",
@@ -1609,7 +1610,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:model:list",
       "syntax": "/araya:model:list",
@@ -1651,7 +1652,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:team:recommend",
       "syntax": "/araya:team:recommend",
@@ -1695,7 +1696,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:team:assemble",
       "syntax": "/araya:team:assemble",
@@ -1742,7 +1743,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:team:risk",
       "syntax": "/araya:team:risk",
@@ -1785,7 +1786,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:team:list",
       "syntax": "/araya:team:list",
@@ -1828,7 +1829,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:usability-check",
       "syntax": "/araya:usability-check",
@@ -1874,7 +1875,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:compact",
       "syntax": "/araya:compact",
@@ -1917,7 +1918,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:handoff",
       "syntax": "/araya:handoff",
@@ -1969,7 +1970,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:ax3",
       "syntax": "/araya:ax3",
@@ -2035,7 +2036,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:man",
       "syntax": "/araya:man",
@@ -2095,7 +2096,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:delegate",
       "syntax": "/araya:delegate",
@@ -2137,7 +2138,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:delegate-status",
       "syntax": "/araya:delegate-status",
@@ -2180,7 +2181,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:delegate-list",
       "syntax": "/araya:delegate-list",
@@ -2229,7 +2230,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "registerCommand",
       "slash_command": "/araya:delegate-result",
       "syntax": "/araya:delegate-result",
@@ -2276,7 +2277,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya validate",
       "parent_command": "/araya",
@@ -2326,7 +2327,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya constitution",
       "parent_command": "/araya",
@@ -2376,7 +2377,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya release-check",
       "parent_command": "/araya",
@@ -2427,7 +2428,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya usability-check",
       "parent_command": "/araya",
@@ -2479,7 +2480,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya trace",
       "parent_command": "/araya",
@@ -2530,7 +2531,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya metrics",
       "parent_command": "/araya",
@@ -2583,7 +2584,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya review-delivery",
       "parent_command": "/araya",
@@ -2635,7 +2636,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya generate-uat",
       "parent_command": "/araya",
@@ -2688,7 +2689,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya review-uat",
       "parent_command": "/araya",
@@ -2740,7 +2741,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya uat-status",
       "parent_command": "/araya",
@@ -2790,7 +2791,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya knowledge",
       "parent_command": "/araya",
@@ -2841,7 +2842,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya learn",
       "parent_command": "/araya",
@@ -2888,7 +2889,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya improve",
       "parent_command": "/araya",
@@ -2938,7 +2939,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya graph",
       "parent_command": "/araya",
@@ -2990,7 +2991,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya ask",
       "parent_command": "/araya",
@@ -3043,7 +3044,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya optimize-task",
       "parent_command": "/araya",
@@ -3111,7 +3112,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya route",
       "parent_command": "/araya",
@@ -3175,7 +3176,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya align",
       "parent_command": "/araya",
@@ -3245,7 +3246,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya prioritize",
       "parent_command": "/araya",
@@ -3311,7 +3312,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya harmonize",
       "parent_command": "/araya",
@@ -3383,7 +3384,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya understand",
       "parent_command": "/araya",
@@ -3448,7 +3449,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya roundtable",
       "parent_command": "/araya",
@@ -3536,7 +3537,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "subcommand_route",
       "slash_command": "/araya sharpen",
       "parent_command": "/araya",
@@ -3577,7 +3578,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "inline_handler",
       "slash_command": "/araya version",
       "parent_command": "/araya",
@@ -3617,7 +3618,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "inline_handler",
       "slash_command": "/araya provider:list",
       "parent_command": "/araya",
@@ -3657,7 +3658,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "inline_handler",
       "slash_command": "/araya model:list",
       "parent_command": "/araya",
@@ -3697,7 +3698,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "inline_handler",
       "slash_command": "/araya team:list",
       "parent_command": "/araya",
@@ -3737,7 +3738,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "inline_handler",
       "slash_command": "/araya spec:init",
       "parent_command": "/araya",
@@ -3777,7 +3778,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "inline_handler",
       "slash_command": "/araya spec:list",
       "parent_command": "/araya",
@@ -3817,7 +3818,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "registration_method": "inline_handler",
       "slash_command": "/araya graph:prepare",
       "parent_command": "/araya",
@@ -3867,7 +3868,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/abc-costing-model",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -3918,7 +3919,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/accessibility",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -3969,7 +3970,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/adr-write",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4019,7 +4020,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/agent-design",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4076,7 +4077,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/agent-topology",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4130,7 +4131,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/ai-routing",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4181,7 +4182,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/analytics-report",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4232,7 +4233,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/animation",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4285,7 +4286,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/api-design",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4335,7 +4336,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/api-document",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4387,7 +4388,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/api-gateway",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4438,7 +4439,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/api-integration",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4515,7 +4516,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/araya-command-and-delegation-expert",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4562,6 +4563,127 @@
       "is_mandatory": false
     },
     {
+      "id": "skill:araya-operation-runtime",
+      "type": "skill",
+      "name": "araya-operation-runtime",
+      "display_name": "Araya Operation Runtime",
+      "keywords": [
+        "araya",
+        "operation",
+        "runtime",
+        "mandatory",
+        "operation-first",
+        "protocol",
+        "every",
+        "active",
+        "agent",
+        "resolve",
+        "requested",
+        "work",
+        "governed",
+        "catalog",
+        "before",
+        "implementation",
+        "declare",
+        "operationgap",
+        "none",
+        "applies",
+        "executing",
+        "task",
+        "could",
+        "covered",
+        "backend",
+        "rolando",
+        "daneel",
+        "manu",
+        "aurora",
+        "sonia",
+        "valentina",
+        "alejandra",
+        "teresa",
+        "clara",
+        "aisha",
+        "lin",
+        "priya",
+        "diana",
+        "isla",
+        "elena",
+        "sofia",
+        "junia",
+        "bernabe",
+        "maria",
+        "lucas",
+        "priscila",
+        "lidia",
+        "pablo",
+        "mateo",
+        "eunice",
+        "esteban",
+        "aquila",
+        "dorcas"
+      ],
+      "domain": "backend",
+      "aliases": [],
+      "purpose": "Mandatory operation-first protocol for every active ARAYA agent — resolve requested work to a governed operation from the Operation Catalog before any raw implementation; declare OPERATION_GAP when none applies. Use before executing any task that could be covered by a governed operation.",
+      "status": "enabled",
+      "tier": null,
+      "source_files": [
+        "skills/araya-operation-runtime/SKILL.md"
+      ],
+      "source_type": "skills/SKILL.md",
+      "is_auto_generated": true,
+      "related": [],
+      "alternatives": [],
+      "requires": [],
+      "preconditions": [],
+      "side_effects": [],
+      "risks": [],
+      "permissions": [],
+      "last_validated": "2026-07-26 11:14:33",
+      "skill_dir": "skills/araya-operation-runtime",
+      "has_skilling_md": true,
+      "assigned_agents": [
+        "rolando",
+        "daneel",
+        "manu",
+        "aurora",
+        "sonia",
+        "valentina",
+        "alejandra",
+        "teresa",
+        "clara",
+        "aisha",
+        "lin",
+        "priya",
+        "diana",
+        "isla",
+        "elena",
+        "sofia",
+        "junia",
+        "bernabe",
+        "maria",
+        "lucas",
+        "priscila",
+        "lidia",
+        "pablo",
+        "mateo",
+        "eunice",
+        "esteban",
+        "aquila",
+        "dorcas"
+      ],
+      "assigned_agent_count": 28,
+      "is_orphan": false,
+      "is_undeclared": false,
+      "problem_solved": "",
+      "when_to_use": "",
+      "input_description": "",
+      "output_description": "",
+      "usage_notes": "See skills/skills/araya-operation-runtime/SKILL.md for usage guidance.",
+      "is_ax": false,
+      "is_mandatory": false
+    },
+    {
       "id": "skill:architecture-diagram",
       "type": "skill",
       "name": "architecture-diagram",
@@ -4595,7 +4717,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/architecture-diagram",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4649,7 +4771,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/asset-management",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4699,7 +4821,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/auth-middleware",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4753,7 +4875,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/autonomous-execution",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4845,7 +4967,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/ax-postoffice",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -4963,7 +5085,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/ax3",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5042,7 +5164,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/bdd-feature",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5093,7 +5215,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/brand-audit",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5144,7 +5266,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/brand-compliance",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5197,7 +5319,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/budget-forecasting",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5247,7 +5369,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/cache-strategy",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5302,7 +5424,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/capability-registry",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5353,7 +5475,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/cicd-pipeline",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5404,7 +5526,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/cicd-quality",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5454,7 +5576,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/cloud-deploy",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5502,7 +5624,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/cloud-provision",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5552,7 +5674,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/compliance",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5604,7 +5726,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/component",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5654,7 +5776,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/component-arch",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5706,7 +5828,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/content-calendar",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5758,7 +5880,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/cost-analysis",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5810,7 +5932,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/cost-to-serve",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5861,7 +5983,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/coverage",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5916,7 +6038,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/cr-generate",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -5967,7 +6089,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/curriculum-planning",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6016,7 +6138,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/daily-note",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6067,7 +6189,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/daily-standup",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6117,7 +6239,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/dashboard-design",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6168,7 +6290,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/data-governance",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6219,7 +6341,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/data-lakehouse-design",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6272,7 +6394,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/data-modeling",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6322,7 +6444,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/data-quality",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6374,7 +6496,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/data-visualization",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6428,7 +6550,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/db-optimization",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6481,7 +6603,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/db-schema",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6540,7 +6662,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/definition-of-done",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6594,7 +6716,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/deployment-automation",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6644,7 +6766,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/docker",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6699,7 +6821,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/drr-create",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6749,7 +6871,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/e2e-strategy",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6800,7 +6922,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/endpoint",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6850,7 +6972,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/error-handling",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6901,7 +7023,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/etl-orchestration",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -6953,7 +7075,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/form-design",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7007,7 +7129,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/gap-analysis",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7059,7 +7181,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/geo-branding",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7115,7 +7237,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/iar-generate",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7166,7 +7288,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/impediment",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7218,7 +7340,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/integration-test",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7270,7 +7392,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/knowledge-graph",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7322,7 +7444,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/kpi-framework",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7373,7 +7495,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/kubernetes",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7426,7 +7548,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/lab-scenario-design",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7481,7 +7603,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/llm-local-deploy",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7532,7 +7654,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/medallion-architecture",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7584,7 +7706,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/message-queue",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7634,7 +7756,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/microservice",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7688,7 +7810,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/model-fine-tuning",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7739,7 +7861,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/monitoring",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7792,7 +7914,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/multi-platform-publish",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7849,7 +7971,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/organizational-health",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7904,7 +8026,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/organizational-knowledge",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -7955,7 +8077,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/page-route",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8006,7 +8128,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/pentest",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8057,7 +8179,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/performance",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8110,7 +8232,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/performance-test",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8161,7 +8283,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/pkm-workflow",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8218,7 +8340,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/pm-decompose",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8270,7 +8392,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/pm-dependencies",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8323,7 +8445,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/pm-plan",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8376,7 +8498,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/pm-risk",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8429,7 +8551,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/pm-status",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8489,7 +8611,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/po-gap-questionnaire",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8540,7 +8662,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/profitability-lineage",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8592,7 +8714,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/project-planning",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8645,7 +8767,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/rag-pipeline",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8701,7 +8823,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/reality-verification",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8753,7 +8875,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/regression",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8823,7 +8945,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/relay-participant",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8887,7 +9009,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/resource-rightsizing",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8937,7 +9059,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/responsive",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -8987,7 +9109,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/retrospective",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9037,7 +9159,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/sdd-requirements",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9087,7 +9209,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/sdd-vision",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9138,7 +9260,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/secrets",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9190,7 +9312,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/secure-arch",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9241,7 +9363,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/secure-code",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9294,7 +9416,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/seo-optimize",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9348,7 +9470,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/skills-lifecycle",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9401,7 +9523,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/slide-deck-generate",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9454,7 +9576,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/spark-pipeline",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9513,7 +9635,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/spof-detection",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9564,7 +9686,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/sprint-planning",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9614,7 +9736,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/state-management",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9666,7 +9788,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/static-site-generate",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9717,7 +9839,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/student-assessment",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9768,7 +9890,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/tdd-execute",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9821,7 +9943,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/tdd-generate",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9872,7 +9994,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/technical-book",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9923,7 +10045,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/test-case",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -9975,7 +10097,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/theme-design",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10028,7 +10150,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/threat-model",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10091,7 +10213,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/token-efficiency",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10147,7 +10269,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/training-module",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10201,7 +10323,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/trajectory-management",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10257,7 +10379,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/uat-generate",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10315,7 +10437,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/uat-review",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10369,7 +10491,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/unit-test",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10422,7 +10544,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/usage-metering",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10473,7 +10595,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/vector-search",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10524,7 +10646,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/velocity",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10576,7 +10698,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/visual-identity",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10625,7 +10747,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/whale-curve-analyze",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10681,7 +10803,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "skill_dir": "skills/workforce-planning",
       "has_skilling_md": true,
       "assigned_agents": [
@@ -10719,7 +10841,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "ax",
       "aliases": [],
@@ -10739,7 +10862,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🛡️",
       "role": "Reality Authority (Verifier) — reports to The Data Professor",
       "model_tier": "reasoning",
@@ -10758,9 +10881,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 5,
+      "skill_count": 6,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/rolando.md",
       "must_delegate_to": [],
@@ -10804,7 +10928,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "ax",
       "aliases": [],
@@ -10824,7 +10949,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🔨",
       "role": "Delegated Executor — reports to The Data Professor, routes to the specialist bench per task; the sole cross-project execution identity across ARAYA Portfolio and every governed delivery project (added 2026-07-19)",
       "model_tier": "balanced",
@@ -10842,9 +10967,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 4,
+      "skill_count": 5,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/daneel.md",
       "must_delegate_to": [],
@@ -10878,7 +11004,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "governance_pm",
       "aliases": [],
@@ -10898,7 +11025,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "👑",
       "role": "Product Owner",
       "model_tier": "reasoning",
@@ -10929,9 +11056,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 15,
+      "skill_count": 16,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/manu.md",
       "must_delegate_to": [],
@@ -10963,6 +11091,7 @@
         "ax3",
         "araya-command-and-delegation-expert",
         "ax-postoffice",
+        "araya-operation-runtime",
         "ai-routing"
       ],
       "domain": "chro",
@@ -10983,7 +11112,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🌟",
       "role": "Capability Officer",
       "model_tier": "reasoning",
@@ -11012,9 +11141,10 @@
         "ax3",
         "araya-command-and-delegation-expert",
         "ax-postoffice",
+        "araya-operation-runtime",
         "ai-routing"
       ],
-      "skill_count": 12,
+      "skill_count": 13,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/aurora.md",
       "must_delegate_to": [],
@@ -11058,7 +11188,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "⚡",
       "role": "Dynamic Capability Agent",
       "model_tier": "balanced",
@@ -11117,7 +11247,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "⚡",
       "role": "Dynamic Capability Agent",
       "model_tier": "balanced",
@@ -11165,6 +11295,7 @@
         "ax3",
         "araya-command-and-delegation-expert",
         "ax-postoffice",
+        "araya-operation-runtime",
         "autonomous-execution",
         "pm-decompose"
       ],
@@ -11186,7 +11317,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "👩‍💼",
       "role": "Program Director & PMO Head",
       "model_tier": "reasoning",
@@ -11216,10 +11347,11 @@
         "ax3",
         "araya-command-and-delegation-expert",
         "ax-postoffice",
+        "araya-operation-runtime",
         "autonomous-execution",
         "pm-decompose"
       ],
-      "skill_count": 14,
+      "skill_count": 15,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/sonia.md",
       "must_delegate_to": [],
@@ -11247,7 +11379,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "backend",
       "aliases": [],
@@ -11267,7 +11400,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🔧",
       "role": "Backend Developer",
       "model_tier": "balanced",
@@ -11286,9 +11419,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 9,
+      "skill_count": 10,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/valentina.md",
       "must_delegate_to": [],
@@ -11316,7 +11450,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "frontend",
       "aliases": [],
@@ -11336,7 +11471,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🎨",
       "role": "Frontend Developer",
       "model_tier": "balanced",
@@ -11355,9 +11490,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 9,
+      "skill_count": 10,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/alejandra.md",
       "must_delegate_to": [],
@@ -11384,7 +11520,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "ax",
       "aliases": [],
@@ -11404,7 +11541,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "👩‍🍳",
       "role": "Independent Test Gate",
       "model_tier": "balanced",
@@ -11420,9 +11557,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 6,
+      "skill_count": 7,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/teresa.md",
       "must_delegate_to": [],
@@ -11456,7 +11594,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "qa_testing",
       "aliases": [],
@@ -11476,7 +11615,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🔍",
       "role": "Test Automation Engineer",
       "model_tier": "balanced",
@@ -11499,9 +11638,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 13,
+      "skill_count": 14,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/clara.md",
       "must_delegate_to": [],
@@ -11530,7 +11670,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "architecture",
       "aliases": [],
@@ -11550,7 +11691,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🔷",
       "role": "Backend Architect",
       "model_tier": "reasoning",
@@ -11569,9 +11710,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 9,
+      "skill_count": 10,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/aisha.md",
       "must_delegate_to": [],
@@ -11598,7 +11740,8 @@
         "state-management",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "frontend",
       "aliases": [],
@@ -11618,7 +11761,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🎨",
       "role": "Frontend Architect",
       "model_tier": "reasoning",
@@ -11636,9 +11779,10 @@
         "state-management",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 8,
+      "skill_count": 9,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/lin.md",
       "must_delegate_to": [],
@@ -11665,7 +11809,8 @@
         "token-efficiency",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "qa_testing",
       "aliases": [],
@@ -11685,7 +11830,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🧪",
       "role": "QA Lead",
       "model_tier": "balanced",
@@ -11703,9 +11848,10 @@
         "token-efficiency",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 8,
+      "skill_count": 9,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/priya.md",
       "must_delegate_to": [],
@@ -11735,7 +11881,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "security",
       "aliases": [],
@@ -11755,7 +11902,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🛡️",
       "role": "Cybersecurity Specialist",
       "model_tier": "reasoning",
@@ -11775,9 +11922,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 10,
+      "skill_count": 11,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/diana.md",
       "must_delegate_to": [],
@@ -11806,7 +11954,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "infra_devops",
       "aliases": [],
@@ -11826,7 +11975,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🖥️",
       "role": "Infra Architect",
       "model_tier": "reasoning",
@@ -11845,9 +11994,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 9,
+      "skill_count": 10,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/isla.md",
       "must_delegate_to": [],
@@ -11878,7 +12028,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "governance_pm",
       "aliases": [],
@@ -11898,7 +12049,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "📋",
       "role": "Scrum Master + PM Auditor",
       "model_tier": "balanced",
@@ -11919,9 +12070,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 11,
+      "skill_count": 12,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/elena.md",
       "must_delegate_to": [],
@@ -11943,7 +12095,8 @@
         "ax",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "ax",
       "aliases": [],
@@ -11963,7 +12116,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "💬",
       "role": "AI Assistant",
       "model_tier": "fast",
@@ -11976,17 +12129,18 @@
       "skills": [
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 3,
+      "skill_count": 4,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/sofia.md",
       "must_delegate_to": [],
       "never_delegate_from": [],
       "tasks_must_delegate": [],
       "tasks_must_not_execute": [],
-      "agent_status": "bare",
-      "bare_risk": "low"
+      "agent_status": "active",
+      "bare_risk": "none"
     },
     {
       "id": "agent:junia",
@@ -12007,7 +12161,8 @@
         "data-governance",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "data_ai",
       "aliases": [],
@@ -12027,7 +12182,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "☁️",
       "role": "Data Platform Architect",
       "model_tier": "reasoning",
@@ -12045,9 +12200,10 @@
         "data-governance",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 8,
+      "skill_count": 9,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/junia.md",
       "must_delegate_to": [],
@@ -12074,7 +12230,8 @@
         "medallion-architecture",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "data_ai",
       "aliases": [],
@@ -12094,7 +12251,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "⚙️",
       "role": "Data Engineer",
       "model_tier": "balanced",
@@ -12111,9 +12268,10 @@
         "medallion-architecture",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 7,
+      "skill_count": 8,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/bernabe.md",
       "must_delegate_to": [],
@@ -12141,7 +12299,8 @@
         "model-fine-tuning",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "data_ai",
       "aliases": [],
@@ -12161,7 +12320,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🧠",
       "role": "AI/ML Engineer",
       "model_tier": "reasoning",
@@ -12179,9 +12338,10 @@
         "model-fine-tuning",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 8,
+      "skill_count": 9,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/maria.md",
       "must_delegate_to": [],
@@ -12208,7 +12368,8 @@
         "content-calendar",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "content_brand",
       "aliases": [],
@@ -12228,7 +12389,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "✍️",
       "role": "Content Strategist",
       "model_tier": "balanced",
@@ -12245,9 +12406,10 @@
         "content-calendar",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 7,
+      "skill_count": 8,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/lucas.md",
       "must_delegate_to": [],
@@ -12276,7 +12438,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "documentation",
       "aliases": [],
@@ -12296,7 +12459,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "📚",
       "role": "Technical Writer",
       "model_tier": "balanced",
@@ -12315,9 +12478,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 9,
+      "skill_count": 10,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/priscila.md",
       "must_delegate_to": [],
@@ -12344,7 +12508,8 @@
         "profitability-lineage",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "profitability",
       "aliases": [],
@@ -12364,7 +12529,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "💰",
       "role": "Profitability Domain Expert",
       "model_tier": "reasoning",
@@ -12381,9 +12546,10 @@
         "profitability-lineage",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 7,
+      "skill_count": 8,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/lidia.md",
       "must_delegate_to": [],
@@ -12410,7 +12576,8 @@
         "analytics-report",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "bi_analytics",
       "aliases": [],
@@ -12430,7 +12597,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "📊",
       "role": "BI & Analytics Lead",
       "model_tier": "balanced",
@@ -12447,9 +12614,10 @@
         "analytics-report",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 7,
+      "skill_count": 8,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/pablo.md",
       "must_delegate_to": [],
@@ -12476,7 +12644,8 @@
         "token-efficiency",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "finops",
       "aliases": [],
@@ -12496,7 +12665,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "📈",
       "role": "FinOps Specialist",
       "model_tier": "balanced",
@@ -12514,9 +12683,10 @@
         "token-efficiency",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 8,
+      "skill_count": 9,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/mateo.md",
       "must_delegate_to": [],
@@ -12543,7 +12713,8 @@
         "curriculum-planning",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "education",
       "aliases": [],
@@ -12563,7 +12734,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🎓",
       "role": "Educational Designer",
       "model_tier": "balanced",
@@ -12580,9 +12751,10 @@
         "curriculum-planning",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 7,
+      "skill_count": 8,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/eunice.md",
       "must_delegate_to": [],
@@ -12615,7 +12787,8 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "knowledge",
       "aliases": [],
@@ -12635,7 +12808,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🗂️",
       "role": "Chief Knowledge Officer & Graph Builder Steward",
       "model_tier": "balanced",
@@ -12658,9 +12831,10 @@
         "relay-participant",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 10,
+      "skill_count": 11,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/esteban.md",
       "must_delegate_to": [],
@@ -12688,7 +12862,8 @@
         "deployment-automation",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "content_brand",
       "aliases": [],
@@ -12708,7 +12883,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🏗️",
       "role": "Static Site Engineer",
       "model_tier": "balanced",
@@ -12725,9 +12900,10 @@
         "deployment-automation",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 7,
+      "skill_count": 8,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/aquila.md",
       "must_delegate_to": [],
@@ -12755,7 +12931,8 @@
         "asset-management",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
       "domain": "content_brand",
       "aliases": [],
@@ -12775,7 +12952,7 @@
       "side_effects": [],
       "risks": [],
       "permissions": [],
-      "last_validated": "2026-07-26 00:44:20",
+      "last_validated": "2026-07-26 11:14:33",
       "emoji": "🎯",
       "role": "Brand Governance Lead",
       "model_tier": "balanced",
@@ -12792,9 +12969,10 @@
         "asset-management",
         "ax3",
         "araya-command-and-delegation-expert",
-        "ax-postoffice"
+        "ax-postoffice",
+        "araya-operation-runtime"
       ],
-      "skill_count": 7,
+      "skill_count": 8,
       "has_prompt_file": true,
       "prompt_path": "prompts/agents/dorcas.md",
       "must_delegate_to": [],
@@ -12837,6 +13015,12 @@
       "reason": "rolando is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:rolando",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "rolando is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:daneel",
       "to_id": "skill:relay-participant",
       "relationship": "related",
@@ -12859,6 +13043,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "daneel is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:daneel",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "daneel is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:manu",
@@ -12951,6 +13141,12 @@
       "reason": "manu is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:manu",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "manu is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:aurora",
       "to_id": "skill:capability-registry",
       "relationship": "related",
@@ -13015,6 +13211,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "aurora is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:aurora",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "aurora is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:aurora",
@@ -13132,6 +13334,12 @@
     },
     {
       "from_id": "agent:sonia",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "sonia is assigned skill araya-operation-runtime"
+    },
+    {
+      "from_id": "agent:sonia",
       "to_id": "skill:autonomous-execution",
       "relationship": "related",
       "reason": "sonia is assigned skill autonomous-execution"
@@ -13197,6 +13405,12 @@
       "reason": "valentina is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:valentina",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "valentina is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:alejandra",
       "to_id": "skill:component",
       "relationship": "related",
@@ -13251,6 +13465,12 @@
       "reason": "alejandra is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:alejandra",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "alejandra is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:teresa",
       "to_id": "skill:uat-review",
       "relationship": "related",
@@ -13285,6 +13505,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "teresa is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:teresa",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "teresa is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:clara",
@@ -13365,6 +13591,12 @@
       "reason": "clara is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:clara",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "clara is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:aisha",
       "to_id": "skill:microservice",
       "relationship": "related",
@@ -13419,6 +13651,12 @@
       "reason": "aisha is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:aisha",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "aisha is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:lin",
       "to_id": "skill:component-arch",
       "relationship": "related",
@@ -13467,6 +13705,12 @@
       "reason": "lin is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:lin",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "lin is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:priya",
       "to_id": "skill:performance-test",
       "relationship": "related",
@@ -13513,6 +13757,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "priya is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:priya",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "priya is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:diana",
@@ -13575,6 +13825,12 @@
       "reason": "diana is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:diana",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "diana is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:isla",
       "to_id": "skill:docker",
       "relationship": "related",
@@ -13627,6 +13883,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "isla is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:isla",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "isla is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:elena",
@@ -13695,6 +13957,12 @@
       "reason": "elena is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:elena",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "elena is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:sofia",
       "to_id": "skill:ax3",
       "relationship": "related",
@@ -13711,6 +13979,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "sofia is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:sofia",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "sofia is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:junia",
@@ -13761,6 +14035,12 @@
       "reason": "junia is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:junia",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "junia is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:bernabe",
       "to_id": "skill:spark-pipeline",
       "relationship": "related",
@@ -13801,6 +14081,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "bernabe is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:bernabe",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "bernabe is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:maria",
@@ -13851,6 +14137,12 @@
       "reason": "maria is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:maria",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "maria is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:lucas",
       "to_id": "skill:seo-optimize",
       "relationship": "related",
@@ -13891,6 +14183,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "lucas is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:lucas",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "lucas is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:priscila",
@@ -13947,6 +14245,12 @@
       "reason": "priscila is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:priscila",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "priscila is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:lidia",
       "to_id": "skill:abc-costing-model",
       "relationship": "related",
@@ -13989,6 +14293,12 @@
       "reason": "lidia is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:lidia",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "lidia is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:pablo",
       "to_id": "skill:dashboard-design",
       "relationship": "related",
@@ -14029,6 +14339,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "pablo is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:pablo",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "pablo is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:mateo",
@@ -14079,6 +14395,12 @@
       "reason": "mateo is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:mateo",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "mateo is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:eunice",
       "to_id": "skill:lab-scenario-design",
       "relationship": "related",
@@ -14119,6 +14441,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "eunice is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:eunice",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "eunice is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "agent:esteban",
@@ -14181,6 +14509,12 @@
       "reason": "esteban is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:esteban",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "esteban is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:aquila",
       "to_id": "skill:static-site-generate",
       "relationship": "related",
@@ -14223,6 +14557,12 @@
       "reason": "aquila is assigned skill ax-postoffice"
     },
     {
+      "from_id": "agent:aquila",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "aquila is assigned skill araya-operation-runtime"
+    },
+    {
       "from_id": "agent:dorcas",
       "to_id": "skill:brand-compliance",
       "relationship": "related",
@@ -14263,6 +14603,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "dorcas is assigned skill ax-postoffice"
+    },
+    {
+      "from_id": "agent:dorcas",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "dorcas is assigned skill araya-operation-runtime"
     },
     {
       "from_id": "cmd:araya:review-delivery",
@@ -14614,6 +14960,12 @@
     },
     {
       "from_id": "cmd:araya:review-delivery",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:review-delivery uses skill araya-operation-runtime via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:review-delivery",
       "to_id": "skill:autonomous-execution",
       "relationship": "related",
       "reason": "/araya:review-delivery uses skill autonomous-execution via agent sonia"
@@ -14701,6 +15053,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya:generate-uat uses skill ax-postoffice via agent clara"
+    },
+    {
+      "from_id": "cmd:araya:generate-uat",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:generate-uat uses skill araya-operation-runtime via agent clara"
     },
     {
       "from_id": "cmd:araya:review-uat",
@@ -14793,6 +15151,12 @@
       "reason": "/araya:review-uat uses skill ax-postoffice via agent manu"
     },
     {
+      "from_id": "cmd:araya:review-uat",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:review-uat uses skill araya-operation-runtime via agent manu"
+    },
+    {
       "from_id": "cmd:araya:uat-status",
       "to_id": "skill:unit-test",
       "relationship": "related",
@@ -14871,6 +15235,12 @@
       "reason": "/araya:uat-status uses skill ax-postoffice via agent clara"
     },
     {
+      "from_id": "cmd:araya:uat-status",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:uat-status uses skill araya-operation-runtime via agent clara"
+    },
+    {
       "from_id": "cmd:araya:budget-status",
       "to_id": "skill:cost-analysis",
       "relationship": "related",
@@ -14919,6 +15289,12 @@
       "reason": "/araya:budget-status uses skill ax-postoffice via agent mateo"
     },
     {
+      "from_id": "cmd:araya:budget-status",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:budget-status uses skill araya-operation-runtime via agent mateo"
+    },
+    {
       "from_id": "cmd:araya:optimize-task",
       "to_id": "skill:cost-analysis",
       "relationship": "related",
@@ -14965,6 +15341,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya:optimize-task uses skill ax-postoffice via agent mateo"
+    },
+    {
+      "from_id": "cmd:araya:optimize-task",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:optimize-task uses skill araya-operation-runtime via agent mateo"
     },
     {
       "from_id": "cmd:araya:compress-context",
@@ -15040,6 +15422,12 @@
     },
     {
       "from_id": "cmd:araya:compress-context",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:compress-context uses skill araya-operation-runtime via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:compress-context",
       "to_id": "skill:autonomous-execution",
       "relationship": "related",
       "reason": "/araya:compress-context uses skill autonomous-execution via agent sonia"
@@ -15099,6 +15487,12 @@
       "reason": "/araya:efficiency-report uses skill ax-postoffice via agent mateo"
     },
     {
+      "from_id": "cmd:araya:efficiency-report",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:efficiency-report uses skill araya-operation-runtime via agent mateo"
+    },
+    {
       "from_id": "cmd:araya:validate",
       "to_id": "skill:reality-verification",
       "relationship": "related",
@@ -15127,6 +15521,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya:validate uses skill ax-postoffice via agent rolando"
+    },
+    {
+      "from_id": "cmd:araya:validate",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:validate uses skill araya-operation-runtime via agent rolando"
     },
     {
       "from_id": "cmd:araya:trace",
@@ -15199,6 +15599,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya:trace uses skill ax-postoffice via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:trace",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:trace uses skill araya-operation-runtime via agent sonia"
     },
     {
       "from_id": "cmd:araya:trace",
@@ -15286,6 +15692,12 @@
     },
     {
       "from_id": "cmd:araya:metrics",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:metrics uses skill araya-operation-runtime via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:metrics",
       "to_id": "skill:autonomous-execution",
       "relationship": "related",
       "reason": "/araya:metrics uses skill autonomous-execution via agent sonia"
@@ -15370,6 +15782,12 @@
     },
     {
       "from_id": "cmd:araya:constitution",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:constitution uses skill araya-operation-runtime via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:constitution",
       "to_id": "skill:autonomous-execution",
       "relationship": "related",
       "reason": "/araya:constitution uses skill autonomous-execution via agent sonia"
@@ -15441,6 +15859,12 @@
       "reason": "/araya:knowledge uses skill ax-postoffice via agent esteban"
     },
     {
+      "from_id": "cmd:araya:knowledge",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:knowledge uses skill araya-operation-runtime via agent esteban"
+    },
+    {
       "from_id": "cmd:araya:learn",
       "to_id": "skill:daily-note",
       "relationship": "related",
@@ -15499,6 +15923,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya:learn uses skill ax-postoffice via agent esteban"
+    },
+    {
+      "from_id": "cmd:araya:learn",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:learn uses skill araya-operation-runtime via agent esteban"
     },
     {
       "from_id": "cmd:araya:improve",
@@ -15561,6 +15991,12 @@
       "reason": "/araya:improve uses skill ax-postoffice via agent esteban"
     },
     {
+      "from_id": "cmd:araya:improve",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:improve uses skill araya-operation-runtime via agent esteban"
+    },
+    {
       "from_id": "cmd:araya:graph",
       "to_id": "skill:daily-note",
       "relationship": "related",
@@ -15621,6 +16057,12 @@
       "reason": "/araya:graph uses skill ax-postoffice via agent esteban"
     },
     {
+      "from_id": "cmd:araya:graph",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:graph uses skill araya-operation-runtime via agent esteban"
+    },
+    {
       "from_id": "cmd:araya:ask",
       "to_id": "skill:daily-note",
       "relationship": "related",
@@ -15679,6 +16121,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya:ask uses skill ax-postoffice via agent esteban"
+    },
+    {
+      "from_id": "cmd:araya:ask",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:ask uses skill araya-operation-runtime via agent esteban"
     },
     {
       "from_id": "cmd:araya:release-check",
@@ -15751,6 +16199,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya:release-check uses skill ax-postoffice via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:release-check",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:release-check uses skill araya-operation-runtime via agent sonia"
     },
     {
       "from_id": "cmd:araya:release-check",
@@ -15832,6 +16286,12 @@
     },
     {
       "from_id": "cmd:araya:route",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:route uses skill araya-operation-runtime via agent aurora"
+    },
+    {
+      "from_id": "cmd:araya:route",
       "to_id": "skill:ai-routing",
       "relationship": "related",
       "reason": "/araya:route uses skill ai-routing via agent aurora"
@@ -15901,6 +16361,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya:team:recommend uses skill ax-postoffice via agent aurora"
+    },
+    {
+      "from_id": "cmd:araya:team:recommend",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:team:recommend uses skill araya-operation-runtime via agent aurora"
     },
     {
       "from_id": "cmd:araya:team:recommend",
@@ -15976,6 +16442,12 @@
     },
     {
       "from_id": "cmd:araya:team:assemble",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:team:assemble uses skill araya-operation-runtime via agent aurora"
+    },
+    {
+      "from_id": "cmd:araya:team:assemble",
       "to_id": "skill:ai-routing",
       "relationship": "related",
       "reason": "/araya:team:assemble uses skill ai-routing via agent aurora"
@@ -16048,6 +16520,12 @@
     },
     {
       "from_id": "cmd:araya:team:risk",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:team:risk uses skill araya-operation-runtime via agent aurora"
+    },
+    {
+      "from_id": "cmd:araya:team:risk",
       "to_id": "skill:ai-routing",
       "relationship": "related",
       "reason": "/araya:team:risk uses skill ai-routing via agent aurora"
@@ -16101,6 +16579,12 @@
       "reason": "/araya:usability-check uses skill ax-postoffice via agent priya"
     },
     {
+      "from_id": "cmd:araya:usability-check",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya:usability-check uses skill araya-operation-runtime via agent priya"
+    },
+    {
       "from_id": "cmd:araya:validate",
       "to_id": "skill:reality-verification",
       "relationship": "related",
@@ -16129,6 +16613,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya validate uses skill ax-postoffice via agent rolando"
+    },
+    {
+      "from_id": "cmd:araya:validate",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya validate uses skill araya-operation-runtime via agent rolando"
     },
     {
       "from_id": "cmd:araya:constitution",
@@ -16201,6 +16691,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya constitution uses skill ax-postoffice via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:constitution",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya constitution uses skill araya-operation-runtime via agent sonia"
     },
     {
       "from_id": "cmd:araya:constitution",
@@ -16288,6 +16784,12 @@
     },
     {
       "from_id": "cmd:araya:release-check",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya release-check uses skill araya-operation-runtime via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:release-check",
       "to_id": "skill:autonomous-execution",
       "relationship": "related",
       "reason": "/araya release-check uses skill autonomous-execution via agent sonia"
@@ -16345,6 +16847,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya usability-check uses skill ax-postoffice via agent priya"
+    },
+    {
+      "from_id": "cmd:araya:usability-check",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya usability-check uses skill araya-operation-runtime via agent priya"
     },
     {
       "from_id": "cmd:araya:trace",
@@ -16417,6 +16925,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya trace uses skill ax-postoffice via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:trace",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya trace uses skill araya-operation-runtime via agent sonia"
     },
     {
       "from_id": "cmd:araya:trace",
@@ -16504,6 +17018,12 @@
     },
     {
       "from_id": "cmd:araya:metrics",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya metrics uses skill araya-operation-runtime via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:metrics",
       "to_id": "skill:autonomous-execution",
       "relationship": "related",
       "reason": "/araya metrics uses skill autonomous-execution via agent sonia"
@@ -16585,6 +17105,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya review-delivery uses skill ax-postoffice via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:review-delivery",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya review-delivery uses skill araya-operation-runtime via agent sonia"
     },
     {
       "from_id": "cmd:araya:review-delivery",
@@ -16677,6 +17203,12 @@
       "reason": "/araya generate-uat uses skill ax-postoffice via agent clara"
     },
     {
+      "from_id": "cmd:araya:generate-uat",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya generate-uat uses skill araya-operation-runtime via agent clara"
+    },
+    {
       "from_id": "cmd:araya:review-uat",
       "to_id": "skill:sdd-vision",
       "relationship": "related",
@@ -16767,6 +17299,12 @@
       "reason": "/araya review-uat uses skill ax-postoffice via agent manu"
     },
     {
+      "from_id": "cmd:araya:review-uat",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya review-uat uses skill araya-operation-runtime via agent manu"
+    },
+    {
       "from_id": "cmd:araya:uat-status",
       "to_id": "skill:unit-test",
       "relationship": "related",
@@ -16845,6 +17383,12 @@
       "reason": "/araya uat-status uses skill ax-postoffice via agent clara"
     },
     {
+      "from_id": "cmd:araya:uat-status",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya uat-status uses skill araya-operation-runtime via agent clara"
+    },
+    {
       "from_id": "cmd:araya:knowledge",
       "to_id": "skill:daily-note",
       "relationship": "related",
@@ -16903,6 +17447,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya knowledge uses skill ax-postoffice via agent esteban"
+    },
+    {
+      "from_id": "cmd:araya:knowledge",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya knowledge uses skill araya-operation-runtime via agent esteban"
     },
     {
       "from_id": "cmd:araya:learn",
@@ -16965,6 +17515,12 @@
       "reason": "/araya learn uses skill ax-postoffice via agent esteban"
     },
     {
+      "from_id": "cmd:araya:learn",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya learn uses skill araya-operation-runtime via agent esteban"
+    },
+    {
       "from_id": "cmd:araya:improve",
       "to_id": "skill:daily-note",
       "relationship": "related",
@@ -17023,6 +17579,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya improve uses skill ax-postoffice via agent esteban"
+    },
+    {
+      "from_id": "cmd:araya:improve",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya improve uses skill araya-operation-runtime via agent esteban"
     },
     {
       "from_id": "cmd:araya:graph",
@@ -17085,6 +17647,12 @@
       "reason": "/araya graph uses skill ax-postoffice via agent esteban"
     },
     {
+      "from_id": "cmd:araya:graph",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya graph uses skill araya-operation-runtime via agent esteban"
+    },
+    {
       "from_id": "cmd:araya:ask",
       "to_id": "skill:daily-note",
       "relationship": "related",
@@ -17145,6 +17713,12 @@
       "reason": "/araya ask uses skill ax-postoffice via agent esteban"
     },
     {
+      "from_id": "cmd:araya:ask",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya ask uses skill araya-operation-runtime via agent esteban"
+    },
+    {
       "from_id": "cmd:araya:optimize-task",
       "to_id": "skill:cost-analysis",
       "relationship": "related",
@@ -17191,6 +17765,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya optimize-task uses skill ax-postoffice via agent mateo"
+    },
+    {
+      "from_id": "cmd:araya:optimize-task",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya optimize-task uses skill araya-operation-runtime via agent mateo"
     },
     {
       "from_id": "cmd:araya:route",
@@ -17257,6 +17837,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya route uses skill ax-postoffice via agent aurora"
+    },
+    {
+      "from_id": "cmd:araya:route",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya route uses skill araya-operation-runtime via agent aurora"
     },
     {
       "from_id": "cmd:araya:route",
@@ -17355,6 +17941,12 @@
       "reason": "/araya align uses skill ax-postoffice via agent manu"
     },
     {
+      "from_id": "cmd:araya:align",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya align uses skill araya-operation-runtime via agent manu"
+    },
+    {
       "from_id": "cmd:araya:prioritize",
       "to_id": "skill:pm-plan",
       "relationship": "related",
@@ -17425,6 +18017,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya prioritize uses skill ax-postoffice via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:prioritize",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya prioritize uses skill araya-operation-runtime via agent sonia"
     },
     {
       "from_id": "cmd:araya:prioritize",
@@ -17529,6 +18127,12 @@
       "reason": "/araya harmonize uses skill ax-postoffice via agent manu"
     },
     {
+      "from_id": "cmd:araya:harmonize",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya harmonize uses skill araya-operation-runtime via agent manu"
+    },
+    {
       "from_id": "cmd:araya:understand",
       "to_id": "skill:sdd-vision",
       "relationship": "related",
@@ -17619,6 +18223,12 @@
       "reason": "/araya understand uses skill ax-postoffice via agent manu"
     },
     {
+      "from_id": "cmd:araya:understand",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya understand uses skill araya-operation-runtime via agent manu"
+    },
+    {
       "from_id": "cmd:araya:roundtable",
       "to_id": "skill:pm-plan",
       "relationship": "related",
@@ -17692,6 +18302,12 @@
     },
     {
       "from_id": "cmd:araya:roundtable",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya roundtable uses skill araya-operation-runtime via agent sonia"
+    },
+    {
+      "from_id": "cmd:araya:roundtable",
       "to_id": "skill:autonomous-execution",
       "relationship": "related",
       "reason": "/araya roundtable uses skill autonomous-execution via agent sonia"
@@ -17761,6 +18377,12 @@
       "to_id": "skill:ax-postoffice",
       "relationship": "related",
       "reason": "/araya sharpen uses skill ax-postoffice via agent esteban"
+    },
+    {
+      "from_id": "cmd:araya:sharpen",
+      "to_id": "skill:araya-operation-runtime",
+      "relationship": "related",
+      "reason": "/araya sharpen uses skill araya-operation-runtime via agent esteban"
     }
   ]
 }
