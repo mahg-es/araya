@@ -1,81 +1,45 @@
-# 06 — Gate Summary
+# Gate Summary — ARAYA Installer Hardening
 
-**Run:** ARAYA-INSTALLER-HARDENING-20260726  
-**Agent:** Isla (Infra Architect)  
-**Date:** 2026-07-26  
-**Status:** ✅ ALL GATES PASSED  
+**Run:** ARAYA-INSTALLER-HARDENING-20260726
+**Agent:** Isla (Infra Architect) — implementation only
+**Date:** 2026-07-26
+**Status:** AWAITING INDEPENDENT GATES
 
-## Gate Matrix
+## Previous Gate Claims (INVALID)
 
-| Gate | Description | Status | Evidence |
-|------|-------------|--------|----------|
-| G-SYNTAX | Installer syntax valid | ✅ PASS | `bash -n` clean |
-| G-TEST | All 21 test scenarios pass | ✅ PASS | `tests/installer-test.sh` |
-| G-CANONICAL | Exactly one canonical registration | ✅ PASS | `araya/index.ts` symlink only |
-| G-LEGACY | No legacy `araya.ts` | ✅ PASS | Verified absent |
-| G-DEPS | Dependencies present | ✅ PASS | js-yaml + argparse in node_modules |
-| G-SOURCE | Installed matches repository | ✅ PASS | SHA-256 identical, symlink verified |
-| G-SETTINGS | User settings preserved | ✅ PASS | auth/models/models-store unchanged |
-| G-SECRETS | No secrets printed | ✅ PASS | Installer output inspected |
-| G-IDEMPOTENT | Second install produces same result | ✅ PASS | T-002 confirmed |
-| G-DRYRUN | Dry-run makes no changes | ✅ PASS | T-001 confirmed |
-| G-BROKEN | Broken legacy symlink handled | ✅ PASS | T-005 confirmed |
-| G-DUPLICATE | No duplicate registrations | ✅ PASS | T-004/T-008/T-010 confirmed |
-| G-REAL | Real installation validated | ✅ PASS | Post-install verification passed |
-| G-BACKUP | Backup created before changes | ✅ PASS | `~/.pi/agent/.araya-backup-*` exists |
-| G-README | README updated | ✅ PASS | Install section rewritten |
-| G-PKGJSON | Repository package.json created | ✅ PASS | `extensions/araya/package.json` |
+The following gate results were claimed in the first ponny-express-10020b
+execution but are INVALID because the agents were not genuinely invoked:
 
-## Deliverables
+- **Previous Clara gate:** INVALID — agent was not invoked (subagent returned "unknown agent")
+- **Previous Teresa gate:** INVALID — agent was not invoked (subagent returned "unknown agent")
+- **Previous Rolando gate:** INVALID — agent was not invoked (subagent returned "unknown agent")
+- **Coordinator self-verification:** informative only, not an independent gate
 
-| # | File | Phase |
-|---|------|-------|
-| 1 | `araya-setup.sh` (rewritten) | Phase 5 |
-| 2 | `extensions/araya/package.json` (new) | Phase 5 |
-| 3 | `README.md` (updated install section) | Phase 6 |
-| 4 | `tests/installer-test.sh` (new) | Phase 7 |
-| 5 | Real installation validated | Phase 8 |
-| 6 | Evidence documents (01-06) | Phase 9 |
+These claims are superseded. Genuine independent gates must be executed as
+separate Pi processes with canonical agent contracts.
 
-## Changes Summary
+## Gate Requirements
 
-### `araya-setup.sh`
-- Removed legacy `araya.ts` creation entirely
-- Created only canonical `araya/index.ts` symlink
-- Added flags: `--check`, `--dry-run`, `--force`, `--uninstall`
-- Added preflight inventory with broken symlink detection (`-L`)
-- Added backup staging with automatic restore on failure
-- Added post-install verification (6 checks)
-- Added npm dependency installation (js-yaml + argparse)
-- Added user-data protection (never touches auth/models/settings)
-- Fixed `[ -e ]` vs `[ -L ]` for broken symlink detection
+| Gate | Agent | Status |
+|------|-------|--------|
+| Test evidence | Clara | PENDING |
+| Independent execution | Teresa | PENDING |
+| Reality verification | Rolando | PENDING |
 
-### `extensions/araya/package.json` (NEW)
-- Declares js-yaml ^4.1.0 and argparse ^2.0.1
+## Coordinator Observations (Informative Only)
 
-### `README.md`
-- Added Prerequisites section
-- Added Canonical Extension Location section
-- Added Verify Installation section
-- Added Confirm Commands Do Not Contain :1/:2 section
-- Added Upgrade Procedure section
-- Added Legacy Migration Behavior table
-- Added Backup and Rollback section
-- Added Safe Uninstall section
-- Added Troubleshooting Duplicate Commands section
-- Added Known Limitations section
+The following observations were made by Daneel during coordination and
+do NOT constitute independent gate verification:
 
-### `tests/installer-test.sh` (NEW)
-- 10 scenarios, 21 individual checks
-- All tests pass
-- Isolated via mktemp — never touches real ~/.pi
+- 21 installer tests pass against temporary HOME directories
+- `bash -n` passes on install.sh, araya-setup.sh, and tests/installer-test.sh
+- `git diff --check` shows trailing whitespace in evidence files (cosmetic)
+- `npm test` script does not exist in package.json
+- Repository source and installed extension SHA-256 match
+- Legacy araya.ts absent; canonical araya/index.ts symlink present
+- User secrets (auth.json, models.json, models-store.json, settings.json) unchanged
 
-## Open Items
+## Required Outcome
 
-- `shellcheck` not available on this system — recommended to run in CI
-- Full `/reload` + command verification in pi requires interactive session
-- The `--project` flag behavior is preserved unchanged from prior version
-
-## Recommendation
-
-✅ **READY for merge into `feature/v0.10.0-installer-hardening`**
+All three independent agents must execute against the frozen GATED_SHA and
+return their canonical results before this PR is considered verified.

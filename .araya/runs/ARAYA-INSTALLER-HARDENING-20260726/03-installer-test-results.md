@@ -1,8 +1,8 @@
 # 03 — Installer Test Results
 
-**Run:** ARAYA-INSTALLER-HARDENING-20260726  
-**Date:** 2026-07-26  
-**Test harness:** `tests/installer-test.sh`  
+**Run:** ARAYA-INSTALLER-HARDENING-20260726
+**Date:** 2026-07-26
+**Test harness:** `tests/installer-test.sh`
 
 ## Test Summary
 

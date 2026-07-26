@@ -15,13 +15,15 @@
 #   T-008: Exactly one discoverable ARAYA extension after install
 #   T-009: Installed source matches repository artifact
 #   T-010: Failed installation does not leave duplicate active registrations
+#   T-011: install.sh and araya-setup.sh behave equivalently
+#   T-012: Both entry points propagate exit codes
 # ─────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
 # Find the repo root (where this test file lives)
 TEST_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$TEST_DIR/.." && pwd)"
-INSTALLER="$REPO_ROOT/araya-setup.sh"
+INSTALLER="$REPO_ROOT/install.sh"
 PASS=0
 FAIL=0
 TOTAL=0
@@ -429,6 +431,59 @@ echo -e "  ${GREEN}PASS: $PASS${NC}"
 echo -e "  ${RED}FAIL: $FAIL${NC}"
 echo "  TOTAL: $TOTAL"
 echo ""
+
+# ─── T-011: install.sh and araya-setup.sh behave equivalently ──────────
+echo ""
+echo "--- T-011: install.sh and araya-setup.sh behave equivalently ---"
+TMP=$(mktemp -d)
+trap "rm -rf $TMP" EXIT
+
+# Run install.sh --check in temp dir
+HOME="$TMP/home1" mkdir -p "$HOME/.pi/agent"
+HOME="$TMP/home1" bash "$REPO_ROOT/install.sh" --check > "$TMP/install-out.txt" 2>&1 || true
+
+# Run araya-setup.sh --check in another temp dir
+HOME="$TMP/home2" mkdir -p "$HOME/.pi/agent"
+HOME="$TMP/home2" bash "$REPO_ROOT/araya-setup.sh" --check > "$TMP/araya-out.txt" 2>&1 || true
+
+# Compare: both should produce same preflight result (clean/dirty)
+INSTALL_CLEAN=$(grep -c "CLEAN" "$TMP/install-out.txt" || true)
+ARAYA_CLEAN=$(grep -c "CLEAN" "$TMP/araya-out.txt" || true)
+if [ "$INSTALL_CLEAN" = "$ARAYA_CLEAN" ]; then
+  echo -e "  ${GREEN}PASS${NC}: T-011: install.sh and araya-setup.sh produce equivalent output"
+  PASS=$((PASS + 1))
+else
+  echo -e "  ${RED}FAIL${NC}: T-011: Outputs differ (install=$INSTALL_CLEAN, araya=$ARAYA_CLEAN)"
+  FAIL=$((FAIL + 1))
+fi
+TOTAL=$((TOTAL + 1))
+
+# ─── T-012: Both entry points propagate exit codes ─────────────────────
+echo ""
+echo "--- T-012: Both entry points propagate exit codes ---"
+
+# Both should exit 0 on --check of empty HOME
+HOME="$TMP/home3" mkdir -p "$HOME/.pi/agent"
+HOME="$TMP/home3" bash "$REPO_ROOT/install.sh" --check > /dev/null 2>&1
+INSTALL_RC=$?
+
+HOME="$TMP/home4" mkdir -p "$HOME/.pi/agent"
+HOME="$TMP/home4" bash "$REPO_ROOT/araya-setup.sh" --check > /dev/null 2>&1
+ARAYA_RC=$?
+
+if [ "$INSTALL_RC" = "$ARAYA_RC" ]; then
+  echo -e "  ${GREEN}PASS${NC}: T-012: Both propagate same exit code ($INSTALL_RC)"
+  PASS=$((PASS + 1))
+else
+  echo -e "  ${RED}FAIL${NC}: T-012: Exit codes differ (install=$INSTALL_RC, araya=$ARAYA_RC)"
+  FAIL=$((FAIL + 1))
+fi
+TOTAL=$((TOTAL + 1))
+
+rm -rf "$TMP"
+trap - EXIT
+
+# ─── Summary ────────────────────────────────────────────────────────────
 
 if [ "$FAIL" -gt 0 ]; then
   echo -e "${RED}SOME TESTS FAILED${NC}"

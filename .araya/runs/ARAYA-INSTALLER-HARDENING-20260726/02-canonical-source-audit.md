@@ -1,12 +1,12 @@
 # 02 — Canonical Source Audit
 
-**Run:** ARAYA-INSTALLER-HARDENING-20260726  
-**Date:** 2026-07-26  
+**Run:** ARAYA-INSTALLER-HARDENING-20260726
+**Date:** 2026-07-26
 
 ## Canonical Extension Source
 
-**Path:** `extensions/araya/index.ts` (in repository)  
-**Lines:** ~2830  
+**Path:** `extensions/araya/index.ts` (in repository)
+**Lines:** ~2830
 **Purpose:** ARAYA pi.dev extension — registers slash commands, agent delegation, and governance operations.
 
 ### Dependencies

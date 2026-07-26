@@ -1,7 +1,7 @@
 # 05 — Security and User-Data Preservation
 
-**Run:** ARAYA-INSTALLER-HARDENING-20260726  
-**Date:** 2026-07-26  
+**Run:** ARAYA-INSTALLER-HARDENING-20260726
+**Date:** 2026-07-26
 
 ## Design Principles
 

@@ -96,8 +96,11 @@ Done. Traceable. Auditable. Governed.
 ```bash
 git clone git@github.com:mahg-es/araya.git
 cd araya
-./araya-setup.sh
+./install.sh
 ```
+
+> `araya-setup.sh` is a backward-compatible wrapper that delegates to `install.sh`.
+> Both entry points produce identical results.
 
 ### 3. Load in pi
 
@@ -590,8 +593,11 @@ From `definition-of-done` to `po-gap-questionnaire`, from `drr-create` to `cr-ge
 ```bash
 git clone git@github.com:mahg-es/araya.git
 cd araya
-./araya-setup.sh
+./install.sh
 ```
+
+`araya-setup.sh` is a backward-compatible wrapper that delegates to `install.sh`.
+Both entry points produce identical results.
 
 Or from within pi:
 
@@ -636,7 +642,7 @@ ls ~/.pi/agent/extensions/araya.ts 2>&1
 # Should show: No such file or directory
 
 # Run preflight check
-./araya-setup.sh --check
+./install.sh --check
 # Should exit 0 with: Check: CLEAN
 
 # Verify dependencies
@@ -649,17 +655,17 @@ ls ~/.pi/agent/extensions/araya/node_modules/js-yaml
 After `/reload`, inspect the pi command palette. All `/araya:*` commands should
 appear exactly once — no `araya:man:1`, `araya:man:2`, `araya:delegate:1`, etc.
 
-> **⚠️ Warning:** Seeing `/araya:*` commands with generated `:1` or `:2` suffixes
-> means that multiple extensions registered the same logical command. This is
-> typically caused by having both the legacy `araya.ts` and canonical
-> `araya/index.ts` registrations active. Run `./araya-setup.sh --force` to fix.
+> **⚠️ Warning:** If Pi displays ARAYA commands with suffixes such as `:1` or `:2`,
+> multiple extensions registered the same logical command.
+> Do not continue with operational validation until the duplicate
+> registration is removed. Run `./install.sh --force` to fix.
 
 ### Upgrade Procedure
 
 ```bash
 cd /path/to/araya
 git pull origin dev-mahg          # or your tracking branch
-./araya-setup.sh --force           # reinstall over existing installation
+./install.sh --force               # reinstall over existing installation
 ```
 
 The `--force` flag ensures:
@@ -699,13 +705,13 @@ cp ~/.pi/agent/.araya-backup-*/index.ts ~/.pi/agent/extensions/araya/index.ts
 
 # Or re-clone and reinstall
 git clone git@github.com:mahg-es/araya.git /tmp/araya-restore
-cd /tmp/araya-restore && ./araya-setup.sh --force
+cd /tmp/araya-restore && ./install.sh --force
 ```
 
 ### Safe Uninstall
 
 ```bash
-./araya-setup.sh --uninstall
+./install.sh --uninstall
 ```
 
 This removes only ARAYA-managed files:
@@ -727,7 +733,7 @@ Skills, agents, and prompts symlinks are NOT removed (manual removal if desired)
 
 **Fix:**
 ```bash
-./araya-setup.sh --force
+./install.sh --force
 ```
 
 This removes legacy registrations and ensures exactly one canonical extension.
@@ -793,7 +799,8 @@ The `araya-command-and-delegation-expert` skill (assigned to **every** ARAYA age
 ```
 araya/
 ├── araya.yaml              # Configuration (single source of truth for version)
-├── araya-setup.sh          # One-command installer
+├── install.sh              # Canonical one-command installer
+├── araya-setup.sh          # Backward-compatible wrapper → install.sh
 ├── extensions/araya/       # ARAYA pi extension (command handlers)
 ├── .pi/agents/             # 28 agent definitions (YAML frontmatter; daneel verifier defined in extensions/)
 ├── prompts/agents/         # 26 personality prompt templates

@@ -1,7 +1,7 @@
 # 04 — Runtime Before/After
 
-**Run:** ARAYA-INSTALLER-HARDENING-20260726  
-**Date:** 2026-07-26  
+**Run:** ARAYA-INSTALLER-HARDENING-20260726
+**Date:** 2026-07-26
 
 ## Before Hardening
 

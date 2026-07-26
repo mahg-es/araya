@@ -1,8 +1,8 @@
 # 01 — Duplicate Registration Root Cause
 
-**Run:** ARAYA-INSTALLER-HARDENING-20260726  
-**Defect detector:** Professor, through direct human inspection of the Pi command UI  
-**Date:** 2026-07-26  
+**Run:** ARAYA-INSTALLER-HARDENING-20260726
+**Defect detector:** Professor, through direct human inspection of the Pi command UI
+**Date:** 2026-07-26
 
 ## Symptom
 
