@@ -294,7 +294,11 @@ def message_paths(root: Path) -> list[Path]:
         if not base.exists():
             continue
         check_no_symlink_escape(root, base, label=folder)
-        paths.extend(sorted(base.rglob("MSG-*.md")))
+        # Only canonical message files count as messages. Annotation records
+        # (e.g. *.discrepancy-record.md) match MSG-*.md but are not messages.
+        paths.extend(
+            p for p in sorted(base.rglob("MSG-*.md")) if ID_RE.match(p.stem)
+        )
     return paths
 
 

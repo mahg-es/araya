@@ -331,5 +331,62 @@ class CreateMessageDispositionTests(unittest.TestCase):
         self.assertEqual(1, len(pending["items"]))
 
 
+class AnnotationRecordToleranceTests(unittest.TestCase):
+    """Annotation records (*.discrepancy-record.md, no frontmatter) must never
+    crash message scans (post-merge audit finding, ponny-express-10008 FASE 7)."""
+
+    def setUp(self) -> None:
+        self.tempdir = tempfile.TemporaryDirectory()
+        self.root = Path(self.tempdir.name)
+        (self.root / ".git").mkdir()
+        postoffice = self.root / ".araya" / "postoffice"
+        for folder in ("inbox", "outbox", "archive"):
+            (postoffice / folder).mkdir(parents=True, exist_ok=True)
+        (postoffice / "thread.md").write_text("", encoding="utf-8")
+        (postoffice / "index.jsonl").write_text("", encoding="utf-8")
+        self._original_repo_root = postoffice_loop.repo_root
+        postoffice_loop.repo_root = lambda: self.root
+        postoffice_loop.create_message(
+            from_actor="Sonia",
+            to="Daneel",
+            subject="real message",
+            body="Body\n",
+            model="test-model",
+            model_source="tool-reported",
+        )
+        # annotation record WITHOUT frontmatter, matching the MSG-*.md glob
+        (postoffice / "outbox" / "MSG-20260725-183610-271c5427.discrepancy-record.md").write_text(
+            "# Discrepancy Record\n\nNo frontmatter here.\n", encoding="utf-8"
+        )
+
+    def tearDown(self) -> None:
+        postoffice_loop.repo_root = self._original_repo_root
+        self.tempdir.cleanup()
+
+    def test_summary_ignores_annotation_records(self) -> None:
+        result = postoffice_loop.cmd_summary(SimpleNamespace(no_sync=True))
+        self.assertEqual(1, result["counts"]["messages"])
+
+    def test_list_ignores_annotation_records(self) -> None:
+        result = postoffice_loop.cmd_list(SimpleNamespace(no_sync=True))
+        self.assertEqual(1, len(result["items"]))
+
+    def test_pending_ignores_annotation_records(self) -> None:
+        result = postoffice_loop.cmd_pending(SimpleNamespace(to="Daneel", no_sync=True))
+        self.assertEqual(1, len(result["items"]))
+
+    def test_allocate_seq_ignores_annotation_records(self) -> None:
+        result = postoffice_loop.create_message(
+            from_actor="Sonia",
+            to="Daneel",
+            subject="second message",
+            body="Body\n",
+            model="test-model",
+            model_source="tool-reported",
+        )
+        self.assertTrue(result["ok"])
+        self.assertEqual(2, result["seq"])
+
+
 if __name__ == "__main__":
     unittest.main()
