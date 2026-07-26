@@ -31,7 +31,10 @@ export async function gitMergeGate(input: Record<string, unknown>, ctx: { root: 
   const remoteHead = git(root, ["ls-remote", "origin", `refs/pull/${pr}/head`]);
   const remoteSha = remoteHead.code === 0 ? remoteHead.stdout.trim().split(/\s+/)[0] : "";
   checks.push(check("candidate_resolves", isHex(candidate) && git(root, ["cat-file", "-t", candidate]).stdout.trim() === "commit", `candidate=${candidate}`));
-  checks.push(check("head_current_remote", remoteSha.startsWith(candidate) || candidate.startsWith(remoteSha.slice(0, 12)), `remote PR head=${remoteSha.slice(0, 12)} vs candidate=${candidate.slice(0, 12)}`));
+  // Remote PR head must equal the candidate, or the evidence commit when one is
+  // provided (protocol: gates on X, merge head is the evidence commit Y).
+  const expectedHead = evidenceCommit ?? candidate;
+  checks.push(check("head_current_remote", remoteSha.startsWith(expectedHead) || expectedHead.startsWith(remoteSha.slice(0, 12)), `remote PR head=${remoteSha.slice(0, 12)} vs expected=${expectedHead.slice(0, 12)}`));
 
   // gate reports: Teresa PASS + Rolando VERIFIED on the exact same SHA
   const runsDir = path.join(root, ".araya", "runs");
@@ -105,9 +108,32 @@ function findGateReports(runsDir: string, agentRe: RegExp, candidate: string): G
       if (entry.isDirectory()) stack.push(p);
       else if (entry.isFile() && agentRe.test(entry.name) && entry.name.endsWith(".md")) {
         const text = fs.readFileSync(p, "utf-8");
-        const shaMatch = text.match(/verified_sha[\s:*"`]*([0-9a-f]{40})/i) || text.match(/SHA[\s:*"`]*([0-9a-f]{40})/i);
-        const fullSha = shaMatch ? shaMatch[1] : "";
-        const dispMatch = text.match(/Disposition[^A-Za-z\n]*([A-Z][A-Z ]+)/);
+        // Line-based SHA extraction: any 40-hex on a line mentioning "sha" near
+        // verified/candidate/evaluated keywords (tolerates markdown/emojis).
+        let fullSha = "";
+        for (const line of text.split("\n")) {
+          if (!/verified.?sha|candidate.?sha|evaluated.?sha|^\s*\*\*?sha\*\*?/i.test(line)) continue;
+          const m = line.match(/([0-9a-f]{40})/i);
+          if (m) { fullSha = m[1]; break; }
+        }
+        if (!fullSha) {
+          const m2 = text.match(/verified_sha[\s:*"`]*([0-9a-f]{40})/i) || text.match(/SHA[\s:*"`]*([0-9a-f]{40})/i);
+          fullSha = m2 ? m2[1] : "";
+        }
+        // Line-based disposition: find a Disposition marker, then scan up to 3
+        // lines for a fixed disposition vocabulary word (tolerates markdown/emoji).
+        let disposition = "";
+        {
+          const ls = text.split("\n");
+          for (let i = 0; i < ls.length && !disposition; i++) {
+            if (!/disposition/i.test(ls[i])) continue;
+            for (let j = i; j < Math.min(i + 3, ls.length); j++) {
+              const m = ls[j].match(/\b(PASS|FAIL|BLOCK|VERIFIED WITH OBSERVATION|VERIFIED|DISCREPANCY)\b/);
+              if (m) { disposition = m[1]; break; }
+            }
+          }
+        }
+        const dispMatch = disposition ? [disposition, disposition] : null;
         const shaMatchesCandidate =
           fullSha.length > 0 &&
           candidate.length > 0 &&
