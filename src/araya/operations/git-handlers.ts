@@ -110,20 +110,30 @@ function findGateReports(runsDir: string, agentRe: RegExp, candidate: string): G
         const text = fs.readFileSync(p, "utf-8");
         // Line-based SHA extraction: any 40-hex on a line mentioning "sha" near
         // verified/candidate/evaluated keywords (tolerates markdown/emojis).
-        // Frequency-based SHA selection: gate reports cite the verified candidate
-        // multiple times (header, rev-parse row, summary). Pick the 40-hex with
-        // the highest count across sha-keyword lines (stable: first wins ties).
+        // Priority 1: an explicit "verified sha" marker (heading or inline) —
+        // accept the hex on that line OR within the next 2 lines (heading-then-value).
         let fullSha = "";
         {
-          const counts = new Map<string, number>();
-          for (const line of text.split("\n")) {
-            if (!/verified.?sha|candidate|full.?sha|evaluated.?sha|head.?sha|rev-parse|^\s*\*+\s*sha\b/i.test(line)) continue;
-            const m = line.match(/([0-9a-f]{40})(?![0-9a-f])/i);
-            if (m) counts.set(m[1], (counts.get(m[1]) ?? 0) + 1);
+          const ls = text.split("\n");
+          for (let i = 0; i < ls.length && !fullSha; i++) {
+            if (!/verified.?sha/i.test(ls[i])) continue;
+            for (let j = i; j < Math.min(i + 5, ls.length); j++) {
+              const m = ls[j].match(/([0-9a-f]{40})(?![0-9a-f])/i);
+              if (m) { fullSha = m[1]; break; }
+            }
           }
-          let best = 0;
-          for (const [sha, n] of counts) {
-            if (n > best) { best = n; fullSha = sha; }
+          // Priority 2: frequency across sha-keyword lines (stable: first wins ties).
+          if (!fullSha) {
+            const counts = new Map<string, number>();
+            for (const line of ls) {
+              if (!/candidate|full.?sha|evaluated.?sha|head.?sha|rev-parse|^\s*\*+\s*sha\b/i.test(line)) continue;
+              const m = line.match(/([0-9a-f]{40})(?![0-9a-f])/i);
+              if (m) counts.set(m[1], (counts.get(m[1]) ?? 0) + 1);
+            }
+            let best = 0;
+            for (const [sha, n] of counts) {
+              if (n > best) { best = n; fullSha = sha; }
+            }
           }
         }
         if (!fullSha) {
@@ -137,7 +147,7 @@ function findGateReports(runsDir: string, agentRe: RegExp, candidate: string): G
           const ls = text.split("\n");
           for (let i = 0; i < ls.length && !disposition; i++) {
             if (!/disposition/i.test(ls[i])) continue;
-            for (let j = i; j < Math.min(i + 3, ls.length); j++) {
+            for (let j = i; j < Math.min(i + 5, ls.length); j++) {
               const m = ls[j].match(/\b(PASS|FAIL|BLOCK|VERIFIED WITH OBSERVATION|VERIFIED|DISCREPANCY)\b/);
               if (m) { disposition = m[1]; break; }
             }
