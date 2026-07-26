@@ -80,6 +80,18 @@ Allowed `status` values:
 - `replied`
 - `archived`
 - `blocked`
+- `superseded` (terminal, non-operational; set only by `supersede`; never claimable, never in `pending`, absent from live statuses)
+
+Optional supersession fields (frontmatter):
+
+- `supersedes` — id of the message this one replaces (set on the replacement)
+- `superseded_by` — id of the replacement message (set by `supersede`)
+- `supersede_reason` — explicit reason (required by `supersede`)
+- `original_sender`, `original_recipient`, `reroute_reason`, `payload_integrity`, `source_evidence_sha256` — re-route provenance for replaced dispatches
+
+## Retired-Agent Guard (2026-07-26)
+
+Retired agents (single source: `.araya/governance/retired-agents.json`) hold zero operational authority. `post` rejects any message whose `to` or `from` is a retired agent, BEFORE writing, with structured error `RETIRED_OPERATIONAL_ACTOR` (exit 1, no file written). `supersede --by` also rejects replacements addressed to retired agents. There is no silent fallback recipient; re-routing requires an explicit superseding message with provenance fields.
 
 Historical messages may lack `seq`, `claimed_by`, or `claimed_at`; tools must continue to read them without rewriting history.
 
@@ -156,6 +168,8 @@ Messages with status:
 
 may remain visible in `thread.md`.
 
+Messages with status `superseded` are non-operational records: not visible as pending work, not claimable, terminal.
+
 Archived messages must disappear from `thread.md` during `archive` or `compact`.
 
 `thread.md` is not:
@@ -208,6 +222,7 @@ mark-read <message-id>
 mark-claimed <message-id> [--claimed-by <name>]
 mark-replied <message-id>
 mark-blocked <message-id> --reason <text>
+supersede <message-id> [--by <replacement-id>] --reason <text>
 archive <message-id>
 sweep [--include-read]
 ```
@@ -288,7 +303,7 @@ The MVP tool must:
 - never call network
 - never read secrets
 
-Live PostOffice state writes must be run from the shared checkout, not from an isolated `git worktree` or feature-branch-only checkout. This applies to `post`, `mark-read`, `mark-replied`, `mark-blocked`, `archive`, `sweep`, and `compact`. The PostOffice is a live coordination channel, not just a record that becomes visible after a PR merge; if an agent posts from an isolated worktree, Giskard may not see the report for hours or days unless that branch is fetched or merged manually.
+Live PostOffice state writes must be run from the shared checkout, not from an isolated `git worktree` or feature-branch-only checkout. This applies to `post`, `mark-read`, `mark-replied`, `mark-blocked`, `archive`, `sweep`, and `compact`. The PostOffice is a live coordination channel, not just a record that becomes visible after a PR merge; if an agent posts from an isolated worktree, the active coordinator (Daneel) may not see the report for hours or days unless that branch is fetched or merged manually.
 
 ## Size Limit
 

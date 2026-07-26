@@ -28,6 +28,7 @@ import {
   validateProfiles,
   piAdapterValidator,
 } from "./validator";
+import { findOperationalRetiredReferences } from "../governance/retired-agents";
 
 // ─── Constants ─────────────────────────────────────────────────────────────
 
@@ -50,6 +51,17 @@ export async function main(args: string[] = process.argv.slice(2)): Promise<void
   // Step 2: Collect all source files
   const sourceFiles = collectSourceFiles(root, agents, skills);
   const manifest = buildSourceManifest(root, sourceFiles);
+
+  // Step 2.5: Retired-agent guard (ponny-express-10008, FASE 3/FASE 4).
+  // No profile may be generated or validated from sources carrying operational
+  // references to retired agents. Fail closed BEFORE writing anything.
+  const retiredViolations = findOperationalRetiredReferences(root);
+  if (retiredViolations.length > 0) {
+    console.error("\n=== RETIRED_OPERATIONAL_ACTOR violations ===");
+    for (const v of retiredViolations) console.error(`  ERROR ${v}`);
+    console.error("\nGeneration/validation blocked: retired agents hold zero operational authority.");
+    process.exit(1);
+  }
 
   // Step 3: Check mode
   if (options.check) {

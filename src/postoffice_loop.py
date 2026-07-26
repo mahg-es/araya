@@ -33,11 +33,11 @@ INDEX_FILE = "index.jsonl"
 SEQ_COUNTER_FILE = ".seq_counter"
 MAX_BODY_BYTES = 65_536
 ID_RE = re.compile(r"^MSG-\d{8}-\d{6}-[a-f0-9]{8}$")
-STATUS_VALUES = {"new", "claimed", "read", "replied", "archived", "blocked"}
+STATUS_VALUES = {"new", "claimed", "read", "replied", "archived", "blocked", "superseded"}
 DIRECTION_VALUES = {"inbound", "outbound"}
 DISPOSITION_VALUES = {"PASS", "SUCCESS", "STOP", "ASK", "FIX", "ESCALATE", "BLOCK", "AUDIT"}
 LIVE_STATUSES = {"new", "claimed", "read", "replied", "blocked"}
-EVENT_TYPE_VALUES = {"created", "mark-read", "mark-claimed", "mark-replied", "mark-blocked", "archive", "compact"}
+EVENT_TYPE_VALUES = {"created", "mark-read", "mark-claimed", "mark-replied", "mark-blocked", "archive", "compact", "supersede"}
 LIFECYCLE_TRANSITIONS = {
     ("new", "read"),
     ("new", "claimed"),
@@ -50,7 +50,44 @@ LIFECYCLE_TRANSITIONS = {
     ("replied", "archived"),
     ("blocked", "archived"),
     ("read", "archived"),
+    ("new", "superseded"),
+    ("claimed", "superseded"),
+    ("read", "superseded"),
+    ("blocked", "superseded"),
 }
+
+# ─── Retired-agent guard (ponny-express-10008) ──────────────────────────────
+# Single source: .araya/governance/retired-agents.json. A retired agent has zero
+# operational authority: no routing, no ownership, no execution, no verification,
+# no message eligibility. The guard fires BEFORE any message is written.
+RETIRED_AGENTS_FALLBACK = frozenset({"giskard"})
+RETIRED_REASON = "RETIRED_OPERATIONAL_ACTOR"
+
+
+def retired_agents(root: Path | None = None) -> frozenset:
+    try:
+        base = root if root is not None else repo_root()
+        data = json.loads((base / ".araya" / "governance" / "retired-agents.json").read_text(encoding="utf-8"))
+        ids = {str(a.get("id", "")).strip().lower() for a in data.get("retired_agents", [])}
+        ids.discard("")
+        return frozenset(ids) if ids else RETIRED_AGENTS_FALLBACK
+    except Exception:
+        return RETIRED_AGENTS_FALLBACK
+
+
+def is_retired_agent(actor: str | None, root: Path | None = None) -> bool:
+    return (actor or "").strip().lower() in retired_agents(root)
+
+
+def assert_routable_actor(actor: str | None, *, field: str, root: Path | None = None) -> None:
+    """Reject any operation routing TO or FROM a retired agent. Fail closed."""
+    if is_retired_agent(actor, root):
+        raise PostOfficeError(
+            RETIRED_REASON,
+            f"{field}: '{actor}' is retired — no operational role. Routing/delivery/assignment is forbidden. "
+            f"Use a superseding/historical record with an explicit non-operational marker instead.",
+        )
+
 THREAD_HEADER = "# PostOffice Thread"
 ARCHIVE_THREAD_HEADER = "# Archived PostOffice Thread"
 
@@ -606,7 +643,9 @@ def allocate_seq(root: Path) -> int:
     last_seq = read_seq_counter(root)
     if last_seq is None:
         last_seq = historical_message_count_from_index(root)
-    seq = last_seq + 1
+    # Fail-safe against stale counters: never allocate below an existing seq,
+    # even if .seq_counter/index.jsonl drifted from the committed messages.
+    seq = max(last_seq, max(existing, default=0)) + 1
     if seq in existing:
         raise PostOfficeError("SeqCollision", f"seq collision detected: {seq}")
     seq_counter_path(root).write_text(f"{seq}\n", encoding="utf-8")
@@ -628,7 +667,10 @@ def append_index_event(root: Path, event: dict[str, Any]) -> None:
 def current_message_records(root: Path) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for path in message_paths(root):
-        meta, body = read_frontmatter(path)
+        try:
+            meta, body = read_frontmatter(path)
+        except PostOfficeError:
+            continue  # tolerate annotation records (e.g. *.discrepancy-record.md) without frontmatter
         records.append(
             {
                 "path": path,
@@ -1124,10 +1166,17 @@ def create_message(
     model: str | None = None,
     model_source: str | None = None,
     to_session_id: str | None = None,
+    extra_fields: dict[str, str | None] | None = None,
 ) -> dict[str, Any]:
     root = repo_root()
     if len(body.encode("utf-8")) > MAX_BODY_BYTES:
         raise PostOfficeError("SizeLimitExceeded", f"body exceeds {MAX_BODY_BYTES} bytes")
+    if not (to or "").strip():
+        raise PostOfficeError("ValidationFailure", "recipient (to) is required — fail closed on unknown recipient")
+    if not (from_actor or "").strip():
+        raise PostOfficeError("ValidationFailure", "sender (from) is required — fail closed on unknown sender")
+    assert_routable_actor(to, field="to", root=root)
+    assert_routable_actor(from_actor, field="from", root=root)
     stored_body = body.rstrip() + "\n"
     parse_disposition(stored_body)
     now = datetime.now(timezone.utc)
@@ -1166,6 +1215,9 @@ def create_message(
     frontmatter["from_session_id"] = session_fm.get("from_session_id")
     frontmatter["from_session_metadata"] = session_fm.get("from_session_metadata")
     frontmatter["to_session_id"] = to_session_id
+    if extra_fields:
+        for key, value in extra_fields.items():
+            frontmatter[key] = value
     lines = ["---"]
     for key, value in frontmatter.items():
         lines.append(f"{key}: {yaml_scalar(value)}")
@@ -1337,6 +1389,63 @@ def cmd_mark_blocked(args: argparse.Namespace) -> dict[str, Any]:
     )
 
 
+def cmd_supersede(args: argparse.Namespace) -> dict[str, Any]:
+    """Supersede a message: terminal, non-operational status (ponny-express-10008).
+
+    A superseded message is not claimable, not readable as work, not replyable:
+    `superseded` is deliberately absent from LIVE_STATUSES and has no outgoing
+    transitions. Use for cancelled deliveries, invalid recipients, replaced
+    dispatches. The original content is never rewritten — only frontmatter
+    status/metadata change, and the event log records the supersession.
+    """
+    root = repo_root()
+    path, meta, body = load_message(root, args.message_id)
+    current_status = str(meta.get("status") or "")
+    validate_transition(current_status, "superseded")
+    if meta.get("supersedes") and not args.by:
+        raise PostOfficeError(
+            "ValidationFailure",
+            f"{args.message_id} is itself a replacement (supersedes {meta['supersedes']}); "
+            "superseding it requires --by <successor> so the supersession chain is never left without a live carrier",
+        )
+    if args.by:
+        # replacement must exist and must not itself be superseded
+        _, rmeta, _ = load_message(root, args.by)
+        if str(rmeta.get("status") or "") == "superseded":
+            raise PostOfficeError("ValidationFailure", f"replacement {args.by} is itself superseded")
+        assert_routable_actor(str(rmeta.get("to") or ""), field="to", root=root)
+    meta["superseded_by"] = args.by
+    meta["supersede_reason"] = args.reason
+    rewrite_message(path, meta, body, new_status="superseded")
+    event_at = utc_timestamp()
+    record_event(
+        root,
+        event_type="supersede",
+        event_at=event_at,
+        message_id=str(meta.get("id") or args.message_id),
+        message_path=str(path.relative_to(root)),
+        actor=message_from(meta),
+        from_actor=message_from(meta),
+        to_actor=message_to(meta),
+        subject=message_subject(meta),
+        status="superseded",
+        direction=str(meta.get("direction")) if meta.get("direction") is not None else None,
+        body_sha256=str(meta.get("body_sha256") or hashlib.sha256(body.encode("utf-8")).hexdigest()),
+        details={"previous_status": current_status, "next_status": "superseded", "superseded_by": args.by, "reason": args.reason, "seq": meta.get("seq")},
+    )
+    rebuild_thread_views(root)
+    return response(
+        "supersede",
+        True,
+        summary=f"superseded {args.message_id}" + (f" by {args.by}" if args.by else ""),
+        message_id=args.message_id,
+        status="superseded",
+        superseded_by=args.by,
+        reason=args.reason,
+        path=str(path.relative_to(root)),
+    )
+
+
 def cmd_archive(args: argparse.Namespace) -> dict[str, Any]:
     root = repo_root()
     path, meta, body = load_message(root, args.message_id)
@@ -1489,7 +1598,10 @@ def cmd_pending(args):
     if outbox_dir.is_dir():
         pending_items: list[dict[str, Any]] = []
         for fpath in sorted(outbox_dir.glob("MSG-*.md")):
-            meta, _ = read_frontmatter(fpath)
+            try:
+                meta, _ = read_frontmatter(fpath)
+            except PostOfficeError:
+                continue  # skip annotation records without frontmatter
             status = str(meta.get("status", ""))
             if status != "new":
                 continue
@@ -1544,6 +1656,10 @@ def build_parser() -> argparse.ArgumentParser:
     mark_blocked = sub.add_parser("mark-blocked")
     mark_blocked.add_argument("message_id")
     mark_blocked.add_argument("--reason", required=True)
+    supersede = sub.add_parser("supersede")
+    supersede.add_argument("message_id")
+    supersede.add_argument("--by", default=None, help="replacement message id")
+    supersede.add_argument("--reason", required=True, help="explicit supersession reason")
     archive = sub.add_parser("archive")
     archive.add_argument("message_id")
     sub.add_parser("compact")
@@ -1569,6 +1685,7 @@ def main() -> int:
         "mark-claimed": cmd_mark_claimed,
         "mark-replied": cmd_mark_replied,
         "mark-blocked": cmd_mark_blocked,
+        "supersede": cmd_supersede,
         "archive": cmd_archive,
         "compact": cmd_compact,
         "model-stats": cmd_model_stats,

@@ -90,7 +90,7 @@ id: "{msg_id}"
 seq: 1
 created_at: "2026-07-20T00:00:00Z"
 from: "Daneel"
-to: "Giskard"
+to: "Sonia"
 subject: "test"
 status: "{status}"
 claimed_by: null
@@ -276,7 +276,7 @@ class RealWorldScenarioTests(SyncPostOfficeTests):
 
         # Remote added something in the meantime
         remote = self._make_remote_change()
-        self._write_outbox_msg(remote, "MSG-giskard", status="new")
+        self._write_outbox_msg(remote, "MSG-sonia", status="new")
         subprocess.run(["git", "add", ".araya/"], cwd=remote, check=True, capture_output=True)
         subprocess.run(["git", "commit", "-m", "giskard"], cwd=remote, check=True, capture_output=True)
         self._push_remote(remote)
@@ -292,7 +292,7 @@ class RealWorldScenarioTests(SyncPostOfficeTests):
                             f"CRITICAL: MSG-audit{i:03d} lost — same bug as tonight!")
 
         # Remote message also appeared
-        self.assertTrue((self.work / ".araya" / "postoffice" / "outbox" / "MSG-giskard.md").exists())
+        self.assertTrue((self.work / ".araya" / "postoffice" / "outbox" / "MSG-sonia.md").exists())
 
     def test_rapid_read_write_cycle(self):
         """Simulate the rapid read→write→read cycle that lost mark-replied."""

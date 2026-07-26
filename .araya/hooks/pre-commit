@@ -52,4 +52,15 @@ elif echo "$WT_REAL" | grep -q "$HOME/github/mahg-es/"; then
   exit 1
 fi
 
+# ─── Rule 7: Retired-agent operational-reference validation ───────────
+# ponny-express-10008: no staged change may introduce an operational
+# reference to a retired agent (single source: .araya/governance/retired-agents.json)
+if [ -f "src/operational_reference_validator.py" ]; then
+  if ! python3 src/operational_reference_validator.py --staged; then
+    echo "❌ BLOCKED: staged change carries an operational reference to a retired agent."
+    echo "   Historical/superseded references require explicit non-operational marking."
+    exit 1
+  fi
+fi
+
 exit 0

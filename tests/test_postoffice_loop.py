@@ -40,7 +40,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
         with self.assertRaises(postoffice_loop.PostOfficeError) as exc:
             postoffice_loop.create_message(
                 from_actor="Daneel",
-                to="Giskard",
+                to="Sonia",
                 subject="invalid disposition test",
                 body="Body\n\nDisposition: NOPE.\n",
                 model="test-model",
@@ -60,7 +60,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
 
         result = postoffice_loop.create_message(
             from_actor="Daneel",
-            to="Giskard",
+            to="Sonia",
             subject="valid disposition test",
             body="Body\n\nDisposition: STOP.\n",
             model="test-model",
@@ -86,7 +86,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
 
         postoffice_loop.create_message(
             from_actor="Daneel",
-            to="Giskard",
+            to="Sonia",
             subject="related_pr structured test",
             body="Body with no PR: line\n\nDisposition: STOP.\n",
             model="test-model",
@@ -107,7 +107,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
 
         postoffice_loop.create_message(
             from_actor="Daneel",
-            to="Giskard",
+            to="Sonia",
             subject="fallback test",
             body="PR: #239\n\nDisposition: STOP.\n",
             model="test-model",
@@ -128,7 +128,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
 
         postoffice_loop.create_message(
             from_actor="Daneel",
-            to="Giskard",
+            to="Sonia",
             subject="no pr test",
             body="Body with no PR reference at all\n\nDisposition: STOP.\n",
             model="test-model",
@@ -165,7 +165,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
         (postoffice / "index.jsonl").write_text("", encoding="utf-8")
 
         result = postoffice_loop.create_message(
-            from_actor="Giskard",
+            from_actor="Sonia",
             to="Daneel",
             subject="claim me",
             body="Body\n",
@@ -194,7 +194,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
         (postoffice / "index.jsonl").write_text("", encoding="utf-8")
 
         result = postoffice_loop.create_message(
-            from_actor="Giskard",
+            from_actor="Sonia",
             to="Daneel",
             subject="claim once",
             body="Body\n",
@@ -213,7 +213,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
         (postoffice / "index.jsonl").write_text("", encoding="utf-8")
 
         first = postoffice_loop.create_message(
-            from_actor="Giskard",
+            from_actor="Sonia",
             to="Daneel",
             subject="first",
             body="First\n",
@@ -221,7 +221,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
             model_source="tool-reported",
         )
         second = postoffice_loop.create_message(
-            from_actor="Giskard",
+            from_actor="Sonia",
             to="Daneel",
             subject="second",
             body="Second\n",
@@ -244,7 +244,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
         (postoffice / "index.jsonl").write_text("", encoding="utf-8")
 
         postoffice_loop.create_message(
-            from_actor="Giskard",
+            from_actor="Sonia",
             to="Daneel",
             subject="case check",
             body="Body\n",
@@ -268,7 +268,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
                     "---",
                     f'id: "{message_id}"',
                     'created_at: "2026-07-01T00:00:00Z"',
-                    'from: "Giskard"',
+                    'from: "Sonia"',
                     'to: "Daneel"',
                     'subject: "historical"',
                     'status: "new"',
@@ -301,7 +301,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
         (postoffice / "index.jsonl").write_text("", encoding="utf-8")
 
         postoffice_loop.create_message(
-            from_actor="Giskard",
+            from_actor="Sonia",
             to="Daneel",
             subject="sync-fail test",
             body="Body\n",
@@ -319,7 +319,7 @@ class CreateMessageDispositionTests(unittest.TestCase):
         (postoffice / "index.jsonl").write_text("", encoding="utf-8")
 
         postoffice_loop.create_message(
-            from_actor="Giskard",
+            from_actor="Sonia",
             to="Daneel",
             subject="no-sync test",
             body="Body\n",
