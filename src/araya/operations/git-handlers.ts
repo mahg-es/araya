@@ -110,11 +110,21 @@ function findGateReports(runsDir: string, agentRe: RegExp, candidate: string): G
         const text = fs.readFileSync(p, "utf-8");
         // Line-based SHA extraction: any 40-hex on a line mentioning "sha" near
         // verified/candidate/evaluated keywords (tolerates markdown/emojis).
+        // Frequency-based SHA selection: gate reports cite the verified candidate
+        // multiple times (header, rev-parse row, summary). Pick the 40-hex with
+        // the highest count across sha-keyword lines (stable: first wins ties).
         let fullSha = "";
-        for (const line of text.split("\n")) {
-          if (!/verified.?sha|candidate|full.?sha|evaluated.?sha|^\s*\*+\s*sha\b/i.test(line)) continue;
-          const m = line.match(/([0-9a-f]{40})(?![0-9a-f])/i);
-          if (m) { fullSha = m[1]; break; }
+        {
+          const counts = new Map<string, number>();
+          for (const line of text.split("\n")) {
+            if (!/verified.?sha|candidate|full.?sha|evaluated.?sha|head.?sha|rev-parse|^\s*\*+\s*sha\b/i.test(line)) continue;
+            const m = line.match(/([0-9a-f]{40})(?![0-9a-f])/i);
+            if (m) counts.set(m[1], (counts.get(m[1]) ?? 0) + 1);
+          }
+          let best = 0;
+          for (const [sha, n] of counts) {
+            if (n > best) { best = n; fullSha = sha; }
+          }
         }
         if (!fullSha) {
           const m2 = text.match(/verified_sha[\s:*"`]*([0-9a-f]{40})/i) || text.match(/SHA[\s:*"`]*([0-9a-f]{40})/i);
