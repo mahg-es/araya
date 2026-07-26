@@ -43,15 +43,27 @@
 - `tests/req-043-test.js` — 31 passed, 0 failed
 
 ## Files Included in the Candidate
-- `src/cli.ts` — relay subcommand route (+4 lines)
+Complete PR file inventory (11 files total, verified against `git diff --name-status origin/dev-mahg...HEAD` and `gh pr diff 90 --name-only`):
+
+**Source files (6):**
+- `src/cli.ts` — relay subcommand route (+4 lines) (modified)
 - `src/araya/relay/types.ts` — Task/Event/Claim types, LIMITS, RelayError
 - `src/araya/relay/workflow-standard-delivery.ts` — executable twin of workflow.yaml
 - `src/araya/relay/store.ts` — persistence: O_EXCL flock + stale reclaim, optimistic version, atomic rename, append-only JSONL with sequence-gap + idempotency dedup
 - `src/araya/relay/motor.ts` — state machine: init/inbox/claim/ack/returnBall/control/status
 - `src/araya/relay/cli.ts` — six canonical commands: init, inbox, claim, ack, return, status (+ control)
+
+**Test files (1):**
 - `tests/relay-motor-acceptance-test.js` — executable acceptance suite T-001..T-033 + FASE 3 negative cases
+
+**Evidence files (4):**
 - `.araya/runs/REQ-042-OPERATIONAL-ACCEPTANCE-20260726/STOP-AND-PRESERVE.md` — preservation checkpoint
 - `.araya/runs/REQ-042-OPERATIONAL-ACCEPTANCE-20260726/01-acceptance-candidate.md` — this record
+- `.araya/runs/REQ-042-LAGUNA-CONFIG-VALIDATION-20260726/01-config-validation.md` — Laguna configuration validation record (corrected by ponny-express-10016)
+- `.araya/runs/REQ-042-LAGUNA-EVALUATION-20260726/01-laguna-evaluation.md` — Laguna evaluation record
+
+**Documentation files:** 0
+**Deleted files:** 0
 
 ## Known Limitations
 - MVP scope: standard-delivery workflow only. governance-delivery and quick-fix deferred.
