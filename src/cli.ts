@@ -57,6 +57,10 @@ async function main() {
     const code = await operationsCliMain(args, findArayaRoot(process.cwd()));
     process.exit(code);
   }
+  if (args[0] === "relay") {
+    const { relayCliMain } = await import("./araya/relay/cli");
+    process.exit(await relayCliMain(args.slice(1)));
+  }
   let command = "";
   let task = "";
   let adapterName = "pi";
