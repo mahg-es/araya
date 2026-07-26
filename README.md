@@ -96,8 +96,11 @@ Done. Traceable. Auditable. Governed.
 ```bash
 git clone git@github.com:mahg-es/araya.git
 cd araya
-./araya-setup.sh
+./install.sh
 ```
+
+> `araya-setup.sh` is a backward-compatible wrapper that delegates to `install.sh`.
+> Both entry points produce identical results.
 
 ### 3. Load in pi
 
@@ -578,13 +581,23 @@ From `definition-of-done` to `po-gap-questionnaire`, from `drr-create` to `cr-ge
 > **ARAYA is a git-based framework** — it is not distributed via npm, Docker, or package registries.
 > The [Releases](https://github.com/mahg-es/araya/releases) page provides tagged, stable versions.
 
+### Prerequisites
+
+- [pi.dev](https://pi.dev) v0.76.0+ (tested through v0.82.x)
+- Node.js 22+ (for npm dependency resolution)
+- Bash 4.0+
+- Git 2.30+
+
 ### One-Command Setup
 
 ```bash
 git clone git@github.com:mahg-es/araya.git
 cd araya
-./araya-setup.sh
+./install.sh
 ```
+
+`araya-setup.sh` is a backward-compatible wrapper that delegates to `install.sh`.
+Both entry points produce identical results.
 
 Or from within pi:
 
@@ -594,15 +607,145 @@ Or from within pi:
 
 Then `/reload` and you're ready.
 
-### What the setup does
+### What the setup installs
 
 | Step | Action |
 |------|--------|
-| Extensions | Symlinks ARAYA + subagent + notifier to `~/.pi/agent/extensions/` |
-| Agents | Copies 28 agent definitions to `~/.pi/agent/agents/` |
-| Skills | Symlinks 120 skills to `~/.pi/agent/skills/araya/` |
+| Extensions | Symlinks ARAYA (canonical), subagent, and notifier to `~/.pi/agent/extensions/` |
+| Agents | Copies 30 agent definitions to `~/.pi/agent/agents/` |
+| Skills | Symlinks ~120 skills to `~/.pi/agent/skills/araya/` |
 | Prompts | Symlinks prompt templates to `~/.pi/agent/prompts/araya/` |
-| Config | Copies `araya.yaml` (single source of truth for version) |
+| Config | Symlinks `araya.yaml` (single source of truth for version) |
+| Dependencies | Installs npm packages (js-yaml, argparse) for runtime resolution |
+
+### Canonical Extension Location
+
+ARAYA registers **exactly one** extension path with pi:
+
+```
+~/.pi/agent/extensions/araya/index.ts
+```
+
+This is a **symlink** to the repository source (`<repo>/extensions/araya/index.ts`).
+The legacy form `~/.pi/agent/extensions/araya.ts` is no longer created and is
+removed during upgrade — see Legacy Migration below.
+
+### Verify Installation
+
+```bash
+# Check that exactly one ARAYA extension exists
+ls -la ~/.pi/agent/extensions/araya/index.ts
+# Should show: ... -> /path/to/araya/extensions/araya/index.ts
+
+# Verify no legacy duplicate
+ls ~/.pi/agent/extensions/araya.ts 2>&1
+# Should show: No such file or directory
+
+# Run preflight check
+./install.sh --check
+# Should exit 0 with: Check: CLEAN
+
+# Verify dependencies
+ls ~/.pi/agent/extensions/araya/node_modules/js-yaml
+# Should show directory listing
+```
+
+### Confirm Commands Do Not Contain `:1`/`:2` Suffixes
+
+After `/reload`, inspect the pi command palette. All `/araya:*` commands should
+appear exactly once — no `araya:man:1`, `araya:man:2`, `araya:delegate:1`, etc.
+
+> **⚠️ Warning:** If Pi displays ARAYA commands with suffixes such as `:1` or `:2`,
+> multiple extensions registered the same logical command.
+> Do not continue with operational validation until the duplicate
+> registration is removed. Run `./install.sh --force` to fix.
+
+### Upgrade Procedure
+
+```bash
+cd /path/to/araya
+git pull origin dev-mahg          # or your tracking branch
+./install.sh --force               # reinstall over existing installation
+```
+
+The `--force` flag ensures:
+- Legacy `araya.ts` registration is removed
+- Existing canonical extension is replaced with fresh symlink
+- Dependencies are reinstalled
+- No duplicate registrations survive
+
+### Legacy Migration Behavior
+
+Running the installer automatically handles upgrades from older installations:
+
+| Legacy state | Behavior |
+|-------------|----------|
+| `araya.ts` symlink only | Backed up, removed, canonical created |
+| Both `araya.ts` + `araya/index.ts` | Back up legacy, keep canonical only |
+| Broken `araya.ts` symlink | Removed with warning |
+| `araya/index.ts` file copy | Replaced with symlink to repository |
+| Unknown user files in `araya/` | Preserved — never deleted |
+
+Every migrated path is reported to stdout.
+
+### Backup and Rollback
+
+Before making destructive changes, the installer creates a timestamped backup:
+
+```
+~/.pi/agent/.araya-backup-YYYYMMDD-HHMMSS/
+```
+
+If installation fails, the previous installation is automatically restored.
+To manually roll back:
+
+```bash
+# Restore from backup
+cp ~/.pi/agent/.araya-backup-*/index.ts ~/.pi/agent/extensions/araya/index.ts
+
+# Or re-clone and reinstall
+git clone git@github.com:mahg-es/araya.git /tmp/araya-restore
+cd /tmp/araya-restore && ./install.sh --force
+```
+
+### Safe Uninstall
+
+```bash
+./install.sh --uninstall
+```
+
+This removes only ARAYA-managed files:
+- `~/.pi/agent/extensions/araya/index.ts`
+- `~/.pi/agent/extensions/araya/package.json`
+- `~/.pi/agent/extensions/araya/node_modules/`
+- `~/.pi/agent/extensions/araya.ts` (legacy)
+- `~/.pi/agent/extensions/araya.yaml`
+- `~/.pi/agent/extensions/araya-notifier.ts`
+
+Skills, agents, and prompts symlinks are NOT removed (manual removal if desired).
+
+### Troubleshooting Duplicate Commands
+
+**Symptom:** `/araya:man:1`, `/araya:man:2`, `/araya:delegate:1` appear in pi.
+
+**Root cause:** Two extensions registered the same command — typically the legacy
+`araya.ts` file extension and the canonical `araya/index.ts` directory extension.
+
+**Fix:**
+```bash
+./install.sh --force
+```
+
+This removes legacy registrations and ensures exactly one canonical extension.
+Then `/reload` in pi.
+
+### Known Limitations (Planned for v0.10.0)
+
+- The installer requires the pi binary to be on `$PATH` for subagent extension
+  resolution (subagent extension is optional; ARAYA functions without it)
+- `npm install` requires network access on first installation
+- Bash 4.0+ associative arrays not used (compatible with macOS default bash 3.2)
+- `shellcheck` is recommended for development but not required at runtime
 
 ---
 
@@ -656,7 +799,8 @@ The `araya-command-and-delegation-expert` skill (assigned to **every** ARAYA age
 ```
 araya/
 ├── araya.yaml              # Configuration (single source of truth for version)
-├── araya-setup.sh          # One-command installer
+├── install.sh              # Canonical one-command installer
+├── araya-setup.sh          # Backward-compatible wrapper → install.sh
 ├── extensions/araya/       # ARAYA pi extension (command handlers)
 ├── .pi/agents/             # 28 agent definitions (YAML frontmatter; daneel verifier defined in extensions/)
 ├── prompts/agents/         # 26 personality prompt templates
