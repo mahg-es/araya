@@ -17,6 +17,7 @@ import { readFileSync, existsSync, realpathSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { createHash } from "node:crypto";
 import { load } from "js-yaml";
+import { Type } from "typebox";
 
 // ─── Types ────────────────────────────────────────────────────────────────
 
@@ -463,7 +464,7 @@ export default function (pi: ExtensionAPI) {
         const phases = modeConfig.phases;
         const phaseAgentMap: Record<string, string> = {
           sdd: "sonia", plan: "sonia", bdd: "sonia",
-          tdd: "teresa", tests: "teresa",
+          tdd: "clara", tests: "clara",
           implementation: "valentina",
           review: "aisha",
           security: "diana",
@@ -794,11 +795,21 @@ export default function (pi: ExtensionAPI) {
             const rev = parts[1] || 0, hot = parts[2] || 0;
             const toMajor = 73 - rev;
             const toHotfix = toMajor > 0 ? (5 - hot) : 0;
+            // ponny-express-10010 PHASE 10: computed counts from live sources;
+            // rules/domains labeled static documentation (not computed).
+            let computedAgents = "?", computedSkills = "?";
+            try {
+              const cfgV: any = yamlLoad(readFileSync(resolve(findArayaRoot(), "araya.yaml"), "utf-8"));
+              computedAgents = String(Object.keys(cfgV?.agents ?? {}).length);
+              const { readdirSync: rd } = require("node:fs");
+              computedSkills = String(rd(resolve(findArayaRoot(), "skills"), { withFileTypes: true }).filter((e: any) => e.isDirectory()).length);
+            } catch { /* keep '?' */ }
             ctx.ui.notify(
               `## ARAYA v${v}\n\n` +
               `**MAJOR:** ${parts[0]} | **REVISION:** ${rev} | **HOTFIX:** ${hot}\n\n` +
               `**Path to 1.0.0:** ${toMajor} revisions + ${Math.max(0, toHotfix)} hotfixes remaining\n` +
-              `**Active:** 90 rules | 17 domains | 120 skills | 25 agents\n` +
+              `**Computed:** ${computedSkills} skills | ${computedAgents} agents (live from araya.yaml + skills/)\n` +
+              `**Static documentation:** 90 rules | 17 domains (not computed from sources)\n` +
               `**Rule:** 0.73.5 → 1.0.0 (MAHG Release Standard)`,
               "info"
             );
@@ -1317,9 +1328,10 @@ export default function (pi: ExtensionAPI) {
           `**Tasks:** ${refs.TASK.size}`,
           ""];
 
-        const hasOrphans = false; // Simplified — full implementation in skills
-        lines.push(`**Status:** ${hasOrphans ? "🔴 FAILED" : "🟢 PASSED"}`);
-        if (hasOrphans) lines.push("", "⚠️ Orphan references detected. Run /skill:token-efficiency for detailed analysis.");
+        // ponny-express-10010 PHASE 10: no hardcoded success. Orphan detection
+        // is NOT implemented in this command — report NOT_IMPLEMENTED instead of
+        // a false PASS.
+        lines.push(`**Status:** ⚠️ NOT_IMPLEMENTED — orphan detection is not implemented in this command. Counts above are real; no orphan verdict is emitted. Do not read this as PASS.`);
               // PROJECT-001 — Repository hygiene check
       const projectViolations: string[] = [];
       if (existsSync(resolve(cwd, "memory"))) {
@@ -1337,7 +1349,7 @@ export default function (pi: ExtensionAPI) {
         authConflicts.push(...projectViolations);
       }
 
-      ctx.ui.notify(lines.join("\n"), hasOrphans ? "warning" : "info");
+      ctx.ui.notify(lines.join("\n"), "info");
       } else {
         const lines = ["## Traceability Chain", "",
           `\`\`\``,
@@ -2279,10 +2291,48 @@ export default function (pi: ExtensionAPI) {
           return;
         }
 
+        // --list operations / --operation <id> (ponny-express-10010)
+        if (raw === "--list operations") {
+          const registryPath = resolve(arayaRoot, "dist", "araya", "operations", "registry.js");
+          const mod = await import(registryPath);
+          const registry = new mod.OperationRegistry(arayaRoot);
+          registry.load();
+          const ops = registry.list();
+          const lines = ops.map((o: any) => `- \`${o.operation_id}\` [${o.status}] — ${o.title} (adapters: ${o.adapters.join(", ") || "none"})`);
+          ctx.ui.notify(`## ARAYA Operations (${ops.length})\n\n${lines.join("\n")}`, "info");
+          return;
+        }
+        if (raw.startsWith("--operation ")) {
+          const id = raw.slice(12).trim();
+          const registryPath = resolve(arayaRoot, "dist", "araya", "operations", "registry.js");
+          const mod = await import(registryPath);
+          const registry = new mod.OperationRegistry(arayaRoot);
+          registry.load();
+          const def = registry.describe(id);
+          ctx.ui.notify(def ? JSON.stringify(def, null, 2) : `unknown operation: ${id}`, def ? "info" : "warning");
+          return;
+        }
+        if (raw === "--operation") {
+          ctx.ui.notify("Usage: /araya:man --operation <operation-id>", "warning");
+          return;
+        }
+
         // --search <keyword>
         if (raw.startsWith("--search ")) {
           const keyword = raw.slice(9).trim().replace(/"/g, "");
-          ctx.ui.notify(manSearch(keyword), keyword ? "info" : "warning");
+          let out = manSearch(keyword);
+          try {
+            const registryPath = resolve(arayaRoot, "dist", "araya", "operations", "registry.js");
+            const mod = await import(registryPath);
+            const registry = new mod.OperationRegistry(arayaRoot);
+            registry.load();
+            const hits = registry.search(keyword);
+            if (hits.length > 0) {
+              out += `\n\n### Operations matching "${keyword}" (${hits.length})\n` +
+                hits.map((o: any) => `- \`${o.operation_id}\` [${o.status}] — ${o.title}`).join("\n");
+            }
+          } catch { /* operations runtime not built — skip operations section */ }
+          ctx.ui.notify(out, keyword ? "info" : "warning");
           return;
         }
         if (raw === "--search") {
@@ -2507,6 +2557,264 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(lines.join("\n"), result.status === "completed" ? "info" : "warning");
       } catch (e: any) {
         ctx.ui.notify(`❌ Result query failed: ${e?.message ?? "unknown error"}`, "error");
+      }
+    },
+  });
+
+  // ── Governed Operations (ponny-express-10010) ────────────────────────────
+  // Thin adapters: every tool/command delegates to the canonical OperationRegistry
+  // (dist/araya/operations/registry). No gate logic is reimplemented here.
+
+  async function loadOperationsRegistry() {
+    const root = findArayaRoot();
+    const registryPath = resolve(root, "dist", "araya", "operations", "registry.js");
+    if (!existsSync(registryPath)) {
+      throw new Error(
+        `Operations runtime not built: missing ${registryPath}. Run \`npm run build\` (npx tsc) in the ARAYA repo.`
+      );
+    }
+    const mod = await import(registryPath);
+    const registry = new mod.OperationRegistry(root);
+    const { errors } = registry.load();
+    if (errors.length > 0) {
+      throw new Error(`Operation catalog errors: ${errors.join("; ")}`);
+    }
+    return registry;
+  }
+
+  function opText(value: unknown): { content: { type: string; text: string }[]; details: Record<string, unknown> } {
+    const text = typeof value === "string" ? value : JSON.stringify(value, null, 2);
+    return { content: [{ type: "text", text }], details: value as Record<string, unknown> };
+  }
+
+  // Pi custom tool: resolve an intent to a governed operation
+  pi.registerTool({
+    name: "araya_operation_resolve",
+    label: "ARAYA Operation Resolve",
+    description: "Resolve a human or agent intent to the governed ARAYA operation that performs it, using the canonical Operation Catalog (deterministic: exact id, alias, declared intent).",
+    promptSnippet: "Find which governed ARAYA operation handles a requested task",
+    promptGuidelines: [
+      "Use araya_operation_resolve BEFORE implementing any task manually, to check whether a governed ARAYA operation already performs it (operation-first rule).",
+    ],
+    parameters: Type.Object({
+      intent: Type.String({ description: "Natural-language intent or operation alias/id to resolve" }),
+    }),
+    async execute(_toolCallId: string, params: { intent: string }) {
+      const registry = await loadOperationsRegistry();
+      const r = registry.resolve(params.intent);
+      const op = r.operation_id ? registry.describe(r.operation_id) : null;
+      return opText({
+        operation_id: "operation.resolve",
+        passed: r.found,
+        query: params.intent,
+        matched_operation: r.operation_id,
+        confidence: r.confidence,
+        via: r.via,
+        mandatory: r.found,
+        available_adapters: op?.adapters ?? [],
+      });
+    },
+  });
+
+  // Pi custom tool: describe an operation contract
+  pi.registerTool({
+    name: "araya_operation_describe",
+    label: "ARAYA Operation Describe",
+    description: "Show the full versioned contract of a governed ARAYA operation (inputs, outputs, side effects, authority, evidence, adapters, tests).",
+    promptSnippet: "Read an ARAYA operation's contract before using it",
+    promptGuidelines: [
+      "Use araya_operation_describe to read an operation's contract (side effects, authority, evidence) before executing it.",
+    ],
+    parameters: Type.Object({
+      operation_id: Type.String({ description: "Dotted operation id, e.g. git.merge-gate" }),
+    }),
+    async execute(_toolCallId: string, params: { operation_id: string }) {
+      const registry = await loadOperationsRegistry();
+      const def = registry.describe(params.operation_id);
+      if (!def) return opText({ passed: false, error: `unknown operation: ${params.operation_id}` });
+      return opText(def);
+    },
+  });
+
+  // Pi custom tool: evaluate the merge gate for a PR
+  pi.registerTool({
+    name: "araya_git_merge_gate",
+    label: "ARAYA Git Merge Gate",
+    description: "Determine whether a PR may be merged into an integration branch (gate reports on exact candidate SHA, evidence-only diff, mergeability, base, tests, remote head, co-author, main guard). Predicate — does not merge.",
+    promptSnippet: "Evaluate whether a PR is authorized to merge",
+    promptGuidelines: [
+      "Use araya_git_merge_gate before any merge to an integration branch; merge only when the OperationResult has passed=true.",
+    ],
+    parameters: Type.Object({
+      pr: Type.String({ description: "PR number" }),
+      candidate: Type.String({ description: "Exact candidate commit SHA (40 hex)" }),
+      base: Type.Optional(Type.String({ description: "Integration branch (default dev-mahg)" })),
+      evidence_commit: Type.Optional(Type.String({ description: "Evidence commit Y after the candidate (X..Y must be evidence-only)" })),
+      repo: Type.Optional(Type.String({ description: "Repository path (default: ARAYA root)" })),
+    }),
+    async execute(_toolCallId: string, params: { pr: string; candidate: string; base?: string; evidence_commit?: string; repo?: string }) {
+      const registry = await loadOperationsRegistry();
+      const result = await registry.execute("git.merge-gate", {
+        pr: params.pr,
+        candidate: params.candidate,
+        base: params.base ?? "dev-mahg",
+        evidence_commit: params.evidence_commit,
+        repo: params.repo,
+      });
+      return opText(result);
+    },
+  });
+
+  // Pi custom tool: repository sanity
+  pi.registerTool({
+    name: "araya_git_repository_sanity",
+    label: "ARAYA Git Repository Sanity",
+    description: "Read-only inspection of repository existence, remotes, branches, divergence, worktrees, in-progress Git operations, and protection recognition.",
+    promptSnippet: "Inspect repository state before Git work",
+    promptGuidelines: [
+      "Use araya_git_repository_sanity before significant Git work to confirm the repository is in a known, safe state.",
+    ],
+    parameters: Type.Object({
+      repo: Type.Optional(Type.String({ description: "Repository path (default: ARAYA root)" })),
+    }),
+    async execute(_toolCallId: string, params: { repo?: string }) {
+      const registry = await loadOperationsRegistry();
+      const result = await registry.execute("git.repository-sanity", { repo: params.repo });
+      return opText(result);
+    },
+  });
+
+  // Pi custom tool: run a test operation wrapper
+  pi.registerTool({
+    name: "araya_test_run",
+    label: "ARAYA Test Run",
+    description: "Run a governed test operation (test.relay-unit/integration/behavior/recovery/idempotency) and return counts, tested SHA, commands and evidence.",
+    promptSnippet: "Run a canonical test suite as a governed operation",
+    promptGuidelines: [
+      "Use araya_test_run to execute canonical test suites and get machine-validatable OperationResult counts instead of ad-hoc test runs.",
+    ],
+    parameters: Type.Object({
+      suite: Type.String({ description: "test.* operation id, e.g. test.relay-unit" }),
+      repo: Type.Optional(Type.String({ description: "Repository path (default: ARAYA root)" })),
+    }),
+    async execute(_toolCallId: string, params: { suite: string; repo?: string }) {
+      const registry = await loadOperationsRegistry();
+      const result = await registry.execute(params.suite, { repo: params.repo });
+      return opText(result);
+    },
+  });
+
+  // Slash command: /araya:operation
+  pi.registerCommand("araya:operation", {
+    description: "⚙️ ARAYA Governed Operations — resolve/describe/list/execute operations",
+    handler: async (args, ctx) => {
+      const raw = (args ?? "").trim();
+      try {
+        const registry = await loadOperationsRegistry();
+        if (raw.startsWith("resolve ")) {
+          const q = raw.slice(8).replace(/^"|"$/g, "");
+          const r = registry.resolve(q);
+          const op = r.operation_id ? registry.describe(r.operation_id) : null;
+          ctx.ui.notify(JSON.stringify({ passed: r.found, query: q, matched_operation: r.operation_id, confidence: r.confidence, via: r.via, available_adapters: op?.adapters ?? [] }, null, 2), r.found ? "info" : "warning");
+          return;
+        }
+        if (raw.startsWith("describe ")) {
+          const def = registry.describe(raw.slice(9).trim());
+          ctx.ui.notify(def ? JSON.stringify(def, null, 2) : `unknown operation: ${raw.slice(9).trim()}`, def ? "info" : "warning");
+          return;
+        }
+        if (raw === "list" || raw === "") {
+          const ops = registry.list();
+          const lines = ops.map((o) => `- \`${o.operation_id}\` [${o.status}] — ${o.title} (adapters: ${o.adapters.join(", ") || "none"})`);
+          ctx.ui.notify(`## ARAYA Operations (${ops.length})\n\n${lines.join("\n")}`, "info");
+          return;
+        }
+        if (raw.startsWith("execute ")) {
+          const [id, ...rest] = raw.slice(8).trim().split(/\s+/);
+          const input: Record<string, unknown> = {};
+          for (const kv of rest) {
+            const m = kv.match(/^([\w-]+)=(.*)$/);
+            if (m) input[m[1].replace(/-/g, "_")] = m[2] === "true" ? true : m[2] === "false" ? false : m[2];
+          }
+          const result = await registry.execute(id, input);
+          ctx.ui.notify(JSON.stringify(result, null, 2), result.passed ? "info" : "warning");
+          return;
+        }
+        ctx.ui.notify("Usage: /araya:operation resolve \"<intent>\" | describe <id> | list | execute <id> [k=v ...]", "warning");
+      } catch (e: any) {
+        ctx.ui.notify(`❌ Operations error: ${e?.message ?? e}`, "error");
+      }
+    },
+  });
+
+  // Slash command: /araya:gate
+  pi.registerCommand("araya:gate", {
+    description: "🚪 ARAYA Merge Gate — evaluate whether a PR may merge into an integration branch",
+    handler: async (args, ctx) => {
+      const raw = (args ?? "").trim();
+      try {
+        const registry = await loadOperationsRegistry();
+        if (raw.startsWith("merge-pr")) {
+          const parts = raw.split(/\s+/);
+          const get = (k: string) => { const i = parts.indexOf(k); return i >= 0 ? parts[i + 1] : undefined; };
+          const pr = get("--pr");
+          const candidate = get("--candidate");
+          if (!pr || !candidate) {
+            ctx.ui.notify("Usage: /araya:gate merge-pr --pr <n> --candidate <sha> [--base <branch>] [--evidence-commit <sha>] [--repo <path>]", "warning");
+            return;
+          }
+          const result = await registry.execute("git.merge-gate", {
+            pr, candidate,
+            base: get("--base") ?? "dev-mahg",
+            evidence_commit: get("--evidence-commit"),
+            repo: get("--repo"),
+          });
+          ctx.ui.notify(JSON.stringify(result, null, 2), result.passed ? "info" : "warning");
+          return;
+        }
+        ctx.ui.notify("Usage: /araya:gate merge-pr --pr <n> --candidate <sha> [...]", "warning");
+      } catch (e: any) {
+        ctx.ui.notify(`❌ Gate error: ${e?.message ?? e}`, "error");
+      }
+    },
+  });
+
+  // Slash command: /araya:git
+  pi.registerCommand("araya:git", {
+    description: "🌿 ARAYA Git Operations — sanity and governed git operations",
+    handler: async (args, ctx) => {
+      const raw = (args ?? "").trim();
+      try {
+        const registry = await loadOperationsRegistry();
+        if (raw.startsWith("sanity")) {
+          const parts = raw.split(/\s+/);
+          const i = parts.indexOf("--repo");
+          const result = await registry.execute("git.repository-sanity", { repo: i >= 0 ? parts[i + 1] : undefined });
+          ctx.ui.notify(JSON.stringify(result, null, 2), result.passed ? "info" : "warning");
+          return;
+        }
+        ctx.ui.notify("Usage: /araya:git sanity [--repo <path>]", "warning");
+      } catch (e: any) {
+        ctx.ui.notify(`❌ Git operation error: ${e?.message ?? e}`, "error");
+      }
+    },
+  });
+
+  // Slash command: /araya:test
+  pi.registerCommand("araya:test", {
+    description: "🧪 ARAYA Test Operations — run canonical test suites as governed operations",
+    handler: async (args, ctx) => {
+      const raw = (args ?? "").trim();
+      try {
+        const registry = await loadOperationsRegistry();
+        if (raw.startsWith("test.")) {
+          const result = await registry.execute(raw, {});
+          ctx.ui.notify(JSON.stringify(result, null, 2), result.passed ? "info" : "warning");
+          return;
+        }
+        ctx.ui.notify("Usage: /araya:test <test.relay-unit|test.relay-integration|test.relay-behavior|test.relay-recovery|test.relay-idempotency>", "warning");
+      } catch (e: any) {
+        ctx.ui.notify(`❌ Test operation error: ${e?.message ?? e}`, "error");
       }
     },
   });
