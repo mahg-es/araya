@@ -51,25 +51,32 @@ test or operator hand-creates it. Derived fields (`stageAuthorized`,
 `currentNode`, `nextEligibleAction`, `blocker`) come from Repository Truth +
 Approved Plan + durable slice evidence + runtime facts.
 
-## 3. Live runtime proof — honest status
+## 3. Live runtime proof — completed (pe44 final live proof)
 
 ```text
-ACTIVE_ARAYA_EXTENSION_LOADED   = NOT PROVEN IN THIS SESSION
-agent_before_settle IN LIVE PROC = NOT PROVEN
-tool_call IN LIVE PROC            = NOT PROVEN
+LIVE_PROOF_RUNTIME_SHA          = 2a0e647a5378c2e71bb5b7617ca4a6b2db101ba4
+ACTIVE_ARAYA_EXTENSION_LOADED   = PASS (fresh live session)
+agent_before_settle IN LIVE PROC = PASS (fired; premature settlement rejected)
+tool_call IN LIVE PROC            = PASS (mutating write gated + allowed)
 ```
 
-The running Pi process started before the extension symlinks were repaired;
-repairing them mid-session does not reload the live process. **Live proof
-requires the supported Pi reload/new-session mechanism** (a user action), after
-which the enforcement hooks can be observed firing through the normal lifecycle.
+The pe44 final live proof executed in a fresh Pi session after the extension
+was installed from the clean runtime worktree `pe48-runtime-canonical`
+(`origin/dev-mahg @ 2a0e647a…`). The live `tool_call` hook intercepted a
+mutating `write` (the pe44 live-proof observer note), derived authoritative
+state (`stageAuthorized=true, currentNode=S5, nextEligibleAction=S6,
+blocker=false`) and allowed it — the live pre-action proof. The live
+`agent_before_settle` hook then rejected a premature terminal settlement,
+queued a deterministic `araya_derived_continuation` (``Continue with the
+derived NEXT_ELIGIBLE_ACTION (S6) under current authority.``) and the next
+provider turn occurred — the live pre-disposition proof.
 
 ## 4. S1 code correction (fail-open UNKNOWN fixed)
 
 ```text
 S1_CODE = FIX_REQUIRED → FIXED
-S1_LIVE_STATE_DERIVATION   = PENDING live reload (code-correct, not yet observed live)
-S1_LIVE_RUNTIME_ENFORCEMENT = PENDING live reload (code-correct, not yet observed live)
+S1_LIVE_STATE_DERIVATION   = PASS (observed live — pe44 final live proof)
+S1_LIVE_RUNTIME_ENFORCEMENT = PASS (observed live — pe44 final live proof)
 ```
 
 `runtime-enforcement.ts` now returns `{status:"UNKNOWN"}` on absent/corrupt
@@ -119,19 +126,21 @@ S5_EVIDENCE = REUSED  (installer/bundle implementation unchanged; premises ident
 
 ```text
 S0 = PASS
-S1 = PASS  (code corrected; live runtime proof pending reload)
+S1 = PASS  (code corrected; live runtime proof observed)
 S2 = PASS
 S3a = PASS
 S3b = PASS
 S4 = PASS
 S5 = PASS
-S6 = PASS  (this audit)
+S6 = PASS  (this audit — corroborating; independent S6 acceptance is a separate coordinator record)
 
-FAST_PATH_END_TO_END = PENDING LIVE RELOAD
+S6 LIVE PROOF = PASS
 
-LIVE_STATE_DERIVATION = PASS (code) / PENDING (live observation)
-LIVE_PRE_ACTION_ENFORCEMENT = PENDING LIVE RELOAD
-LIVE_PRE_DISPOSITION_ENFORCEMENT = PENDING LIVE RELOAD
+FAST_PATH_END_TO_END = PASS
+
+LIVE_STATE_DERIVATION = PASS
+LIVE_PRE_ACTION_ENFORCEMENT = PASS
+LIVE_PRE_DISPOSITION_ENFORCEMENT = PASS
 
 MANUAL_STATE_MAINTENANCE = 0
 MANUAL_EVIDENCE_PUBLICATION = 0
@@ -141,7 +150,7 @@ INDEPENDENT_VERIFICATION = PRESERVED
 FAIL_CLOSED = PRESERVED
 TRACEABILITY = PRESERVED
 
-CUTOVER_READINESS = PASS (subject to live-runtime proof at reload)
+CUTOVER_READINESS = PASS
 CUTOVER_AUTHORIZATION = PENDING
 
 v0.5.0 ACTIVE_CANON = NO
