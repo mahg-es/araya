@@ -79,6 +79,22 @@ function makeFixture({ audit, adoption }) {
   if (adoption != null) fs.writeFileSync(path.join(om, "ADOPTION-RECORD.md"), adoption);
   return dir;
 }
+
+/** Coordinator fixture providing an INDEPENDENT S6 acceptance record (pe44 live proof). */
+function makeCoordinatorS6Accepted() {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "araya-rte-crd-"));
+  execFileSync("git", ["init", "-q", dir]);
+  execFileSync("git", ["-C", dir, "config", "user.email", "test@araya.invalid"]);
+  execFileSync("git", ["-C", dir, "config", "user.name", "test"]);
+  fs.writeFileSync(path.join(dir, "README.md"), "fixture\n");
+  execFileSync("git", ["-C", dir, "add", "README.md"]);
+  execFileSync("git", ["-C", dir, "commit", "-qm", "init"]);
+  const pc = path.join(dir, "planning", "current");
+  fs.mkdirSync(pc, { recursive: true });
+  fs.writeFileSync(path.join(pc, "status-checkpoint.md"), "# status\nOwner E-4: AUTHORIZED (pe-araya-2609-34)\nv0.5.0 ACTIVE_CANON: NO\n");
+  fs.writeFileSync(path.join(pc, "s6-live-proof-accepted.md"), "# S6\nS6 = ACCEPTED\nLIVE_ARAYA_EXTENSION_LOADED = PASS\n");
+  return dir;
+}
 const j = (v) => JSON.stringify(v);
 
 // ── §5: UNKNOWN state fails CLOSED (automatic derivation, no manual file) ──
@@ -120,12 +136,26 @@ console.log(JSON.stringify(enforcePreDisposition(root, { context: { canContinue:
   fs.rmSync(f, { recursive: true, force: true });
 
   const fDone = makeFixture({ audit: AUDIT_DONE, adoption: ADOPTION_OK });
+  // S6 acceptance is INDEPENDENT: the audit's `S6 = PASS` alone must NOT yield a
+  // legitimate terminal. Without an independent S6-acceptance record the state
+  // is pre-S6 (nextEligibleAction=S6).
   const r2 = run(`
 import { enforcePreDisposition } from "./src/araya/operating-model/runtime-enforcement";
-console.log(JSON.stringify(enforcePreDisposition(${j(fDone)}, { context: { canContinue: true } }) ?? null));
+const root = ${j(fDone)};
+console.log(JSON.stringify(enforcePreDisposition(root, { context: { canContinue: true } }) ?? null));
 `);
-  check("legitimate terminal (no next eligible) → no continuation", r2 === null || r2.continue !== true, JSON.stringify(r2));
+  check("audit S6=PASS without independent S6 → continuation (nextEligibleAction=S6, no false terminal)", r2 && r2.continue === true, JSON.stringify(r2));
+
+  const fDoneCrd = makeCoordinatorS6Accepted();
+  const r3 = run(`
+process.env.ARAYA_COORDINATOR_ROOT = ${j(fDoneCrd)};
+import { enforcePreDisposition } from "./src/araya/operating-model/runtime-enforcement";
+const root = ${j(fDone)};
+console.log(JSON.stringify(enforcePreDisposition(root, { context: { canContinue: true } }) ?? null));
+`);
+  check("independent S6 acceptance → legitimate terminal (no continuation)", r3 === null || r3.continue !== true, JSON.stringify(r3));
   fs.rmSync(fDone, { recursive: true, force: true });
+  fs.rmSync(fDoneCrd, { recursive: true, force: true });
 }
 
 // ── Pre-action enforcement: stage boundary ───────────────────────────────
