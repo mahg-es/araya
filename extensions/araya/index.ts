@@ -268,6 +268,27 @@ export default function (pi: ExtensionAPI) {
     };
   });
 
+  // ── S1 Operating-Model Runtime Enforcement (ADR-0021 / REQ-051) ────────
+  // Wire the fail-closed gates into the real agent lifecycle so they are
+  // unavoidable, not merely callable.
+  pi.on("agent_before_settle", async (_event: any, _ctx: any) => {
+    try {
+      const { enforcePreDisposition } = await import(resolve(root, "dist/araya/operating-model/runtime-enforcement"));
+      return enforcePreDisposition(root);
+    } catch {
+      return undefined;
+    }
+  });
+
+  pi.on("tool_call", async (event: any, _ctx: any) => {
+    try {
+      const { enforcePreAction } = await import(resolve(root, "dist/araya/operating-model/runtime-enforcement"));
+      return enforcePreAction(root, event?.toolName ?? "");
+    } catch {
+      return undefined;
+    }
+  });
+
   // ── /araya ──────────────────────────────────────────────────────────────
 
   pi.registerCommand("araya", {
