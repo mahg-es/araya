@@ -56,7 +56,7 @@ const rU2 = run(`
 import { enforcePreAction } from "./src/araya/operating-model/runtime-enforcement";
 console.log(JSON.stringify({ bash: enforcePreAction(".", "bash") ?? null, read: enforcePreAction(".", "read") ?? null }));
 `);
-check("UNKNOWN state: mutating tool (bash) BLOCKED", rU2 && rU2.bash !== null, JSON.stringify(rU2));
+check("UNKNOWN state: mutating tool (bash) BLOCKED with block:true", rU2 && rU2.bash && rU2.bash.block === true, JSON.stringify(rU2));
 check("UNKNOWN state: read NOT blocked", rU2 && rU2.read === null, JSON.stringify(rU2));
 
 // ── Pre-disposition enforcement: the real termination boundary ──────────
@@ -80,7 +80,7 @@ const r3 = run(`
 import { enforcePreAction } from "./src/araya/operating-model/runtime-enforcement";
 console.log(JSON.stringify({ bash: enforcePreAction(".", "bash") ?? null, read: enforcePreAction(".", "read") ?? null }));
 `);
-check("stage NOT authorized: mutating tool (bash) BLOCKED", r3 && r3.bash !== null, JSON.stringify(r3));
+check("stage NOT authorized: mutating tool (bash) BLOCKED with block:true", r3 && r3.bash && r3.bash.block === true, JSON.stringify(r3));
 check("stage NOT authorized: read NOT blocked", r3 && r3.read === null, JSON.stringify(r3));
 
 deriveState({ stageAuthorized: true, currentNode: "S3b", nextEligibleAction: "S3b", blocker: false });

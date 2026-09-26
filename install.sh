@@ -245,6 +245,46 @@ do_install() {
     exit 0
   fi
 
+  # ── Stage 0: Build runtime enforcement (fail-closed install) ───────────
+  # A supported installation must guarantee the mandatory runtime enforcement
+  # module is loadable before the extension can report success. Otherwise the
+  # governance hooks (agent_before_settle / tool_call) would silently no-op.
+  local ENFORCE_MODULE="$CANONICAL/dist/araya/operating-model/runtime-enforcement.js"
+
+  if [ "$DRY_RUN" = true ]; then
+    info "Would build runtime enforcement (npm install + npm run build)"
+    info "Would verify module: $ENFORCE_MODULE"
+  else
+    # Ensure TypeScript tooling is available (repository devDependency).
+    if [ ! -x "$CANONICAL/node_modules/.bin/tsc" ]; then
+      action "Installing build dependencies (npm install)"
+      if ! (cd "$CANONICAL" && npm install --no-audit --no-fund); then
+        fail "npm install failed — cannot build runtime enforcement"
+        exit 1
+      fi
+    fi
+
+    action "Building dist (npm run build)"
+    if ! (cd "$CANONICAL" && npm run build); then
+      fail "Build failed — runtime enforcement module was not produced"
+      exit 1
+    fi
+
+    if [ -f "$ENFORCE_MODULE" ]; then
+      ok "Runtime enforcement module present: dist/araya/operating-model/runtime-enforcement.js"
+    else
+      fail "MANDATORY runtime enforcement module MISSING after build: $ENFORCE_MODULE"
+      exit 1
+    fi
+
+    if node -e "const m=require(process.argv[1]); if(!m.enforcePreAction||!m.enforcePreDisposition)process.exit(1)" "$ENFORCE_MODULE"; then
+      ok "Runtime enforcement module loads successfully (enforcePreAction + enforcePreDisposition)"
+    else
+      fail "Runtime enforcement module NOT loadable: $ENFORCE_MODULE"
+      exit 1
+    fi
+  fi
+
   # ── Stage 1: Create backup of any legacy artifacts ────────────────────
   local BACKUP_DIR=""
   local NEEDS_RESTORE=false
