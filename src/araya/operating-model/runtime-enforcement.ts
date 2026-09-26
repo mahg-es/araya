@@ -6,53 +6,108 @@
  *   - pre-disposition gate  → `agent_before_settle` (fires before final settlement)
  *   - pre-action gate       → `tool_call` (fires before a mutating tool executes)
  *
- * Operating state is DERIVED, not stored: `.araya/operating-model/state.json` is a
- * NON-TRACKED transient cache (gitignored), reconstructed at each work-cycle start
- * from Repository Truth + Approved Plan + current evidence. It is NOT an authority
- * store, NOT manually maintained, and safely disposable. NEW_RUNTIME_ENGINES=0,
+ * Operating state is DERIVED from authoritative inputs (Repository Truth +
+ * Approved Plan + durable slice evidence + current repository/runtime facts),
+ * never from a manually-maintained authority store.
+ *
+ * `.araya/operating-model/state.json` (if present at all) is a NON-AUTHORITATIVE
+ * disposable cache whose writer is automatic (`deriveAndCacheState`) and whose
+ * absence/corruption yields UNKNOWN — which FAILS CLOSED. It is never hand-
+ * created, never authoritative, and safely disposable. NEW_RUNTIME_ENGINES=0,
  * NEW_PERSONAS=0, NEW_PERSISTENT_AUTHORITY_STORES=0.
  */
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { preActionGate, preDispositionGate } from "./index";
 
-export interface TransientState {
+export type StateStatus = "KNOWN" | "UNKNOWN";
+
+/** Authoritative derived operating state (inputs come from Repository Truth). */
+export interface DerivedState {
   stageAuthorized: boolean;
   currentNode: string;
   nextEligibleAction: string | null;
   blocker: boolean;
 }
 
+/** Result of reading the disposable cache. UNKNOWN must fail closed. */
+export interface TransientState extends DerivedState {
+  status: StateStatus;
+}
+
+const UNKNOWN_STATE: TransientState = {
+  status: "UNKNOWN",
+  stageAuthorized: false,
+  currentNode: "",
+  nextEligibleAction: null,
+  blocker: false,
+};
+
 const MUTATING_TOOLS = new Set(["bash", "edit", "write"]);
 
+const STATE_PATH = path.join(".araya", "operating-model", "state.json");
+
+function isDerivedState(j: unknown): j is DerivedState {
+  if (typeof j !== "object" || j === null) return false;
+  const o = j as Record<string, unknown>;
+  return (
+    typeof o.stageAuthorized === "boolean" &&
+    typeof o.currentNode === "string" &&
+    typeof o.blocker === "boolean" &&
+    (o.nextEligibleAction === null || o.nextEligibleAction === undefined || typeof o.nextEligibleAction === "string")
+  );
+}
+
+/**
+ * Automatic writer for the disposable cache. It only records state that was
+ * already derived from authoritative inputs; it never invents authority.
+ * This is the ONLY writer of state.json — no test or operator hand-creates it.
+ */
+export function deriveAndCacheState(root: string, derived: DerivedState): DerivedState {
+  try {
+    const dir = path.join(root, ".araya", "operating-model");
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "state.json"), JSON.stringify(derived, null, 2));
+  } catch {
+    // Cache write failure is non-fatal: the derived state is still authoritative.
+  }
+  return derived;
+}
+
+/**
+ * Read the disposable cache. Absence or corruption yields UNKNOWN (status), so
+ * callers fail closed — they must NOT fabricate a permissive authoritative state.
+ */
 export function readState(root: string): TransientState {
-  // Transient, non-authoritative, reconstructable cache (gitignored). Absence or
-  // corruption yields UNKNOWN — never a fabricated authoritative state.
-  const p = path.join(root, ".araya", "operating-model", "state.json");
+  const p = path.join(root, STATE_PATH);
   try {
     const raw = fs.readFileSync(p, "utf-8");
     const j = JSON.parse(raw);
+    if (!isDerivedState(j)) return { ...UNKNOWN_STATE };
     return {
-      stageAuthorized: j.stageAuthorized === true,
-      currentNode: String(j.currentNode ?? ""),
-      nextEligibleAction: j.nextEligibleAction == null ? null : String(j.nextEligibleAction),
-      blocker: j.blocker === true,
+      status: "KNOWN",
+      stageAuthorized: j.stageAuthorized,
+      currentNode: j.currentNode,
+      nextEligibleAction: j.nextEligibleAction ?? null,
+      blocker: j.blocker,
     };
   } catch {
-    // No/absent cache → no derived enforcement signal. This is a reconstruction
-    // gap, not authoritative state; enforcement derives at the next work-cycle
-    // boundary from Repository Truth.
-    return { stageAuthorized: false, currentNode: "", nextEligibleAction: null, blocker: false };
+    return { ...UNKNOWN_STATE };
   }
 }
 
 /**
- * Pre-disposition enforcement. Return a BoundaryResult-like object with
- * `continue: true` when a terminal settlement is premature (authorized next
- * action exists and no blocker). Return undefined otherwise.
+ * Pre-disposition enforcement. Return `{ continue: true }` when a terminal
+ * settlement is premature (authorized next action exists and no blocker) OR when
+ * authoritative state is UNKNOWN (fail closed). Return undefined to allow settle.
  */
 export function enforcePreDisposition(root: string): { continue?: boolean } | undefined {
   const s = readState(root);
+  if (s.status === "UNKNOWN") {
+    // Fail closed: unresolved authoritative state must not permit a terminal
+    // settlement (STOP/AUDIT). Derive/resolve state before settling.
+    return { continue: true };
+  }
   const gate = preDispositionGate({
     disposition: "STOP", // the agent is attempting to settle/terminate
     nextEligibleActionExists: s.nextEligibleAction != null && s.nextEligibleAction !== "",
@@ -69,17 +124,18 @@ export function enforcePreDisposition(root: string): { continue?: boolean } | un
 
 /**
  * Pre-action enforcement. Return `{ action: "handled" }` to block a mutating
- * tool when prerequisites are unresolved (fail-closed). Return undefined to
- * allow the tool. Only mutating tools are gated.
+ * tool when prerequisites are unresolved (fail-closed) OR when authoritative
+ * state is UNKNOWN. Return undefined to allow the tool. Only mutating tools gated.
  */
 export function enforcePreAction(root: string, toolName: string): { action: string } | undefined {
   if (!MUTATING_TOOLS.has(toolName)) return undefined;
   const s = readState(root);
+  // Fail closed: UNKNOWN state blocks mutation until state is derived/resolved.
+  if (s.status === "UNKNOWN") {
+    return { action: "handled" };
+  }
   // Fail-closed on the automatic stage boundary: mutation is blocked when the
-  // operating state declares the stage NOT authorized. (Requirement-First /
-  // authority / candidate-staleness predicates require task context and remain
-  // governed through the operation runtime; this hook provides the automatic
-  // boundary for the stage authority the marker can derive.)
+  // operating state declares the stage NOT authorized.
   if (!s.stageAuthorized) {
     return { action: "handled" };
   }
