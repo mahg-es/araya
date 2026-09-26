@@ -18,10 +18,10 @@ postconditions: ["OperationResult contract-valid"]
 evidence: ["checks[]"]
 idempotency: "safe to re-run"
 rollback: "no writes"
-adapters: ["cli", "pi-custom-tool"]
+adapters: ["cli"]
 aliases: []
 intents: []
 owner: "daneel"
-source_provenance: "pe-araya-2609-34/35 (S1 runtime enforcement)"
+source_provenance: "pe-araya-2609-34/35 (S1 runtime enforcement); pe-araya-2609-47 (adapter truth: no live pi-custom-tool executes this operation — automatic derivation is the live lifecycle path)"
 tests:
   - "tests/operating-model-integration-test.js"
