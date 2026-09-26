@@ -47,9 +47,6 @@ const UNKNOWN_STATE: TransientState = {
 
 const STATE_PATH = path.join(".araya", "operating-model", "state.json");
 
-/** ARAYA v0.5.0 adoption delivery-slice sequence (K01/K02 + S6 audit, Repository Truth). */
-const NODE_SEQUENCE = ["S0", "S1", "S2", "S3a", "S3b", "S4", "S5", "S6"];
-
 /** Smallest sufficient automatic-continuation guard: at most one forced next
  *  provider turn per unchanged (state + nextEligibleAction + headSHA). */
 export const MAX_AUTOMATIC_CONTINUATION_WITHOUT_STATE_CHANGE = 1;
@@ -101,69 +98,159 @@ function readTextIfExists(p: string): string | null {
 // ─── Authoritative state derivation ────────────────────────────────────────
 
 /**
+ * The ARAYA v0.5.0 adoption slice sequence S0..S6 (K01/K02 + formal Stage 2
+ * Implementation Plan, Repository Truth). S7+ (canonical cutover) is a
+ * SEPARATE Owner boundary and is never part of this runtime derivation.
+ */
+const PRE_S6_SEQUENCE = ["S0", "S1", "S2", "S3a", "S3b", "S4", "S5"];
+
+/**
+ * The S6 audit may corroborate S0–S5 (transitions that were already accepted
+ * through independent evidence: coordinator ledger STOP entries + planning
+ * evidence files), but it MUST NOT independently make `currentNode = S6`.
+ * S6 acceptance requires an INDEPENDENT S6-acceptance record (live proof +
+ * exact-SHA STOP + remote publication + durable coordinator evidence), which
+ * does not exist until pe44's final live proof completes.
+ */
+
+function resolveCoordinatorRoot(root: string, explicit?: string): string | null {
+  const candidates: string[] = [];
+  if (explicit) candidates.push(explicit);
+  if (process.env.ARAYA_COORDINATOR_ROOT) candidates.push(process.env.ARAYA_COORDINATOR_ROOT);
+  candidates.push(path.resolve(root, "..", "araya-project-coordinator"));
+  for (const c of candidates) {
+    if (!c) continue;
+    try {
+      if (fs.existsSync(path.join(c, ".araya", "ax", "ledger", "score.ndjson")) || fs.existsSync(path.join(c, "planning", "current", "status-checkpoint.md"))) {
+        return c;
+      }
+    } catch { /* keep searching */ }
+  }
+  return null;
+}
+
+function readCoordFile(coordinatorRoot: string, rel: string): string | null {
+  return readTextIfExists(path.join(coordinatorRoot, rel));
+}
+
+/**
+ * E4 / Stage-3 authorization (independent of S6 audit and of ADOPTION-RECORD).
+ *
+ * Returns true/false only when discoverable records resolve it; returns null
+ * when unresolved OR when the coordinator record contradicts the audit record.
+ * ADOPTION-RECORD.md "ADOPTED / ACTIVE CANONICAL" is SOURCE v0.5.0 adoption,
+ * NOT target canonical cutover — it is never used as a stage-authorization
+ * premise here.
+ */
+function resolveE4Authorized(root: string, coordinatorRoot: string | null): boolean | null {
+  const audit = readTextIfExists(path.join(root, ".araya", "operating-model", "S6-CUTOVER-READINESS-AUDIT.md")) ?? "";
+  const auditAuthorized = /Stage\s*3\s+authorized/i.test(audit) && !/Stage\s*3\s+not\s+authorized/i.test(audit);
+  const auditNotAuthorized = /Stage\s*3\s+not\s+authorized/i.test(audit);
+
+  if (coordinatorRoot) {
+    const checkpoint = readCoordFile(coordinatorRoot, "planning/current/status-checkpoint.md") ?? "";
+    const coordAuthorized = /Owner\s+E-4:\s*AUTHORIZED/i.test(checkpoint);
+    const coordNotAuthorized = /Owner\s+E-4:\s*NOT\s+(?:GRANTED|AUTHORIZED)/i.test(checkpoint);
+    if (coordAuthorized && !coordNotAuthorized) {
+      // Contradiction: coordinator authorizes but the audit explicitly denies.
+      if (auditNotAuthorized) return null;
+      return true;
+    }
+    if (coordNotAuthorized) {
+      // Contradiction: coordinator denies but the audit explicitly authorizes.
+      if (auditAuthorized) return null;
+      return false;
+    }
+  }
+
+  // Corroborating authority marker from the S6 audit (Stage 3 authorized = E4
+  // was granted; it is NOT a claim that S6 itself is accepted).
+  if (auditAuthorized) return true;
+  if (auditNotAuthorized) return false;
+  return null;
+}
+
+/**
+ * Independent S6 acceptance. Returns true ONLY when an independent durable
+ * S6-acceptance record exists in the coordinator (live proof + exact-SHA STOP
+ * + publication + coordinator evidence). The S6 audit's own `S6 = PASS` is
+ * never consulted here. Absent → false (S6 NOT yet accepted).
+ */
+function resolveIndependentS6Accepted(coordinatorRoot: string | null): boolean {
+  if (!coordinatorRoot) return false;
+  // A dedicated coordinator evidence file is the canonical independent signal.
+  // It does not exist yet (pe44 live proof has not completed).
+  const dedicated = readCoordFile(coordinatorRoot, "planning/current/s6-live-proof-accepted.md");
+  if (dedicated && /^S6\s*=\s*ACCEPTED/m.test(dedicated)) return true;
+  // Fallback: coordinator status-checkpoint explicitly declaring S6 accepted
+  // with live proof (post-pe44 state), never the target S6 audit.
+  const checkpoint = readCoordFile(coordinatorRoot, "planning/current/status-checkpoint.md") ?? "";
+  if (/S6\s*=\s*PASS.*live\s+proof|live\s+proof.*S6\s*=\s*PASS/is.test(checkpoint)) return true;
+  return false;
+}
+
+/**
  * Discover and derive the operating state from actual existing authoritative
  * inputs in Repository Truth (never from chat memory):
  *
- *   - target Repository Truth: `git rev-parse HEAD` + `git branch --show-current`
- *   - durable slice evidence:  tracked `.araya/operating-model/S6-CUTOVER-READINESS-AUDIT.md`
- *   - approved authority:      tracked `.araya/operating-model/ADOPTION-RECORD.md`
+ *   - target Repository Truth:   `git rev-parse HEAD`
+ *   - coordinator Repository Truth: sibling/env `araya-project-coordinator`
+ *   - E4 / Stage-3 authorization: coordinator status-checkpoint (not ADOPTION-RECORD)
+ *   - slice acceptance S0–S5:     corroborated by the S6 audit (independently-accepted transitions)
+ *   - S6 acceptance:              INDEPENDENT S6-acceptance record only (absent → S6 NOT accepted)
  *
- * The four gating fields are read from explicit declarations in those tracked
- * artifacts. If required evidence is absent or contradictory, the result is
- * UNKNOWN (fail closed) — never a fabricated permissive state.
+ * If required evidence is absent or contradictory, the result is UNKNOWN
+ * (fail closed) — never a fabricated permissive state.
  */
-export function deriveAuthoritativeState(root: string): TransientState {
+export function deriveAuthoritativeState(root: string, coordinatorRoot?: string): TransientState {
   // 1. Repository Truth (target). No git HEAD → no trustworthy identity → UNKNOWN.
   const headSha = git(root, ["rev-parse", "HEAD"]);
   if (!headSha) return { ...UNKNOWN_STATE };
 
-  // 2. Durable slice evidence + approved authority (tracked, read-only).
-  const auditPath = path.join(root, ".araya", "operating-model", "S6-CUTOVER-READINESS-AUDIT.md");
-  const adoptionPath = path.join(root, ".araya", "operating-model", "ADOPTION-RECORD.md");
-  const audit = readTextIfExists(auditPath);
-  const adoption = readTextIfExists(adoptionPath);
-  if (!audit || !adoption) return { ...UNKNOWN_STATE };
+  const coordRoot = resolveCoordinatorRoot(root, coordinatorRoot);
 
-  // 3. stageAuthorized — from explicit authority declarations only.
-  const authorizedMarker = /Stage\s*3\s+authorized/i.test(audit);
-  const notAuthorizedMarker = /Stage\s*3\s+not\s+authorized/i.test(audit);
-  const adopted = /ADOPTED\s*\/\s*ACTIVE\s+CANONICAL/.test(adoption);
-  let stageAuthorized: boolean;
-  if (authorizedMarker && adopted && !notAuthorizedMarker) stageAuthorized = true;
-  else if (notAuthorizedMarker && adopted) stageAuthorized = false;
-  else return { ...UNKNOWN_STATE }; // authority evidence absent or contradictory
+  // 2. stageAuthorized — from E4/Stage-3 authorization only (never ADOPTION-RECORD).
+  const e4 = resolveE4Authorized(root, coordRoot);
+  if (e4 === null) return { ...UNKNOWN_STATE };
+  const stageAuthorized = e4;
 
-  // 4. currentNode / nextEligibleAction / blocker — from durable node statuses.
-  const statuses = parseNodeStatuses(audit);
+  // 3. Slice acceptance. The S6 audit is read ONLY for S0–S5 corroboration;
+  //    its `S6 = PASS` is never used to conclude S6 acceptance.
+  const audit = readTextIfExists(path.join(root, ".araya", "operating-model", "S6-CUTOVER-READINESS-AUDIT.md"));
+  const statuses = audit ? parseNodeStatuses(audit) : null;
+
+  // S0–S5 acceptance requires an S6 audit (or equivalent corroboration) present.
   if (statuses === null || statuses.size === 0) return { ...UNKNOWN_STATE };
 
-  // Furthest completed node (in canonical sequence order).
+  // Furthest completed PRE-S6 node (in canonical sequence order). S6 is excluded.
   let currentNode = "";
-  for (const node of NODE_SEQUENCE) {
+  for (const node of PRE_S6_SEQUENCE) {
     const st = statuses.get(node);
     if (st === "PASS") currentNode = node;
-    else break; // first non-PASS (or missing) node bounds the completed prefix
+    else break; // first non-PASS node (FAIL/BLOCK/PENDING/missing) bounds the completed prefix
   }
   if (!currentNode) return { ...UNKNOWN_STATE };
 
-  // DAG successor: the first not-yet-PASS node after currentNode.
-  const idx = NODE_SEQUENCE.indexOf(currentNode);
-  let nextEligibleAction: string | null = null;
-  for (let i = idx + 1; i < NODE_SEQUENCE.length; i++) {
-    const st = statuses.get(NODE_SEQUENCE[i]);
-    if (st === "PASS") continue;
-    // NOT AUTHORIZED means no further eligible implementation slice.
-    nextEligibleAction = st === "NOT AUTHORIZED" ? null : NODE_SEQUENCE[i];
-    break;
+  // Independent S6 acceptance (never the S6 audit's own marker).
+  const s6IndependentlyAccepted = resolveIndependentS6Accepted(coordRoot);
+
+  let nextEligibleAction: string | null;
+  if (s6IndependentlyAccepted) {
+    // Only with independent S6 acceptance does the derivation resolve S6 done.
+    currentNode = "S6";
+    nextEligibleAction = null; // S7 = NOT AUTHORIZED (separate Owner boundary)
+  } else {
+    // Pre-S6 state: the next eligible action is the DAG successor of currentNode.
+    const idx = PRE_S6_SEQUENCE.indexOf(currentNode);
+    nextEligibleAction = idx >= 0 && idx + 1 < PRE_S6_SEQUENCE.length ? PRE_S6_SEQUENCE[idx + 1] : "S6";
   }
 
-  // blocker — any failed/blocked node or a failed cutover-readiness declaration.
+  // blocker — any failed/blocked pre-S6 node.
   let blocker = false;
-  for (const node of NODE_SEQUENCE) {
+  for (const node of PRE_S6_SEQUENCE) {
     const st = statuses.get(node);
     if (st === "FAIL" || st === "BLOCK") { blocker = true; break; }
   }
-  if (/CUTOVER_READINESS\s*=\s*FAIL/.test(audit)) blocker = true;
 
   return {
     status: "KNOWN",
@@ -240,8 +327,8 @@ export function readState(root: string): TransientState {
  * No manual step, no manual state file. UNKNOWN is returned only when the
  * authoritative evidence genuinely cannot resolve to a KNOWN state.
  */
-export function getOrDeriveState(root: string): TransientState {
-  const derived = deriveAuthoritativeState(root);
+export function getOrDeriveState(root: string, coordinatorRoot?: string): TransientState {
+  const derived = deriveAuthoritativeState(root, coordinatorRoot);
   if (derived.status === "KNOWN") {
     deriveAndCacheState(root, {
       stageAuthorized: derived.stageAuthorized,

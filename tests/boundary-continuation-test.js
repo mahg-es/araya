@@ -11,6 +11,7 @@
 const { execFileSync } = require("node:child_process");
 const path = require("node:path");
 const fs = require("node:fs");
+const os = require("node:os");
 
 const ROOT = path.join(__dirname, "..");
 const AUDIT_PATH = path.join(ROOT, ".araya", "operating-model", "S6-CUTOVER-READINESS-AUDIT.md");
@@ -117,6 +118,22 @@ function writeEvidence(audit) {
   fs.writeFileSync(ADOPTION_PATH, ADOPTION_OK);
 }
 
+/** Coordinator fixture with an INDEPENDENT S6 acceptance record. */
+function makeCoordinatorS6Accepted() {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "araya-bnd-crd-"));
+  execFileSync("git", ["init", "-q", dir]);
+  execFileSync("git", ["-C", dir, "config", "user.email", "test@araya.invalid"]);
+  execFileSync("git", ["-C", dir, "config", "user.name", "test"]);
+  fs.writeFileSync(path.join(dir, "README.md"), "fixture\n");
+  execFileSync("git", ["-C", dir, "add", "README.md"]);
+  execFileSync("git", ["-C", dir, "commit", "-qm", "init"]);
+  const pc = path.join(dir, "planning", "current");
+  fs.mkdirSync(pc, { recursive: true });
+  fs.writeFileSync(path.join(pc, "status-checkpoint.md"), "# status\nOwner E-4: AUTHORIZED (pe-araya-2609-34)\nv0.5.0 ACTIVE_CANON: NO\n");
+  fs.writeFileSync(path.join(pc, "s6-live-proof-accepted.md"), "# S6\nS6 = ACCEPTED\nLIVE_ARAYA_EXTENSION_LOADED = PASS\n");
+  return dir;
+}
+
 function restoreEvidence() {
   // Restore the tracked audit from git (worktree scratch is disposable; this
   // returns the tracked file to its committed state).
@@ -147,11 +164,21 @@ function restoreEvidence() {
   check("next eligible + canContinue=false → NO bare continue:true (no <boundary> error)", !(r2 && r2.continue === true && (!r2.entries || r2.entries.length === 0)), JSON.stringify(r2));
   check("next eligible + canContinue=false → continuation is runnable (continue with queued entry)", r2 && r2.continue === true && Array.isArray(r2.entries) && r2.entries.length > 0, JSON.stringify(r2));
 
-  // ── Scenario 3: no next eligible action → no continuation ────────────────
+  // ── Scenario 3: independent S6 acceptance → no continuation ─────────────
+  // (S6 acceptance is INDEPENDENT of the S6 audit; a coordinator record is
+  // required. Without it the state is pre-S6 and continuation is requested.)
   await resetGuard();
   writeEvidence(AUDIT_DONE);
   const r3 = await handler({ type: "agent_before_settle", context: { canContinue: true } }, {});
-  check("no next eligible action → settlement allowed (no continuation)", r3 === undefined || r3 === null || r3.continue !== true, JSON.stringify(r3));
+  check("audit S6=PASS without independent S6 → continuation (no false terminal)", r3 && r3.continue === true, JSON.stringify(r3));
+
+  const crd = makeCoordinatorS6Accepted();
+  process.env.ARAYA_COORDINATOR_ROOT = crd;
+  await resetGuard();
+  const r3b = await handler({ type: "agent_before_settle", context: { canContinue: true } }, {});
+  check("independent S6 acceptance → settlement allowed (no continuation)", r3b === undefined || r3b === null || r3b.continue !== true, JSON.stringify(r3b));
+  delete process.env.ARAYA_COORDINATOR_ROOT;
+  fs.rmSync(crd, { recursive: true, force: true });
 
   // ── Scenario 4: blocker exists → no unauthorized continuation ────────────
   await resetGuard();

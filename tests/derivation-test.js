@@ -105,12 +105,14 @@ console.log(JSON.stringify({ derived, cacheBefore, got: got.status, cacheAfter }
 
 // ── 2. Incomplete authoritative evidence → UNKNOWN ───────────────────────
 {
+  // ADOPTION-RECORD is SOURCE adoption, NOT a derivation authority premise.
+  // Its absence must NOT make the state UNKNOWN (pe48 semantic fix).
   const fMissingAdoption = makeFixture({ audit: AUDIT_COMPLETE, adoption: null });
   const r1 = run(`
 import { deriveAuthoritativeState } from "./src/araya/operating-model/runtime-enforcement";
 console.log(JSON.stringify({ s: deriveAuthoritativeState(${j(fMissingAdoption)}).status }));
 `);
-  check("missing adoption record → UNKNOWN", r1.s === "UNKNOWN", JSON.stringify(r1));
+  check("missing adoption record → still KNOWN (ADOPTION-RECORD is not an authority premise)", r1.s === "KNOWN", JSON.stringify(r1));
   fs.rmSync(fMissingAdoption, { recursive: true, force: true });
 
   const fMissingAudit = makeFixture({ audit: null, adoption: ADOPTION_OK });
