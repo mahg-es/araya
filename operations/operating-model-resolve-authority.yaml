@@ -1,0 +1,27 @@
+operation_id: "operating-model.resolve-authority"
+version: "1.0.0"
+status: "active"
+domain: "operating-model"
+title: "semantic authority resolution"
+description: "ADR-0021/REQ-051 operating-model capability (semantic authority resolution)."
+canonical_handler: "src/araya/operations/operating-model-handlers.ts#operatingModelResolveAuthority"
+input_schema:
+  type: "object"
+output_schema:
+  type: "object"
+  contract: "OperationResult"
+side_effects: []
+risk_level: "read-only"
+required_authority: "any"
+preconditions: []
+postconditions: ["OperationResult contract-valid"]
+evidence: ["checks[]"]
+idempotency: "safe to re-run"
+rollback: "no writes"
+adapters: ["cli", "pi-custom-tool"]
+aliases: []
+intents: []
+owner: "daneel"
+source_provenance: "pe-araya-2609-34/35 (S1 runtime enforcement)"
+tests:
+  - "tests/operating-model-integration-test.js"
