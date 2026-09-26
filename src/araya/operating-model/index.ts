@@ -234,7 +234,7 @@ export function deriveState(input: {
   nextEligibleAction: string | null;
 }): OperatingState {
   const invariants: { name: string; satisfied: boolean }[] = [
-    { name: "REQUIREMENT_FIRST", satisfied: !(false) },
+    { name: "REQUIREMENT_FIRST", satisfied: input.requirementInRepositoryTruth },
     { name: "AUTHORITY_RESOLVED", satisfied: input.authorityClass !== "UNKNOWN" },
     { name: "DEPENDENCIES", satisfied: input.dependenciesSatisfied },
     { name: "CANDIDATE_CURRENT", satisfied: !input.candidateShaStale },

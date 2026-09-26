@@ -52,6 +52,7 @@ r.v5 = verifyCapability({ producerIdentity:"Daneel", verifierIdentity:"AX3", can
 
 // ── State derivation ──────────────────────────────────────────────────
 r.s1 = deriveState({ currentStage:"3", currentNode:"S0", requirementInRepositoryTruth:true, authorityClass:"REPOSITORY_TRUTH", dependenciesSatisfied:true, candidateSha:sha, candidateShaStale:false, verificationPresent:true, verificationStale:false, repositoryTruthPublished:true, nextEligibleAction:"S1" });
+r.s2 = deriveState({ currentStage:"3", currentNode:"S0", requirementInRepositoryTruth:false, authorityClass:"REPOSITORY_TRUTH", dependenciesSatisfied:true, candidateSha:sha, candidateShaStale:false, verificationPresent:true, verificationStale:false, repositoryTruthPublished:true, nextEligibleAction:null });
 
 console.log(JSON.stringify(r));
 `, ROOT], { encoding: "utf-8" });
@@ -84,6 +85,8 @@ check("v4 non-STOP → MISSING_VERIFICATION", r.v4 === "MISSING_VERIFICATION", r
 check("v5 non-durable → NON_DURABLE_EVIDENCE", r.v5 === "NON_DURABLE_EVIDENCE", r.v5);
 
 check("s1 state derived with next eligible S1, terminal ineligible", r.s1.nextEligibleAction === "S1" && r.s1.terminalDispositionEligibility === false, JSON.stringify(r.s1));
+check("s1 REQUIREMENT_FIRST invariant true when REQ in RT", r.s1.invariants.find(i => i.name === "REQUIREMENT_FIRST").satisfied === true, JSON.stringify(r.s1.invariants));
+check("s2 REQUIREMENT_FIRST invariant false when REQ absent", r.s2.invariants.find(i => i.name === "REQUIREMENT_FIRST").satisfied === false, JSON.stringify(r.s2.invariants));
 
 console.log(`\n${passed} passed, ${failed} failed`);
 if (failed) { console.log(failures.join("\n")); process.exit(1); }
