@@ -27,6 +27,7 @@
 - [🏗 Architecture](#-architecture)
 - [⚡ Features](#-features)
 - [🔧 Installation](#-installation)
+- [🧭 Operator Guide — v0.5.0 (Candidate)](#-operator-guide--v050-candidate)
 - [📁 Repository Structure](#-repository-structure)
 - [👤 Author](#-author)
 - [📄 License](#-license)
@@ -746,6 +747,125 @@ Then `/reload` in pi.
 - `npm install` requires network access on first installation
 - Bash 4.0+ associative arrays not used (compatible with macOS default bash 3.2)
 - `shellcheck` is recommended for development but not required at runtime
+
+---
+
+## 🧭 Operator Guide — v0.5.0 (Candidate)
+
+> **Governance status**
+>
+> ```text
+> v0.5.0          = CANDIDATE  (NOT active canon)
+> ACTIVE_CANON    = NO
+> LEGACY_CANON_STATE = CURRENT EFFECTIVE BASELINE
+> cutover         = separate Owner boundary (NOT yet authorized)
+> ```
+>
+> The legacy operating model remains the **current effective baseline** until a
+> separately-authorized Canonical Cutover. The v0.5.0 candidate is a canary and
+> is not activated by this document.
+
+### What's New
+
+- **Deterministic operating model (S1)** — a small machine-readable state
+  contract (`src/araya/operating-model/`) with fail-closed pre-action and
+  pre-disposition gates, over the existing runtime. No new engine, no new
+  persistent authority store.
+- **Live state derivation** — operating state (stage authorization, current
+  node, next eligible action, blocker) is derived from Repository Truth +
+  Approved Plan + current durable evidence at each work-cycle start. There is
+  no manually-maintained operating state file; any transient cache is
+  automatically written from derived authoritative inputs, safely disposable,
+  and its absence/corruption **fails closed** (never silently permissive).
+- **Canonical portable bundle + installer** — `araya-install.sh` (external
+  SHA-256 trust anchor), `ops/make-bundle.sh` (bundle builder), and
+  `ops/bootstrap-installer.sh` (state-safe PRESENT/MISSING/UNKNOWN
+  materialization with deterministic rollback).
+
+### What Changed
+
+- Manual operating state is **removed as a second authority store**; state is
+  derived, and the disposable cache has authority NONE.
+- Verification is moving to a **persona-free** capability invariant:
+  `producer != verifier` + exact candidate SHA + `STOP` + durable evidence. No
+  specific persona name is required.
+- The installer (v0.10.0 line) was hardened: exactly one canonical extension
+  (`~/.pi/agent/extensions/araya/index.ts`), legacy `araya.ts` removed, and
+  duplicate-registration detection.
+
+### What Still Works
+
+- `./install.sh` / `araya-setup.sh` one-command setup and `--check` preflight.
+- `/araya` command suite, `/araya:man` discovery, `/araya:status`, agent roster.
+- Skills, prompts, and agent definitions (symlink/copy install unchanged).
+- PostOffice, Relay, catalog, and delegation runtime paths.
+
+### Under Future Assessment
+
+- **AX3** — REQ-053 records `AX3_DEPRECATION_AUTHORIZED = NO`. AX3 is **under
+  future value/functionality/deprecation assessment only**; no deprecation,
+  deletion, or retirement is planned or authorized by this document.
+- **Coordinator verification tooling** — the coordinator merge gate is being
+  aligned to the persona-free verification invariant; do not assume any
+  historical persona-bound path is retired until coordinator Repository Truth
+  proves it.
+- **Legacy `araya.ts` extension** — removed; canonical path is
+  `extensions/araya/index.ts`.
+
+### Migration
+
+Running the installer automatically migrates older installations: the legacy
+`araya.ts` registration is backed up and removed, the canonical extension is
+symlinked, and any file-copy `araya/index.ts` is replaced with a symlink. See
+“Legacy Migration Behavior” above for the full table.
+
+### Fresh Installation
+
+```bash
+git clone git@github.com:mahg-es/araya.git
+cd araya
+./install.sh            # then /reload in pi
+```
+
+Alternatively, from a portable bundle (see below), materialize the canonical
+installer on a machine where it is MISSING and run it.
+
+### Existing Installation / Update
+
+```bash
+cd /path/to/araya
+git pull origin dev-mahg
+./install.sh --force    # PRESENT installer → REUSE; re-symlinks + deps
+```
+
+`--force` removes legacy registrations, re-creates the canonical symlink, and
+reinstalls dependencies without destroying unrelated user files.
+
+### Portable Bundle
+
+A self-contained, portable ARAYA bundle ZIP carries an embedded canonical
+installer and a `MANIFEST.sha256` for contained-file integrity.
+
+```bash
+ops/make-bundle.sh <bundle-id> <payload-dir> araya-install.sh <output.zip>
+# external EXPECTED_SHA256 is computed AFTER the ZIP is sealed (trust anchor)
+
+araya-install.sh <bundle.zip> <expected-sha256>
+ops/bootstrap-installer.sh <bundle.zip> <sha256> "$HOME/bin/araya-install.sh" materialize
+```
+
+Trust chain: external `EXPECTED_SHA256` → verify ZIP → internal `MANIFEST.sha256`
+→ verify installer → materialize. `PRESENT → REUSE`, `MISSING → materialize`,
+`UNKNOWN → BLOCK` (resolved by evidence, never treated as MISSING).
+
+### Rollback / Recovery
+
+- **Installer rollback:** `install.sh` snapshots the prior installation to
+  `~/.pi/agent/.araya-backup-<timestamp>/` and restores it automatically on
+  failure; manual restore is documented in “Backup and Rollback” above.
+- **Bundle rollback:** `ops/bootstrap-installer.sh … rollback` restores the
+  exact pre-state (`PRESENT` → restore pre-hash; `MISSING` → remove only
+  slice-materialized files; `UNKNOWN` → no mutation performed).
 
 ---
 
