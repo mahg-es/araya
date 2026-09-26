@@ -274,31 +274,50 @@ export default function (pi: ExtensionAPI) {
   // must NOT silently degrade into ungoverned execution: the pre-action gate
   // blocks mutating tools and the pre-disposition gate refuses terminal
   // settlement (both fail closed).
-  const MUTATING_TOOLS = new Set(["bash", "edit", "write"]);
 
-  pi.on("agent_before_settle", async (_event: any, _ctx: any) => {
+  pi.on("agent_before_settle", async (event: any, _ctx: any) => {
     try {
       const { enforcePreDisposition } = await import(resolve(root, "dist/araya/operating-model/runtime-enforcement"));
-      return enforcePreDisposition(root);
+      // Pass the real lifecycle event so the gate can respect
+      // `event.context.canContinue` and, when needed, create a legitimate
+      // runnable next-turn context instead of a blind `continue: true`.
+      return enforcePreDisposition(root, event ?? {});
     } catch {
       // Fail closed: enforcement module unavailable → cannot authorize a
-      // terminal settlement. Reject settlement until state can be derived.
-      return { continue: true };
+      // terminal settlement. Never return an invalid `continue: true` without a
+      // runnable context. When the boundary is already runnable we may request
+      // one continuation; otherwise surface an observable fail-closed condition.
+      if (event?.context?.canContinue === true) return { continue: true };
+      return {
+        entries: [{
+          type: "custom",
+          customType: "araya_enforcement_unavailable",
+          data: { reason: "ARAYA runtime enforcement module unavailable — fail-closed (no invalid continuation)" },
+        }],
+      };
     }
   });
 
   pi.on("tool_call", async (event: any, _ctx: any) => {
+    const toolName = event?.toolName ?? "";
+    const command = toolName === "bash" ? String(event?.input?.command ?? "") : "";
     try {
       const { enforcePreAction } = await import(resolve(root, "dist/araya/operating-model/runtime-enforcement"));
-      return enforcePreAction(root, event?.toolName ?? "");
+      return enforcePreAction(root, toolName, command);
     } catch {
-      // Fail closed: enforcement module unavailable → block mutating tools.
-      // Read-only tools are unaffected (precise governed-action boundary).
-      const toolName = event?.toolName ?? "";
-      if (MUTATING_TOOLS.has(toolName)) {
+      // Fail closed: enforcement module unavailable → block mutating tools
+      // (edit/write + any bash that is not confidently read-only). Read-only
+      // tools are unaffected (precise governed-action boundary).
+      if (toolName === "edit" || toolName === "write") {
         return {
           block: true,
           reason: `ARAYA: mandatory runtime enforcement module unavailable — blocked mutating tool "${toolName}" (fail-closed)`,
+        };
+      }
+      if (toolName === "bash") {
+        return {
+          block: true,
+          reason: "ARAYA: mandatory runtime enforcement module unavailable — blocked bash (fail-closed)",
         };
       }
       return undefined;
