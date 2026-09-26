@@ -6,8 +6,11 @@
  *   - pre-disposition gate  → `agent_before_settle` (fires before final settlement)
  *   - pre-action gate       → `tool_call` (fires before a mutating tool executes)
  *
- * State is DERIVED from a transient marker (`.araya/operating-model/state.json`),
- * not a persistent authority store. NEW_RUNTIME_ENGINES=0, NEW_PERSONAS=0.
+ * Operating state is DERIVED, not stored: `.araya/operating-model/state.json` is a
+ * NON-TRACKED transient cache (gitignored), reconstructed at each work-cycle start
+ * from Repository Truth + Approved Plan + current evidence. It is NOT an authority
+ * store, NOT manually maintained, and safely disposable. NEW_RUNTIME_ENGINES=0,
+ * NEW_PERSONAS=0, NEW_PERSISTENT_AUTHORITY_STORES=0.
  */
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -23,6 +26,8 @@ export interface TransientState {
 const MUTATING_TOOLS = new Set(["bash", "edit", "write"]);
 
 export function readState(root: string): TransientState {
+  // Transient, non-authoritative, reconstructable cache (gitignored). Absence or
+  // corruption yields UNKNOWN — never a fabricated authoritative state.
   const p = path.join(root, ".araya", "operating-model", "state.json");
   try {
     const raw = fs.readFileSync(p, "utf-8");
@@ -34,8 +39,9 @@ export function readState(root: string): TransientState {
       blocker: j.blocker === true,
     };
   } catch {
-    // No state marker → no enforcement signal. Fail-open only for unknown state;
-    // enforcement activates once the marker declares an authorized next action.
+    // No/absent cache → no derived enforcement signal. This is a reconstruction
+    // gap, not authoritative state; enforcement derives at the next work-cycle
+    // boundary from Repository Truth.
     return { stageAuthorized: false, currentNode: "", nextEligibleAction: null, blocker: false };
   }
 }
