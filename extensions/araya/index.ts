@@ -270,13 +270,20 @@ export default function (pi: ExtensionAPI) {
 
   // ── S1 Operating-Model Runtime Enforcement (ADR-0021 / REQ-051) ────────
   // Wire the fail-closed gates into the real agent lifecycle so they are
-  // unavoidable, not merely callable.
+  // unavoidable, not merely callable. A missing mandatory enforcement module
+  // must NOT silently degrade into ungoverned execution: the pre-action gate
+  // blocks mutating tools and the pre-disposition gate refuses terminal
+  // settlement (both fail closed).
+  const MUTATING_TOOLS = new Set(["bash", "edit", "write"]);
+
   pi.on("agent_before_settle", async (_event: any, _ctx: any) => {
     try {
       const { enforcePreDisposition } = await import(resolve(root, "dist/araya/operating-model/runtime-enforcement"));
       return enforcePreDisposition(root);
     } catch {
-      return undefined;
+      // Fail closed: enforcement module unavailable → cannot authorize a
+      // terminal settlement. Reject settlement until state can be derived.
+      return { continue: true };
     }
   });
 
@@ -285,6 +292,15 @@ export default function (pi: ExtensionAPI) {
       const { enforcePreAction } = await import(resolve(root, "dist/araya/operating-model/runtime-enforcement"));
       return enforcePreAction(root, event?.toolName ?? "");
     } catch {
+      // Fail closed: enforcement module unavailable → block mutating tools.
+      // Read-only tools are unaffected (precise governed-action boundary).
+      const toolName = event?.toolName ?? "";
+      if (MUTATING_TOOLS.has(toolName)) {
+        return {
+          block: true,
+          reason: `ARAYA: mandatory runtime enforcement module unavailable — blocked mutating tool "${toolName}" (fail-closed)`,
+        };
+      }
       return undefined;
     }
   });

@@ -123,21 +123,22 @@ export function enforcePreDisposition(root: string): { continue?: boolean } | un
 }
 
 /**
- * Pre-action enforcement. Return `{ action: "handled" }` to block a mutating
- * tool when prerequisites are unresolved (fail-closed) OR when authoritative
- * state is UNKNOWN. Return undefined to allow the tool. Only mutating tools gated.
+ * Pre-action enforcement. Return `{ block: true }` (the Pi `tool_call` event
+ * result shape) to block a mutating tool when prerequisites are unresolved
+ * (fail-closed) OR when authoritative state is UNKNOWN. Return undefined to
+ * allow the tool. Only mutating tools gated.
  */
-export function enforcePreAction(root: string, toolName: string): { action: string } | undefined {
+export function enforcePreAction(root: string, toolName: string): { block: boolean; reason?: string } | undefined {
   if (!MUTATING_TOOLS.has(toolName)) return undefined;
   const s = readState(root);
   // Fail closed: UNKNOWN state blocks mutation until state is derived/resolved.
   if (s.status === "UNKNOWN") {
-    return { action: "handled" };
+    return { block: true, reason: "operating state UNKNOWN — fail closed (derive/resolve before mutation)" };
   }
   // Fail-closed on the automatic stage boundary: mutation is blocked when the
   // operating state declares the stage NOT authorized.
   if (!s.stageAuthorized) {
-    return { action: "handled" };
+    return { block: true, reason: "stage NOT authorized — mutation blocked (fail-closed)" };
   }
   return undefined;
 }
