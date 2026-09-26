@@ -36,12 +36,32 @@ export async function gitMergeGate(input: Record<string, unknown>, ctx: { root: 
   const expectedHead = evidenceCommit ?? candidate;
   checks.push(check("head_current_remote", remoteSha.startsWith(expectedHead) || expectedHead.startsWith(remoteSha.slice(0, 12)), `remote PR head=${remoteSha.slice(0, 12)} vs expected=${expectedHead.slice(0, 12)}`));
 
-  // gate reports: Teresa PASS + Rolando VERIFIED on the exact same SHA
-  const runsDir = path.join(root, ".araya", "runs");
-  const teresa = findGateReports(runsDir, /teresa/i, candidate);
-  const rolando = findGateReports(runsDir, /rolando/i, candidate);
-  checks.push(check("teresa_exact_sha", teresa.some((r) => r.disposition === "PASS" && r.sha === candidate), teresa.length ? `reports=${teresa.length}` : "no teresa report for candidate", teresa.map((r) => r.path)));
-  checks.push(check("rolando_exact_sha", rolando.some((r) => /^VERIFIED/.test(r.disposition) && r.sha === candidate), rolando.length ? `reports=${rolando.length}` : "no rolando report for candidate", rolando.map((r) => r.path)));
+  // Governed capability verification (ADR-0011 D1 / ADR-0019 / agent-operating-standard §10):
+  // producer != verifier + exact candidate SHA + STOP + durable ledger evidence.
+  // Replaces the stale persona-name sentinels (Teresa/Rolando). No bypass.
+  const ledgerPath = path.join(root, ".araya", "ax", "ledger", "score.ndjson");
+  let capabilityVerified = false;
+  let capabilityDetail = "no governed capability verification for candidate";
+  if (fs.existsSync(ledgerPath)) {
+    for (const line of fs.readFileSync(ledgerPath, "utf-8").split("\n")) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      let e: any;
+      try { e = JSON.parse(trimmed); } catch { continue; }
+      if (
+        e.disposition === "STOP" &&
+        e.commit === candidate &&
+        typeof e.producer === "string" && e.producer &&
+        typeof e.emitter === "string" && e.emitter &&
+        e.producer !== e.emitter
+      ) {
+        capabilityVerified = true;
+        capabilityDetail = `producer=${e.producer} verifier=${e.emitter} STOP @ ${candidate}`;
+        break;
+      }
+    }
+  }
+  checks.push(check("capability_verification", capabilityVerified, capabilityDetail));
 
   // evidence-only diff X..Y (when evidence commit provided)
   if (evidenceCommit) {

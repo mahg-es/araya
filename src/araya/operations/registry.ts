@@ -17,6 +17,13 @@ import {
   gitFeaturePrGate,
 } from "./git-handlers";
 import { testRelayWrapper, operationResolve, RELAY_SUITES } from "./misc-handlers";
+import {
+  operatingModelPreActionGate,
+  operatingModelPreDispositionGate,
+  operatingModelResolveAuthority,
+  operatingModelVerifyCapability,
+  operatingModelDeriveState,
+} from "./operating-model-handlers";
 
 export interface RegisteredOperation {
   definition: OperationDefinition;
@@ -34,6 +41,11 @@ const HANDLERS: Record<string, OperationHandler> = {
   "test.relay-behavior": (input, ctx) => testRelayWrapper("test.relay-behavior", input, ctx),
   "test.relay-recovery": (input, ctx) => testRelayWrapper("test.relay-recovery", input, ctx),
   "test.relay-idempotency": (input, ctx) => testRelayWrapper("test.relay-idempotency", input, ctx),
+  "operating-model.pre-action-gate": operatingModelPreActionGate,
+  "operating-model.pre-disposition-gate": operatingModelPreDispositionGate,
+  "operating-model.resolve-authority": operatingModelResolveAuthority,
+  "operating-model.verify-capability": operatingModelVerifyCapability,
+  "operating-model.derive-state": operatingModelDeriveState,
 };
 
 export class OperationRegistry {

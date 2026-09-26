@@ -37,7 +37,7 @@ check("catalog loads without errors", list.code === 0, list.out.slice(0, 200));
 let ops = [];
 try { ops = extractJson(list.out); } catch { /* handled below */ }
 check("list emits JSON array", Array.isArray(ops) && ops.length >= 16, `got ${ops.length}`);
-check("12 active operations", ops.filter((o) => o.status === "active").length === 12);
+check("17 active operations", ops.filter((o) => o.status === "active").length === 17);
 check("6 design-only operations", ops.filter((o) => o.status === "design-only").length === 6);
 
 // every operation has required contract fields
