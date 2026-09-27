@@ -1,0 +1,631 @@
+openapi: 3.1.0
+info:
+  title: ARAYA PostOffice Tracing API
+  description: |
+    HTTP API exposing the ARAYA PostOffice messaging + trace library.
+
+    PostOffice is agent-to-agent messaging + historical trace. It is explicitly
+    NOT an authority, an approval ledger, a workflow state machine, canonical
+    repository truth, or an automatic continuation controller.
+
+    Endpoints map 1:1 to the PostOffice library methods:
+
+    | Endpoint                          | Library method        | Operation ID     |
+    |-----------------------------------|-----------------------|------------------|
+    | POST   /v1/send                   | PostOffice.send       | sendMessage      |
+    | GET    /v1/messages/{messageId}   | PostOffice.get        | getMessage       |
+    | POST   /v1/messages/{messageId}/ack | PostOffice.ack      | ackMessage       |
+    | GET    /v1/trace/{correlationId}  | PostOffice.trace      | traceCorrelation |
+    | GET    /v1/messages               | PostOffice.read_all   | listMessages     |
+
+    Messages are append-only JSONL records persisted at
+    `.araya/postoffice/thread.jsonl`. IDs are `msg-<hex>` / `ack-<hex>`
+    (cryptographic random, no auto-increment). Every message carries an
+    optional `correlation_id` so an instruction can be followed through
+    delegation to its result.
+
+    See ADR-0003 for the decision to expose PostOffice as an advisory,
+    non-authority tracing API with correlation IDs.
+  version: 1.0.0
+  contact:
+    name: ARAYA AX3
+    url: https://github.com/mahg-es/araya
+
+servers:
+  - url: https://postoffice.araya.local/v1
+    description: Production PostOffice tracing endpoint
+
+security:
+  - jwt: []
+
+tags:
+  - name: messages
+    description: Send, retrieve, acknowledge, and list PostOffice messages
+  - name: trace
+    description: Trace message lineage by correlation ID
+
+paths:
+  /send:
+    post:
+      tags: [messages]
+      summary: Send a message into the PostOffice
+      description: |
+        Appends a new message to the thread. Maps to `PostOffice.send`.
+
+        Message IDs are generated server-side as `msg-<hex>` and are never
+        auto-incremented. The returned object is the complete stored record
+        including `id`, `timestamp`, and the `acknowledged` flag (initially
+        `false`).
+      operationId: sendMessage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageSendRequest'
+            examples:
+              note:
+                summary: Simple note
+                value:
+                  sender: daneel
+                  recipient: agent-7dd55a
+                  subject: handoff
+                  body: "begin design work"
+                  message_type: note
+                  correlation_id: P123
+              handoff:
+                summary: Handoff correlated to a PonyExpress instruction
+                value:
+                  sender: daneel
+                  recipient: agent-7dd55a
+                  subject: trace-api-design
+                  body: "see P123"
+                  message_type: handoff
+                  correlation_id: P123
+      responses:
+        '201':
+          description: Message created
+          headers:
+            Location:
+              description: URI of the newly created message
+              schema:
+                    type: string
+                    format: uri-reference
+                    example: /v1/messages/msg-a1b2c3d4e5f6
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                id: msg-a1b2c3d4e5f6
+                sender: daneel
+                recipient: agent-7dd55a
+                timestamp: '2026-09-27T13:00:00Z'
+                correlation_id: P123
+                message_type: note
+                subject: handoff
+                body: begin design work
+                acknowledged: false
+                acknowledged_at: null
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /messages/{messageId}:
+    get:
+      tags: [messages]
+      summary: Retrieve a single message by ID
+      description: |
+        Fetches the complete message record for the given `messageId`.
+        Maps to `PostOffice.get`.
+
+        The `messageId` must match the pattern `msg-[0-9a-f]{12}`. If the
+        message does not exist a `404` is returned. Acknowlegement records
+        (created via `ack`) are distinct append-only records and are not
+        returned here; use `GET /v1/trace/{correlationId}` to see a message
+        alongside its acknowledgements.
+      operationId: getMessage
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          description: The message identifier (`msg-<hex>`).
+          schema:
+            type: string
+            pattern: '^msg-[0-9a-f]{12}$'
+            example: msg-a1b2c3d4e5f6
+      responses:
+        '200':
+          description: The requested message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                id: msg-a1b2c3d4e5f6
+                sender: daneel
+                recipient: agent-7dd55a
+                timestamp: '2026-09-27T13:00:00Z'
+                correlation_id: P123
+                message_type: note
+                subject: handoff
+                body: begin design work
+                acknowledged: false
+                acknowledged_at: null
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /messages/{messageId}/ack:
+    post:
+      tags: [messages]
+      summary: Acknowledge a message
+      description: |
+        Appends an acknowledgement record for `messageId`. Maps to
+        `PostOffice.ack`.
+
+        Acknowledgement is append-only: a new `ack-<hex>` record is created
+        and appended to the thread. The original message is never mutated
+        in-place. The acknowledgement carries the same `correlation_id` as
+        the original message and a `refers_to` field pointing back to it.
+      operationId: ackMessage
+      parameters:
+        - name: messageId
+          in: path
+          required: true
+          description: The message to acknowledge (`msg-<hex>`).
+          schema:
+            type: string
+            pattern: '^msg-[0-9a-f]{12}$'
+            example: msg-a1b2c3d4e5f6
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AckRequest'
+            example:
+              ack_by: agent-7dd55a
+      responses:
+        '201':
+          description: Acknowledgement record created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              example:
+                id: ack-9f8e7d6c5b4a
+                message_type: acknowledgement
+                refers_to: msg-a1b2c3d4e5f6
+                acknowledged_by: agent-7dd55a
+                timestamp: '2026-09-27T13:05:00Z'
+                correlation_id: P123
+                subject: 'ack: handoff'
+                body: ''
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Message already acknowledged
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: already_acknowledged
+                error: 'Message msg-a1b2c3d4e5f6 has already been acknowledged.'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /trace/{correlationId}:
+    get:
+      tags: [trace]
+      summary: Trace all messages sharing a correlation ID
+      description: |
+        Returns every message (and acknowledgement) that carries the given
+        `correlationId`, in append order. Maps to `PostOffice.trace`.
+
+        This enables following a Professor-originated PonyExpress instruction
+        through PostOffice delegation and results end-to-end.
+      operationId: traceCorrelation
+      parameters:
+        - name: correlationId
+          in: path
+          required: true
+          description: The correlation identifier shared across an instruction
+            and its delegation chain.
+          schema:
+            type: string
+            pattern: '^[A-Za-z0-9][A-Za-z0-9_-]{2,63}$'
+            example: P123
+      responses:
+        '200':
+          description: All messages sharing the correlation ID (may be empty)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+              example:
+                - id: msg-a1b2c3d4e5f6
+                  sender: daneel
+                  recipient: agent-7dd55a
+                  timestamp: '2026-09-27T13:00:00Z'
+                  correlation_id: P123
+                  message_type: handoff
+                  subject: trace-api-design
+                  body: see P123
+                  acknowledged: true
+                  acknowledged_at: '2026-09-27T13:05:00Z'
+                - id: ack-9f8e7d6c5b4a
+                  message_type: acknowledgement
+                  refers_to: msg-a1b2c3d4e5f6
+                  acknowledged_by: agent-7dd55a
+                  timestamp: '2026-09-27T13:05:00Z'
+                  correlation_id: P123
+                  subject: 'ack: trace-api-design'
+                  body: ''
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /messages:
+    get:
+      tags: [messages]
+      summary: List all messages (paginated)
+      description: |
+        Returns a paginated view of every message in the thread. Maps to
+        `PostOffice.read_all`.
+
+        The thread is append-only; pagination reflects insertion order
+        (newest last). Acknowledgement records are included in the result set
+        because they are appended to the same `thread.jsonl` log.
+      operationId: listMessages
+      parameters:
+        - name: page
+          in: query
+          description: 1-based page number.
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Page size.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+            default: 50
+            example: 50
+      responses:
+        '200':
+          description: A page of messages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageList'
+              example:
+                messages:
+                  - id: msg-a1b2c3d4e5f6
+                    sender: daneel
+                    recipient: agent-7dd55a
+                    timestamp: '2026-09-27T13:00:00Z'
+                    correlation_id: P123
+                    message_type: handoff
+                    subject: trace-api-design
+                    body: see P123
+                    acknowledged: true
+                    acknowledged_at: '2026-09-27T13:05:00Z'
+                  - id: ack-9f8e7d6c5b4a
+                    message_type: acknowledgement
+                    refers_to: msg-a1b2c3d4e5f6
+                    acknowledged_by: agent-7dd55a
+                    timestamp: '2026-09-27T13:05:00Z'
+                    correlation_id: P123
+                    subject: 'ack: trace-api-design'
+                    body: ''
+                pagination:
+                  page: 1
+                  limit: 50
+                  total: 2
+                  has_more: false
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        JSON Web Token issued by the ARAYA authentication service. Required on
+        every request. The PostOffice API itself is advisory and does not
+        confer authority; JWT only controls who may read/write the trace.
+
+  schemas:
+    Message:
+      type: object
+      description: |
+        A single append-only record in the PostOffice thread. Either a message
+        (`message_type` != `acknowledgement`, `id` starts with `msg-`) or an
+        acknowledgement (`message_type` == `acknowledgement`, `id` starts with
+        `ack-` and has a `refers_to` field).
+      required:
+        - id
+        - sender
+        - recipient
+        - timestamp
+        - message_type
+        - subject
+        - acknowledged
+      properties:
+        id:
+          type: string
+          description: Unique record identifier — `msg-<hex>` for messages,
+            `ack-<hex>` for acknowledgements (12 hex chars, cryptographic
+            random, never auto-incremented).
+          pattern: '^(msg|ack)-[0-9a-f]{12}$'
+          example: msg-a1b2c3d4e5f6
+        sender:
+          type: string
+          description: Originating agent or authority.
+          example: daneel
+        recipient:
+          type: string
+          description: Intended recipient agent.
+          example: agent-7dd55a
+        timestamp:
+          type: string
+          format: date-time
+          description: UTC timestamp of record creation (ISO 8601 with `Z`).
+          example: '2026-09-27T13:00:00Z'
+        correlation_id:
+          type: string
+          nullable: true
+          description: Correlation identifier linking this record to a
+            PonyExpress instruction and its downstream delegation chain.
+            `null` when no correlation exists.
+          example: P123
+        message_type:
+          type: string
+          description: Logical type of the record. `note` (default), `handoff`,
+            `delivery`, `acknowledgement`, or other operational type.
+          default: note
+          example: note
+        subject:
+          type: string
+          description: Short human-readable subject line.
+          example: handoff
+        body:
+          type: string
+          description: Free-text body / payload.
+          example: begin design work
+        acknowledged:
+          type: boolean
+          description: |
+            Whether this *message* has been acknowledged. `true` when an
+            `ack-` record referring to this message exists. Always `false` for
+            acknowledgement records themselves.
+          default: false
+          example: false
+        acknowledged_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: UTC timestamp of acknowledgement, or `null` if not yet
+            acknowledged.
+          example: '2026-09-27T13:05:00Z'
+        refers_to:
+          type: string
+          nullable: true
+          description: |
+            Present only on acknowledgement records; the `id` of the message
+            being acknowledged.
+          example: msg-a1b2c3d4e5f6
+        acknowledged_by:
+          type: string
+          nullable: true
+          description: |
+            Present only on acknowledgement records; the agent that
+            acknowledged the message.
+          example: agent-7dd55a
+
+    MessageSendRequest:
+      type: object
+      description: Request body for sending a new message.
+      required:
+        - recipient
+        - subject
+      properties:
+        sender:
+          type: string
+          description: Originating agent. Defaults to `daneel` when omitted.
+          default: daneel
+          example: daneel
+        recipient:
+          type: string
+          description: Intended recipient agent.
+          example: agent-7dd55a
+        subject:
+          type: string
+          description: Short human-readable subject line.
+          example: handoff
+        body:
+          type: string
+          description: Free-text body / payload.
+          default: ''
+          example: begin design work
+        message_type:
+          type: string
+          description: Logical message type.
+          default: note
+          example: note
+        correlation_id:
+          type: string
+          nullable: true
+          description: Correlation identifier to link this message to a
+            PonyExpress instruction. `null` when no correlation exists.
+          example: P123
+
+    AckRequest:
+      type: object
+      description: Request body for acknowledging a message. All fields optional;
+        the server derives `acknowledged_by` from the authenticated principal
+        or the message's original recipient when `ack_by` is not supplied.
+      properties:
+        ack_by:
+          type: string
+          nullable: true
+          description: The agent acknowledging the message. When `null`,
+            defaults to the original message's `recipient`.
+          example: agent-7dd55a
+
+    Pagination:
+      type: object
+      description: Cursor-free page metadata.
+      required:
+        - page
+        - limit
+        - total
+        - has_more
+      properties:
+        page:
+          type: integer
+          minimum: 1
+          description: Current page number (1-based).
+          example: 1
+        limit:
+          type: integer
+          minimum: 1
+          description: Number of items requested per page.
+          example: 50
+        total:
+          type: integer
+          minimum: 0
+          description: Total number of records in the thread.
+          example: 2
+        has_more:
+          type: boolean
+          description: Whether additional pages exist.
+          example: false
+
+    MessageList:
+      type: object
+      description: A paginated list of messages.
+      required:
+        - messages
+        - pagination
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          description: The page of message records.
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    Error:
+      type: object
+      description: Standard error response.
+      required:
+        - code
+        - error
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+          example: not_found
+        error:
+          type: string
+          description: Human-readable error message.
+          example: 'Message msg-a1b2c3d4e5f6 not found in thread.'
+
+  responses:
+    BadRequest:
+      description: Invalid request — validation failure or malformed body.
+      headers:
+        X-Request-ID:
+          description: Correlation identifier for the API request.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: bad_request
+            error: 'recipient and subject are required.'
+
+    Unauthorized:
+      description: Missing or invalid authentication credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: unauthorized
+            error: 'Valid JWT bearer token is required.'
+
+    Forbidden:
+      description: Authenticated but not authorized to perform the operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: forbidden
+            error: 'Token does not grant PostOffice scope.'
+
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: not_found
+            error: 'Message msg-a1b2c3d4e5f6 not found in thread.'
+
+    ServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: internal_error
+            error: 'Unexpected error writing to the store.'

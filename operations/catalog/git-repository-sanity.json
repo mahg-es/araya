@@ -1,0 +1,31 @@
+{
+  "operation_id": "git.repository-sanity",
+  "version": "1.0.0",
+  "status": "active",
+  "domain": "git",
+  "title": "Repository Sanity",
+  "description": "Read-only inspection of repository existence, remotes, branches, divergence, in-progress operations, and (optionally) worktree authorization.",
+  "canonical_handler": "araya_lib.git_ops.git_repository_sanity",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "repo": {"type": "string"},
+      "authorized_worktree_root": {"type": "string"}
+    }
+  },
+  "output_schema": {"type": "object", "contract": "OperationResult"},
+  "side_effects": [],
+  "risk_level": "read-only",
+  "required_authority": "any",
+  "preconditions": ["repository truth fetched when required"],
+  "postconditions": ["OperationResult contract-valid"],
+  "evidence": ["checks[]", "evidence[]", "evaluated_sha"],
+  "idempotency": "safe to re-run",
+  "rollback": "no writes to roll back",
+  "adapters": ["cli"],
+  "aliases": ["repo sanity", "sanity"],
+  "intents": ["check repository state", "is the repository sane"],
+  "tests": ["tests/test_operations.py"],
+  "owner": "araya",
+  "source_provenance": "recovered from legacy operations/git-repository-sanity.yaml (ponny-express-10010); authority coupling removed"
+}

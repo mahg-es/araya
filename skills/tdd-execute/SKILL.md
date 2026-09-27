@@ -1,61 +1,40 @@
 ---
 name: tdd-execute
-description: "Execute the test suite and report results in red/green format."
----
+description: "Execute the test suite and report results in red/green format with actionable failures."
 ---
 
 # TDD Execute
 
-Execute the test suite and report results in red/green format.
-
-## What problem this solves
-Tests exist but need to be executed, with results clearly communicated so the 
-team knows what passes, what fails, and what to fix next.
+Execute a test suite and report results in red/green format, with actionable
+failure messages.
 
 ## When to use
-After `tdd-generate` has produced test files, or anytime tests need to be run.
 
-## Input
-Project test configuration (vitest.config.ts, jest.config.js, etc.) and test files.
-
-## Output
-A red/green test report:
-
-```
-🧪 TDD Test Results
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ PASS  tests/login.test.ts (3 tests)
-   ✓ should authenticate with valid credentials (45ms)
-   ✓ should reject with 401 for wrong password (12ms)
-   ✓ should lock account after 5 failed attempts (23ms)
-
-❌ FAIL  tests/register.test.ts (2/3 passing)
-   ✗ should validate email format (Error: Expected 400, got 500)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary: 5/6 passing | 1 failing
-📈 Coverage: 0% (expected — implementation not started)
-🟡 Status: RED — 1 test failing, implementation needed
-```
+After test files exist, or any time tests need to be run to gate implementation.
 
 ## Steps
-1. Detect the project's test runner (check for vitest, jest, or other config)
-2. Execute the test suite: `npx vitest run` or `npx jest`
-3. Parse the output for pass/fail counts, individual test results, and coverage
-4. Format results clearly with ✅ PASS / ❌ FAIL indicators
-5. Report summary: pass count, fail count, coverage percentage
-6. Set status: 🟢 GREEN (all pass) or 🔴 RED (failures exist)
-7. For failures, provide the specific error message and location
+
+1. Detect the project's test runner.
+2. Execute the suite via the deterministic `test.execute` operation (single
+   run, not watch mode) — do not re-derive how to run the tool:
+   ```bash
+   araya operation execute test.execute command="pytest -q"
+   ```
+3. Interpret the structured result: exit code, pass/fail counts.
+4. Report with PASS/FAIL per test and a summary.
+5. Set status: GREEN (all pass) or RED (failures exist).
+6. For failures, surface the specific error and location — reason only about
+   the failure and the next action, not about how to run the suite.
 
 ## Rules
-- Red means stop — do not proceed to implementation if tests can't even compile
-- Green without implementation means tests are wrong — verify test logic
-- Coverage is informative, not a target — don't chase 100% blindly
-- Every test failure must have an actionable error message
-- Run tests in CI mode (single run, not watch mode) for reporting
-## Done Criteria
 
-- [ ] All steps completed as specified
-- [ ] Output validated against requirements
-- [ ] Status reported with confidence score
-- [ ] Evidence artifacts captured
+- Red means stop — do not proceed to implementation while tests fail to run.
+- Green without implementation means tests are wrong — verify test logic.
+- Coverage is informative, not a target.
+- Every failure must carry an actionable message.
+
+## Done criteria
+
+- [ ] Suite executed (not simulated)
+- [ ] Pass/fail counts reported with exact numbers
+- [ ] Each failure has an actionable message

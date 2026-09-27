@@ -1,637 +1,358 @@
-<div align="center">
-    <img src="https://raw.githubusercontent.com/mahg-es/araya/main/.araya/araya.svg" alt="ARAYA Logo" width="572" />
-    <h3><em>AI-Native SDLC Orchestration — Enterprise Governance for AI-Assisted Development</em></h3>
-</div>
+# ARAYA — AX3 v0.5.0
 
-<p align="center">
-    <strong>29 agents (27 active + 2 dormant). 120 skills. 12 domains. One pi session.</strong>
-</p>
+## What is ARAYA?
 
-<p align="center">
-    <a href="https://github.com/mahg-es/araya/releases/latest"><img src="https://img.shields.io/github/v/release/mahg-es/araya" alt="Latest Release"/></a>
-    <a href="https://github.com/mahg-es/araya/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mahg-es/araya" alt="License"/></a>
-    <a href="https://pi.dev"><img src="https://img.shields.io/badge/built%20on-pi.dev-blue" alt="Built on pi.dev"/></a>
-</p>
+ARAYA is an AI-engineer **operating model**: a minimal always-on kernel
+(`GPT-CONFIGURATION.md`) plus ten canonical Knowledge files (`K01`–`K10`) that
+govern authority, Repository Truth, stages, ADRs, product delivery, Git
+publication, installation bundles, orchestration, and templates.
 
----
+On top of that kernel sits the **capability foundation**: a small, reusable,
+agent-first set of deterministic operations, progressive-disclosure skills, a
+capability/delegation resolver, agent-to-agent and Professor channels
+(PostOffice / PonyExpress), runtime utilities, and an agent-first CLI. ARAYA is
+a methodology that runs *on top of* a host — it does not own the host.
 
-## Table of Contents
+### What problem it solves
 
-- [🤔 What is ARAYA?](#-what-is-araya)
-- [⚡ Quick Start](#-quick-start)
-- [📸 ARAYA in Action](#-araya-in-action)
-- [📋 Slash Command Reference](#-slash-command-reference)
-- [📦 Delivery Modes](#-delivery-modes)
-- [🤖 Agent Roster](#-agent-roster)
-- [🔧 CLI Reference](#-cli-reference)
-- [🏗 Architecture](#-architecture)
-- [⚡ Features](#-features)
-- [🔧 Installation](#-installation)
-- [📁 Repository Structure](#-repository-structure)
-- [👤 Author](#-author)
-- [📄 License](#-license)
+It gives an AI agent a small, governed, reusable engineering capability layer,
+so that a natural-language request resolves to the **right** capabilities and is
+executed by an **ephemeral** worker — without a permanent agent roster, a global
+host takeover, or a heavyweight orchestration engine.
 
----
+### How the pieces relate
 
-## 🤔 What is ARAYA?
-
-ARAYA is an **AI-native SDLC orchestration framework** built on [pi.dev](https://pi.dev). It transforms a single pi session into a complete AI DevOps organization — the equivalent of GitHub Actions + PMO + Jira + enterprise SDLC governance.
-
-**ARAYA** is named after the [Araya Peninsula](https://es.wikipedia.org/wiki/Pen%C3%ADnsula_de_Araya) in Venezuela — a remote, resilient land of ancient salt flats where ocean, desert, and sky converge. Like its namesake, ARAYA is built to last — not a fleeting tool, but a foundation.
-
-### Why ARAYA?
-
-Solo development becomes **team development**. You are never alone:
-
-> *"I built ARAYA because I know how to deliver software professionally, but I cannot afford an entire delivery organization. ARAYA gives a solo professional access to the structure, governance, specialization and discipline normally found in larger teams. Many AI tools help you write code. ARAYA helps you work like an organization. One person. Many specialists. Professional delivery."*
->
-> — **Manuel Alejandro Hernández Giuliani**, The Data Professor
-
-- 👑 **Manu** owns product direction, requirements, and acceptance criteria — The Data Professor's proxy
-- 👩‍💼 **Sonia** governs delivery — Program Director + organizational authority
-- 🌟 **Aurora** manages organizational capability — workforce, skills, hiring
-- 🤖 **Daneel** verifies reality — independent audit and repository truth
-- 🔧 **Valentina** builds the backend. 🎨 **Alejandra** builds the frontend.
-- 🧪 **Clara** and **Priya** ensure quality. 🛡️ **Diana** guards security.
-- 💰 **Lidia** validates profitability methodology. ☁️ **Junia** architects data platforms.
-- 🧠 **María** deploys local LLMs. 📚 **Priscila** writes the documentation.
-- *And 18 more specialists across every domain.*
-
-### How It Works
-
-```
-The Data Professor describes what to build
-           │
-           ▼
-Manu (PO) formalizes requirements + acceptance criteria
-           │
-           ▼
-Sonia orchestrates: SDD → BDD → TDD → Implementation → Review → Validation
-           │
-           ▼
-DAG-aware delegation: independent phases run in parallel
-           │
-           ▼
-Manu (PO) validates delivery against acceptance criteria
-           │
-           ▼
-Post-delivery review: DRR → IAR → CR → work package → next iteration
-           │
-           ▼
-Done. Traceable. Auditable. Governed.
+```text
+Professor  (human authority, final decision)
+  → Daneel (Pi user-layer agent; the Professor's right hand; persistent)
+    → ARAYA (project-scoped, opt-in operating model + capability foundation)
+      → capabilities  (which specializations the intent needs)
+        → skills        (procedural specialization, progressive disclosure)
+        → operations    (deterministic, explicitly-invoked code)
+          → worker      (ephemeral specialist composed from skills + operations)
 ```
 
----
+**`Daneel != ARAYA`.** Daneel is the Professor's personal Pi user-layer agent;
+ARAYA is a project-scoped, opt-in operating model that runs *on top of* a host
+and never owns or configures it.
 
-## ⚡ Quick Start
+## Current state
 
-### 1. Prerequisites
+- **Active canonical:** AX3 v0.5.0 (adopted 2026-09-20).
+- **Status:** clean core + capability foundation installed; Pi adapter,
+  ChatGPT bundle, and installer working.
+- The legacy ARAYA runtime (global Pi hooks, orchestration engines, permanent
+  agent roster, authority ledgers, relay state machine) is **archived** on Git
+  branches (`archive/araya-legacy-*`) and is **not** part of the active
+  product. Legacy capabilities return only after an individual product-value
+  review (see `docs/LEGACY-CAPABILITY-INVENTORY.md`).
 
-- [pi.dev](https://pi.dev) v0.76.0+
-- Node.js 22+
-- Any pi.dev supported model provider
+## What works now
 
-### 2. Install ARAYA
+1. Canonical core integrity (`sha256sum -c SHA256SUMS.txt`).
+2. Repository installer (`araya-install.sh`): core + capability foundation by
+   default, opt-in adapters, never touches global `~/.pi`.
+3. Automatic ARAYA project context: when Pi runs inside this repository, it
+   loads `AGENTS.md` (AX3 v0.5.0) automatically — no command needed.
+4. Explicit, project-scoped Pi adapter (`/araya <task>` in a project other
+   than this repository).
+5. Reproducible ChatGPT bundle (`bundle/chatgpt/build.sh`).
+6. **Capability foundation** — see below.
+
+### Capability foundation
+
+The foundation is a clean, reusable, agent-first layer. It deliberately has no
+global runtime, no authority ledger, and no orchestration engine.
+
+**Operations (deterministic code).** Reusable, parametrized, explicitly-invoked
+operations with a minimal API — `list`, `describe`, `resolve`, `execute`. Git
+operations are recovered as deterministic checks (repository sanity, merge
+gate, feature PR gate, feature start) and are never a global shell gate.
+
+**Skills (procedural specialization).** Skills are the primary unit of reusable
+procedural specialization, loaded by progressive disclosure: minimal metadata
+is always discoverable (`skills/index.json`), full instructions load only when
+a skill is selected, and resources load only when needed. The full library is
+never loaded into every context. Nine canonical skills exist:
+`adr-write`, `architecture-diagram`, `api-design`, `tdd-execute`,
+`test-authoring`, `security-review`, `git-publication`, `postoffice`,
+`ponyexpress`.
+
+Skills compose into one ephemeral specialist (e.g. a "review and safely publish
+a fix" task selects `test-authoring` + `tdd-execute` + `git-publication` +
+`security-review` and the corresponding deterministic operations).
+
+**Ephemeral agent model.** Specialist agents are ephemeral workers composed
+from a task + selected skills + selected operations + scoped context +
+permissions + runtime model. Their display names are randomly assigned and have
+no architectural meaning — capabilities and skills determine specialization,
+not names. There is no permanent persona roster.
+
+**Delegation.** A capability resolver plus an ephemeral-agent factory. A task
+is resolved to capabilities, skills, and deterministic operations; if no
+specialist is needed it executes directly, otherwise it composes an ephemeral
+specialist and hands it off for REAL native subagent execution, then traces the
+communication through PostOffice.
+
+The native subagent boundary: `delegate run` resolves, composes a scoped worker
+request, records the PostOffice handoff (delegation), and emits the worker
+prompt for the agent-facing caller to invoke through Pi's native `subagent`
+mechanism; `delegate result` records the worker's returned result and emits the
+correlation trace. The library never spawns the subagent itself — it provides
+the smallest adapter boundary so the caller invokes the host's native subagent
+without duplicating orchestration logic.
+
+**CLI (agent-first).** `cli/araya` provides stable, namespaced commands with
+structured parameters, `--json` output, stable exit codes, non-interactive
+execution, and machine-readable capability discovery:
 
 ```bash
-git clone git@github.com:mahg-es/araya.git
-cd araya
-./araya-setup.sh
+python3 cli/araya --json status
+python3 cli/araya --json operation list
+python3 cli/araya --json operation execute git.repository-sanity repo=/path/to/repo
+python3 cli/araya --json git merge-gate --pr 123 --candidate <sha> --base dev-mahg
+python3 cli/araya --json delegate "publish this branch to integration"
+python3 cli/araya --json delegate run --correlation P123 "verify the repository"
+python3 cli/araya --json delegate result --correlation P123 --worker <name> --status PASS
 ```
 
-### 3. Load in pi
+**PostOffice (agent ↔ agent).** Messaging + historical trace: sender, recipient,
+timestamp, correlation id, message type, subject, body, acknowledgement. It is
+**not** an authority, an approval ledger, a workflow state machine, canonical
+repository truth, or an automatic continuation controller.
 
-```
-/reload
-```
+**PonyExpress (Professor → Daneel / agents).** The Professor's explicit
+communication channel toward the agent system, with durable append-only
+traceability and correlation so an instruction can be followed through
+delegation and responses (`correlation_id = P123`).
 
-### 4. Run your first orchestrated delivery
+**Runtime utilities.** Read-only `model-context` (provider/model/reasoning —
+runtime info, not Daneel's operating model), opt-in `quota` read/guard, a
+`cycle` duration/copy helper, and a non-invasive `notifier`. None takes over
+the host.
 
-```
-/araya run --mode standard "Build a REST API for user registration"
-```
+## What is not available yet
 
-### 5. Check status
+1. The legacy permanent agent roster and orchestration engines — not restored;
+   specialists are now ephemeral and composed from skills/operations.
+2. The historical relay state machine (T0–T11/T12) — not restored; only the
+   L07 handoff/correlation/delivery/acknowledgement/trace is recovered.
+3. Global ARAYA integration — none, and none is planned: integration is
+   explicit/scoped by design.
+4. Most legacy domain skills remain deferred (81 of 128 reviewed) — see
+   `docs/legacy-skills-review.md`.
 
-```
-/araya:status
-```
-
----
-
-## 📸 ARAYA in Action
-
-<p align="center">
-  <img src=".araya/ss/araya-plan.png" alt="Sonia orchestrating delivery plan" width="90%" />
-  <br/><em>Sonia orchestrates the full delivery plan — phases, governance, delegation chain</em>
-</p>
-
-<p align="center">
-  <img src=".araya/ss/araya-sdd.png" alt="SDD — Software Design Document" width="90%" />
-  <br/><em>SDD phase — architecture, boundaries, workflows, entities, APIs, permissions</em>
-</p>
-
-<p align="center">
-  <img src=".araya/ss/araya-bdd.png" alt="BDD — Gherkin scenarios" width="90%" />
-  <br/><em>BDD phase — Gherkin scenarios covering user flows, exceptions, lifecycle</em>
-</p>
-
-<p align="center">
-  <img src=".araya/ss/araya-tdd.png" alt="TDD — Test definitions" width="90%" />
-  <br/><em>TDD phase — validations, integration tests, regression suites defined</em>
-</p>
-
-<p align="center">
-  <img src=".araya/ss/araya-status.png" alt="Proactive status reporting" width="90%" />
-  <br/><em>Sonia proactively reports delegation status — Phase breakdown, blockers, forecast</em>
-</p>
-
-<p align="center">
-  <img src=".araya/ss/araya-parallel.png" alt="Parallel orchestration" width="90%" />
-  <br/><em>DAG-aware parallel execution — independent phases run simultaneously via subagent delegation</em>
-</p>
-
-<p align="center">
-  <img src=".araya/ss/araya-review.png" alt="Post-delivery review" width="90%" />
-  <br/><em>Post-delivery review — DRR captures feedback, IAR maps impact, CR creates work packages</em>
-</p>
-
----
-
-## 📋 Slash Command Reference
-
-### Core Commands
-
-| Command | Description |
-|---------|-------------|
-| `/araya run --mode <mode> "<task>"` | Orchestrate a full SDLC delivery |
-| `/araya <agent> "<task>"` | Delegate a task to a specialist agent |
-| `/araya:status` | Full agent roster with tiers and skills |
-| `/araya:install` | Install ARAYA on this machine |
-| `/araya help` | Complete command manual |
-| `/araya version` | Show version and release path |
-
-### Context & Reconstitution
-
-| Command | Description |
-|---------|-------------|
-| `/araya compact` | Context capsule — active standards, violations, repository truth |
-| `/araya handoff` | Agent-to-agent delegation handoff document |
-| `/araya reconstitute` | Reset project context to repository truth |
-
-### Governance & Validation
-
-| Command | Description |
-|---------|-------------|
-| `/araya validate` | Validate delivery against acceptance criteria |
-| `/araya validate --summary` | Compact validation coverage summary |
-| `/araya constitution` | Show ARAYA Constitution — rules, types, governance |
-| `/araya constitution --validate` | Validate constitutional compliance |
-| `/araya release-check` | Validate version compliance with MAHG Standard |
-| `/araya usability-check` | Check usability evidence coverage |
-
-### Delivery Review
-
-| Command | Description |
-|---------|-------------|
-| `/araya review-delivery <id>` | Create DRR → IAR → CR for post-delivery feedback |
-| `/araya generate-uat <id>` | Generate UAT package from requirements + ACs |
-| `/araya review-uat <id>` | Review UAT package for completeness |
-| `/araya uat-status <id>` | Show UAT status for a delivery |
-
-### Traceability & Graph
-
-| Command | Description |
-|---------|-------------|
-| `/araya trace` | End-to-end traceability tree from REQ to CR |
-| `/araya trace --validate` | Detect orphan requirements and broken references |
-| `/araya graph` | Organizational knowledge graph summary |
-| `/araya graph:prepare` | Validate graph builder readiness for Batch 9 |
-| `/araya ask "<question>"` | Organizational query using graph + capabilities |
-
-### Knowledge & Learning
-
-| Command | Description |
-|---------|-------------|
-| `/araya knowledge` | Organizational knowledge summary |
-| `/araya knowledge --search "<term>"` | Search standards, ADRs, lessons |
-| `/araya learn "<lesson>"` | Capture structured organizational lesson |
-| `/araya trajectory` | Golden trajectory summary |
-| `/araya improve` | Analyze trajectories for process improvements |
-
-### Metrics & Efficiency
-
-| Command | Description |
-|---------|-------------|
-| `/araya metrics` | Governance metrics and delivery health score |
-| `/araya budget-status` | Token consumption and rate-limit risk |
-| `/araya optimize-task "<task>"` | Analyze for token efficiency |
-| `/araya efficiency-report` | Token efficiency metrics report |
-
-### Team & Routing
-
-| Command | Description |
-|---------|-------------|
-| `/araya team:recommend "<task>"` | Recommend optimal team |
-| `/araya team:assemble "<task>"` | Assemble team with role assignments |
-| `/araya team:risk` | Workforce risk analysis |
-| `/araya team:list` | Active team formations |
-| `/araya route "<task>"` | Recommend provider + model |
-| `/araya route --explain "<task>"` | Show routing decision reasoning |
-| `/araya provider:list` | Registered AI providers |
-| `/araya model:list` | Model capabilities and routing classes |
-| `/araya spec:init` | Initialize specification structure |
-| `/araya spec:list` | List active specifications and changes |
-
-### Organizational Excellence (Covey's 7 Habits)
-
-| Command | Description |
-|---------|-------------|
-| `/araya anticipate` | Proactive risk, drift, and debt detection — ORG-002 |
-| `/araya align` | Vision→implementation alignment verification — ORG-003 |
-| `/araya prioritize` | Most-important-outcomes focus and critical path — ORG-001 |
-| `/araya harmonize` | Tradeoff resolution with documented rationale — ORG-004 |
-| `/araya understand` | Discovery before execution — find ambiguity proactively (AMB-001) — ORG-005 |
-| `/araya roundtable` | Collaborative expert review leveraging collective intelligence — ORG-006 |
-| `/araya sharpen [--scope]` | Institutional learning and continuous improvement — ORG-007 |
-|  | `--scope organization\|governance\|skills\|agents\|architecture\|delivery` |
-
-### Run Flags
-
-| Flag | Values | Description |
-|------|--------|-------------|
-| `--mode` | `full`, `standard`, `quick`, `review`, `repair` | Delivery mode |
-| `--policy` | `auto`, `conservative`, `balanced`, `aggressive` | Workflow policy |
-| `--execution-mode` | `deterministic`, `adaptive` | Execution style |
-| `--safe-mode` | (flag) | Dry-run — no writes, no shell, no git |
-
----
-
-## 📦 Delivery Modes
-
-| Mode | Phases | When to Use |
-|------|--------|-------------|
-| **full** | SDD → BDD → TDD → Implementation → Review → Security → Validation → Docs | New features, architecture changes, security-sensitive work |
-| **standard** | Plan → Tests → Implementation → Review → Validation | Normal feature work |
-| **quick** | Review only | Docs, naming fixes, UI text, minor config |
-| **review** | Review → Security | Code review, PR review, architecture review |
-| **repair** | Tests → Validation | Fixing tests, builds, lint, regressions |
-
-### Workflow Policies
-
-| Policy | Behavior |
-|--------|----------|
-| `auto` | Sonia decides dynamically based on task analysis |
-| `conservative` | All gates required, security + architect review mandatory |
-| `balanced` | Standard enterprise workflow |
-| `aggressive` | Optimized for speed, reduced approvals |
-
----
-
-## 🤖 Agent Roster
-
-### 👑 Leadership & Governance
-
-| Agent | Role | Tier | Can Write | Skills |
-|-------|------|------|-----------|--------|
-| **Manu** | Product Owner (The Data Professor's proxy) | reasoning | ✍️ docs | sdd-vision, sdd-requirements, test-case, po-gap-questionnaire, definition-of-done |
-| **Aurora** | Capability Officer | reasoning | ❌ | capability-registry, gap-analysis, workforce-planning, agent-topology, skills-lifecycle, spof-detection, hiring-recommendations, organizational-health |
-| **Sonia** | Program Director & PMO Head | reasoning | ✍️ docs | pm-plan, pm-dependencies, pm-risk, pm-status, project-planning, drr-create, iar-generate, cr-generate |
-| **Elena** | Scrum Master + PM Auditor | balanced | ❌ | daily-standup, sprint-planning, retrospective, impediment, velocity, definition-of-done |
-| **Diana** | Cybersecurity Specialist | reasoning | ❌ | threat-model, secure-arch, secure-code, pentest, compliance, secrets |
-| **Neo** | Dynamic Capability Agent (dormant) | balanced | ✅ | (mission-assigned) |
-| **Trinity** | Dynamic Capability Agent (dormant) | balanced | ✅ | (mission-assigned) |
-
-### 🏗 Architecture
-
-| Agent | Role | Tier | Can Write | Skills |
-|-------|------|------|-----------|--------|
-| **Aisha** | Backend Architect | reasoning | ❌ | microservice, api-gateway, cache-strategy, message-queue, db-optimization |
-| **Lin** | Frontend Architect | reasoning | ❌ | component-arch, animation, performance, accessibility, state-management |
-| **Junia** | Data Platform Architect | reasoning | ❌ | data-lakehouse-design, spark-pipeline, cloud-provision, data-modeling, data-governance |
-
-### 💻 Development
-
-| Agent | Role | Tier | Can Write | Skills |
-|-------|------|------|-----------|--------|
-| **Valentina** | Backend Developer | balanced | ✅ | api-design, db-schema, endpoint, auth-middleware, error-handling |
-| **Alejandra** | Frontend Developer | balanced | ✅ | component, form-design, page-route, api-integration, responsive |
-| **Bernabé** | Data Engineer | balanced | ✅ | spark-pipeline, etl-orchestration, data-quality, medallion-architecture |
-| **María** | AI/ML Engineer | reasoning | ✅ | llm-local-deploy, rag-pipeline, vector-search, agent-design, model-fine-tuning |
-| **Aquila** | Static Site Engineer | balanced | ✅ | static-site-generate, theme-design, seo-optimize, deployment-automation |
-
-### 🧪 Quality
-
-| Agent | Role | Tier | Can Write | Skills |
-|-------|------|------|-----------|--------|
-| **Teresa** | Chief Culinary Officer (CCO) | balanced | ❌ | uat-review, token-efficiency |
-| **Clara** | QA Engineer | balanced | ✅ | unit-test, integration-test, test-case, regression, coverage, tdd-generate, tdd-execute, uat-generate, token-efficiency |
-| **Priya** | QA Lead | balanced | ❌ | performance-test, e2e-strategy, cicd-quality |
-
-### 🖥 Infrastructure
-
-| Agent | Role | Tier | Can Write | Skills |
-|-------|------|------|-----------|--------|
-| **Isla** | Infra Architect | reasoning | ✅ | docker, kubernetes, cicd-pipeline, cloud-deploy, monitoring |
-
-### 💼 Business & Strategy
-
-| Agent | Role | Tier | Can Write | Skills |
-|-------|------|------|-----------|--------|
-| **Lidia** | Profitability Domain Expert | reasoning | ❌ | abc-costing-model, whale-curve-analyze, cost-to-serve, profitability-lineage |
-| **Pablo** | BI & Analytics Lead | balanced | ❌ | dashboard-design, data-visualization, kpi-framework, analytics-report |
-| **Mateo** | FinOps Specialist | balanced | ❌ | cost-analysis, usage-metering, resource-rightsizing, budget-forecasting |
-| **Lucas** | Content Strategist | balanced | ❌ | seo-optimize, geo-branding, multi-platform-publish, content-calendar |
-
-### 📚 Education & Knowledge
-
-| Agent | Role | Tier | Can Write | Skills |
-|-------|------|------|-----------|--------|
-| **Eunice** | Educational Designer | balanced | ✅ | lab-scenario-design, student-assessment, training-module, curriculum-planning |
-| **Priscila** | Technical Writer | balanced | ✍️ docs | adr-write, api-document, architecture-diagram, slide-deck-generate, technical-book |
-| **Esteban** | Chief Knowledge Officer | balanced | ✅ | daily-note, knowledge-graph, project-planning, pkm-workflow, organizational-knowledge, trajectory-management |
-
-### 🎯 Brand & Identity
-
-| Agent | Role | Tier | Can Write | Skills |
-|-------|------|------|-----------|--------|
-| **Dorcas** | Brand Governance Lead | balanced | ❌ | brand-compliance, visual-identity, brand-audit, asset-management |
-| **Sofia** | AI Assistant | fast | ✅ | General assistance, triage, delegation |
-
-**Key:** ✅ = full tools (read, write, edit, bash, grep, find) | ✍️ docs = governance writing only | ❌ = read-only (read, grep, find)
-
----
-
-## 🔧 CLI Reference
-
-### `/araya run`
+## Quick start
 
 ```bash
-# Full enterprise delivery
-/araya run --mode full --policy conservative "Build JWT authentication"
+# 1. Install the core + capability foundation into your project (never ~/.pi).
+bash araya-install.sh --target /path/to/project
 
-# Standard feature work
-/araya run --mode standard "Add user profile API"
-
-# Quick fix
-/araya run --mode quick "Fix typo in README"
-
-# Dry-run planning
-/araya run --mode full --safe-mode "Plan microservice migration"
-
-# Aggressive for speed
-/araya run --policy aggressive --mode standard "Add caching"
+# 2. Sanity-check the install.
+python3 cli/araya --json status
+python3 cli/araya --json doctor
 ```
 
-> **💬 Conversational-first.** ARAYA understands natural language — commands are optional. Just speak to your organization:
->
-> ```
-> Sonia, how are we doing?
-> Manu and Sonia, I want to build a customer portal.
-> Aurora, do we have capability gaps?
-> Diana, review the security implications.
-> Esteban, what have we learned recently?
-> ```
->
-> ARAYA detects intent, routes to agents, executes workflows, and responds — no memorization needed.
+### First request
 
-### `/araya <agent>`
+Resolve an intent — in natural language, without naming skills — and inspect
+which capabilities/skills it selects (and that a read-only intent selects no
+operation):
 
 ```bash
-# Delegate to Product Owner
-/araya manu "Review acceptance criteria for the pricing module"
-
-# Delegate to Backend Developer
-/araya valentina "Build POST /api/users endpoint"
-
-# Delegate to QA
-/araya teresa "Generate test suite for authentication flow"
-
-# Delegate to Security
-/araya diana "Threat-model the new payment pipeline"
+python3 cli/araya --json delegate "review the design of a minimalist REST API"
 ```
 
-### `/araya help`
+From Pi, inside an ARAYA project, just state the request; the resolver selects
+the capabilities/skills and, when a specialist is needed, an ephemeral worker
+is composed and handed off through PostOffice (see `docs/usage/`).
 
-Displays the complete command manual with all agents, modes, policies, and budget information.
+## Documentation
 
-### `/araya:status`
+- **HOW TO / usage:** [`docs/usage/README.md`](docs/usage/README.md)
+- **Installation & upgrade:** [`docs/INSTALLATION.md`](docs/INSTALLATION.md)
+- **Troubleshooting:** [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md)
+- **Architecture (ADRs):** [`docs/architecture/`](docs/architecture/)
+- **Canonical core:** the 13 files at the repository root (verified by `sha256sum -c SHA256SUMS.txt`)
 
-Shows the full agent roster with tiers, skills, and governance information.
-
-### `/araya:install`
-
-Installs ARAYA from the canonical source on any machine.
-
-### `/araya review-delivery <delivery-id>`
-
-Creates a Delivery Review Report (DRR) for post-delivery feedback. Sonia classifies findings, generates Impact Analysis (IAR), and produces Change Requests (CR) approved by Manu.
+## Install
 
 ```bash
-/araya review-delivery DEL-2026-005
+# Install the core + capability foundation into a target directory (default: cwd).
+bash araya-install.sh --target /path/to/project
+
+# Opt-in: install the project-scoped Pi adapter (adds /araya to that project only).
+bash araya-install.sh --target /path/to/project --adapter pi
+
+# Opt-in: build the reproducible ChatGPT bundle.
+bash araya-install.sh --adapter chatgpt
 ```
 
----
+Default installation never touches your global `~/.pi`. Pi integration is
+explicit and project-scoped. The installer refuses to write into the Pi user
+layer (`~/.pi/agent/`) or into a target named `daneel`.
 
-## 🏗 Architecture
+## Pi behavior
 
-```
-ARAYA
-├── Manu: Product Authority (pre-implementation + pre-delivery gates)
-├── Sonia: Delivery Authority (organizational governance)
-├── Aurora: Capability Authority (workforce, skills, hiring)
-├── Daneel: Reality Authority (independent verification)
-├── Workflow Policy Engine (auto / conservative / balanced / aggressive)
-├── Model Selection Engine (capability tiers: fast / balanced / reasoning)
-├── Quality Gate Engine (7 validation gates per agent output)
-├── Execution Budget Engine (cost, time, token, turn limits)
-├── Circuit Breaker Engine (failure thresholds, retry limits)
-├── Delegation Engine (subagent spawning with isolated contexts)
-├── DependencyAnalyzer (DAG-aware phase optimization)
-└── 29 Agents across 12 domains (27 active + 2 dormant)
-```
+Running `pi` starts **Daneel**, the Professor's personal right-hand Pi-level
+agent. Daneel is a Pi **user-layer** agent and is **not** part of ARAYA —
+ARAYA never hooks, owns, or configures global Pi. ARAYA does not require
+Daneel, and Daneel does not require ARAYA; they are independent.
 
-### Governance Pipeline
+## Automatic ARAYA project context
 
-```
-Manu (PO Gate) → Requirement → SDD → BDD → TDD → Dependency Analysis → Resource Assignment
-  → Implementation → Cross-Audit → Delivery Comparison → Manu (PO Validation) → Controlled Merge
-```
-
-**No implementation without Manu's approval. No delivery without Manu's validation.**
-
-### Change Lifecycle
-
-```
-Draft → Planned → Approved → Executing → Review → Validated → Archived
-```
-
-Every change follows a deterministic lifecycle. Review findings loop back to Executing. Failed ACs return to Executing. Scope changes restart at Draft.
-
-### End-to-End Traceability
-
-```
-REQ → AC → TASK → EVD → DEL → DRR → IAR → CR
-```
-
-Every artifact is traceable. Orphan detection via `/araya trace --validate`. Full tree via `/araya trace`.
-
-### Constitutional Governance
-
-```
-The Constitution — 167 rules, 4 types, 26 domains
-```
-
-ARAYA is governed by a constitution — the highest authority below The Data Professor.
-Rules are OBLIGATION, PROHIBITION, PERMISSION, or ESCALATION. Violations are tracked.
-Exceptions require approval. `/araya constitution` — `/araya constitution --validate`
-
-### Versioning Standard
-
-```
-MAJOR.REVISION.HOTFIX — Hotfix ≤ 5, Revision ≤ 73
-```
-
-Hotfix values represent The Data Professor's birth month (May = 5).
-When hotfix reaches 5, the next increment rolls to the next revision.
-Major promotion: 0.73.5 → 1.0.0.
-`/araya version` — `/araya release-check`
-
----
-
-## ⚡ Features
-
-### 👑 Product Owner Gates
-
-**Manu** — The Data Professor's permanent proxy in every delivery. Two mandatory gates:
-
-- **Pre-implementation**: Requirements and acceptance criteria must be approved before work starts
-- **Pre-delivery**: All acceptance criteria must be verified before delivery
-
-When gaps exist, Manu generates structured Q&A questionnaires. The Professor answers by number. Manu applies answers to official artifacts.
-
-### Sub-Agent Delegation
-
-Each agent runs in an **isolated pi process** with its own context window. Streaming output, usage tracking, and abort support per agent. DAG-aware parallel execution for independent phases.
-
-### Model Tiering
-
-Agents resolve to capability tiers — never hardcoded model names:
-- **reasoning** → pi.dev thinking models (architecture, security, planning)
-- **balanced** → pi.dev balanced models (development, testing, review)
-- **fast** → pi.dev fast models (documentation, triage)
-
-### Execution Governance
-
-- **Budget limits**: $2.00 max cost, 20 min max runtime, 50K tokens
-- **Circuit breakers**: 3 failures/phase, 2 retries, halt on security failure
-- **Human approvals**: Required for destructive ops, schema changes, infrastructure
-- **Audit trail**: Every run tracked with trace IDs and evidence artifacts
-
-### Definition of Done
-
-Three-tier mandatory verification per task, phase, and delivery. Binary only — done or not done. Cross-agent verification required.
-
-### Post-Delivery Review
-
-Feedback is never lost. After delivery, the complete feedback loop:
-- **DRR** (Delivery Review Report): captures all feedback as classified findings across 13 categories
-- **IAR** (Impact Analysis Report): maps findings to affected artifacts, estimates effort and risk
-- **CR** (Change Request): converts approved findings to new work packages routed back into the SDLC
-- Traceability chain: Delivery → DRR → IAR → CR → Implementation
-- Command: `/araya review-delivery <delivery-id>`
-
-### User Acceptance Testing (UAT)
-
-Every delivery can generate a formal acceptance package:
-- **UAT packages**: traceability matrix (requirement → AC → UAT test case)
-- **Test cases per AC**: preconditions, steps, expected results, PASS/FAIL/BLOCKED
-- **Coverage matrix**: % requirements tested, % ACs tested, pass rate
-- **Acceptance decision**: ACCEPTED | ACCEPTED WITH CONDITIONS | REJECTED
-- **Result processing**: FAIL → DRR → IAR → CR → work package
-- Commands: `/araya generate-uat`, `/araya review-uat`, `/araya uat-status`
-
-### Token Efficiency & Provider Optimization
-
-Maximize useful work within available quotas — transparent for the entire pi environment:
-- **7 provider profiles**: Codex, Claude, DeepSeek, Gemini, Copilot, OpenCode Go, Zen
-- **Token budget estimation** before execution
-- **Rate-limit risk prediction** with early warnings
-- **Context capsules**: 40:1 compression, reusable across agents
-- **Auto-decomposition** at 8K tokens
-- Commands: `/araya budget-status`, `/araya optimize-task`, `/araya compress-context`, `/araya efficiency-report`
-
-### 120 Skills Across 12 Domains
-
-From `definition-of-done` to `po-gap-questionnaire`, from `drr-create` to `cr-generate`, from `sdd-vision` to `whale-curve-analyze`, from `docker` to `llm-local-deploy`, from `threat-model` to `brand-compliance`.
-
----
-
-## 🔧 Installation
-
-> **ARAYA is a git-based framework** — it is not distributed via npm, Docker, or package registries.
-> The [Releases](https://github.com/mahg-es/araya/releases) page provides tagged, stable versions.
-
-### One-Command Setup
+When you run `pi` inside this repository:
 
 ```bash
-git clone git@github.com:mahg-es/araya.git
-cd araya
-./araya-setup.sh
+cd ~/github/mahg-es/araya
+pi
 ```
 
-Or from within pi:
+Pi automatically loads `AGENTS.md`, so the active agent is **Daneel plus this
+repository's ARAYA AX3 v0.5.0 operating context**. You do **not** need to run
+`/araya` here.
 
+The `/araya` command is only for intentionally bringing ARAYA context into a
+*different* project where the project-scoped adapter has been installed:
+
+```bash
+cd /path/to/other/project
+pi
+/araya <task>
 ```
-/araya:install
+
+Outside the ARAYA repository, ARAYA context does not leak into unrelated
+projects.
+
+## Use with Pi
+
+- Inside this repository, run `pi` — the ARAYA AX3 v0.5.0 context loads
+  automatically (see "Automatic ARAYA project context").
+- In another project, install the project-scoped adapter (`--adapter pi`) and
+  run `/araya <task>` to open an explicit ARAYA session there.
+- ARAYA never hooks global Pi; Daneel (the Professor's Pi user-layer agent)
+  remains independent of ARAYA.
+
+## Use the CLI
+
+The CLI is agent-first; humans may also use it. Run from the repository (or an
+installed target):
+
+```bash
+python3 cli/araya --help
+python3 cli/araya --json status
+python3 cli/araya --json operation list
+python3 cli/araya --json skills list
+python3 cli/araya --json capabilities
+python3 cli/araya --json runtime model-context
 ```
 
-Then `/reload` and you're ready.
+Exit codes: `0` success, `1` operation failure, `2` usage error. See
+`docs/usage/` for details.
 
-### What the setup does
+## Build / use the ChatGPT bundle
 
-| Step | Action |
-|------|--------|
-| Extensions | Symlinks ARAYA + subagent + notifier to `~/.pi/agent/extensions/` |
-| Agents | Copies 28 agent definitions to `~/.pi/agent/agents/` |
-| Skills | Symlinks 120 skills to `~/.pi/agent/skills/araya/` |
-| Prompts | Symlinks prompt templates to `~/.pi/agent/prompts/araya/` |
-| Config | Copies `araya.yaml` (single source of truth for version) |
-
----
-
-## 📁 Repository Structure
-
+```bash
+bash bundle/chatgpt/build.sh
 ```
+
+This produces `bundle/chatgpt/dist/ARAYA-AX3-v0.5.0-chatgpt.zip` (name,
+description, instructions, and the 10 Knowledge files) for import into a custom
+ChatGPT. See `docs/usage/`. The build validates the README before packaging, so
+a bundle can never be produced against a stale README.
+
+## Repository structure
+
+```text
 araya/
-├── araya.yaml              # Configuration (single source of truth for version)
-├── araya-setup.sh          # One-command installer
-├── extensions/araya/       # ARAYA pi extension (command handlers)
-├── .pi/agents/             # 28 agent definitions (YAML frontmatter; daneel verifier defined in extensions/)
-├── prompts/agents/         # 26 personality prompt templates
-├── skills/                 # 120 SKILL.md files across 12 domains
-├── src/araya/v2/           # Orchestration engine (TypeScript)
-│   └── engines/            # Workflow, model, quality, budget, circuit, delegation
-├── tests/                  # Smoke tests
-├── LICENSE                 # MIT
-└── CONTRIBUTING.md         # How to contribute
+├── GPT-CONFIGURATION.md            operating kernel (always-on)
+├── K01–K10                         canonical Knowledge (deep policy)
+├── ADOPTION-RECORD.md, ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md, SHA256SUMS.txt
+│                                   adoption + integrity evidence
+├── AGENTS.md                       Pi project context (auto-loaded in this repo)
+├── araya-install.sh                installer (core + foundation + opt-in adapters)
+├── cli/                            agent-first CLI + shared library (stdlib only)
+├── operations/                     deterministic operations catalog (JSON)
+├── skills/                         progressive-disclosure skills (index + SKILL.md)
+├── capabilities/                   capability registry (maps to skills/operations)
+├── communications/
+│   ├── postoffice/                 agent ↔ agent messaging + trace
+│   └── ponyexpress/                Professor → agent channel
+├── runtime/                        notifier, quota, model-context, cycle
+├── delegation/                     capability resolver + ephemeral agent factory
+├── demo/                           vertical demonstration (real product behavior)
+├── adapters/
+│   └── pi/                         explicit, opt-in Pi adapter
+├── bundle/chatgpt/                 reproducible ChatGPT bundle
+├── docs/                           architecture ADRs, usage, legacy inventory
+└── tests/                          integrity, installer, adapter, bundle, CLI tests
 ```
 
----
+## Where the core lives
 
-## 👤 Author
+The canonical core is the 13 byte-identical files at the repository root:
+`GPT-CONFIGURATION.md`, `K01`–`K10`, `ADOPTION-RECORD.md`,
+`ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md`, and `SHA256SUMS.txt`. Verify with:
 
-**Manuel Alejandro Hernández Giuliani** — Enterprise Big Data Architect
+```bash
+sha256sum -c SHA256SUMS.txt
+```
 
-- 🌐 [thedataprofessor.com](https://thedataprofessor.com)
-- 🌐 [manuelhernandezgiuliani.com](https://manuelhernandezgiuliani.com)
-- 🌐 [mahg.es](https://mahg.es)
-- 🐙 [github.com/mahernandezg](https://github.com/mahernandezg)
+## Where adapters live
 
----
+- Pi: `adapters/pi/`
+- ChatGPT: `bundle/chatgpt/`
 
-## 📄 License
+Both consume the same canonical core; neither forks or rewrites it. The
+capability foundation's shared library (`cli/araya_lib/`) is the single
+implementation consumed by the CLI and any future host adapter.
 
-MIT — see [LICENSE](LICENSE).
+## Ownership boundary — Daneel
 
-Built with ❤️ by The Data Professor and R. Daneel Olivaw.
+`DANEEL != ARAYA`. **Daneel** is the Professor's personal, Pi-level agent
+(`~/.pi/agent/SYSTEM.md`, `~/.pi/agent/APPEND_SYSTEM.md`,
+`~/.pi/agent/daneel/`). ARAYA does not own, install, modify, generate, or
+delete Daneel or other Pi user resources. The installer is enforced to respect
+this boundary (`tests/test-installer.sh`). The name `Daneel` is reserved; ARAYA
+never creates a persona named `daneel`.
+
+## Important limitations / debts
+
+1. Of the 128 legacy skills reviewed, 81 remain deferred (`LATER`) and are not
+   yet recovered — see `docs/legacy-skills-review.md` / `.json`.
+2. No automated cross-project delegation/state store; ARAYA is per-project and
+   host-scoped. The library composes the scoped worker request and records the
+   handoff/result, but the actual native subagent invocation is performed by
+   the agent-facing caller (Daneel) at the adapter boundary — the library does
+   not spawn subagents itself.
+3. The ChatGPT bundle is for a custom GPT; there is no hosted ARAYA service.
+4. Daneel's private memory/identity is not versioned inside ARAYA; if it needs
+   backup/versioning, that must live in a private location independent of ARAYA.
+5. The CLI is stdlib-only Python; there is no MCP adapter yet (only where
+   interoperability justifies it).
+
+## Legacy skills review
+
+Every legacy `SKILL.md` body (128 skills) was read in full and reviewed
+evidence-first (`docs/legacy-skills-review.md` + `.json`). Each record carries
+purpose, inputs, outputs, dependencies, deterministic-code availability,
+overlaps, disposition, canonical target, reason, and provenance:
+
+- Reviewed (full source body): **128**
+- KEEP: **5** (already-canonical + Wave 2)
+- COMBINE: **13** (absorbed into 3 canonical skills)
+- REPLACE_BY_OPERATION: **1**
+- DROP: **28** (legacy machinery + SDLC ceremony)
+- LATER: **81** (each with an individual evidence-based reason)
+
+Canonical skills total: **9**. Wave 1 recovered `test-authoring` and
+`security-review` (foundational engineering). Wave 2 recovered
+`architecture-diagram` and `api-design` (the latter absorbing legacy
+`api-document`). Provenance is retained per canonical skill via
+`source_provenance`; no legacy skill is lost (it remains in Git history).
+
+## Next product increment
+
+After this stable release, the next increment comes from **real product use** —
+not from another internal construction wave. There is no Wave 3. Concrete gaps
+found while using ARAYA should be captured as their own scoped increments.

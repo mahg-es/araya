@@ -1,0 +1,106 @@
+{
+  "version": "2.0.0",
+  "disclosure": "progressive",
+  "description": "Skills are the primary unit of reusable procedural specialization. This index exposes minimal metadata (always discoverable); full instructions load from each skill's SKILL.md only when selected. Each canonical skill records which legacy skill(s) it came from (source_provenance).",
+  "skills": [
+    {
+      "name": "adr-write",
+      "description": "Write Architecture Decision Records (ADRs) — lightweight documents capturing a significant architectural decision, context, options, decision, and consequences.",
+      "path": "adr-write/SKILL.md",
+      "tags": ["architecture", "decision", "documentation"],
+      "capabilities": ["document-decisions"],
+      "dependencies": [],
+      "operations": [],
+      "resources": [],
+      "source_provenance": ["adr-write"]
+    },
+    {
+      "name": "architecture-diagram",
+      "description": "Create standards-based C4/sequence/data-flow architecture diagrams as version-controlled text (Mermaid/PlantUML), paired with ADRs.",
+      "path": "architecture-diagram/SKILL.md",
+      "tags": ["architecture", "diagram", "documentation", "c4", "mermaid"],
+      "capabilities": ["document-architecture"],
+      "dependencies": [],
+      "operations": [],
+      "resources": [],
+      "source_provenance": ["architecture-diagram"]
+    },
+    {
+      "name": "api-design",
+      "description": "Design REST/GraphQL APIs as an OpenAPI 3.1 contract (endpoints, schemas, auth, errors, versioning) and derive developer documentation from the spec.",
+      "path": "api-design/SKILL.md",
+      "tags": ["api", "openapi", "rest", "graphql", "design", "documentation"],
+      "capabilities": ["design-api"],
+      "dependencies": [],
+      "operations": [],
+      "resources": [],
+      "source_provenance": ["api-design", "api-document"]
+    },
+    {
+      "name": "tdd-execute",
+      "description": "Execute a test suite via the deterministic test.execute operation and report red/green results with actionable failures.",
+      "path": "tdd-execute/SKILL.md",
+      "tags": ["testing", "tdd", "quality"],
+      "capabilities": ["execute-tests"],
+      "dependencies": [],
+      "operations": ["test.execute"],
+      "resources": [],
+      "source_provenance": ["tdd-execute"]
+    },
+    {
+      "name": "test-authoring",
+      "description": "Author tests from requirements/specs — unit, integration, E2E, and BDD/Gherkin — with structured, traceable cases; run via test.execute.",
+      "path": "test-authoring/SKILL.md",
+      "tags": ["testing", "unit", "integration", "e2e", "bdd", "regression"],
+      "capabilities": ["author-tests"],
+      "dependencies": ["tdd-execute"],
+      "operations": ["test.execute"],
+      "resources": [],
+      "source_provenance": ["unit-test", "integration-test", "test-case", "bdd-feature", "tdd-generate", "e2e-strategy", "regression"]
+    },
+    {
+      "name": "security-review",
+      "description": "Review code, architecture, and dependencies for security (OWASP/CWE/STRIDE) and audit secrets. Reasoning-only capability; it declares no deterministic operation.",
+      "path": "security-review/SKILL.md",
+      "tags": ["security", "code-review", "threat-model", "secrets"],
+      "capabilities": ["review-security"],
+      "dependencies": [],
+      "operations": [],
+      "resources": [],
+      "source_provenance": ["secure-code", "secure-arch", "threat-model", "pentest", "secrets"]
+    },
+    {
+      "name": "git-publication",
+      "description": "Branch, commit, PR, and merge discipline backed by the deterministic git operations (sanity, feature-start, feature-pr-gate, merge-gate).",
+      "path": "git-publication/SKILL.md",
+      "tags": ["git", "publication", "merge", "pull-request"],
+      "capabilities": ["publish-git"],
+      "dependencies": [],
+      "operations": ["git.repository-sanity", "git.feature-start", "git.feature-pr-gate", "git.merge-gate"],
+      "resources": [],
+      "source_provenance": ["(synthesized from legacy git operations, not a legacy skill)"]
+    },
+    {
+      "name": "postoffice",
+      "description": "Consult and write the agent-to-agent postoffice — the operational-coordination channel. Advisory, never a gate; governance acts never travel it.",
+      "path": "postoffice/SKILL.md",
+      "tags": ["coordination", "messaging", "trace"],
+      "capabilities": ["coordinate"],
+      "dependencies": [],
+      "operations": [],
+      "resources": ["communications/postoffice/README.md"],
+      "source_provenance": ["ax-postoffice"]
+    },
+    {
+      "name": "ponyexpress",
+      "description": "Intake and trace Professor-originated instructions via the PonyExpress channel, correlated through delegation to results.",
+      "path": "ponyexpress/SKILL.md",
+      "tags": ["intake", "instruction", "correlation"],
+      "capabilities": ["coordinate", "trace-instruction"],
+      "dependencies": ["postoffice"],
+      "operations": [],
+      "resources": ["communications/ponyexpress/README.md"],
+      "source_provenance": ["(synthesized; PonyExpress channel has no direct legacy skill)"]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+%% C4 Context diagram — ARAYA PostOffice Tracing API
+%% Abstraction level: Context (Level 1) — system + users + external systems.
+%% Audience: executive / architect / developer onboarding.
+%%
+%% Legend:
+%%   ┌────────────┐  Person / human / authority boundary
+%%   │            │  (solid line = trust boundary; dashed = advisory flow)
+%%
+%%   ┌[SYSTEM]────┐  Software system
+%%   │            │
+%%   ┌{{STORE]]    │  Persistent store (file-system)
+%%
+%%   -->  HTTPS/JSON  (authenticated, advisory)
+%%   ->>  Python IPC (in-process method call)
+%%   ~~~  File/JSONL append (append-only, never in-place)
+
+%%{init: {"theme": "neutral", "flowchart": {"curve": "linear"}}}%%
+
+C4Context
+    Person(prof, "Professor (Manuel)", "The Data Professor — human final authority")
+    Person(daneel, "Daneel", "Pi-level personal agent (DANEEL ≠ ARAYA). Not owned by ARAYA.")
+    Person(agent, "Ephemeral Agent (agent-7dd5a)", "Specialist worker; display name has no architectural meaning")
+
+    System(ponyex, "PonyExpress", "Professor → agent system channel. Transport, not authority. Stores at .araya/ponyexpress/inbox.jsonl")
+    System(postoffice, "PostOffice", "Agent-to-agent messaging + trace library. Advisory, never an authority. Stores at .araya/postoffice/thread.jsonl")
+    System(tracing_api, "PostOffice Tracing API", "HTTP/REST API exposing send/get/ack/trace/read_all over PostOffice")
+    System_Boundary(astore, ".araya Store")
+    System_Ext(store_po, ".araya/postoffice/thread.jsonl", "Append-only JSONL — all messages + acknowledgements (newest last)")
+    System_Ext(store_pe, ".araya/ponyexpress/inbox.jsonl", "Append-only JSONL — Professor instructions")
+
+    Rel(prof, ponyex, "POST instruction", "HTTPS/JSON — {sender, recipient, subject, body, correlation_id}")
+    Rel(ponyex, store_pe, "append instruction", "File/JSONL ~~~ ")
+
+    Rel(prof, daneel, "issues instruction", "PonyExpress message — correlation_id = P123")
+    Rel(daneel, postoffice, "delegate handoff", "Python ->> PostOffice.send(message_type=handoff, correlation_id=P123)")
+    Rel(daneel, agent, "assigns work", "PostOffice handoff — task payload + correlation_id")
+
+    Rel(agent, tracing_api, "send / get / ack / trace / list", "HTTPS/JSON — Bearer JWT")
+    Rel(tracing_api, postoffice, "call library methods", "Python ->> send/get/ack/trace/read_all")
+    Rel(postoffice, store_po, "append record", "File/JSONL ~~~ ")
+
+    Rel(store_pe, postoffice, "correlation link", "correlation_id — P123 shared across stores")
+
+    LayOUTOF(prof, ponyex)
+    LayOUTOF(daneel, postoffice)
+    LayOUTOF(agent, tracing_api)
+    LayOUTOF(ponyex, store_pe)
+    LayOUTOF(postoffice, store_po)
+    LayOUTOF(store_po, store_pe)
+
+    Note_R(prof, "PostOffice is advisory — messages never block, halt, or force a run. Governance acts never travel it. See ADR-0001, ADR-0002, ADR-0003")
+
+    %% Legend
+    person prof
+    person daneel
+    person agent
+    system ponyex
+    system postoffice
+    system tracing_api
+    system store_po
+    system store_pe
+
+    %% C4 legend elements
+    End

@@ -1,0 +1,76 @@
+{
+  "version": "1.0.0",
+  "description": "Capabilities determine specialization — not display names. Each capability maps to the skills and deterministic operations that realize it. `keywords` are the explicit, multilingual (EN/ES) terms the deterministic resolver matches against the intent; descriptions are prose and are intentionally NOT matched.",
+  "capabilities": [
+    {
+      "id": "document-decisions",
+      "description": "Capture significant decisions as immutable Architecture Decision Records.",
+      "skills": ["adr-write"],
+      "operations": [],
+      "keywords": ["adr", "adrs", "decision", "decisions", "decisiones", "record", "records", "registro", "registros", "rationale", "decision-record", "architecture-decision-record"]
+    },
+    {
+      "id": "document-architecture",
+      "description": "Create standards-based architecture diagrams (C4/sequence/data-flow) as version-controlled text.",
+      "skills": ["architecture-diagram"],
+      "operations": [],
+      "keywords": ["architecture", "arquitectura", "diagram", "diagrams", "diagrama", "diagramas", "mermaid", "plantuml", "c4", "sequence", "secuencia", "component", "container", "deployment", "despliegue", "topology", "topologia", "dataflow", "diagrama-de-arquitectura", "architecture-diagram"]
+    },
+    {
+      "id": "design-api",
+      "description": "Design a REST/GraphQL API as an OpenAPI 3.1 contract and derive developer documentation from it.",
+      "skills": ["api-design"],
+      "operations": [],
+      "keywords": ["api", "apis", "openapi", "rest", "graphql", "endpoint", "endpoints", "contract", "contrato", "interface", "interfaz", "schema", "schemas", "esquema", "spec", "specification", "especificacion", "design", "diseno", "health", "healthcheck", "version", "swagger", "api-design"]
+    },
+    {
+      "id": "execute-tests",
+      "description": "Execute a test suite and report red/green results.",
+      "skills": ["tdd-execute"],
+      "operations": ["test.execute"],
+      "keywords": ["test", "tests", "testing", "pytest", "unittest", "suite", "tdd", "pruebas", "prueba", "test-suite", "tdd-execute"]
+    },
+    {
+      "id": "author-tests",
+      "description": "Author unit/integration/E2E/BDD tests from requirements and specifications.",
+      "skills": ["test-authoring"],
+      "operations": ["test.execute"],
+      "keywords": ["author", "authors", "author-tests", "test-authoring", "unit", "e2e", "bdd", "gherkin", "regression", "aceptacion", "test-case", "casos-de-prueba"]
+    },
+    {
+      "id": "review-security",
+      "description": "Review code, architecture, dependencies, and secrets for security.",
+      "skills": ["security-review"],
+      "operations": [],
+      "keywords": ["security", "seguridad", "owasp", "cwe", "stride", "secret", "secrets", "secreto", "secretos", "vulnerability", "vulnerabilidad", "threat", "amenaza", "pentest", "audit", "auditoria", "security-review"]
+    },
+    {
+      "id": "publish-git",
+      "description": "Branch, commit, PR, and merge with deterministic gates.",
+      "skills": ["git-publication"],
+      "operations": ["git.repository-sanity", "git.feature-start", "git.feature-pr-gate", "git.merge-gate"],
+      "keywords": ["git", "branch", "branches", "rama", "ramas", "commit", "commits", "pr", "prs", "pull", "request", "merge", "merges", "fusionar", "push", "publish", "publicar", "release", "lanzar", "feature", "features", "worktree", "worktrees", "publication", "publicacion", "git-publication"]
+    },
+    {
+      "id": "verify-repository",
+      "description": "Inspect repository state for sanity and merge readiness.",
+      "skills": ["git-publication"],
+      "operations": ["git.repository-sanity", "git.merge-gate"],
+      "keywords": ["repository", "repositorio", "repo", "repos", "sanity", "sane", "verify", "verificar", "inspect", "inspeccionar", "divergence", "divergencia", "hygiene", "mergeable", "readiness", "merge-readiness"]
+    },
+    {
+      "id": "coordinate",
+      "description": "Coordinate work between agents via the postoffice channel.",
+      "skills": ["postoffice"],
+      "operations": [],
+      "keywords": ["postoffice", "coordinate", "coordination", "coordinacion", "message", "mensaje", "mensajes", "messaging", "handoff", "channel", "canal", "post-office"]
+    },
+    {
+      "id": "trace-instruction",
+      "description": "Intake a Professor instruction and trace it through delegation to results.",
+      "skills": ["ponyexpress", "postoffice"],
+      "operations": [],
+      "keywords": ["ponyexpress", "instruction", "instruccion", "instrucciones", "trace", "traza", "correlation", "correlacion", "intake", "tracing"]
+    }
+  ]
+}
