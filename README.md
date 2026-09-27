@@ -13,6 +13,29 @@ capability/delegation resolver, agent-to-agent and Professor channels
 (PostOffice / PonyExpress), runtime utilities, and an agent-first CLI. ARAYA is
 a methodology that runs *on top of* a host — it does not own the host.
 
+### What problem it solves
+
+It gives an AI agent a small, governed, reusable engineering capability layer,
+so that a natural-language request resolves to the **right** capabilities and is
+executed by an **ephemeral** worker — without a permanent agent roster, a global
+host takeover, or a heavyweight orchestration engine.
+
+### How the pieces relate
+
+```text
+Professor  (human authority, final decision)
+  → Daneel (Pi user-layer agent; the Professor's right hand; persistent)
+    → ARAYA (project-scoped, opt-in operating model + capability foundation)
+      → capabilities  (which specializations the intent needs)
+        → skills        (procedural specialization, progressive disclosure)
+        → operations    (deterministic, explicitly-invoked code)
+          → worker      (ephemeral specialist composed from skills + operations)
+```
+
+**`Daneel != ARAYA`.** Daneel is the Professor's personal Pi user-layer agent;
+ARAYA is a project-scoped, opt-in operating model that runs *on top of* a host
+and never owns or configures it.
+
 ## Current state
 
 - **Active canonical:** AX3 v0.5.0 (adopted 2026-09-20).
@@ -118,6 +141,39 @@ the host.
    explicit/scoped by design.
 4. Most legacy domain skills remain deferred (81 of 128 reviewed) — see
    `docs/legacy-skills-review.md`.
+
+## Quick start
+
+```bash
+# 1. Install the core + capability foundation into your project (never ~/.pi).
+bash araya-install.sh --target /path/to/project
+
+# 2. Sanity-check the install.
+python3 cli/araya --json status
+python3 cli/araya --json doctor
+```
+
+### First request
+
+Resolve an intent — in natural language, without naming skills — and inspect
+which capabilities/skills it selects (and that a read-only intent selects no
+operation):
+
+```bash
+python3 cli/araya --json delegate "review the design of a minimalist REST API"
+```
+
+From Pi, inside an ARAYA project, just state the request; the resolver selects
+the capabilities/skills and, when a specialist is needed, an ephemeral worker
+is composed and handed off through PostOffice (see `docs/usage/`).
+
+## Documentation
+
+- **HOW TO / usage:** [`docs/usage/README.md`](docs/usage/README.md)
+- **Installation & upgrade:** [`docs/INSTALLATION.md`](docs/INSTALLATION.md)
+- **Troubleshooting:** [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md)
+- **Architecture (ADRs):** [`docs/architecture/`](docs/architecture/)
+- **Canonical core:** the 13 files at the repository root (verified by `sha256sum -c SHA256SUMS.txt`)
 
 ## Install
 
@@ -262,7 +318,7 @@ never creates a persona named `daneel`.
 
 ## Important limitations / debts
 
-1. Of the 128 legacy skills reviewed, 84 remain deferred (`LATER`) and are not
+1. Of the 128 legacy skills reviewed, 81 remain deferred (`LATER`) and are not
    yet recovered — see `docs/legacy-skills-review.md` / `.json`.
 2. No automated cross-project delegation/state store; ARAYA is per-project and
    host-scoped. The library composes the scoped worker request and records the
@@ -297,5 +353,6 @@ Canonical skills total: **9**. Wave 1 recovered `test-authoring` and
 
 ## Next product increment
 
-Wave 2 selective recovery of the remaining legacy skills, prioritized by
-product value (see `docs/legacy-skills-review.md`).
+After this stable release, the next increment comes from **real product use** —
+not from another internal construction wave. There is no Wave 3. Concrete gaps
+found while using ARAYA should be captured as their own scoped increments.

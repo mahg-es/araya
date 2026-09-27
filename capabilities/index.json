@@ -41,7 +41,7 @@
       "id": "review-security",
       "description": "Review code, architecture, dependencies, and secrets for security.",
       "skills": ["security-review"],
-      "operations": ["git.feature-pr-gate"],
+      "operations": [],
       "keywords": ["security", "seguridad", "owasp", "cwe", "stride", "secret", "secrets", "secreto", "secretos", "vulnerability", "vulnerabilidad", "threat", "amenaza", "pentest", "audit", "auditoria", "security-review"]
     },
     {
@@ -49,7 +49,7 @@
       "description": "Branch, commit, PR, and merge with deterministic gates.",
       "skills": ["git-publication"],
       "operations": ["git.repository-sanity", "git.feature-start", "git.feature-pr-gate", "git.merge-gate"],
-      "keywords": ["git", "branch", "branches", "rama", "ramas", "commit", "commits", "pr", "prs", "pull", "request", "merge", "merges", "fusionar", "push", "publish", "publicar", "release", "lanzar", "feature", "features", "worktree", "worktrees", "integration", "integracion", "publication", "publicacion", "git-publication"]
+      "keywords": ["git", "branch", "branches", "rama", "ramas", "commit", "commits", "pr", "prs", "pull", "request", "merge", "merges", "fusionar", "push", "publish", "publicar", "release", "lanzar", "feature", "features", "worktree", "worktrees", "publication", "publicacion", "git-publication"]
     },
     {
       "id": "verify-repository",

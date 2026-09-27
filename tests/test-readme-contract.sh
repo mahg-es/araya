@@ -51,5 +51,29 @@ fi
 # 4. Canonical integrity must hold (README describes a product whose core is intact).
 sha256sum -c SHA256SUMS.txt >/dev/null || { echo "FAIL: canonical integrity broken"; exit 1; }
 
+# 5. Product documentation set must exist and be linked from the README.
+for f in docs/usage/README.md docs/INSTALLATION.md docs/TROUBLESHOOTING.md; do
+  [[ -f "$f" ]] || { echo "FAIL: missing $f"; exit 1; }
+  [[ "$(wc -l < "$f")" -ge 20 ]] || { echo "FAIL: $f too small"; exit 1; }
+done
+grep -qF 'docs/usage/README.md' README.md || { echo "FAIL: README does not link HOWTO"; exit 1; }
+grep -qF 'docs/INSTALLATION.md' README.md || { echo "FAIL: README does not link Installation"; exit 1; }
+grep -qF 'docs/TROUBLESHOOTING.md' README.md || { echo "FAIL: README does not link Troubleshooting"; exit 1; }
+
+# 6. README must state the Professor -> Daneel -> ARAYA relationship chain.
+{ grep -qF 'Professor' README.md && grep -qF 'Daneel' README.md && grep -qF 'ARAYA' README.md; } \
+  || { echo "FAIL: README missing the Professor/Daneel/ARAYA relationship"; exit 1; }
+
+# 7. A documented README/HOWTO example must actually produce the documented result.
+EX="$(python3 cli/araya --json delegate 'review the design of a minimalist REST API')" \
+  || { echo "FAIL: documented example command failed"; exit 1; }
+python3 - "$EX" <<'PY' || { echo "FAIL: documented example resolution mismatch"; exit 1; }
+import json, sys
+r = json.loads(sys.argv[1])["resolution"]
+assert "design-api" in r["capabilities"], r
+assert r["operations"] == [], r
+PY
+
 echo "README_CONTRACT=PASS"
 echo "README_VERSION=$VERSION"
+echo "DOCS_CONTRACT=PASS"

@@ -190,5 +190,35 @@ class OperationSafetyTest(unittest.TestCase):
         self.assertEqual(self.d.resolve("design a REST API")["operations"], [])
 
 
+class ResolverDebtsTest(unittest.TestCase):
+    """PE-ARAYA-2609-C-04: close the two remaining resolver ambiguities."""
+
+    def setUp(self):
+        self.d = Delegation(str(REPO))
+
+    def test_security_review_does_not_drag_git_operation(self):
+        for q in ("review the security of the new endpoint",
+                  "revisar la seguridad del endpoint"):
+            r = self.d.resolve(q)
+            self.assertIn("review-security", r["capabilities"], q)
+            self.assertEqual(r["operations"], [], q)
+            self.assertNotIn("git.feature-pr-gate", r["operations"], q)
+
+    def test_generic_integration_word_does_not_activate_git_publication(self):
+        for q in ("explain the integration strategy",
+                  "discuss the system integration",
+                  "explica la integración del sistema"):
+            r = self.d.resolve(q)
+            self.assertNotIn("publish-git", r["capabilities"], q)
+            self.assertNotIn("git-publication", r["skills"], q)
+
+    def test_real_git_intent_still_selects_git_publication(self):
+        for q in ("publish this branch", "start a feature branch and publish it",
+                  "publicar la rama y hacer merge"):
+            r = self.d.resolve(q)
+            self.assertIn("publish-git", r["capabilities"], q)
+            self.assertIn("git-publication", r["skills"], q)
+
+
 if __name__ == "__main__":
     unittest.main()
