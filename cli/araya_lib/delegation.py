@@ -45,47 +45,75 @@ class Delegation:
         self.skills.load_index()
         self.operations.load()
 
+    def _capability_haystack(self, cap: dict) -> str:
+        """The capability's explicit, declared match terms — its multilingual
+        ``keywords`` only. Ids, descriptions and operation ids are intentionally
+        excluded so that (a) prose cannot pull in a capability and (b) a shared
+        token in an id/skill name (e.g. "architecture", "tests") cannot bleed
+        one capability into another."""
+        return " ".join(cap.get("keywords", []))
+
+    def _operation_warranted(self, op_id: str, task: str) -> bool:
+        """Operation safety: an operation is warranted only when it is
+        read-only, or when the intent explicitly names the action the operation
+        performs. A read-only/design intent never silently gains a
+        state-changing operation from a textual similarity."""
+        definition = self.operations.describe(op_id)
+        if definition is None:
+            return False
+        if definition.get("risk_level") == "read-only":
+            return True
+        hay = " ".join([
+            definition.get("operation_id", ""),
+            definition.get("title", ""),
+            *definition.get("aliases", []),
+            *definition.get("intents", []),
+        ])
+        return matches(hay, task)
+
     def resolve(self, task: str) -> dict:
         """Determine capabilities, skills, and deterministic operations for a
-        task using deterministic matching (no probabilistic certainty claims)."""
-        t = task.lower()
-        capability_ids = []
-        skill_names = []
-        operation_ids = []
+        task using deterministic matching (no probabilistic certainty claims).
+
+        Selection follows the declared dependency chain::
+
+            intent -> capabilities -> skills declared by those capabilities
+                   -> operations required by those skills/capabilities
+
+        Skills and operations are *derived* from the selected capabilities (and
+        the skills they declare) — never accumulated independently merely
+        because an arbitrary word happened to match."""
+        capability_ids: list = []
+        skill_names: list = []
+        operation_ids: list = []
 
         for cap in self.capabilities.list():
-            hay = " ".join([
-                cap.get("id", ""), cap.get("description", ""),
-                *cap.get("skills", []), *cap.get("operations", []),
-            ])
-            if matches(hay, task):
+            if matches(self._capability_haystack(cap), task):
                 capability_ids.append(cap.get("id"))
                 for s in cap.get("skills", []):
                     if s not in skill_names:
                         skill_names.append(s)
+
+        # Operations are derived from the selected capabilities and the skills
+        # they declared — never matched directly against the raw intent.
+        skill_meta = {s.get("name"): s for s in self.skills.list()}
+        candidates: list = []
+        for cap in self.capabilities.list():
+            if cap.get("id") in capability_ids:
                 for op in cap.get("operations", []):
-                    if op not in operation_ids:
-                        operation_ids.append(op)
+                    if op not in candidates:
+                        candidates.append(op)
+        for name in skill_names:
+            rec = skill_meta.get(name) or {}
+            for op in rec.get("operations", []):
+                if op not in candidates:
+                    candidates.append(op)
 
-        # Also match skills directly by tag/keyword.
-        for s in self.skills.list():
-            hay = " ".join([
-                s.get("name", ""), s.get("description", ""), *s.get("tags", []),
-                *s.get("capabilities", []),
-            ])
-            if matches(hay, task):
-                if s.get("name") not in skill_names:
-                    skill_names.append(s.get("name"))
-
-        # And operations directly by id/alias/intent keyword.
-        for op in self.operations.list():
-            hay = " ".join([
-                op["operation_id"], op.get("title", ""), op.get("description", ""),
-                *op.get("aliases", []), *op.get("intents", []),
-            ])
-            if matches(hay, task):
-                if op["operation_id"] not in operation_ids:
-                    operation_ids.append(op["operation_id"])
+        # Operation safety: keep an operation only when it is genuinely
+        # warranted by the task (read-only, or explicitly requested).
+        for op in candidates:
+            if self._operation_warranted(op, task):
+                operation_ids.append(op)
 
         needs_specialist = bool(skill_names) and not operation_ids
         return {

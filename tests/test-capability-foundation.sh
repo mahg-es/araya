@@ -12,6 +12,7 @@ PY_TESTS=(
   tests/test_operations.py
   tests/test_communications.py
   tests/test_skills_capabilities_delegation.py
+  tests/test_resolver_precision.py
   tests/test_runtime.py
   tests/test_native_subagent.py
   tests/test_legacy_skills_review.py
