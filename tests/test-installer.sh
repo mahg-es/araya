@@ -20,6 +20,20 @@ check_no_global_araya
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
+# 0. Ownership boundary: installer must refuse the Pi user layer and the
+#    reserved "daneel" name.
+if bash araya-install.sh --target "$HOME/.pi/agent" > "$TMP/guard1.log" 2>&1; then
+  echo "FAIL: installer accepted the Pi user layer as target"; exit 1
+fi
+grep -q 'Refusing to install into the Pi user layer' "$TMP/guard1.log" \
+  || { echo "FAIL: no ownership-boundary error for Pi user layer"; exit 1; }
+
+if bash araya-install.sh --target "$TMP/daneel" > "$TMP/guard2.log" 2>&1; then
+  echo "FAIL: installer accepted a target named 'daneel'"; exit 1
+fi
+grep -q "target named 'daneel'" "$TMP/guard2.log" \
+  || { echo "FAIL: no ownership-boundary error for reserved name 'daneel'"; exit 1; }
+
 # 1. Core-only install into a clean target directory.
 TARGET="$TMP/project"
 bash araya-install.sh --target "$TARGET" > "$TMP/core.log" 2>&1

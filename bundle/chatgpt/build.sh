@@ -22,6 +22,9 @@ done
 # 1. Verify the canonical core is intact before packaging.
 ( cd "$REPO_ROOT" && sha256sum -c SHA256SUMS.txt )
 
+# 1b. Verify the README matches the product before packaging (stale-README gate).
+( cd "$REPO_ROOT" && bash tests/test-readme-contract.sh )
+
 # 2. Assemble the package.
 rm -rf "$PKG"
 mkdir -p "$PKG/knowledge"
