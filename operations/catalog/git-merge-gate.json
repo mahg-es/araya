@@ -1,0 +1,35 @@
+{
+  "operation_id": "git.merge-gate",
+  "version": "1.0.0",
+  "status": "active",
+  "domain": "git",
+  "title": "Merge Gate",
+  "description": "Determine whether a PR may be merged into an integration branch. Predicate — does not merge. Persona-free: validates repository truth only.",
+  "canonical_handler": "araya_lib.git_ops.git_merge_gate",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "repo": {"type": "string"},
+      "pr": {"type": "string"},
+      "candidate": {"type": "string"},
+      "base": {"type": "string"},
+      "evidence_commit": {"type": "string"},
+      "required_tests": {"type": "array", "items": {"type": "string"}}
+    }
+  },
+  "output_schema": {"type": "object", "contract": "OperationResult"},
+  "side_effects": [],
+  "risk_level": "read-only",
+  "required_authority": "any",
+  "preconditions": ["repository truth fetched when required"],
+  "postconditions": ["OperationResult contract-valid"],
+  "evidence": ["checks[]", "evidence[]", "evaluated_sha"],
+  "idempotency": "safe to re-run",
+  "rollback": "no writes to roll back",
+  "adapters": ["cli"],
+  "aliases": ["merge gate", "merge-gate", "gate"],
+  "intents": ["validate whether a PR may be merged", "can I merge this PR", "merge pr"],
+  "tests": ["tests/test_operations.py"],
+  "owner": "araya",
+  "source_provenance": "recovered from legacy operations/git-merge-gate.yaml (ponny-express-10010); persona sentinels and authority-ledger check removed"
+}

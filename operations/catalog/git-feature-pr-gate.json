@@ -1,0 +1,33 @@
+{
+  "operation_id": "git.feature-pr-gate",
+  "version": "1.0.0",
+  "status": "active",
+  "domain": "git",
+  "title": "Feature PR Gate",
+  "description": "Validate a feature branch before creating a PR to integration (diff, whitespace, base, forbidden paths, secrets, tests, hygiene). Read-only.",
+  "canonical_handler": "araya_lib.git_ops.git_feature_pr_gate",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "repo": {"type": "string"},
+      "base": {"type": "string"},
+      "required_tests": {"type": "array", "items": {"type": "string"}},
+      "forbidden_paths": {"type": "array", "items": {"type": "string"}}
+    }
+  },
+  "output_schema": {"type": "object", "contract": "OperationResult"},
+  "side_effects": [],
+  "risk_level": "read-only",
+  "required_authority": "any",
+  "preconditions": ["repository truth fetched when required"],
+  "postconditions": ["OperationResult contract-valid"],
+  "evidence": ["checks[]", "evidence[]", "evaluated_sha"],
+  "idempotency": "safe to re-run",
+  "rollback": "no writes to roll back",
+  "adapters": ["cli"],
+  "aliases": ["pr gate", "feature gate"],
+  "intents": ["validate feature branch before PR", "prepare PR"],
+  "tests": ["tests/test_operations.py"],
+  "owner": "araya",
+  "source_provenance": "recovered from legacy operations/git-feature-pr-gate.yaml (ponny-express-10010); generator-check removed (no generated-drift surface in clean core)"
+}

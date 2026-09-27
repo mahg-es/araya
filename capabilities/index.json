@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "description": "Capabilities determine specialization — not display names. Each capability maps to the skills and deterministic operations that realize it.",
+  "capabilities": [
+    {
+      "id": "document-decisions",
+      "description": "Capture significant decisions as immutable Architecture Decision Records.",
+      "skills": ["adr-write"],
+      "operations": []
+    },
+    {
+      "id": "execute-tests",
+      "description": "Execute a test suite and report red/green results.",
+      "skills": ["tdd-execute"],
+      "operations": []
+    },
+    {
+      "id": "publish-git",
+      "description": "Branch, commit, PR, and merge with deterministic gates.",
+      "skills": ["git-publication"],
+      "operations": ["git.repository-sanity", "git.feature-start", "git.feature-pr-gate", "git.merge-gate"]
+    },
+    {
+      "id": "verify-repository",
+      "description": "Inspect repository state for sanity and merge readiness.",
+      "skills": ["git-publication"],
+      "operations": ["git.repository-sanity", "git.merge-gate"]
+    },
+    {
+      "id": "coordinate",
+      "description": "Coordinate work between agents via the postoffice channel.",
+      "skills": ["postoffice"],
+      "operations": []
+    },
+    {
+      "id": "trace-instruction",
+      "description": "Intake a Professor instruction and trace it through delegation to results.",
+      "skills": ["ponyexpress", "postoffice"],
+      "operations": []
+    }
+  ]
+}

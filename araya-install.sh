@@ -4,7 +4,7 @@ set -Eeuo pipefail
 # araya-install.sh — repository installer for the ARAYA AX3 v0.5.0 core.
 #
 #   verify input
-#   -> install ARAYA core
+#   -> install ARAYA core + capability foundation
 #   -> optionally install a requested host adapter
 #   -> verify installation
 #   -> report exact result
@@ -29,6 +29,19 @@ CANONICAL_FILES=(
   "ADOPTION-RECORD.md"
   "ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md"
   "SHA256SUMS.txt"
+)
+
+# Capability foundation: the agent-first CLI, shared library, operations
+# catalog, skills, capabilities, communications, runtime, and delegation.
+# Copied alongside the canonical core (they are product, not kernel canon).
+FOUNDATION_DIRS=(
+  "cli"
+  "operations"
+  "skills"
+  "capabilities"
+  "communications"
+  "runtime"
+  "delegation"
 )
 
 die() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
@@ -106,6 +119,9 @@ info "ARAYA installer: verifying input..."
 for f in "${CANONICAL_FILES[@]}"; do
   [[ -f "$SELF_DIR/$f" ]] || die "Canonical file missing from source: $f"
 done
+for d in "${FOUNDATION_DIRS[@]}"; do
+  [[ -d "$SELF_DIR/$d" ]] || die "Foundation directory missing from source: $d"
+done
 ( cd "$SELF_DIR" && sha256sum -c SHA256SUMS.txt ) \
   || die "Canonical core integrity check failed (input)."
 
@@ -113,6 +129,9 @@ done
 mkdir -p "$TARGET"
 for f in "${CANONICAL_FILES[@]}"; do
   cp -p "$SELF_DIR/$f" "$TARGET/$f"
+done
+for d in "${FOUNDATION_DIRS[@]}"; do
+  cp -R "$SELF_DIR/$d" "$TARGET/$d"
 done
 info "ARAYA core installed to: $TARGET"
 
@@ -140,6 +159,7 @@ info "ARAYA installer: verifying installation..."
 for f in "${CANONICAL_FILES[@]}"; do
   [[ -f "$TARGET/$f" ]] || die "Canonical file missing after install: $f"
 done
+[[ -f "$TARGET/cli/araya" ]] || die "Capability foundation CLI missing after install: $TARGET/cli/araya"
 ( cd "$TARGET" && sha256sum -c SHA256SUMS.txt ) \
   || die "Canonical core integrity check failed (installed)."
 

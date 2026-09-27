@@ -1,20 +1,45 @@
-# Legacy capability inventory (deferred review)
+# Legacy capability inventory
 
 The legacy ARAYA runtime was archived (see the `archive/araya-legacy-*` Git
-branches). This inventory lists its capability groups for later individual
-review. Nothing here is reintroduced automatically.
+branches). This inventory lists its capability groups and their current
+disposition. Nothing is reintroduced automatically — each capability returns
+only after an individual product-value review.
 
-| Capability group | Legacy location | Notes | Candidate dispositions |
+## Recovered (in the capability foundation)
+
+Recovered as clean, reusable, agent-first code — with authority/runtime
+coupling removed:
+
+1. **Operations catalog** (`operations/`) — deterministic git operations
+   (repository sanity, merge gate, feature PR gate, feature start) with a
+   minimal `list`/`describe`/`resolve`/`execute` API. No pre-task lookup, no
+   OPERATION_GAP, no global preflight.
+2. **CLI** (`cli/`) — agent-first, stdlib-only, `--json`, stable exit codes.
+3. **Skills** (progressive disclosure) — a small curated set
+   (`adr-write`, `tdd-execute`, `git-publication`, `postoffice`, `ponyexpress`)
+   with metadata-always-discoverable → full-instructions-on-selection.
+4. **PostOffice** (`communications/postoffice/`) — agent ↔ agent messaging +
+   trace; explicitly not an authority/ledger/state machine.
+5. **PonyExpress** (`communications/ponyexpress/`) — Professor → agent channel
+   with correlation; not an authority database.
+6. **Relay handoff (L07 only)** — handoff, correlation, delivery,
+   acknowledgement, trace. No T0–T11/T12 state machine.
+7. **Runtime utilities** (`runtime/`) — read-only model-context, opt-in quota,
+   cycle, notifier.
+8. **Delegation** (`delegation/`) — capability resolver + ephemeral agent
+   factory. No sovereign runtime, no durable workflow state.
+
+## Still deferred (not yet reviewed)
+
+| Capability group | Legacy location | Notes | Candidate disposition |
 |---|---|---|---|
-| Agent personas (roster) | `prompts/agents/`, `.pi/agents/` | Elena, Sonia, Aisha, … | agent / drop |
-| Skills library (~130) | `skills/` | Domain + orchestration skills | skill / reimplement later / drop |
+| Agent personas (roster) | `prompts/agents/`, `.pi/agents/` | Elena, Sonia, Aisha, … | drop (ephemeral agents replace the roster) |
+| Skills library (~127 remaining) | `skills/` | bulk of ~132 skills not yet reviewed | skill / reimplement later / drop |
 | Orchestration engines | `src/araya/` | workflow/model/quality/budget/circuit | reimplement later / drop |
-| CLI | `src/cli.ts`, `dist/cli.js` | ARAYA CLI | CLI capability / drop |
-| Git operation gates | `operations/*.yaml` | PR/merge/release gates | reimplement later |
-| Bundle tooling | `ops/bootstrap-installer.sh`, `ops/make-bundle.sh` | legacy bundle builder | reimplement later |
+| Relay state machine (T0–T11/T12) | `src/araya/relay/` | full state machine; only L07 recovered | drop |
 | Global Pi extensions | `extensions/araya`, `araya-notifier`, `araya-quota-guard`, `daneel-persona` | global hooks (removed) | drop |
-| PostOffice / AX ledger | `.araya/postoffice`, `.araya/ax` | message/ledger state store | reimplement later / drop |
-| Runtime enforcement | `.araya/operating-model` | S1/S6 lifecycle gates | reimplement later |
+| AX ledger / authority | `.araya/ax`, `.araya/operating-model` | authority/state store | drop |
+| MCP adapter | `src/araya/v2/mcp/` | only where interoperability justifies | reimplement later |
 
 ## Disposition policy
 

@@ -46,3 +46,18 @@ paths, roles, versions, or governance decisions.
   Truth owns their content; do not edit them here.
 - Product glue (README, installer, adapters, bundle, docs, tests) lives
   alongside the core. Keep it minimal, accurate, and current.
+
+## Capability foundation
+
+- Deterministic operations live in `operations/catalog/` and are invoked via
+  the agent-first CLI (`cli/araya`). Prefer invoking a deterministic operation
+  over re-deriving it by reasoning.
+- Skills live in `skills/` and load by progressive disclosure (metadata in
+  `skills/index.json`, full instructions in each `SKILL.md`).
+- Specialist agents are ephemeral and composed from skills + operations;
+  display names have no architectural meaning. Daneel is the persistent
+  exception and remains outside ARAYA.
+- PostOffice is messaging + trace (never an authority/ledger/gate); PonyExpress
+  is the Professor's channel (never an authority database).
+- Run `bash tests/test-capability-foundation.sh` and `bash demo/vertical-demo.sh`
+  to validate the foundation.

@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "disclosure": "progressive",
+  "description": "Skills are the primary unit of reusable procedural specialization. This index exposes minimal metadata (always discoverable); full instructions load from each skill's SKILL.md only when selected.",
+  "skills": [
+    {
+      "name": "adr-write",
+      "description": "Write Architecture Decision Records (ADRs) — lightweight documents capturing a significant architectural decision, context, options, decision, and consequences.",
+      "path": "adr-write/SKILL.md",
+      "tags": ["architecture", "decision", "documentation"],
+      "capabilities": ["document-decisions"]
+    },
+    {
+      "name": "tdd-execute",
+      "description": "Execute a test suite and report results in red/green format with actionable failures.",
+      "path": "tdd-execute/SKILL.md",
+      "tags": ["testing", "tdd", "quality"],
+      "capabilities": ["execute-tests"]
+    },
+    {
+      "name": "git-publication",
+      "description": "Branch, commit, PR, and merge discipline backed by the deterministic git operations (sanity, feature-start, feature-pr-gate, merge-gate).",
+      "path": "git-publication/SKILL.md",
+      "tags": ["git", "publication", "merge", "pull-request"],
+      "capabilities": ["publish-git"]
+    },
+    {
+      "name": "postoffice",
+      "description": "Consult and write the agent-to-agent postoffice — the operational-coordination channel. Advisory, never a gate; governance acts never travel it.",
+      "path": "postoffice/SKILL.md",
+      "tags": ["coordination", "messaging", "trace"],
+      "capabilities": ["coordinate"]
+    },
+    {
+      "name": "ponyexpress",
+      "description": "Intake and trace Professor-originated instructions via the PonyExpress channel, correlated through delegation to results.",
+      "path": "ponyexpress/SKILL.md",
+      "tags": ["intake", "instruction", "correlation"],
+      "capabilities": ["coordinate", "trace-instruction"]
+    }
+  ]
+}
