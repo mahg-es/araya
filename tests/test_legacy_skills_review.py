@@ -57,6 +57,13 @@ LEGACY_SKILL_IDS = [
 
 VALID_DISPOSITIONS = {"KEEP", "COMBINE", "REPLACE_BY_OPERATION", "DROP", "LATER"}
 
+REQUIRED_FIELDS = [
+    "legacy_skill_id", "purpose", "inputs", "outputs", "dependencies",
+    "deterministic_code_available", "overlap_with_other_skills",
+    "overlap_with_operations", "overlap_with_AX3", "current_product_value",
+    "disposition", "canonical_target", "reason", "source_provenance",
+]
+
 
 class LegacySkillsReviewTest(unittest.TestCase):
     def setUp(self):
@@ -96,13 +103,55 @@ class LegacySkillsReviewTest(unittest.TestCase):
         for f in (REPO / "operations" / "catalog").glob("*.json"):
             op_names.add(json.loads(f.read_text(encoding="utf-8"))["operation_id"])
         for r in self.records:
-            target = r.get("canonical")
+            target = r.get("canonical_target")
             if r["disposition"] in ("COMBINE", "KEEP"):
                 self.assertIsNotNone(target, r)
                 self.assertIn(target, canonical_names, r)
             elif r["disposition"] == "REPLACE_BY_OPERATION":
                 self.assertIsNotNone(target, r)
                 self.assertIn(target, op_names, r)
+
+    def test_review_schema_complete(self):
+        for r in self.records:
+            for field in REQUIRED_FIELDS:
+                self.assertIn(field, r, f"{r['legacy_skill_id']} missing {field}")
+
+    def test_later_reasons_individualized(self):
+        later = [r for r in self.records if r["disposition"] == "LATER"]
+        self.assertTrue(later)
+        for r in later:
+            reason = (r.get("reason") or "").strip()
+            self.assertTrue(len(reason) >= 20,
+                            f"{r['legacy_skill_id']} LATER reason too short/empty")
+            # no generic boilerplate
+            low = reason.lower()
+            self.assertNotIn("not otherwise classified", low)
+            self.assertNotEqual(low, "lateral")
+
+    def test_no_bulk_identical_reasons(self):
+        from collections import Counter
+        counts = Counter((r.get("reason") or "").strip() for r in self.records)
+        bulk = {k: v for k, v in counts.items() if v >= 10}
+        self.assertEqual(bulk, {}, f"bulk default reasons detected: {bulk}")
+
+    def test_combine_has_canonical_target(self):
+        for r in self.records:
+            if r["disposition"] == "COMBINE":
+                self.assertIsNotNone(r.get("canonical_target"), r["legacy_skill_id"])
+
+    def test_replace_has_operation_evidence(self):
+        op_names = {json.loads(f.read_text())["operation_id"]
+                    for f in (REPO / "operations" / "catalog").glob("*.json")}
+        for r in self.records:
+            if r["disposition"] == "REPLACE_BY_OPERATION":
+                self.assertIn(r.get("canonical_target"), op_names, r["legacy_skill_id"])
+                self.assertTrue(r.get("deterministic_code_available"), r["legacy_skill_id"])
+
+    def test_source_provenance_present(self):
+        for r in self.records:
+            prov = r.get("source_provenance")
+            self.assertTrue(prov, r["legacy_skill_id"])
+            self.assertIn(r["legacy_skill_id"], prov)
 
     def test_progressive_disclosure_metadata_only(self):
         # The discovery index exposes metadata only — never a full body.

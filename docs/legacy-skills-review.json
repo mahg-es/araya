@@ -1,775 +1,3493 @@
 {
   "records": [
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "- Chart of accounts / general ledger data",
+        "- Activity descriptions (what does the company actually do?)",
+        "- Resource drivers (what consumes resources: orders processed, support tickets, shipments)",
+        "- Cost objects (what we want to cost: customers, products, services, channels)"
+      ],
       "legacy_skill_id": "abc-costing-model",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "An ABC model document:",
+        "```markdown",
+        "# ABC Model: ManTradeCoin SaaS Platform"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Implement Activity-Based Costing (ABC) to accurately attribute costs to products,",
+      "reason": "Activity-Based Costing model for profitability attribution. Finance domain; deferred \u2014 not foundational, no current product need.",
+      "source_provenance": [
+        "abc-costing-model"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Application URL or source code, target WCAG level (AA default), assistive",
+        "technology requirements."
+      ],
       "legacy_skill_id": "accessibility",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "```markdown",
+        "# Accessibility Audit & Remediation: ARAYA Dashboard"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Implement WCAG 2.2 AA accessibility \u2014 semantic HTML, ARIA, keyboard navigation,",
+      "reason": "WCAG 2.2 AA audit/remediation for UI. Frontend-quality domain; deferred.",
+      "source_provenance": [
+        "accessibility"
+      ]
     },
     {
-      "canonical": "adr-write",
+      "canonical_target": "adr-write",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker"
+      ],
       "disposition": "KEEP",
+      "inputs": [
+        "The decision to document \u2014 technology choice, pattern adoption, or convention."
+      ],
       "legacy_skill_id": "adr-write",
-      "note": "already canonical (recovered in b-004)"
+      "outputs": [
+        "An ADR in `.araya/plan/spec/adr/`:",
+        "```markdown",
+        "# ADR-005: Use PostgreSQL with PostGIS for Spatial Data",
+        "**Status:** Accepted",
+        "**Date:** 2026-05-27",
+        "**Deciders:** Junia (Data Platform Architect), Bernab\u00e9 (Data Engineer), The Data Professor"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Write Architecture Decision Records (ADRs) \u2014 lightweight documents that capture",
+      "reason": "Distinct procedural reasoning: author Architecture Decision Records (context, options, decision, consequences). Foundational, already canonical.",
+      "source_provenance": [
+        "adr-write"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "DROP",
+      "inputs": [
+        "Task domain, required capabilities, constraints, safety requirements."
+      ],
       "legacy_skill_id": "agent-design",
-      "note": "legacy roster agent design (removed architecture)"
+      "outputs": [
+        "An agent architecture specification with roles, tools, memory model, and",
+        "safety guardrails \u2014 ready for implementation."
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design multi-agent AI systems \u2014 agent architectures, tool use, memory systems,",
+      "reason": "Legacy roster: design multi-agent systems for the removed named-persona architecture. No current product value.",
+      "source_provenance": [
+        "agent-design"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "coverage"
+      ],
       "disposition": "DROP",
+      "inputs": [],
       "legacy_skill_id": "agent-topology",
-      "note": "legacy dynamic agent topology (roster machinery)"
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA Dynamic Agent Topology \u2014 team assembly, workforce risk analysis, capability coverage, and adaptive organization design.",
+      "reason": "Legacy roster machinery: dynamic agent topology/team assembly over the removed roster.",
+      "source_provenance": [
+        "agent-topology"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "coverage"
+      ],
       "disposition": "DROP",
+      "inputs": [
+        "- Task description (natural language)",
+        "- Required capabilities (from capability registry)",
+        "- Strategy preference (default: BALANCED)",
+        "- Provider availability and rate-limit state"
+      ],
       "legacy_skill_id": "ai-routing",
-      "note": "legacy provider-agnostic routing runtime"
+      "outputs": [
+        "```markdown"
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA Provider-Agnostic AI Routing \u2014 capability-based model selection, cost governance, and explainable routing decisions.",
+      "reason": "Legacy runtime: provider-agnostic AI routing + capability registry. Removed global runtime.",
+      "source_provenance": [
+        "ai-routing"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Data to analyze, business questions, audience, report format."
+      ],
       "legacy_skill_id": "analytics-report",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "A structured analytics report with executive summary, analysis, visualizations,",
+        "insights, and recommendations."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate executive and operational analytics reports \u2014 structured analysis",
+      "reason": "Generate executive/operational analytics reports. BI domain; deferred.",
+      "source_provenance": [
+        "analytics-report"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "UI states that need animation, performance budget, accessibility requirements."
+      ],
       "legacy_skill_id": "animation",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "```css",
+        "/* src/styles/animations.css */",
+        "/* Design tokens for motion */",
+        ":root {",
+        "--duration-instant: 100ms;",
+        "--duration-fast: 200ms;"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement purposeful motion \u2014 page transitions, micro-interactions,",
+      "reason": "Purposeful motion/micro-interactions. Frontend design; deferred.",
+      "source_provenance": [
+        "animation"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "OpenAPI",
+        "openapi"
+      ],
       "disposition": "LATER",
+      "inputs": [
+        "Feature requirements, data model, authentication strategy."
+      ],
       "legacy_skill_id": "api-design",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "An OpenAPI 3.1 specification:",
+        "```yaml",
+        "# openapi.yaml",
+        "openapi: \"3.1.0\"",
+        "info:",
+        "title: User Management API"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design REST and GraphQL APIs following OpenAPI 3.1 standards. Produce complete",
+      "reason": "Design REST/GraphQL APIs (OpenAPI 3.1). Backend design; deferred.",
+      "source_provenance": [
+        "api-design"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "OpenAPI",
+        "Swagger"
+      ],
       "disposition": "LATER",
+      "inputs": [
+        "OpenAPI specification, authentication details, example use cases."
+      ],
       "legacy_skill_id": "api-document",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "API documentation with reference, guides, authentication, code samples,",
+        "and error catalog."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate comprehensive API documentation \u2014 reference docs, getting-started",
+      "reason": "Generate API reference docs. Backend docs; deferred.",
+      "source_provenance": [
+        "api-document"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Service inventory, authentication strategy, client requirements (web, mobile, API)."
+      ],
       "legacy_skill_id": "api-gateway",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "```yaml",
+        "# gateway/config.yaml (Kong / KrakenD / Express Gateway)",
+        "services:",
+        "- name: user-service",
+        "url: http://user-service:3001",
+        "routes:"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and configure API gateways \u2014 routing, rate limiting, authentication,",
+      "reason": "Design/configure API gateways. Backend infra; deferred.",
+      "source_provenance": [
+        "api-gateway"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "OpenAPI"
+      ],
       "disposition": "LATER",
+      "inputs": [
+        "OpenAPI specification or API endpoint list."
+      ],
       "legacy_skill_id": "api-integration",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "```typescript",
+        "// src/api/client.ts",
+        "const API_BASE = import.meta.env.VITE_API_BASE || \"http://localhost:3000/api/v1\";",
+        "interface ApiError {",
+        "error: string;",
+        "message: string;"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Connect frontend to backend \u2014 type-safe API clients, request/response handling,",
+      "reason": "Connect frontend to backend (typed clients). Frontend/backend glue; deferred.",
+      "source_provenance": [
+        "api-integration"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "docker",
+        "kubectl"
+      ],
       "disposition": "DROP",
+      "inputs": [
+        "- A task request from the user or an orchestrator",
+        "- Access to the ARAYA catalog (`/araya:man`)",
+        "- Knowledge of own role, skills, and permissions from `araya.yaml`"
+      ],
       "legacy_skill_id": "araya-command-and-delegation-expert",
-      "note": "legacy delegation machinery (replaced by delegation resolver + ephemeral worker)"
+      "outputs": [
+        "- A catalog consultation before the first tool call",
+        "- Identification of relevant commands, functions, skills, and specialists",
+        "- A delegation decision (or gap registration) for each subtask",
+        "- No invented commands, flags, agents, or skills",
+        "---"
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": ">",
+      "reason": "Legacy delegation machinery (catalog consultation, gap registration). Replaced by delegation resolver + ephemeral worker.",
+      "source_provenance": [
+        "araya-command-and-delegation-expert"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Git "
+      ],
       "disposition": "DROP",
+      "inputs": [],
       "legacy_skill_id": "araya-operation-runtime",
-      "note": "mandatory operation-first + OPERATION_GAP ceremony (b-004 explicitly removed)"
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Mandatory operation-first protocol for every active ARAYA agent \u2014 resolve requested work to a governed operation from the Operation Catalog before any raw implementation; declare OPERATION_GAP when none applies. Use before executing any task that could be covered by a governed operation.",
+      "reason": "Mandatory operation-first + OPERATION_GAP ceremony; b-004 explicitly removed mandatory pre-task lookup.",
+      "source_provenance": [
+        "araya-operation-runtime"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "System architecture, audience (executive, architect, developer), diagram type."
+      ],
       "legacy_skill_id": "architecture-diagram",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "Architecture diagrams in Mermaid (preferred, text-based, version-controlled)",
+        "or PlantUML/C4-PlantUML format."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Create clear, standards-based architecture diagrams \u2014 C4 model (Context,",
+      "reason": "C4/Mermaid architecture diagrams. Foundational-adjacent but not Wave 1; deferred.",
+      "source_provenance": [
+        "architecture-diagram"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Brand asset inventory, version history, access requirements, distribution needs."
+      ],
       "legacy_skill_id": "asset-management",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "An organized asset management system with canonical file structure, versioning,",
+        "metadata, and distribution guidelines."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Organize and manage digital brand assets \u2014 logos, fonts, templates, images,",
+      "reason": "Organize brand assets. Design ops; deferred.",
+      "source_provenance": [
+        "asset-management"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Authentication strategy (JWT, API key, session), user roles, endpoint access matrix."
+      ],
       "legacy_skill_id": "auth-middleware",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "```typescript",
+        "// src/middleware/auth.ts",
+        "import { Request, Response, NextFunction } from \"express\";",
+        "import jwt from \"jsonwebtoken\";",
+        "const JWT_SECRET = process.env.JWT_SECRET!;",
+        "export interface AuthUser {"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Implement authentication and authorization middleware \u2014 JWT validation, role-based",
+      "reason": "Implement authn/authz middleware. Backend security-adjacent; deferred.",
+      "source_provenance": [
+        "auth-middleware"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "DROP",
+      "inputs": [
+        "- Natural language message from The Data Professor",
+        "- Agent capability registry (for routing)",
+        "- Provider availability state"
+      ],
       "legacy_skill_id": "autonomous-execution",
-      "note": "legacy autonomous NL execution triggers"
+      "outputs": [
+        "- Triggered workflow (started automatically)",
+        "- Run record in `.araya/runs/{run_id}/`",
+        "- Observability stream during execution"
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Reduce manual intervention \u2014 autonomous natural language execution triggers, delegation observability, and run persistence.",
+      "reason": "Legacy autonomous NL execution triggers + run persistence. Removed runtime.",
+      "source_provenance": [
+        "autonomous-execution"
+      ]
     },
     {
-      "canonical": "postoffice",
-      "disposition": "KEEP",
-      "legacy_skill_id": "ax-postoffice",
-      "note": "already canonical as `postoffice` (recovered in b-004)"
-    },
-    {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "git "
+      ],
       "disposition": "DROP",
+      "inputs": [
+        "- A repository root (auto-detected via `araya.yaml` or git root)",
+        "- Optional: `--scope <path>`, `--check`, `--dry-run`, `--repair`",
+        "- Optional: configuration for exclusions, max depth"
+      ],
       "legacy_skill_id": "ax3",
-      "note": "AX3 contract hierarchy is now the canonical kernel (K01-K10), not a skill"
-    },
-    {
-      "canonical": "test-authoring",
-      "disposition": "COMBINE",
-      "legacy_skill_id": "bdd-feature",
-      "note": "combined into canonical skill"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "brand-audit",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "brand-compliance",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "budget-forecasting",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "cache-strategy",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "capability-registry",
-      "note": "legacy org capability registry (now capabilities/index.json)"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "cicd-pipeline",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "cicd-quality",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "cloud-deploy",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "cloud-provision",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "compliance",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "component",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "component-arch",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "content-calendar",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "cost-analysis",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "cost-to-serve",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": "test.execute",
-      "disposition": "REPLACE_BY_OPERATION",
-      "legacy_skill_id": "coverage",
-      "note": "deterministic step is now a reusable operation"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "cr-generate",
-      "note": "Change Request generation (legacy SDLC ceremony)"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "curriculum-planning",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "daily-note",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "daily-standup",
-      "note": "roster-based daily standup ceremony"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "dashboard-design",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "data-governance",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "data-lakehouse-design",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "data-modeling",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "data-quality",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "data-visualization",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "db-optimization",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "db-schema",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "definition-of-done",
-      "note": "mandatory DoD checklists (AX3 covers done criteria)"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "deployment-automation",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "docker",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "drr-create",
-      "note": "Delivery Review Reports (legacy SDLC ceremony)"
-    },
-    {
-      "canonical": "test-authoring",
-      "disposition": "COMBINE",
-      "legacy_skill_id": "e2e-strategy",
-      "note": "combined into canonical skill"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "endpoint",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "error-handling",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "etl-orchestration",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "form-design",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "gap-analysis",
-      "note": "Gap Analysis Reports (legacy SDLC ceremony)"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "geo-branding",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "iar-generate",
-      "note": "Impact Analysis Reports (legacy SDLC ceremony)"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "impediment",
-      "note": "roster-based blocker tracking"
-    },
-    {
-      "canonical": "test-authoring",
-      "disposition": "COMBINE",
-      "legacy_skill_id": "integration-test",
-      "note": "combined into canonical skill"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "knowledge-graph",
-      "note": "legacy organizational knowledge graph"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "kpi-framework",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "kubernetes",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "lab-scenario-design",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "llm-local-deploy",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "medallion-architecture",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "message-queue",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "microservice",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "model-fine-tuning",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "monitoring",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "multi-platform-publish",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "organizational-health",
-      "note": "legacy org health monitoring"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "organizational-knowledge",
-      "note": "legacy org knowledge management"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "page-route",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": "security-review",
-      "disposition": "COMBINE",
-      "legacy_skill_id": "pentest",
-      "note": "combined into canonical skill"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "performance",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "performance-test",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "pkm-workflow",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "pm-decompose",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "pm-dependencies",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "pm-plan",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "pm-risk",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "pm-status",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "po-gap-questionnaire",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "profitability-lineage",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "project-planning",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "rag-pipeline",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "reality-verification",
-      "note": "legacy Reality Verification Layer (governance)"
-    },
-    {
-      "canonical": "test-authoring",
-      "disposition": "COMBINE",
-      "legacy_skill_id": "regression",
-      "note": "combined into canonical skill"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "relay-participant",
-      "note": "legacy relay state machine (replaced by relay L07 handoff)"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "resource-rightsizing",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "responsive",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "retrospective",
-      "note": "roster-based sprint retrospective ceremony"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "sdd-requirements",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "sdd-vision",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": "security-review",
-      "disposition": "COMBINE",
-      "legacy_skill_id": "secrets",
-      "note": "combined into canonical skill"
-    },
-    {
-      "canonical": "security-review",
-      "disposition": "COMBINE",
-      "legacy_skill_id": "secure-arch",
-      "note": "combined into canonical skill"
-    },
-    {
-      "canonical": "security-review",
-      "disposition": "COMBINE",
-      "legacy_skill_id": "secure-code",
-      "note": "combined into canonical skill"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "seo-optimize",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "skills-lifecycle",
-      "note": "legacy skills lifecycle governance"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "slide-deck-generate",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "spark-pipeline",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "spof-detection",
-      "note": "legacy single-point-of-failure detection"
-    },
-    {
-      "canonical": null,
-      "disposition": "DROP",
-      "legacy_skill_id": "sprint-planning",
-      "note": "roster-based sprint planning ceremony"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "state-management",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "static-site-generate",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": null,
-      "disposition": "LATER",
-      "legacy_skill_id": "student-assessment",
-      "note": "plausible domain value, deferred to a later wave"
-    },
-    {
-      "canonical": "tdd-execute",
+      "outputs": [
+        "- A valid AX3.md hierarchy (root + children with indexes)",
+        "- For `--check`: exit code 0 (clean) or 1 (drift detected)",
+        "- For `--dry-run`: planned changes displayed, no writes",
+        "- For reconciliation: updated AX3.md files, regenerated indexes"
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "AX3 contract hierarchy \u2014 read AX3.md chain before editing, update after meaningful changes, reconcile the AX3 tree. This is an ARAYA AX (cross-cutting) feature.",
+      "reason": "AX3 contract hierarchy is now the canonical kernel (K01-K10), not a skill.",
+      "source_provenance": [
+        "ax3"
+      ]
+    },
+    {
+      "canonical_target": "postoffice",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "KEEP",
+      "inputs": [
+        "- The project's `.araya/postoffice/thread.md` (read whole).",
+        "- Your role, by function: `director`, `po-proxy`, `executor`, or `strategy`",
+        "(never a model/vendor name)."
+      ],
+      "legacy_skill_id": "ax-postoffice",
+      "outputs": [
+        "One appended entry in `.araya/postoffice/thread.md`, newest last. Nothing else \u2014",
+        "this skill writes no ledger, emits no disposition, and gates nothing."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Consult and write the ARAYA postoffice \u2014 the operational-directive channel. Advisory, never a gate: read it at cycle start, append your entry at cycle end, consider its directives, never be blocked by it. Governance acts never travel the postoffice.",
+      "reason": "Distinct procedural reasoning: the agent-to-agent coordination channel (consult/write, advisory never a gate). Already canonical as `postoffice`.",
+      "source_provenance": [
+        "ax-postoffice"
+      ]
+    },
+    {
+      "canonical_target": "test-authoring",
+      "current_product_value": "high",
+      "dependencies": [
+        "sdd-requirements"
+      ],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Gherkin",
+        "gherkin"
+      ],
+      "disposition": "COMBINE",
+      "inputs": [
+        "A `specs/requirements.md` file with functional requirements (RF-XX)."
+      ],
+      "legacy_skill_id": "bdd-feature",
+      "outputs": [
+        "One or more `features/*.feature` files in Gherkin format:",
+        "```gherkin",
+        "Feature: [Feature name]",
+        "As a [role]",
+        "I want [goal]",
+        "So that [benefit]"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate Gherkin feature files from functional requirements.",
+      "reason": "Variant of test authoring (Gherkin executable specs; depends on sdd-requirements). Combined into `test-authoring`.",
+      "source_provenance": [
+        "bdd-feature",
+        "test-authoring"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Canonical brand guidelines, list of properties to audit, audit scope."
+      ],
+      "legacy_skill_id": "brand-audit",
+      "outputs": [
+        "A brand audit report with property-by-property findings, severity ratings,",
+        "and prioritized remediation actions."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Conduct comprehensive brand audits \u2014 reviewing all touchpoints (web, social,",
+      "reason": "Quarterly brand audits. Marketing; deferred.",
+      "source_provenance": [
+        "brand-audit"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Canonical brand guidelines (`my-brands-guidelines/`), project URLs or files",
+        "to audit."
+      ],
+      "legacy_skill_id": "brand-compliance",
+      "outputs": [
+        "```markdown",
+        "# Brand Compliance Audit: Q2 2026"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Audit and enforce brand compliance across all projects and platforms \u2014 logo,",
+      "reason": "Enforce brand compliance. Marketing; deferred.",
+      "source_provenance": [
+        "brand-compliance"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Historical costs (12+ months), growth trends, planned changes, business forecasts."
+      ],
+      "legacy_skill_id": "budget-forecasting",
+      "outputs": [
+        "A budget forecast with monthly projections, variance analysis, trend",
+        "identification, and budget alert thresholds."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Forecast cloud and infrastructure budgets \u2014 predicting future costs based on",
+      "reason": "Forecast cloud/infra budgets. FinOps; deferred.",
+      "source_provenance": [
+        "budget-forecasting"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "API endpoints, data freshness requirements, read/write ratios, traffic patterns."
+      ],
+      "legacy_skill_id": "cache-strategy",
+      "outputs": [
+        "```markdown",
+        "# Cache Strategy: ManTradeCoin Platform"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design caching strategies \u2014 what to cache, where, for how long, and how to",
+      "reason": "Design caching strategies. Backend performance; deferred.",
+      "source_provenance": [
+        "cache-strategy"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "coverage"
+      ],
+      "disposition": "DROP",
+      "inputs": [],
+      "legacy_skill_id": "capability-registry",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA organizational capability registry \u2014 authoritative source of agents, skills, domains, and coverage for workforce planning.",
+      "reason": "Legacy organizational capability registry; now capabilities/index.json.",
+      "source_provenance": [
+        "capability-registry"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "Docker",
+        "SAST",
+        "coverage",
+        "git "
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Project language, framework, test runner, deployment target, and security requirements."
+      ],
+      "legacy_skill_id": "cicd-pipeline",
+      "outputs": [
+        "- `.github/workflows/ci.yml`: Build \u2192 Test \u2192 Security Scan \u2192 Quality Gate",
+        "- `.github/workflows/cd.yml`: Deploy to staging \u2192 Smoke tests \u2192 Deploy to production",
+        "- `.github/workflows/pr-validation.yml`: PR title check, branch naming, required reviews",
+        "- Pipeline README: Diagram, triggers, secrets needed, troubleshooting"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "deployment-automation"
+      ],
+      "purpose": "Design and generate CI/CD pipeline configurations (GitHub Actions, GitLab CI, or",
+      "reason": "Generate CI/CD pipeline configs. DevOps; deferred.",
+      "source_provenance": [
+        "cicd-pipeline"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "Docker",
+        "SAST",
+        "coverage",
+        "docker",
+        "npm",
+        "npx",
+        "vitest"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "CI/CD platform, testing strategy, security requirements, deployment pipeline."
+      ],
+      "legacy_skill_id": "cicd-quality",
+      "outputs": [
+        "```yaml",
+        "# .github/workflows/quality-gates.yml",
+        "name: Quality Gates",
+        "on:",
+        "pull_request:",
+        "branches: [main, dev]"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [
+        "git.merge-gate",
+        "git.feature-pr-gate"
+      ],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement quality gates in CI/CD pipelines \u2014 automated checks that",
+      "reason": "Quality gates in CI/CD (overlaps git.merge-gate/feature-pr-gate). DevOps; deferred.",
+      "source_provenance": [
+        "cicd-quality"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Pulumi",
+        "Terraform",
+        "terraform"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Application architecture, scaling requirements, budget constraints, cloud provider",
+        "preference (AWS, OCI, Hetzner, or ask The Data Professor)."
+      ],
+      "legacy_skill_id": "cloud-deploy",
+      "outputs": [
+        "```hcl",
+        "# terraform/main.tf \u2014 AWS Infrastructure for ARAYA API",
+        "terraform {",
+        "required_version = \">= 1.8\"",
+        "required_providers {",
+        "aws = {"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "cloud-provision"
+      ],
+      "purpose": "Provision and deploy cloud infrastructure using Infrastructure as Code (Terraform,",
+      "reason": "Provision/deploy cloud infra (Terraform/Pulumi). IaC; near-duplicate of cloud-provision; deferred.",
+      "source_provenance": [
+        "cloud-deploy"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Pulumi",
+        "Terraform"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Architecture requirements, cloud provider preference, budget, compliance needs."
+      ],
+      "legacy_skill_id": "cloud-provision",
+      "outputs": [
+        "A Terraform module structure with VPC, compute, storage, and database configurations."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "cloud-deploy"
+      ],
+      "purpose": "Provision cloud infrastructure \u2014 AWS, OCI, Hetzner \u2014 with Infrastructure as Code",
+      "reason": "Provision cloud infra (Terraform/Pulumi). IaC; near-duplicate of cloud-deploy; deferred.",
+      "source_provenance": [
+        "cloud-provision"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Target compliance framework, system architecture, data inventory, current",
+        "security controls."
+      ],
+      "legacy_skill_id": "compliance",
+      "outputs": [
+        "```markdown",
+        "# Compliance Assessment: ARAYA Platform \u2014 GDPR Readiness"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Assess, document, and achieve compliance with regulatory frameworks \u2014 GDPR,",
+      "reason": "Regulatory compliance assessment (GDPR/SOC2/HIPAA). Governance-adjacent; deferred.",
+      "source_provenance": [
+        "compliance"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "coverage"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Design mockups, brand guidelines, technology stack, accessibility requirements."
+      ],
+      "legacy_skill_id": "component-arch",
+      "outputs": [
+        "```markdown",
+        "# Component Architecture: ARAYA Dashboard"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "component"
+      ],
+      "purpose": "Design scalable component architectures \u2014 design systems, component libraries,",
+      "reason": "Design component architecture/design systems. Frontend; overlaps `component`; deferred.",
+      "source_provenance": [
+        "component-arch"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Design mockup, component requirements, accessibility level (WCAG AA default)."
+      ],
+      "legacy_skill_id": "component",
+      "outputs": [
+        "```tsx",
+        "// src/components/Button/Button.tsx",
+        "import { type ButtonHTMLAttributes, type ReactNode } from \"react\";",
+        "import styles from \"./Button.module.css\";",
+        "type ButtonVariant = \"primary\" | \"secondary\" | \"danger\" | \"ghost\";",
+        "type ButtonSize = \"sm\" | \"md\" | \"lg\";"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "component-arch"
+      ],
+      "purpose": "Create reusable, accessible, and well-typed UI components following design system",
+      "reason": "Create reusable UI components. Frontend; deferred.",
+      "source_provenance": [
+        "component"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Content pillars, publishing frequency, seasonal events, available content."
+      ],
+      "legacy_skill_id": "content-calendar",
+      "outputs": [
+        "A content calendar with topics, formats, platforms, dates, and KPIs."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and maintain editorial content calendars \u2014 topic planning, publishing",
+      "reason": "Editorial content calendars. Marketing ops; deferred.",
+      "source_provenance": [
+        "content-calendar"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Cloud billing data (AWS Cost Explorer, OCI Cost Analysis, Hetzner invoices),",
+        "resource inventory, project tags."
+      ],
+      "legacy_skill_id": "cost-analysis",
+      "outputs": [
+        "```markdown",
+        "# Cloud Cost Analysis: May 2026"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "usage-metering",
+        "resource-rightsizing"
+      ],
+      "purpose": "Analyze cloud and infrastructure costs \u2014 breakdown by service, project, and",
+      "reason": "Cloud cost analysis by service/project. FinOps; overlaps usage-metering/resource-rightsizing; deferred.",
+      "source_provenance": [
+        "cost-analysis"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Service activity data (support tickets, order frequency, returns, payment method),",
+        "activity costs (from ABC model)."
+      ],
+      "legacy_skill_id": "cost-to-serve",
+      "outputs": [
+        "A cost-to-serve model per customer/product/channel with cost breakdown by",
+        "activity, service tier recommendations, and profit improvement opportunities."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "abc-costing-model"
+      ],
+      "purpose": "Model the cost of serving individual customers, products, or channels \u2014",
+      "reason": "Cost-to-serve modeling per customer/channel. Finance; depends on ABC model; deferred.",
+      "source_provenance": [
+        "cost-to-serve"
+      ]
+    },
+    {
+      "canonical_target": "test.execute",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "Istanbul",
+        "JaCoCo",
+        "coverage",
+        "nyc",
+        "pytest",
+        "vitest"
+      ],
+      "disposition": "REPLACE_BY_OPERATION",
+      "inputs": [
+        "Coverage report (Istanbul/nyc, JaCoCo, coverage.py), source code, risk analysis."
+      ],
+      "legacy_skill_id": "coverage",
+      "outputs": [
+        "```markdown",
+        "# Coverage Analysis Report \u2014 User Management API"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [
+        "test.execute"
+      ],
+      "overlap_with_other_skills": [],
+      "purpose": "Analyze test coverage \u2014 measure what code is tested, identify coverage gaps,",
+      "reason": "Deterministic coverage measurement (run coverage tool + parse report); now `test.execute` with a coverage command. No distinct reasoning to preserve.",
+      "source_provenance": [
+        "coverage"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "DROP",
+      "inputs": [
+        "DRR ID, IAR ID, and Manu's approval decisions."
+      ],
+      "legacy_skill_id": "cr-generate",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate Change Requests (CR) from approved findings, creating new work packages that route back into the SDLC.",
+      "reason": "Change Request generation; legacy SDLC report ceremony (Manu approval flow).",
+      "source_provenance": [
+        "cr-generate"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Domain, target roles, existing courses, industry requirements, certification goals."
+      ],
+      "legacy_skill_id": "curriculum-planning",
+      "outputs": [
+        "A curriculum design with learning tracks, course sequences, prerequisites,",
+        "milestones, and certification paths."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design complete learning curricula \u2014 multi-course programs with learning",
+      "reason": "Design multi-course curricula. Education; deferred.",
+      "source_provenance": [
+        "curriculum-planning"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [
+        "seo-optimize"
+      ],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "git ",
+        "npm"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Day's activities, decisions made, insights gained, open questions, tomorrow's plan."
+      ],
+      "legacy_skill_id": "daily-note",
+      "outputs": [
+        "```markdown",
+        "# 2026-05-28 \u2014 Wednesday"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "pkm-workflow"
+      ],
+      "purpose": "Capture structured daily knowledge \u2014 what was accomplished, what was learned,",
+      "reason": "Capture structured daily knowledge (PKM). Overlaps pkm-workflow; deferred.",
+      "source_provenance": [
+        "daily-note"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "Docker"
+      ],
+      "disposition": "DROP",
+      "inputs": [
+        "Previous day's standup notes, task board status, agent status updates."
+      ],
+      "legacy_skill_id": "daily-standup",
+      "outputs": [
+        "```markdown",
+        "# Daily Standup \u2014 2026-05-28 (Sprint Day 4)"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Facilitate the daily standup \u2014 a 15-minute sync where agents report what they",
+      "reason": "Roster-based daily standup ceremony.",
+      "source_provenance": [
+        "daily-standup"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Business questions to answer, data sources, audience (executive, manager, analyst),",
+        "refresh requirements."
+      ],
+      "legacy_skill_id": "dashboard-design",
+      "outputs": [
+        "```markdown",
+        "# Dashboard Design: ManTradeCoin Executive Overview"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design BI dashboards \u2014 information architecture, visualization selection,",
+      "reason": "BI dashboard design. Data/BI; deferred.",
+      "source_provenance": [
+        "dashboard-design"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Data assets inventory, compliance requirements, data flow diagrams, stakeholder needs."
+      ],
+      "legacy_skill_id": "data-governance",
+      "outputs": [
+        "A data governance framework with catalog design, lineage tracking, quality rules,",
+        "access policies, and retention schedules."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement data governance frameworks \u2014 catalog, lineage, quality,",
+      "reason": "Data governance frameworks. Data platform; deferred.",
+      "source_provenance": [
+        "data-governance"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Great Expectations"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Data sources, business use cases, query patterns, SLAs, and infrastructure",
+        "constraints (cloud provider, budget, team skills)."
+      ],
+      "legacy_skill_id": "data-lakehouse-design",
+      "outputs": [
+        "A lakehouse architecture document:",
+        "```markdown",
+        "# Lakehouse Architecture: ManTradeCoin Data Platform"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "medallion-architecture"
+      ],
+      "purpose": "Design enterprise data lakehouse architectures using medallion patterns",
+      "reason": "Lakehouse architecture (medallion). Data platform; overlaps medallion-architecture; deferred.",
+      "source_provenance": [
+        "data-lakehouse-design"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Business questions, source systems, query patterns, data volumes."
+      ],
+      "legacy_skill_id": "data-modeling",
+      "outputs": [
+        "A dimensional model with star schema design, grain definitions, SCD strategies,",
+        "and DDL ready for implementation."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "db-schema"
+      ],
+      "purpose": "Design data models \u2014 conceptual, logical, and physical \u2014 using star schemas,",
+      "reason": "Dimensional/star data modeling. Data; overlaps db-schema; deferred.",
+      "source_provenance": [
+        "data-modeling"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Great Expectations"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Data schema, quality requirements, business rules, historical data for baselines."
+      ],
+      "legacy_skill_id": "data-quality",
+      "outputs": [
+        "Great Expectations or custom validation suite with expectations per table,",
+        "validation results, and alerting on quality failures."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Implement data quality validation \u2014 Great Expectations, schema validation,",
+      "reason": "Data quality validation (Great Expectations). Data; deferred.",
+      "source_provenance": [
+        "data-quality"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Data, the question it answers, audience, medium (dashboard, report, presentation)."
+      ],
+      "legacy_skill_id": "data-visualization",
+      "outputs": [
+        "Visualization recommendations with chart type, design specifications, and",
+        "implementation guidance."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Transform data into visual stories \u2014 choosing the right chart for each data",
+      "reason": "Chart/visualization selection. Data/BI; deferred.",
+      "source_provenance": [
+        "data-visualization"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Slow query logs, EXPLAIN ANALYZE output, schema, query patterns, data volumes."
+      ],
+      "legacy_skill_id": "db-optimization",
+      "outputs": [
+        "```markdown",
+        "# Database Optimization Report: User Management API"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Optimize database performance \u2014 query tuning, index design, connection pooling,",
+      "reason": "DB query/index optimization. Backend performance; deferred.",
+      "source_provenance": [
+        "db-optimization"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Data model requirements, entity relationships, query patterns, expected data volumes."
+      ],
+      "legacy_skill_id": "db-schema",
+      "outputs": [
+        "1. **Entity-Relationship Diagram** (Mermaid):",
+        "```",
+        "erDiagram",
+        "users ||--o{ orders : places",
+        "users {",
+        "uuid id PK"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "data-modeling"
+      ],
+      "purpose": "Design database schemas \u2014 tables, columns, types, constraints, indexes, and",
+      "reason": "Design DB schemas/ERDs. Backend; overlaps data-modeling; deferred.",
+      "source_provenance": [
+        "db-schema"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Gherkin",
+        "SAST",
+        "coverage"
+      ],
+      "disposition": "DROP",
+      "inputs": [],
+      "legacy_skill_id": "definition-of-done",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate Definition of Done (DoD) checklists for every task, phase, and delivery \u2014 mandatory verification before marking anything complete.",
+      "reason": "Mandatory DoD checklists + confidence-score ceremony; AX3 already covers done criteria.",
+      "source_provenance": [
+        "definition-of-done"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Project type (static site, Docker, serverless), hosting platform, domain,",
+        "environment configuration."
+      ],
+      "legacy_skill_id": "deployment-automation",
+      "outputs": [
+        "CI/CD pipeline configuration for automated build, test, deploy, and rollback."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "cicd-pipeline"
+      ],
+      "purpose": "Automate deployments \u2014 CI/CD pipelines for static sites, Docker containers,",
+      "reason": "Automate deployments. DevOps; overlaps cicd-pipeline; deferred.",
+      "source_provenance": [
+        "deployment-automation"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "docker"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Project requirements: language, runtime, dependencies, services needed, ports,",
+        "volumes, and environment variables."
+      ],
+      "legacy_skill_id": "docker",
+      "outputs": [
+        "- `Dockerfile`: Multi-stage build with optimized layers",
+        "- `docker-compose.yml`: Multi-service orchestration with health checks",
+        "- `.dockerignore`: Exclude unnecessary files from context",
+        "- Optional: `docker-compose.override.yml` for development overrides"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and generate Dockerfiles, docker-compose configurations, and container",
+      "reason": "Generate Dockerfiles/compose. Infra; deferred.",
+      "source_provenance": [
+        "docker"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "DROP",
+      "inputs": [
+        "Delivery ID, reviewer name, and all feedback observations."
+      ],
+      "legacy_skill_id": "drr-create",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Create Delivery Review Reports (DRR) to formally capture all post-delivery feedback, findings, and observations.",
+      "reason": "Delivery Review Reports; legacy SDLC report ceremony.",
+      "source_provenance": [
+        "drr-create"
+      ]
+    },
+    {
+      "canonical_target": "test-authoring",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "npx"
+      ],
+      "disposition": "COMBINE",
+      "inputs": [
+        "Application user journeys, critical paths, test environment, CI/CD pipeline."
+      ],
+      "legacy_skill_id": "e2e-strategy",
+      "outputs": [
+        "```markdown",
+        "# E2E Test Strategy: ARAYA Dashboard"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design end-to-end testing strategy \u2014 what to test, how to test it, when to run",
+      "reason": "Variant of test authoring (end-to-end strategy). Combined into `test-authoring`.",
+      "source_provenance": [
+        "e2e-strategy",
+        "test-authoring"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [
+        "api-design",
+        "db-schema"
+      ],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "OpenAPI"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "OpenAPI specification, database schema, authentication requirements."
+      ],
+      "legacy_skill_id": "endpoint",
+      "outputs": [
+        "Endpoint implementation (Node.js/Express example):",
+        "```typescript",
+        "// src/routes/users.ts",
+        "import { Router, Request, Response } from \"express\";",
+        "import { z } from \"zod\";",
+        "import { db } from \"../db\";"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "api-design",
+        "db-schema"
+      ],
+      "purpose": "Implement REST API endpoints with validation, error handling, and database",
+      "reason": "Implement REST endpoints. Backend; depends on api-design/db-schema; deferred.",
+      "source_provenance": [
+        "endpoint"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Project language, framework, logging setup, error tracking service."
+      ],
+      "legacy_skill_id": "error-handling",
+      "outputs": [
+        "1. **Error classes**:",
+        "```typescript",
+        "// src/errors/AppError.ts",
+        "export class AppError extends Error {",
+        "constructor(",
+        "message: string,"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement standardized error handling patterns \u2014 consistent error",
+      "reason": "Standardized error-handling patterns. Backend code quality; deferred.",
+      "source_provenance": [
+        "error-handling"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Airflow",
+        "Dagster",
+        "Docker",
+        "Prefect"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Pipeline inventory, dependency graph, scheduling requirements, alert preferences."
+      ],
+      "legacy_skill_id": "etl-orchestration",
+      "outputs": [
+        "An Airflow/Dagster/Prefect DAG with tasks, dependencies, schedules, retries,",
+        "and alerting configuration."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement ETL orchestration \u2014 Airflow, Dagster, or Prefect workflows",
+      "reason": "ETL orchestration (Airflow/Dagster/Prefect). Data; deferred.",
+      "source_provenance": [
+        "etl-orchestration"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Form fields with types, validation rules, submission endpoint."
+      ],
+      "legacy_skill_id": "form-design",
+      "outputs": [
+        "```tsx",
+        "// src/components/UserForm/UserForm.tsx",
+        "import { useForm } from \"react-hook-form\";",
+        "import { zodResolver } from \"@hookform/resolvers/zod\";",
+        "import { z } from \"zod\";",
+        "import { Button } from \"../Button/Button\";"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement accessible, validated forms with clear error states,",
+      "reason": "Accessible validated forms. Frontend; deferred.",
+      "source_provenance": [
+        "form-design"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "DROP",
+      "inputs": [],
+      "legacy_skill_id": "gap-analysis",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate Gap Analysis Reports (GAR) \u2014 detect missing capabilities, skills, agents, and recommend remediation.",
+      "reason": "Gap Analysis Reports; legacy SDLC report ceremony.",
+      "source_provenance": [
+        "gap-analysis"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Content to optimize, target AI platforms, competitor analysis."
+      ],
+      "legacy_skill_id": "geo-branding",
+      "outputs": [
+        "A GEO strategy with structured data, entity optimization, citation engineering,",
+        "and content formatting optimized for AI extraction and citation."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "seo-optimize"
+      ],
+      "purpose": "Implement Generative Engine Optimization (GEO) \u2014 optimizing content for AI-powered",
+      "reason": "Generative Engine Optimization. Marketing; overlaps seo-optimize; deferred.",
+      "source_provenance": [
+        "geo-branding"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "DROP",
+      "inputs": [
+        "DRR ID and the full project context (SDD, BDD, TDD, architecture)."
+      ],
+      "legacy_skill_id": "iar-generate",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate Impact Analysis Reports (IAR) to determine which project artifacts are affected by delivery review findings.",
+      "reason": "Impact Analysis Reports; legacy SDLC report ceremony.",
+      "source_provenance": [
+        "iar-generate"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker"
+      ],
+      "disposition": "DROP",
+      "inputs": [
+        "Blocker report from agent, context about what's blocked, who can resolve it."
+      ],
+      "legacy_skill_id": "impediment",
+      "outputs": [
+        "```markdown",
+        "# Blocker Log \u2014 Sprint 3"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Identify, track, and remove blockers \u2014 anything preventing an agent from",
+      "reason": "Roster-based blocker tracking tied to standup/roles.",
+      "source_provenance": [
+        "impediment"
+      ]
+    },
+    {
+      "canonical_target": "test-authoring",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "OpenAPI",
+        "vitest"
+      ],
+      "disposition": "COMBINE",
+      "inputs": [
+        "API specification (OpenAPI), database schema, or service interaction description."
+      ],
+      "legacy_skill_id": "integration-test",
+      "outputs": [
+        "Integration test files:",
+        "```typescript",
+        "// tests/integration/users-api.test.ts",
+        "import { describe, it, expect, beforeAll, afterAll } from 'vitest';",
+        "import request from 'supertest';",
+        "import { app } from '../../src/app';"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate integration tests that verify interactions between multiple components \u2014",
+      "reason": "Variant of test authoring (component interactions). Combined into `test-authoring`.",
+      "source_provenance": [
+        "integration-test",
+        "test-authoring"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "DROP",
+      "inputs": [],
+      "legacy_skill_id": "knowledge-graph",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA Organizational Knowledge Graph \u2014 entity-relationship governance, impact analysis, and organizational query engine.",
+      "reason": "Legacy organizational knowledge graph/impact engine. Removed.",
+      "source_provenance": [
+        "knowledge-graph"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Business strategy, objectives, operational processes, existing metrics."
+      ],
+      "legacy_skill_id": "kpi-framework",
+      "outputs": [
+        "A cascading KPI framework with strategic \u2192 tactical \u2192 operational metrics,",
+        "definitions, targets, and leading/lagging indicator balance."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design cascading KPI frameworks \u2014 strategic, tactical, and operational metrics",
+      "reason": "Cascading KPI frameworks. Business/BI; deferred.",
+      "source_provenance": [
+        "kpi-framework"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "Helm",
+        "helm",
+        "kubectl"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Docker Compose configuration or service architecture description."
+      ],
+      "legacy_skill_id": "kubernetes",
+      "outputs": [
+        "- `k8s/base/`: Namespace, Deployments, Services, ConfigMaps, Secrets",
+        "- `k8s/overlays/`: Environment-specific overlays (dev, staging, prod)",
+        "- `k8s/helm/`: Helm chart (optional, for complex services)",
+        "- `k8s/README.md`: Deployment instructions and architecture diagram"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design Kubernetes manifests, Helm charts, and orchestration strategies for deploying",
+      "reason": "K8s manifests/Helm. Infra; deferred.",
+      "source_provenance": [
+        "kubernetes"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "Spark",
+        "docker",
+        "spark"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Learning objectives, target audience (beginner, practitioner, architect),",
+        "technical stack, available infrastructure (Docker, cloud, local)."
+      ],
+      "legacy_skill_id": "lab-scenario-design",
+      "outputs": [
+        "A complete lab package:",
+        "```",
+        "labs/lab_N/",
+        "\u251c\u2500\u2500 README.md              # Briefing: business context, objectives, prerequisites, architecture",
+        "\u251c\u2500\u2500 lab_N.md               # Step-by-step instructions with expected outputs",
+        "\u251c\u2500\u2500 troubleshooting.md     # Common failures \u2192 symptom, cause, solution"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design hands-on educational laboratory exercises \u2014 realistic business scenarios",
+      "reason": "Design hands-on educational labs. Education; deferred.",
+      "source_provenance": [
+        "lab-scenario-design"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "Llama",
+        "Ollama",
+        "docker",
+        "llama",
+        "ollama",
+        "vLLM"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Use case description: task type (chat, RAG, code gen, classification), throughput",
+        "needs, latency requirements, and available hardware (RAM, GPU VRAM, CPU cores)."
+      ],
+      "legacy_skill_id": "llm-local-deploy",
+      "outputs": [
+        "- **Model Recommendation**: Which model, which quantization level, why",
+        "- **Deployment Config**: Docker Compose or systemd service for inference server",
+        "- **API Wrapper**: OpenAI-compatible endpoint configuration",
+        "- **Benchmark Report**: Tokens/sec, memory usage, latency at various concurrency"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Deploy and serve Large Language Models locally using llama.cpp, Ollama, or vLLM.",
+      "reason": "Local LLM serving (Ollama/vLLM). ML infra; deferred.",
+      "source_provenance": [
+        "llm-local-deploy"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Source data, business requirements, query patterns, governance policies."
+      ],
+      "legacy_skill_id": "medallion-architecture",
+      "outputs": [
+        "A medallion architecture implementation with table definitions, transformation",
+        "logic, and quality gates per layer."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "data-lakehouse-design"
+      ],
+      "purpose": "Implement medallion (Bronze \u2192 Silver \u2192 Gold) data architecture \u2014 progressive",
+      "reason": "Medallion (bronze/silver/gold) architecture. Data; overlaps data-lakehouse-design; deferred.",
+      "source_provenance": [
+        "medallion-architecture"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Service interaction requirements, throughput needs, ordering guarantees, latency",
+        "tolerances."
+      ],
+      "legacy_skill_id": "message-queue",
+      "outputs": [
+        "```markdown",
+        "# Messaging Architecture: ManTradeCoin Platform"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design asynchronous messaging architectures \u2014 choosing the right queue technology,",
+      "reason": "Async messaging architecture. Backend; deferred.",
+      "source_provenance": [
+        "message-queue"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Business domain description, current architecture (if migrating), scale and",
+        "team structure."
+      ],
+      "legacy_skill_id": "microservice",
+      "outputs": [
+        "```markdown",
+        "# Microservice Architecture: ManTradeCoin Platform"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design microservice architectures \u2014 service boundaries, communication patterns,",
+      "reason": "Microservice architecture design. Backend; deferred.",
+      "source_provenance": [
+        "microservice"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Llama",
+        "llama"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Task description, training examples (10-1000+), base model, available hardware."
+      ],
+      "legacy_skill_id": "model-fine-tuning",
+      "outputs": [
+        "A fine-tuning configuration with dataset, training parameters, evaluation",
+        "metrics, and deployment instructions."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Fine-tune open-source LLMs \u2014 LoRA, QLoRA, dataset preparation, and evaluation \u2014",
+      "reason": "Fine-tune open LLMs (LoRA/QLoRA). ML; deferred.",
+      "source_provenance": [
+        "model-fine-tuning"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "docker"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "System architecture, service inventory, SLO/SLA requirements, alerting preferences."
+      ],
+      "legacy_skill_id": "monitoring",
+      "outputs": [
+        "```yaml",
+        "# docker-compose.monitoring.yml",
+        "services:",
+        "# Metrics collection",
+        "prometheus:",
+        "image: prom/prometheus:v2.50.0"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement observability \u2014 logs, metrics, traces, and alerts \u2014 that",
+      "reason": "Observability (logs/metrics/traces). Ops; deferred.",
+      "source_provenance": [
+        "monitoring"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Source content (blog post, article, announcement), target platforms, posting schedule."
+      ],
+      "legacy_skill_id": "multi-platform-publish",
+      "outputs": [
+        "Platform-adapted content variants with scheduling and analytics tracking."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Publish and syndicate content across platforms \u2014 Blogger, X/Twitter, LinkedIn,",
+      "reason": "Syndicate content across platforms. Marketing; deferred.",
+      "source_provenance": [
+        "multi-platform-publish"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "coverage"
+      ],
+      "disposition": "DROP",
+      "inputs": [
+        "- Capability registry (agents, skills, assignments)",
+        "- SPOF register",
+        "- Skills lifecycle states",
+        "- Command delegation mappings",
+        "- Delivery quality metrics (from Sonia)"
+      ],
+      "legacy_skill_id": "organizational-health",
+      "outputs": [
+        "- Organizational health report with composite scores",
+        "- Trend analysis (improving/degrading per metric)",
+        "- Top-N risk items with mitigation recommendations",
+        "- Recommended actions for CHRO"
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA organizational health monitoring \u2014 aggregate coverage scores, risk indicators, skill freshness, and workforce balance metrics.",
+      "reason": "Legacy org-health monitoring over the roster. Removed.",
+      "source_provenance": [
+        "organizational-health"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "DROP",
+      "inputs": [],
+      "legacy_skill_id": "organizational-knowledge",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA organizational knowledge management \u2014 standards, patterns, ADRs, lessons learned, technology preferences, and project reconstitution.",
+      "reason": "Legacy org knowledge management. Removed.",
+      "source_provenance": [
+        "organizational-knowledge"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Page inventory, authentication requirements, layout structure."
+      ],
+      "legacy_skill_id": "page-route",
+      "outputs": [
+        "```tsx",
+        "// src/router/index.tsx",
+        "import { createBrowserRouter, RouterProvider, Navigate, Outlet } from \"react-router-dom\";",
+        "import { Suspense, lazy } from \"react\";",
+        "import { useAuth } from \"../hooks/useAuth\";",
+        "import { MainLayout } from \"../layouts/MainLayout\";"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement page routing \u2014 URL structure, navigation, layouts,",
+      "reason": "Page routing/navigation. Frontend; deferred.",
+      "source_provenance": [
+        "page-route"
+      ]
+    },
+    {
+      "canonical_target": "security-review",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "CWE",
+        "DAST",
+        "OWASP",
+        "SAST",
+        "npm"
+      ],
+      "disposition": "COMBINE",
+      "inputs": [
+        "Application URL, API endpoints, authentication credentials (test environment),",
+        "architecture documentation."
+      ],
+      "legacy_skill_id": "pentest",
+      "outputs": [
+        "```markdown",
+        "# Penetration Test Report: ARAYA Dashboard"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Execute security penetration testing \u2014 SAST, DAST, dependency scanning, and",
+      "reason": "Variant of security review (SAST/DAST scanning + manual adversarial testing). Combined into `security-review`.",
+      "source_provenance": [
+        "pentest",
+        "security-review"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Application URL or build output, performance budget, target device profiles."
+      ],
+      "legacy_skill_id": "performance",
+      "outputs": [
+        "```markdown",
+        "# Performance Audit & Optimization: ARAYA Dashboard"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Optimize frontend performance \u2014 bundle size, rendering speed, network efficiency,",
+      "reason": "Frontend performance optimization. Frontend; deferred.",
+      "source_provenance": [
+        "performance"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "System architecture, expected user counts, target response times, critical paths."
+      ],
+      "legacy_skill_id": "performance-test",
+      "outputs": [
+        "```markdown",
+        "# Performance Test Plan & Results: User Management API"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and execute performance tests \u2014 load, stress, soak, and spike testing \u2014",
+      "reason": "Load/stress/soak testing. Performance engineering; deferred.",
+      "source_provenance": [
+        "performance-test"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Current knowledge practices, tools in use, pain points (lost notes, disorganized",
+        "files, inefficient retrieval)."
+      ],
+      "legacy_skill_id": "pkm-workflow",
+      "outputs": [
+        "A PKM workflow design with capture methods, organization structure, retrieval",
+        "strategies, and synthesis practices."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "daily-note"
+      ],
+      "purpose": "Design and optimize Personal Knowledge Management workflows \u2014 capture,",
+      "reason": "Personal knowledge management workflows. Overlaps daily-note; deferred.",
+      "source_provenance": [
+        "pkm-workflow"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "OpenAPI",
+        "Swagger"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "A large task description or feature request in natural language."
+      ],
+      "legacy_skill_id": "pm-decompose",
+      "outputs": [
+        "A decomposition tree where every leaf is an AWU \u2014 one agent, one session,",
+        "independently deliverable:",
+        "```",
+        "Task: Build User Management API",
+        "\u251c\u2500\u2500 1.1 [P0] Design user schema (Bernab\u00e9/Mateo) \u2014 3 pts",
+        "\u2502   Depends on: nothing"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Break a large task or feature into smaller, independently deliverable subtasks with clear dependencies and acceptance criteria.",
+      "reason": "Break work into deliverable subtasks (AWU). PM; deferred.",
+      "source_provenance": [
+        "pm-decompose"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [
+        "pm-decompose",
+        "pm-plan"
+      ],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Task list with declared dependencies from `pm-decompose` output."
+      ],
+      "legacy_skill_id": "pm-dependencies",
+      "outputs": [
+        "A dependency graph in `.araya/plan/spec/dependencies.md`:",
+        "```markdown",
+        "# Task Dependencies: User Management API"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Map task dependencies as a Directed Acyclic Graph (DAG), identify the critical path,",
+      "reason": "Task dependency DAG/critical path. PM; deferred.",
+      "source_provenance": [
+        "pm-dependencies"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Project vision (`specs/vision.md`) or a task backlog in natural language."
+      ],
+      "legacy_skill_id": "pm-plan",
+      "outputs": [
+        "A sprint plan document containing:",
+        "- **Sprint Goal**: One sentence \u2014 what success looks like at sprint end",
+        "- **Task Backlog**: Prioritized task list (P0 \u2192 P3)",
+        "- **Estimates**: Story points or T-shirt sizes per task",
+        "- **Assignments**: Which agent(s) own each task",
+        "- **Dependencies**: Blocking relationships between tasks"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "project-planning"
+      ],
+      "purpose": "Plan a sprint or project phase: scope, estimation, sequencing, and resource assignment.",
+      "reason": "Sprint/project planning. PM; overlaps project-planning; deferred.",
+      "source_provenance": [
+        "pm-plan"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Project plan, dependency graph, team composition, technology choices."
+      ],
+      "legacy_skill_id": "pm-risk",
+      "outputs": [
+        "A risk register in `.araya/plan/spec/risk-register.md`:",
+        "```markdown",
+        "# Risk Register: User Management API",
+        "| ID | Category | Risk | Likelihood | Impact | Score | Mitigation | Owner | Status |",
+        "|----|----------|------|-----------|--------|-------|-------------|-------|--------|",
+        "| R-01 | Technical | PostgreSQL connection pool exhaustion under load | Medium | High | 8 | Connection pooling (PgBouncer), load test before launch | Isla | Open |"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Identify, assess, and plan mitigation for project risks before they become",
+      "reason": "Project risk register. PM; deferred.",
+      "source_provenance": [
+        "pm-risk"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Task board status, burndown data, blocker list, agent updates."
+      ],
+      "legacy_skill_id": "pm-status",
+      "outputs": [
+        "A status report in `.araya/plan/spec/status-report.md`:",
+        "```markdown",
+        "# Sprint Status Report \u2014 Sprint 3",
+        "**Date:** 2026-05-27 | **Sprint:** May 24 \u2013 Jun 6"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate sprint and project status reports with metrics, progress, blockers,",
+      "reason": "Sprint/project status reports. PM; deferred.",
+      "source_provenance": [
+        "pm-status"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "A gap report from Manu's audit (`.araya/plan/spec/po-retroactive-audit.md`)",
+        "or any PO gap analysis."
+      ],
+      "legacy_skill_id": "po-gap-questionnaire",
+      "outputs": [
+        "A structured questionnaire saved to `.araya/plan/spec/po-questionnaire-{topic}.md`",
+        "with numbered questions ready for The Data Professor to answer."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Product Owner gap analysis questionnaire \u2014 generates structured markdown forms for missing requirements and acceptance criteria, with numbered Q&A support.",
+      "reason": "PO requirements-gap questionnaire (Manu audit flow). PM/product; deferred.",
+      "source_provenance": [
+        "po-gap-questionnaire"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "ABC model output, cost-to-serve data, whale curve analysis, revenue data."
+      ],
+      "legacy_skill_id": "profitability-lineage",
+      "outputs": [
+        "A profitability lineage map showing cost flows from source \u2192 activity \u2192 cost object,",
+        "with profit/loss attribution at each level."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "abc-costing-model",
+        "whale-curve-analyze"
+      ],
+      "purpose": "Trace profitability from cost source through activities to customers, products,",
+      "reason": "Trace profitability source\u2192activity\u2192customer. Finance; depends on ABC/whale-curve; deferred.",
+      "source_provenance": [
+        "profitability-lineage"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Project idea/vision, constraints, available resources, stakeholder needs."
+      ],
+      "legacy_skill_id": "project-planning",
+      "outputs": [
+        "A project charter with vision, scope, milestones, resource plan, risk assessment,",
+        "and success criteria."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "pm-plan"
+      ],
+      "purpose": "Facilitate project planning \u2014 charters, roadmaps, milestones, and resource",
+      "reason": "Project charter/roadmap/milestones. PM; overlaps pm-plan; deferred.",
+      "source_provenance": [
+        "project-planning"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Document corpus, query patterns, latency requirements, accuracy requirements."
+      ],
+      "legacy_skill_id": "rag-pipeline",
+      "outputs": [
+        "A complete RAG pipeline with chunking, embedding, retrieval, and generation",
+        "configuration \u2014 ready for deployment."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement Retrieval-Augmented Generation (RAG) pipelines \u2014 chunking",
+      "reason": "RAG pipeline (chunk/embed/retrieve). AI engineering; deferred.",
+      "source_provenance": [
+        "rag-pipeline"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker"
+      ],
+      "disposition": "DROP",
+      "inputs": [],
+      "legacy_skill_id": "reality-verification",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA Reality Verification Layer \u2014 5-tier delivery state model, independent verification, governance enforcement, reality scoring.",
+      "reason": "Legacy Reality Verification Layer (5-tier delivery governance). Covered by AX3.",
+      "source_provenance": [
+        "reality-verification"
+      ]
+    },
+    {
+      "canonical_target": "test-authoring",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "coverage"
+      ],
+      "disposition": "COMBINE",
+      "inputs": [
+        "Existing test suite, recent changes, bug history, feature inventory."
+      ],
+      "legacy_skill_id": "regression",
+      "outputs": [
+        "A regression test plan:",
+        "```markdown",
+        "# Regression Test Suite \u2014 User Management API v2.0"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and maintain regression test suites that ensure existing functionality",
+      "reason": "Variant of test authoring (regression suite design). Combined into `test-authoring`.",
+      "source_provenance": [
+        "regression",
+        "test-authoring"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Git "
+      ],
+      "disposition": "DROP",
+      "inputs": [],
+      "legacy_skill_id": "relay-participant",
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Participates in the ARAYA Relay state machine and enforces state ownership, allowed transitions, evidence requirements, and handoffs.",
+      "reason": "Legacy relay state-machine participant (state ownership/transitions). Replaced by relay L07 handoff.",
+      "source_provenance": [
+        "relay-participant"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Resource utilization metrics (CPU, memory, disk, network), instance inventory,",
+        "performance requirements."
+      ],
+      "legacy_skill_id": "resource-rightsizing",
+      "outputs": [
+        "Rightsizing recommendations with current vs. proposed sizing, cost savings,",
+        "and implementation guidance."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "cost-analysis"
+      ],
+      "purpose": "Analyze cloud resource utilization and recommend rightsizing \u2014 matching",
+      "reason": "Cloud resource rightsizing. FinOps; overlaps cost-analysis; deferred.",
+      "source_provenance": [
+        "resource-rightsizing"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Design mockups at key breakpoints (mobile 375px, tablet 768px, desktop 1440px)."
+      ],
+      "legacy_skill_id": "responsive",
+      "outputs": [
+        "```css",
+        "/* src/styles/responsive.css */",
+        "/* Mobile-first base styles (320px+) */",
+        ".container {",
+        "display: grid;",
+        "grid-template-columns: 1fr;"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Implement mobile-first responsive design \u2014 fluid layouts, breakpoints,",
+      "reason": "Mobile-first responsive design. Frontend; deferred.",
+      "source_provenance": [
+        "responsive"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "coverage"
+      ],
+      "disposition": "DROP",
+      "inputs": [
+        "Sprint metrics, completed tasks, blocker log, team feedback, standup notes."
+      ],
+      "legacy_skill_id": "retrospective",
+      "outputs": [
+        "```markdown",
+        "# Sprint Retrospective \u2014 Sprint 3",
+        "**Date:** June 9, 2026",
+        "**Sprint Goal:** User Management API with JWT authentication",
+        "**Outcome:** Goal met \u2705 (all P0 tasks completed, 2 P1 tasks carried over)"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Facilitate the sprint retrospective \u2014 a structured reflection on what went well,",
+      "reason": "Roster-based sprint retrospective ceremony.",
+      "source_provenance": [
+        "retrospective"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [
+        "sdd-vision"
+      ],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "A confirmed `specs/vision.md` file in the project's `specs/` directory."
+      ],
+      "legacy_skill_id": "sdd-requirements",
+      "outputs": [
+        "A `specs/requirements.md` file containing:",
+        "### Functional Requirements (RF-XX)",
+        "- **ID**: Unique identifier (RF-01, RF-02, ...)",
+        "- **Description**: What the system must do",
+        "- **Priority**: High / Medium / Low",
+        "- **Acceptance Criteria**: How to verify this requirement is met"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "sdd-vision"
+      ],
+      "purpose": "Generate functional and non-functional requirements from the project vision.",
+      "reason": "Functional/non-functional requirements from vision. SDLC; overlaps sdd-vision; deferred.",
+      "source_provenance": [
+        "sdd-requirements"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "A description of the business problem or project idea, in natural language."
+      ],
+      "legacy_skill_id": "sdd-vision",
+      "outputs": [
+        "A `specs/vision.md` file containing:",
+        "- **Project Name**: Short, descriptive name",
+        "- **Description**: Business problem and proposed solution (2-3 paragraphs)",
+        "- **Objectives**: Measurable, specific goals (3-5 items)",
+        "- **Success Metrics**: How we'll know we've succeeded (3-5 KPIs)",
+        "- **Scope**: What's included and explicitly excluded"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "sdd-requirements"
+      ],
+      "purpose": "Define the project vision from a business problem description.",
+      "reason": "Define project vision from business problem. SDLC; deferred.",
+      "source_provenance": [
+        "sdd-vision"
+      ]
+    },
+    {
+      "canonical_target": "security-review",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "docker",
+        "git "
+      ],
+      "disposition": "COMBINE",
+      "inputs": [
+        "Project configuration, environment variable patterns, or repository to audit."
+      ],
+      "legacy_skill_id": "secrets",
+      "outputs": [
+        "1. **Secrets Audit Report** (if auditing existing code):",
+        "```markdown",
+        "# Secrets Audit: my-project/",
+        "| File | Finding | Severity | Action |",
+        "|------|---------|----------|--------|",
+        "| `.env` tracked by git | AWS keys in VCS history | Critical | Revoke keys, run BFG/git-filter-repo, add `.env` to `.gitignore` |"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [
+        "git.feature-pr-gate"
+      ],
+      "overlap_with_other_skills": [],
+      "purpose": "Audit, design, and implement secrets management strategies \u2014 detecting hardcoded",
+      "reason": "Variant of security review (secrets hygiene; deterministic detection now git.feature-pr-gate). Combined into `security-review`.",
+      "source_provenance": [
+        "secrets",
+        "security-review"
+      ]
+    },
+    {
+      "canonical_target": "security-review",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "docker"
+      ],
+      "disposition": "COMBINE",
+      "inputs": [
+        "Architecture diagrams, data flow diagrams, API specifications, infrastructure",
+        "configuration."
+      ],
+      "legacy_skill_id": "secure-arch",
+      "outputs": [
+        "```markdown",
+        "# Secure Architecture Review: ARAYA Platform"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Review system architecture for security \u2014 zero-trust design, defense in depth,",
+      "reason": "Variant of security review (zero-trust architecture review). Combined into `security-review`.",
+      "source_provenance": [
+        "secure-arch",
+        "security-review"
+      ]
+    },
+    {
+      "canonical_target": "security-review",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "CWE",
+        "OWASP"
+      ],
+      "disposition": "COMBINE",
+      "inputs": [
+        "Source code files to review (one or more files)."
+      ],
+      "legacy_skill_id": "secure-code",
+      "outputs": [
+        "A security review report:",
+        "```markdown",
+        "# Security Code Review: src/auth/login.ts"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [
+        "git.feature-pr-gate"
+      ],
+      "overlap_with_other_skills": [],
+      "purpose": "Review source code for security vulnerabilities following OWASP ASVS and CWE Top 25.",
+      "reason": "Variant of security review (OWASP/CWE code review). Combined with 4 security peers into `security-review`.",
+      "source_provenance": [
+        "secure-code",
+        "security-review"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Spark",
+        "docker",
+        "spark"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Content, website URL, target keywords, competitor URLs."
+      ],
+      "legacy_skill_id": "seo-optimize",
+      "outputs": [
+        "```markdown",
+        "# SEO Audit & Optimization: thedataprofessor.com"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "geo-branding"
+      ],
+      "purpose": "Optimize content and websites for search engines \u2014 keyword strategy, on-page",
+      "reason": "SEO keyword/on-page optimization. Marketing; deferred.",
+      "source_provenance": [
+        "seo-optimize"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "DROP",
+      "inputs": [
+        "- Proposal for new skill (name, description, domain)",
+        "- Deprecation notice for existing skill",
+        "- Quarterly skills audit trigger"
+      ],
+      "legacy_skill_id": "skills-lifecycle",
+      "outputs": [
+        "- Lifecycle state transition record",
+        "- Updated skill registry entry",
+        "- Agent reassignment plan (for superseded/deprecated skills)",
+        "- Retirement manifest for retired skills"
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA skills lifecycle management \u2014 govern creation, maturity, deprecation, and retirement of organizational skills.",
+      "reason": "Legacy skills lifecycle governance over the removed registry.",
+      "source_provenance": [
+        "skills-lifecycle"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Content to present, audience, presentation format, time constraints, brand",
+        "guidelines."
+      ],
+      "legacy_skill_id": "slide-deck-generate",
+      "outputs": [
+        "A slide deck structure with content per slide, speaker notes, and visual",
+        "recommendations \u2014 ready for PowerPoint, Google Slides, or Reveal.js."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Create professional presentation slide decks \u2014 training materials, conference",
+      "reason": "Presentation slide decks. Content; deferred.",
+      "source_provenance": [
+        "slide-deck-generate"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Spark",
+        "spark"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Data source details (CSV, JSON, Parquet, JDBC, Kafka), target schema, business",
+        "transformation rules, partitioning requirements."
+      ],
+      "legacy_skill_id": "spark-pipeline",
+      "outputs": [
+        "```python",
+        "# spark_jobs/bronze_ingestion.py",
+        "from pyspark.sql import SparkSession, DataFrame",
+        "from pyspark.sql.types import StructType, StructField, StringType, DoubleType",
+        "from pyspark.sql.functions import input_file_name, current_timestamp, lit",
+        "from datetime import datetime"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and implement Apache Spark data pipelines \u2014 batch and streaming ETL",
+      "reason": "Apache Spark ETL pipelines. Data; deferred.",
+      "source_provenance": [
+        "spark-pipeline"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "DROP",
+      "inputs": [
+        "- Capability registry (agents, skills, assignments)",
+        "- Domain criticality ratings",
+        "- Agent availability projections"
+      ],
+      "legacy_skill_id": "spof-detection",
+      "outputs": [
+        "- SPOF register with risk-ranked entries",
+        "- Mitigation recommendations (cross-train, hire, document)",
+        "- Bus factor score per domain"
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA Single Point of Failure detection \u2014 identify organizational risks where one agent is the sole holder of a critical capability.",
+      "reason": "Legacy single-point-of-failure detection over the roster. Removed.",
+      "source_provenance": [
+        "spof-detection"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [
+        "pm-dependencies",
+        "pm-risk"
+      ],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Docker",
+        "OpenAPI",
+        "coverage"
+      ],
+      "disposition": "DROP",
+      "inputs": [
+        "Product backlog, team capacity, previous sprint velocity, dependencies from",
+        "`pm-dependencies` output."
+      ],
+      "legacy_skill_id": "sprint-planning",
+      "outputs": [
+        "```markdown",
+        "# Sprint Plan \u2014 Sprint 3",
+        "**Dates:** May 27 \u2014 June 9, 2026 (2 weeks)",
+        "**Team:** Valentina, Teresa, Diana, Isla, Priscila, Bernab\u00e9"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Facilitate sprint planning \u2014 setting the sprint goal, selecting backlog items,",
+      "reason": "Roster-based sprint planning ceremony.",
+      "source_provenance": [
+        "sprint-planning"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Application features, data flow, API structure, real-time requirements."
+      ],
+      "legacy_skill_id": "state-management",
+      "outputs": [
+        "```markdown",
+        "# State Management Architecture: ARAYA Dashboard"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design frontend state management architecture \u2014 choosing the right pattern",
+      "reason": "Frontend state management. Frontend; deferred.",
+      "source_provenance": [
+        "state-management"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "npm"
+      ],
+      "disposition": "LATER",
+      "inputs": [
+        "Content (Markdown files), design preferences (theme, colors, layout), domain",
+        "name, deployment target."
+      ],
+      "legacy_skill_id": "static-site-generate",
+      "outputs": [
+        "A complete static site:",
+        "```",
+        "my-site/",
+        "\u251c\u2500\u2500 src/",
+        "\u2502   \u251c\u2500\u2500 pages/",
+        "\u2502   \u2502   \u251c\u2500\u2500 index.md           # Home page"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate static websites and blogs \u2014 from Markdown content to deployed HTML \u2014",
+      "reason": "Generate static sites from Markdown. Content/web; deferred.",
+      "source_provenance": [
+        "static-site-generate"
+      ]
+    },
+    {
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
+      "disposition": "LATER",
+      "inputs": [
+        "Learning objectives, lab content, competency requirements, assessment format."
+      ],
+      "legacy_skill_id": "student-assessment",
+      "outputs": [
+        "Assessment design with rubrics, test items, automated checks, and feedback",
+        "mechanisms for each learning objective."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design competency-based student assessments \u2014 rubrics, automated grading,",
+      "reason": "Competency-based assessments. Education; deferred.",
+      "source_provenance": [
+        "student-assessment"
+      ]
+    },
+    {
+      "canonical_target": "tdd-execute",
+      "current_product_value": "high",
+      "dependencies": [
+        "tdd-generate"
+      ],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "coverage",
+        "jest",
+        "npx",
+        "vitest"
+      ],
+      "disposition": "KEEP",
+      "inputs": [
+        "Project test configuration (vitest.config.ts, jest.config.js, etc.) and test files."
+      ],
       "legacy_skill_id": "tdd-execute",
-      "note": "already canonical (recovered in b-004); execution now delegates to test.execute"
+      "outputs": [
+        "A red/green test report:",
+        "```",
+        "\ud83e\uddea TDD Test Results",
+        "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501",
+        "\u2705 PASS  tests/login.test.ts (3 tests)",
+        "\u2713 should authenticate with valid credentials (45ms)"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [
+        "test.execute"
+      ],
+      "overlap_with_other_skills": [],
+      "purpose": "Execute the test suite and report results in red/green format.",
+      "reason": "Distinct procedural reasoning: run a suite and report red/green; the deterministic run step now delegates to test.execute (operation reuse). Already canonical.",
+      "source_provenance": [
+        "tdd-execute"
+      ]
     },
     {
-      "canonical": "test-authoring",
+      "canonical_target": "test-authoring",
+      "current_product_value": "high",
+      "dependencies": [
+        "bdd-feature"
+      ],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Gherkin",
+        "Jest",
+        "Vitest",
+        "vitest"
+      ],
       "disposition": "COMBINE",
+      "inputs": [
+        "One or more `features/*.feature` files in Gherkin format."
+      ],
       "legacy_skill_id": "tdd-generate",
-      "note": "combined into canonical skill"
+      "outputs": [
+        "Test files in the project's test framework (Jest/Vitest by default):",
+        "```typescript",
+        "// tests/<feature-name>.test.ts",
+        "import { describe, it, expect, beforeAll, afterAll } from 'vitest';",
+        "describe('Feature: User Login', () => {",
+        "describe('Scenario: Successful login', () => {"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate test code from Gherkin feature files. Tests are written before",
+      "reason": "Variant of test authoring (generate test code from Gherkin). Combined into `test-authoring`.",
+      "source_provenance": [
+        "tdd-generate",
+        "test-authoring"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Topic, target audience, outline, desired chapter count, publishing format."
+      ],
       "legacy_skill_id": "technical-book",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "A structured chapter following technical book conventions with learning",
+        "objectives, body content, diagrams, code examples, and exercises."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Write and structure technical book chapters \u2014 manuscripts, training books,",
+      "reason": "Write technical book chapters. Content; deferred.",
+      "source_provenance": [
+        "technical-book"
+      ]
     },
     {
-      "canonical": "test-authoring",
+      "canonical_target": "test-authoring",
+      "current_product_value": "high",
+      "dependencies": [
+        "sdd-requirements"
+      ],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "coverage"
+      ],
       "disposition": "COMBINE",
+      "inputs": [
+        "Requirements document, user stories, or feature specification."
+      ],
       "legacy_skill_id": "test-case",
-      "note": "combined into canonical skill"
+      "outputs": [
+        "```markdown",
+        "# Test Cases: User Registration"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Write comprehensive test cases from requirements and specifications. Test",
+      "reason": "Variant of test authoring (structured cases from requirements). Combined into `test-authoring`.",
+      "source_provenance": [
+        "test-case",
+        "test-authoring"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Brand guidelines (from Dorcas), design preferences, accessibility requirements,",
+        "supported modes (light, dark, high-contrast)."
+      ],
       "legacy_skill_id": "theme-design",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "A complete CSS theme with design tokens, dark/light mode support, typography",
+        "scale, spacing system, and component variant definitions."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design CSS theme systems \u2014 design tokens, color palettes, typography scales,",
+      "reason": "CSS theme systems/design tokens. Frontend design; deferred.",
+      "source_provenance": [
+        "theme-design"
+      ]
     },
     {
-      "canonical": "security-review",
+      "canonical_target": "security-review",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "STRIDE"
+      ],
       "disposition": "COMBINE",
+      "inputs": [
+        "System architecture description, data flow diagram, or API specification."
+      ],
       "legacy_skill_id": "threat-model",
-      "note": "combined into canonical skill"
+      "outputs": [
+        "A threat model document (`.araya/plan/spec/threat-model.md`):",
+        "```markdown",
+        "# Threat Model: User Management API"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Conduct structured threat modeling on a system design using STRIDE methodology.",
+      "reason": "Variant of security review (STRIDE threat modeling). Combined into `security-review`.",
+      "source_provenance": [
+        "threat-model",
+        "security-review"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "DROP",
+      "inputs": [],
       "legacy_skill_id": "token-efficiency",
-      "note": "legacy global token efficiency framework"
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Global Token Efficiency and Provider Optimization Framework \u2014 maximize useful work within available quotas by optimizing prompts, contexts, and delegation.",
+      "reason": "Legacy global token efficiency framework. Removed runtime.",
+      "source_provenance": [
+        "token-efficiency"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Topic, target audience, duration, delivery format, existing materials."
+      ],
       "legacy_skill_id": "training-module",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "A modular course design with learning path, module descriptions, lesson plans,",
+        "lab integration, and assessment strategy."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design modular training courses \u2014 structured learning paths with modules,",
+      "reason": "Modular training courses. Education; deferred.",
+      "source_provenance": [
+        "training-module"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage"
+      ],
       "disposition": "DROP",
+      "inputs": [],
       "legacy_skill_id": "trajectory-management",
-      "note": "legacy golden trajectory management"
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA golden trajectory management \u2014 capture, validate, promote, and reuse successful delivery patterns.",
+      "reason": "Legacy golden trajectory management. Removed.",
+      "source_provenance": [
+        "trajectory-management"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "coverage"
+      ],
       "disposition": "LATER",
+      "inputs": [
+        "Delivery ID, approved requirements, acceptance criteria, BDD scenarios,",
+        "TDD definitions, and delivery metadata."
+      ],
       "legacy_skill_id": "uat-generate",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate User Acceptance Testing (UAT) packages from requirements, acceptance criteria, SDD, BDD, and TDD \u2014 formal customer validation before delivery acceptance.",
+      "reason": "Generate UAT packages. Legacy SDLC ceremony; deferred (no current acceptance workflow).",
+      "source_provenance": [
+        "uat-generate"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "coverage"
+      ],
       "disposition": "LATER",
+      "inputs": [
+        "UAT ID and the full UAT package."
+      ],
       "legacy_skill_id": "uat-review",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Review and validate UAT packages \u2014 verify completeness, coverage, traceability, and acceptance readiness before customer submission.",
+      "reason": "Review UAT packages. Legacy SDLC ceremony; deferred.",
+      "source_provenance": [
+        "uat-review"
+      ]
     },
     {
-      "canonical": "test-authoring",
+      "canonical_target": "test-authoring",
+      "current_product_value": "high",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Jest",
+        "Vitest",
+        "coverage",
+        "pytest",
+        "vitest"
+      ],
       "disposition": "COMBINE",
+      "inputs": [
+        "Source code file(s) or function signatures to test."
+      ],
       "legacy_skill_id": "unit-test",
-      "note": "combined into canonical skill"
+      "outputs": [
+        "Test file in the project's test framework:",
+        "```typescript",
+        "// tests/calculator.test.ts",
+        "import { describe, it, expect } from 'vitest';",
+        "import { add, divide } from '../src/calculator';",
+        "describe('add', () => {"
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Generate unit tests for functions, methods, and classes. Tests validate behavior",
+      "reason": "Variant of test authoring (isolated unit behavior). Combined with 6 testing peers into `test-authoring`; run via test.execute.",
+      "source_provenance": [
+        "unit-test",
+        "test-authoring"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Cloud billing data, resource inventory, project tags."
+      ],
       "legacy_skill_id": "usage-metering",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "Usage reports by service, project, and environment with consumption metrics,",
+        "trends, and optimization opportunities."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "cost-analysis"
+      ],
+      "purpose": "Track and analyze cloud resource consumption \u2014 CPU-hours, storage GB-months,",
+      "reason": "Track cloud resource consumption. FinOps; overlaps cost-analysis; deferred.",
+      "source_provenance": [
+        "usage-metering"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Data to index, query patterns, latency requirements, accuracy requirements."
+      ],
       "legacy_skill_id": "vector-search",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "A vector search configuration with embedding model, index parameters, HNSW/IVF",
+        "settings, and query pipeline."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Implement vector similarity search \u2014 embedding strategies, index configuration,",
+      "reason": "Vector similarity search (embeddings/HNSW). AI/data; deferred.",
+      "source_provenance": [
+        "vector-search"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "DROP",
+      "inputs": [
+        "Sprint history: committed points, completed points, carry-over, team composition."
+      ],
       "legacy_skill_id": "velocity",
-      "note": "legacy roster-based team velocity tracking"
+      "outputs": [
+        "```markdown",
+        "# Velocity Report \u2014 Q1-Q2 2026"
+      ],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Track, analyze, and forecast team velocity \u2014 the amount of work completed per",
+      "reason": "Roster-based sprint velocity tracking; agile ceremony over removed roles.",
+      "source_provenance": [
+        "velocity"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Brand strategy, logo files, design preferences, competitive landscape."
+      ],
       "legacy_skill_id": "visual-identity",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "A visual identity guide with logo usage, color system, typography, iconography,",
+        "and application examples."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "Design and maintain visual identity systems \u2014 logo, color palette, typography,",
+      "reason": "Visual identity systems. Design; deferred.",
+      "source_provenance": [
+        "visual-identity"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "deferred",
+      "dependencies": [],
+      "deterministic_code_available": false,
+      "deterministic_tools": [],
       "disposition": "LATER",
+      "inputs": [
+        "Customer/product revenue and fully-loaded cost data (from ABC costing model)."
+      ],
       "legacy_skill_id": "whale-curve-analyze",
-      "note": "plausible domain value, deferred to a later wave"
+      "outputs": [
+        "A Whale Curve visualization with cumulative profit ranking, profit tiers,",
+        "improvement candidates, and actionable recommendations."
+      ],
+      "overlap_with_AX3": false,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [
+        "abc-costing-model"
+      ],
+      "purpose": "Analyze customer/product profitability using the Whale Curve methodology \u2014",
+      "reason": "Whale Curve customer profitability. Finance; depends on ABC model; deferred.",
+      "source_provenance": [
+        "whale-curve-analyze"
+      ]
     },
     {
-      "canonical": null,
+      "canonical_target": null,
+      "current_product_value": "none",
+      "dependencies": [],
+      "deterministic_code_available": true,
+      "deterministic_tools": [
+        "Coverage",
+        "coverage"
+      ],
       "disposition": "DROP",
+      "inputs": [],
       "legacy_skill_id": "workforce-planning",
-      "note": "legacy workforce planning"
+      "outputs": [],
+      "overlap_with_AX3": true,
+      "overlap_with_operations": [],
+      "overlap_with_other_skills": [],
+      "purpose": "ARAYA workforce planning \u2014 project future skill needs, recommend agent hiring/retirement, manage organizational capacity.",
+      "reason": "Legacy workforce planning over the roster. Removed.",
+      "source_provenance": [
+        "workforce-planning"
+      ]
     }
   ],
-  "source": "archive/araya-legacy-origin-dev-mahg-20260927 (skills/)",
+  "review_method": "evidence-based full-source review (not frontmatter-only)",
+  "source": "archive/araya-legacy-origin-dev-mahg-20260927 (skills/*/SKILL.md, full body)",
   "summary": {
     "COMBINE": 12,
     "DROP": 28,
@@ -777,11 +3495,12 @@
     "LATER": 84,
     "REPLACE_BY_OPERATION": 1,
     "canonical_skills_total": 7,
+    "review_method": "full source body read (SKILL.md), per-skill evidence fields derived",
     "total_reviewed": 128,
     "wave1_recovered": [
       "test-authoring",
       "security-review"
     ]
   },
-  "version": "1.0.0"
+  "version": "2.0.0"
 }
