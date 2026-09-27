@@ -1,15 +1,15 @@
 # Vertical demonstration
 
 A real end-to-end demonstration of the capability foundation, including REAL
-native Pi subagent worker execution.
+native Pi subagent worker execution AND multi-skill composition.
 
 ## Flow
 
 ```text
 Professor instruction (PonyExpress, correlation P123)
 → capability resolution
-→ selected skill(s)
-→ deterministic operation (git.repository-sanity, real repo)
+→ 3 selected skills (test-authoring + tdd-execute + git-publication)
+→ deterministic operations (test.execute + git.repository-sanity)
 → real ephemeral Pi subagent worker (native subagent mechanism)
 → worker result
 → PostOffice trace (delegation → result)
@@ -19,7 +19,7 @@ Professor instruction (PonyExpress, correlation P123)
 ## Run
 
 Phase 1 (scriptable): PonyExpress instruction, resolution, worker handoff
-(delegation), deterministic operation, and the worker prompt.
+(delegation), deterministic operations, and the worker prompt.
 
 ```bash
 bash demo/vertical-demo.sh
@@ -37,5 +37,6 @@ bash demo/vertical-demo.sh complete
 ```
 
 The worker actually runs (its real output is captured in the PostOffice trace
-and the final structured result). `demo/.run/` is transient state and is
-git-ignored.
+and the final structured result). The task composes 3 skills + 5 operations into
+one ephemeral worker (`multi_skill_composition: true`). `demo/.run/` is
+transient state and is git-ignored.

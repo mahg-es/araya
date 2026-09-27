@@ -15,11 +15,16 @@ After test files exist, or any time tests need to be run to gate implementation.
 ## Steps
 
 1. Detect the project's test runner.
-2. Execute the suite (single run, not watch mode).
-3. Parse pass/fail counts and per-test results.
+2. Execute the suite via the deterministic `test.execute` operation (single
+   run, not watch mode) — do not re-derive how to run the tool:
+   ```bash
+   araya operation execute test.execute command="pytest -q"
+   ```
+3. Interpret the structured result: exit code, pass/fail counts.
 4. Report with PASS/FAIL per test and a summary.
 5. Set status: GREEN (all pass) or RED (failures exist).
-6. For failures, surface the specific error and location.
+6. For failures, surface the specific error and location — reason only about
+   the failure and the next action, not about how to run the suite.
 
 ## Rules
 
