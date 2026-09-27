@@ -97,10 +97,27 @@ done
 
 # ── 0. ownership boundary ──────────────────────────────────────────────────
 # ARAYA owns only the target directory it is given. It must never touch the Pi
-# user layer (~/.pi/agent/) — which includes the Professor's personal agent
-# Daneel — nor the reserved name "daneel".
-ABS_TARGET="$(cd "$TARGET" 2>/dev/null && pwd || printf '%s' "$TARGET")"
-PI_USER_LAYER="$(cd "$HOME/.pi/agent" 2>/dev/null && pwd)"
+# user layer (~/.pi/) — which includes the Professor's personal agent Daneel
+# (under ~/.pi/agent/) — nor the reserved name "daneel".
+#
+# Canonicalize the target so that paths like ~/./.pi, ~/.pi/../../.pi, or
+# relative ../ segments cannot bypass the guard.  realpath -m resolves . and ..
+# and symlinks even when the path does not yet exist on disk.
+canonicalize_path() {
+  if command -v realpath >/dev/null 2>&1; then
+    realpath -m "$1"
+  else
+    (cd "$1" 2>/dev/null && pwd) || printf '%s' "$1"
+  fi
+}
+
+ABS_TARGET="$(canonicalize_path "$TARGET")"
+
+# Resolve $HOME to its canonical form first (handles HOME containing symlinks
+# or relative segments), then append /.pi.  This lets us guard even when
+# ~/.pi does not yet exist on disk.
+HOME_CANON="$(cd "$HOME" && pwd)"
+PI_USER_LAYER="$(canonicalize_path "$HOME_CANON/.pi")"
 
 if [[ -n "$PI_USER_LAYER" ]]; then
   case "$ABS_TARGET" in
