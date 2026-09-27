@@ -69,10 +69,13 @@ def git_repository_sanity(input_: dict, ctx: dict) -> OperationResult:
     ))
 
     upstream = git(root, ["rev-parse", "--abbrev-ref", "@{upstream}"])
+    # A detached HEAD (no upstream) is a normal state during CI/verification —
+    # it is informational, not a sanity failure.
     checks.append(check(
         "upstream_known",
         upstream["code"] == 0 and bool(upstream["stdout"].strip()),
-        upstream["stdout"].strip() or "no upstream",
+        upstream["stdout"].strip() or "no upstream (detached HEAD — informational)",
+        blocking=False,
     ))
 
     status = git(root, ["status", "--porcelain"])
