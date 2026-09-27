@@ -15,16 +15,21 @@ paths, roles, versions, or governance decisions.
 
 ## Host integrations
 
-- Pi is a host, not something ARAYA globally owns. Plain Pi stays plain Pi.
-- The Pi adapter (`adapters/pi/`) is explicit and project-scoped.
+- Pi is a host, not something ARAYA globally owns. ARAYA never hooks global Pi.
+- This `AGENTS.md` is Pi's native project-context file: when Pi runs inside
+  this repository, it loads this file automatically. No manual `/araya`
+  invocation is needed inside the ARAYA repository.
+- The Pi adapter (`adapters/pi/`) is explicit and project-scoped; it exists
+  only to bring ARAYA context into a *different* project via `/araya`.
 - The ChatGPT bundle (`bundle/chatgpt/`) consumes the same core.
 
 ## Ownership boundary — Daneel and Pi user resources
 
 - `DANEEL != ARAYA`. **Daneel** is the Professor's personal, Pi-level agent.
-  It lives in the Pi user layer (`~/.pi/agent/agents/daneel.md` and
-  `~/.pi/agent/daneel/`). ARAYA does **not** own, install, modify, generate,
-  or delete Daneel.
+  It lives in the Pi user layer (`~/.pi/agent/SYSTEM.md` and
+  `~/.pi/agent/APPEND_SYSTEM.md` as the default main-session identity, plus
+  `~/.pi/agent/daneel/` for identity and memory). ARAYA does **not** own,
+  install, modify, generate, or delete Daneel.
 - The name **Daneel** is reserved to the Professor's personal agent. ARAYA
   must never create a persona named `daneel` (the historical `araya.yaml`-
   generated "daneel" verifier persona is **not** the Professor's agent and must
