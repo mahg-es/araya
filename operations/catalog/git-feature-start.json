@@ -1,0 +1,35 @@
+{
+  "operation_id": "git.feature-start",
+  "version": "1.0.0",
+  "status": "active",
+  "domain": "git",
+  "title": "Feature Start",
+  "description": "Create an authorized worktree and feature branch from a fetched integration head. Supports dry-run; writes only after preconditions pass.",
+  "canonical_handler": "araya_lib.git_ops.git_feature_start",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "repo": {"type": "string"},
+      "name": {"type": "string"},
+      "branch": {"type": "string"},
+      "base": {"type": "string"},
+      "authorized_worktree_root": {"type": "string"},
+      "dry_run": {"type": "boolean"}
+    }
+  },
+  "output_schema": {"type": "object", "contract": "OperationResult"},
+  "side_effects": ["creates worktree + branch when preconditions pass and not dry-run"],
+  "risk_level": "low",
+  "required_authority": "any",
+  "preconditions": ["authorized_worktree_root provided", "repository truth fetched when required"],
+  "postconditions": ["OperationResult contract-valid"],
+  "evidence": ["checks[]", "evidence[]", "evaluated_sha"],
+  "idempotency": "fails closed on existing branch/path (no overwrite)",
+  "rollback": "documented per operation",
+  "adapters": ["cli"],
+  "aliases": ["feature start", "start feature"],
+  "intents": ["create a feature worktree", "start a new feature branch"],
+  "tests": ["tests/test_operations.py"],
+  "owner": "araya",
+  "source_provenance": "recovered from legacy operations/git-feature-start.yaml (ponny-express-10010); hardcoded authorized-root removed — now an explicit input"
+}

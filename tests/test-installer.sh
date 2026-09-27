@@ -59,6 +59,16 @@ grep -q 'ARAYA installer result: PASS' "$TMP/core.log"
 
 ( cd "$TARGET" && sha256sum -c SHA256SUMS.txt >/dev/null )
 
+# 1b. The capability foundation (CLI, operations, skills, capabilities) must be
+#     installed alongside the core.
+[[ -f "$TARGET/cli/araya" ]] || { echo "FAIL: capability foundation CLI missing after install"; exit 1; }
+[[ -d "$TARGET/operations/catalog" ]] || { echo "FAIL: operations catalog missing after install"; exit 1; }
+[[ -f "$TARGET/skills/index.json" ]] || { echo "FAIL: skills index missing after install"; exit 1; }
+[[ -f "$TARGET/capabilities/index.json" ]] || { echo "FAIL: capabilities index missing after install"; exit 1; }
+# The installed CLI must actually run (agent-first surface).
+python3 "$TARGET/cli/araya" --json status >/dev/null \
+  || { echo "FAIL: installed CLI does not run"; exit 1; }
+
 # 2. No global Pi change.
 check_no_global_araya
 

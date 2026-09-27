@@ -7,43 +7,103 @@ ARAYA is an AI-engineer **operating model**: a minimal always-on kernel
 govern authority, Repository Truth, stages, ADRs, product delivery, Git
 publication, installation bundles, orchestration, and templates.
 
-This repository is the clean, repository-owned distribution of that operating
-model, plus two explicit host integrations (Pi and ChatGPT) that consume the
-same canonical core. ARAYA is a methodology that runs *on top of* a host — it
-does not own the host.
+On top of that kernel sits the **capability foundation**: a small, reusable,
+agent-first set of deterministic operations, progressive-disclosure skills, a
+capability/delegation resolver, agent-to-agent and Professor channels
+(PostOffice / PonyExpress), runtime utilities, and an agent-first CLI. ARAYA is
+a methodology that runs *on top of* a host — it does not own the host.
 
 ## Current state
 
 - **Active canonical:** AX3 v0.5.0 (adopted 2026-09-20).
-- **Status:** clean core installed; Pi adapter and ChatGPT bundle working.
-- The legacy ARAYA runtime (global Pi hooks, orchestration engines, agent
-  roster) is **archived** on Git branches (`archive/araya-legacy-*`) and is
-  **not** part of the active product. Legacy capabilities return only after an
-  individual product-value review (see `docs/LEGACY-CAPABILITY-INVENTORY.md`).
+- **Status:** clean core + capability foundation installed; Pi adapter,
+  ChatGPT bundle, and installer working.
+- The legacy ARAYA runtime (global Pi hooks, orchestration engines, permanent
+  agent roster, authority ledgers, relay state machine) is **archived** on Git
+  branches (`archive/araya-legacy-*`) and is **not** part of the active
+  product. Legacy capabilities return only after an individual product-value
+  review (see `docs/LEGACY-CAPABILITY-INVENTORY.md`).
 
 ## What works now
 
 1. Canonical core integrity (`sha256sum -c SHA256SUMS.txt`).
-2. Repository installer (`araya-install.sh`): core-only by default, opt-in
-   adapters, never touches global `~/.pi`.
+2. Repository installer (`araya-install.sh`): core + capability foundation by
+   default, opt-in adapters, never touches global `~/.pi`.
 3. Automatic ARAYA project context: when Pi runs inside this repository, it
    loads `AGENTS.md` (AX3 v0.5.0) automatically — no command needed.
 4. Explicit, project-scoped Pi adapter (`/araya <task>` in a project other
    than this repository).
 5. Reproducible ChatGPT bundle (`bundle/chatgpt/build.sh`).
+6. **Capability foundation** — see below.
+
+### Capability foundation
+
+The foundation is a clean, reusable, agent-first layer. It deliberately has no
+global runtime, no authority ledger, and no orchestration engine.
+
+**Operations (deterministic code).** Reusable, parametrized, explicitly-invoked
+operations with a minimal API — `list`, `describe`, `resolve`, `execute`. Git
+operations are recovered as deterministic checks (repository sanity, merge
+gate, feature PR gate, feature start) and are never a global shell gate.
+
+**Skills (procedural specialization).** Skills are the primary unit of reusable
+procedural specialization, loaded by progressive disclosure: minimal metadata
+is always discoverable (`skills/index.json`), full instructions load only when
+a skill is selected, and resources load only when needed. The full library is
+never loaded into every context.
+
+**Ephemeral agent model.** Specialist agents are ephemeral workers composed
+from a task + selected skills + selected operations + scoped context +
+permissions + runtime model. Their display names are randomly assigned and have
+no architectural meaning — capabilities and skills determine specialization,
+not names. There is no permanent persona roster.
+
+**Delegation.** A capability resolver plus an ephemeral-agent factory. A task
+is resolved to capabilities, skills, and deterministic operations; if no
+specialist is needed it executes directly, otherwise it composes an ephemeral
+specialist (delegated via the host's native subagent mechanism) and traces the
+communication through PostOffice.
+
+**CLI (agent-first).** `cli/araya` provides stable, namespaced commands with
+structured parameters, `--json` output, stable exit codes, non-interactive
+execution, and machine-readable capability discovery:
+
+```bash
+python3 cli/araya --json status
+python3 cli/araya --json operation list
+python3 cli/araya --json operation execute git.repository-sanity repo=/path/to/repo
+python3 cli/araya --json git merge-gate --pr 123 --candidate <sha> --base dev-mahg
+python3 cli/araya --json delegate "publish this branch to integration"
+```
+
+**PostOffice (agent ↔ agent).** Messaging + historical trace: sender, recipient,
+timestamp, correlation id, message type, subject, body, acknowledgement. It is
+**not** an authority, an approval ledger, a workflow state machine, canonical
+repository truth, or an automatic continuation controller.
+
+**PonyExpress (Professor → Daneel / agents).** The Professor's explicit
+communication channel toward the agent system, with durable append-only
+traceability and correlation so an instruction can be followed through
+delegation and responses (`correlation_id = P123`).
+
+**Runtime utilities.** Read-only `model-context` (provider/model/reasoning —
+runtime info, not Daneel's operating model), opt-in `quota` read/guard, a
+`cycle` duration/copy helper, and a non-invasive `notifier`. None takes over
+the host.
 
 ## What is not available yet
 
-1. Legacy capabilities (agent roster, skills library, orchestration engines,
-   CLI, git-operation gates, PostOffice/ledger, runtime enforcement) — archived
-   and deferred; none are reintroduced automatically.
-2. No global ARAYA integration, and none is planned: integration is
+1. The legacy permanent agent roster and orchestration engines — not restored;
+   specialists are now ephemeral and composed from skills/operations.
+2. The historical relay state machine (T0–T11/T12) — not restored; only the
+   L07 handoff/correlation/delivery/acknowledgement/trace is recovered.
+3. Global ARAYA integration — none, and none is planned: integration is
    explicit/scoped by design.
 
 ## Install
 
 ```bash
-# Install the core into a target directory (default: current directory).
+# Install the core + capability foundation into a target directory (default: cwd).
 bash araya-install.sh --target /path/to/project
 
 # Opt-in: install the project-scoped Pi adapter (adds /araya to that project only).
@@ -98,6 +158,23 @@ projects.
 - ARAYA never hooks global Pi; Daneel (the Professor's Pi user-layer agent)
   remains independent of ARAYA.
 
+## Use the CLI
+
+The CLI is agent-first; humans may also use it. Run from the repository (or an
+installed target):
+
+```bash
+python3 cli/araya --help
+python3 cli/araya --json status
+python3 cli/araya --json operation list
+python3 cli/araya --json skills list
+python3 cli/araya --json capabilities
+python3 cli/araya --json runtime model-context
+```
+
+Exit codes: `0` success, `1` operation failure, `2` usage error. See
+`docs/usage/` for details.
+
 ## Build / use the ChatGPT bundle
 
 ```bash
@@ -111,17 +188,30 @@ a bundle can never be produced against a stale README.
 
 ## Repository structure
 
-| Path | Responsibility |
-|---|---|
-| `GPT-CONFIGURATION.md` | Operating kernel (always-on instructions) |
-| `K01`–`K10` | Canonical Knowledge (deep policy) |
-| `ADOPTION-RECORD.md`, `ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md`, `SHA256SUMS.txt` | Adoption + integrity evidence |
-| `AGENTS.md` | Pi project context (auto-loaded inside this repo) |
-| `araya-install.sh` | Repository installer (core + opt-in adapters) |
-| `adapters/pi/` | Explicit, opt-in Pi adapter |
-| `bundle/chatgpt/` | Reproducible ChatGPT bundle |
-| `docs/` | Architecture ADR, usage, legacy inventory |
-| `tests/` | Integrity, installer, adapter, bundle, README-contract tests |
+```text
+araya/
+├── GPT-CONFIGURATION.md            operating kernel (always-on)
+├── K01–K10                         canonical Knowledge (deep policy)
+├── ADOPTION-RECORD.md, ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md, SHA256SUMS.txt
+│                                   adoption + integrity evidence
+├── AGENTS.md                       Pi project context (auto-loaded in this repo)
+├── araya-install.sh                installer (core + foundation + opt-in adapters)
+├── cli/                            agent-first CLI + shared library (stdlib only)
+├── operations/                     deterministic operations catalog (JSON)
+├── skills/                         progressive-disclosure skills (index + SKILL.md)
+├── capabilities/                   capability registry (maps to skills/operations)
+├── communications/
+│   ├── postoffice/                 agent ↔ agent messaging + trace
+│   └── ponyexpress/                Professor → agent channel
+├── runtime/                        notifier, quota, model-context, cycle
+├── delegation/                     capability resolver + ephemeral agent factory
+├── demo/                           vertical demonstration (real product behavior)
+├── adapters/
+│   └── pi/                         explicit, opt-in Pi adapter
+├── bundle/chatgpt/                 reproducible ChatGPT bundle
+├── docs/                           architecture ADRs, usage, legacy inventory
+└── tests/                          integrity, installer, adapter, bundle, CLI tests
+```
 
 ## Where the core lives
 
@@ -138,7 +228,9 @@ sha256sum -c SHA256SUMS.txt
 - Pi: `adapters/pi/`
 - ChatGPT: `bundle/chatgpt/`
 
-Both consume the same canonical core; neither forks or rewrites it.
+Both consume the same canonical core; neither forks or rewrites it. The
+capability foundation's shared library (`cli/araya_lib/`) is the single
+implementation consumed by the CLI and any future host adapter.
 
 ## Ownership boundary — Daneel
 
@@ -146,19 +238,23 @@ Both consume the same canonical core; neither forks or rewrites it.
 (`~/.pi/agent/SYSTEM.md`, `~/.pi/agent/APPEND_SYSTEM.md`,
 `~/.pi/agent/daneel/`). ARAYA does not own, install, modify, generate, or
 delete Daneel or other Pi user resources. The installer is enforced to respect
-this boundary (`tests/test-installer.sh`).
+this boundary (`tests/test-installer.sh`). The name `Daneel` is reserved; ARAYA
+never creates a persona named `daneel`.
 
 ## Important limitations / debts
 
-1. Legacy capabilities are archived, not ported — re-review is a separate,
-   future increment.
+1. The capability foundation is the first recovery pass; most legacy skills
+   (~130) remain archived and unreviewed (see `docs/LEGACY-CAPABILITY-INVENTORY.md`).
 2. No automated cross-project delegation/state store; ARAYA is per-project and
-   host-scoped.
+   host-scoped. The ephemeral-agent factory composes a spec; it does not itself
+   run subagents.
 3. The ChatGPT bundle is for a custom GPT; there is no hosted ARAYA service.
 4. Daneel's private memory/identity is not versioned inside ARAYA; if it needs
    backup/versioning, that must live in a private location independent of ARAYA.
+5. The CLI is stdlib-only Python; there is no MCP adapter yet (only where
+   interoperability justifies it).
 
 ## Next product increment
 
-Legacy capability inventory review and prioritization (see
-`docs/LEGACY-CAPABILITY-INVENTORY.md`).
+Selective recovery and review of the remaining legacy skills and capabilities
+(see `docs/LEGACY-CAPABILITY-INVENTORY.md`), prioritized by product value.
