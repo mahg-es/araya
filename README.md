@@ -50,9 +50,10 @@ gate, feature PR gate, feature start) and are never a global shell gate.
 procedural specialization, loaded by progressive disclosure: minimal metadata
 is always discoverable (`skills/index.json`), full instructions load only when
 a skill is selected, and resources load only when needed. The full library is
-never loaded into every context. Seven canonical skills exist:
-`adr-write`, `tdd-execute`, `test-authoring`, `security-review`,
-`git-publication`, `postoffice`, `ponyexpress`.
+never loaded into every context. Nine canonical skills exist:
+`adr-write`, `architecture-diagram`, `api-design`, `tdd-execute`,
+`test-authoring`, `security-review`, `git-publication`, `postoffice`,
+`ponyexpress`.
 
 Skills compose into one ephemeral specialist (e.g. a "review and safely publish
 a fix" task selects `test-authoring` + `tdd-execute` + `git-publication` +
@@ -115,7 +116,7 @@ the host.
    L07 handoff/correlation/delivery/acknowledgement/trace is recovered.
 3. Global ARAYA integration — none, and none is planned: integration is
    explicit/scoped by design.
-4. Most legacy domain skills remain deferred (84 of 128 reviewed) — see
+4. Most legacy domain skills remain deferred (81 of 128 reviewed) — see
    `docs/legacy-skills-review.md`.
 
 ## Install
@@ -282,16 +283,17 @@ purpose, inputs, outputs, dependencies, deterministic-code availability,
 overlaps, disposition, canonical target, reason, and provenance:
 
 - Reviewed (full source body): **128**
-- KEEP: **3** (already-canonical)
-- COMBINE: **12** (absorbed into 2 canonical skills)
+- KEEP: **5** (already-canonical + Wave 2)
+- COMBINE: **13** (absorbed into 3 canonical skills)
 - REPLACE_BY_OPERATION: **1**
 - DROP: **28** (legacy machinery + SDLC ceremony)
-- LATER: **84** (each with an individual evidence-based reason)
+- LATER: **81** (each with an individual evidence-based reason)
 
-Canonical skills total: **7**. Wave 1 recovered `test-authoring` and
-`security-review` (foundational engineering). Provenance is retained per
-canonical skill via `source_provenance`; no legacy skill is lost (it remains
-in Git history).
+Canonical skills total: **9**. Wave 1 recovered `test-authoring` and
+`security-review` (foundational engineering). Wave 2 recovered
+`architecture-diagram` and `api-design` (the latter absorbing legacy
+`api-document`). Provenance is retained per canonical skill via
+`source_provenance`; no legacy skill is lost (it remains in Git history).
 
 ## Next product increment
 
