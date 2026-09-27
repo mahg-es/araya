@@ -10,12 +10,29 @@ bash araya-install.sh --adapter chatgpt                         # build ChatGPT 
 
 Default installation is core-only and never touches global `~/.pi`.
 
-## Pi — explicit session
+## Pi — inside this repository (automatic)
 
-1. Install the adapter into a project (see above).
+When Pi runs inside this repository, `AGENTS.md` is loaded automatically as
+project context, so the AX3 v0.5.0 operating model is active without any
+command:
+
+```bash
+cd ~/github/mahg-es/araya
+pi
+```
+
+No `/araya` invocation is needed here.
+
+## Pi — explicit session in another project
+
+The `/araya` command exists to intentionally bring ARAYA context into a
+*different* project:
+
+1. Install the adapter into that project (see above).
 2. Inside that project, run `/araya <task>`.
 
-Plain `pi` is unaffected. The adapter is project-scoped and opt-in.
+The adapter is project-scoped and opt-in; it never changes global Pi (or the
+Professor's user-level Daneel identity), and ARAYA never hooks global Pi.
 
 ## ChatGPT
 

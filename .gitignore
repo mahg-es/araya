@@ -14,3 +14,6 @@ __pycache__/
 .DS_Store
 *.log
 .env
+
+# Pi runtime (user-level packages such as pi-loop write loops.json here)
+.pi/
