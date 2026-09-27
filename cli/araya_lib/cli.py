@@ -81,6 +81,21 @@ def _flag(args: list, name: str, default: Optional[str] = None) -> Optional[str]
     return default
 
 
+def _split_flag(args: list, name: str) -> tuple:
+    """Remove a --flag <value> pair from args, returning (value, remaining)."""
+    value = None
+    remaining = []
+    i = 0
+    while i < len(args):
+        if args[i] == name and i + 1 < len(args):
+            value = args[i + 1]
+            i += 2
+            continue
+        remaining.append(args[i])
+        i += 1
+    return value, remaining
+
+
 class Cli:
     def __init__(self, root: str, project: str, json_mode: bool):
         self.root = root
@@ -444,12 +459,73 @@ class Cli:
     # ── delegation ─────────────────────────────────────────────────────────
     def delegate_cmd(self, args: list) -> int:
         if not args:
-            return _usage("delegate <task...>")
+            return _usage("delegate <run|result> ...")
+        if args[0] == "run":
+            return self._delegate_run(args[1:])
+        if args[0] == "result":
+            return self._delegate_result(args[1:])
+        # Default (no subcommand): resolve + compose only (dry spec).
         task = " ".join(args)
         resolved = self.delegation.resolve(task)
         agent = self.delegation.compose_ephemeral_agent(task)
         _emit({"resolution": resolved, "ephemeral_agent": agent}, self.json_mode)
         return 0
+
+    def _delegate_run(self, args: list) -> int:
+        """Adapter boundary for native subagent execution: resolve + compose a
+        scoped worker request, record the PostOffice handoff (delegation), and
+        emit the worker request so the agent-facing caller can invoke the host's
+        native subagent with it. No orchestration is performed here."""
+        correlation, task_args = _split_flag(args, "--correlation")
+        task = " ".join(task_args).strip()
+        if not task:
+            return _usage("delegate run [--correlation <id>] <task...>")
+        req = self.delegation.compose_worker_request(task, correlation_id=correlation)
+        po = PostOffice(self.project)
+        handoff = po.send(
+            sender="daneel",
+            recipient=req["worker_name"],
+            subject=f"delegation: {task}",
+            body=json.dumps({
+                "skills": req["skills"],
+                "operations": req["operations"],
+            }, sort_keys=True),
+            message_type="delegation",
+            correlation_id=req["correlation_id"],
+        )
+        req["handoff_message_id"] = handoff["id"]
+        req["worker_prompt"] = self.delegation.worker_prompt(req)
+        _emit(req, self.json_mode)
+        return 0
+
+    def _delegate_result(self, args: list) -> int:
+        """Record the worker's returned result into PostOffice and emit the
+        correlation trace as the structured result."""
+        correlation = _flag(args, "--correlation")
+        worker = _flag(args, "--worker")
+        status = _flag(args, "--status") or "PASS"
+        body = _flag(args, "--body") or ""
+        if not correlation or not worker:
+            return _usage("delegate result --correlation <id> --worker <name> "
+                          "[--status PASS|FAIL] [--body <text>]")
+        po = PostOffice(self.project)
+        result = po.send(
+            sender=worker,
+            recipient="daneel",
+            subject=f"result: {status}",
+            body=body,
+            message_type="result",
+            correlation_id=correlation,
+        )
+        trace = po.trace(correlation)
+        _emit({
+            "correlation_id": correlation,
+            "worker": worker,
+            "status": status,
+            "result_message_id": result["id"],
+            "trace": trace,
+        }, self.json_mode)
+        return 0 if status == "PASS" else 1
 
 
 def _usage(hint: str) -> int:
@@ -542,7 +618,9 @@ Commands:
   ponyexpress send|list|read|trace
   relay handoff|deliver|ack|trace
   runtime model-context|quota|cycle|notify
-  delegate <task...>                      resolve + compose ephemeral agent
+  delegate <task...>                      resolve + compose ephemeral agent (dry spec)
+  delegate run [--correlation <id>] <task...>   handoff + worker request (native subagent)
+  delegate result --correlation <id> --worker <name> [--status PASS|FAIL] [--body <text>]
 
 Exit codes: 0 success, 1 operation failure, 2 usage error.
 """

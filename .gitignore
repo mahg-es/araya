@@ -17,3 +17,7 @@ __pycache__/
 
 # Pi runtime (user-level packages such as pi-loop write loops.json here)
 .pi/
+
+# Demo transient state
+.demo-state/
+demo/.run/

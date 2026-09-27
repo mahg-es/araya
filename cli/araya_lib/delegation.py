@@ -26,6 +26,7 @@ from .capabilities import Capabilities
 from .operations import OperationRegistry
 from .skills import Skills
 from .matching import matches
+from .store import new_id
 
 
 def random_display_name() -> str:
@@ -136,6 +137,84 @@ class Delegation:
                 "deterministic_operations_available": selected_ops,
             },
         }
+
+    def compose_worker_request(
+        self,
+        task: str,
+        correlation_id: Optional[str] = None,
+        tools: Optional[list] = None,
+        permissions: Optional[list] = None,
+        model: Optional[dict] = None,
+    ) -> dict:
+        """Compose a fully-scoped worker request for the host's native subagent
+        mechanism. This is the adapter boundary: the library produces the exact
+        scoped input (task + selected skills + operations + context + permission
+        + runtime model), and the agent-facing caller invokes the host's native
+        subagent with it. No orchestration logic is duplicated here."""
+        resolved = self.resolve(task)
+        skill_bodies = []
+        for name in resolved["skills"]:
+            rec = self.skills.get(name)
+            if rec:
+                skill_bodies.append({"name": name, "instructions": rec.get("body", "")})
+        return {
+            "correlation_id": correlation_id or new_id("W"),
+            "worker_name": random_display_name(),
+            "display_name_has_no_meaning": True,
+            "task": task,
+            "capabilities": resolved["capabilities"],
+            "skills": [s["name"] for s in skill_bodies],
+            "skill_instructions": skill_bodies,
+            "operations": resolved["operations"],
+            "tools": tools or [],
+            "permissions": permissions or ["read-only"],
+            "runtime_model": model if model is not None else {},
+            "scoped_context": {
+                "root": self.root,
+                "deterministic_operations_available": resolved["operations"],
+                "cli": "python3 cli/araya",
+            },
+        }
+
+    def worker_prompt(self, spec: dict) -> str:
+        """Render the scoped prompt passed to the native subagent worker.
+        The worker receives only the scoped task, selected skills, and the
+        deterministic operations/context it needs — nothing else."""
+        lines = [
+            f"You are an ephemeral specialist worker named {spec.get('worker_name')}.",
+            "Your display name is randomly assigned and has no meaning; your",
+            "specialization comes from the scoped task, selected skills, and",
+            "deterministic operations below — never from your name.",
+            "",
+            "Execute ONLY the scoped task. Use the tools available to you.",
+            "Return a concise structured result.",
+            "",
+            f"SCOPED TASK: {spec.get('task')}",
+            "",
+            "PERMISSIONS: " + ", ".join(spec.get("permissions", []) or ["read-only"]),
+        ]
+        skills = spec.get("skill_instructions") or []
+        if skills:
+            lines.append("")
+            lines.append("SELECTED SKILLS (procedural guidance):")
+            for s in skills:
+                lines.append(f"\n--- skill: {s['name']} ---\n{s['instructions'].strip()}")
+        ops = spec.get("operations") or []
+        if ops:
+            lines.append("")
+            lines.append("DETERMINISTIC OPERATIONS AVAILABLE (invoke rather than re-derive):")
+            for op in ops:
+                lines.append(f"  - {op}")
+            root = (spec.get("scoped_context") or {}).get("root")
+            cli = (spec.get("scoped_context") or {}).get("cli", "python3 cli/araya")
+            if root:
+                lines.append("")
+                lines.append(f"Working root: {root}")
+                lines.append(f"Invoke an operation with: cd {root} && {cli} --json operation execute <id> repo={root}")
+        lines.append("")
+        lines.append("After completing the task, report: (1) what you did, (2) the exact")
+        lines.append("result/evidence, (3) a PASS or FAIL outcome.")
+        return "\n".join(lines)
 
 
 __all__ = ["Delegation", "random_display_name"]
