@@ -1,7 +1,7 @@
 # K05 — Install Bundle Procedure and Delivery-Time Preflight
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 K05 owns the reusable Install Bundle contract for repository-mutating, repository-auditing, and repository-validating deliveries.
 

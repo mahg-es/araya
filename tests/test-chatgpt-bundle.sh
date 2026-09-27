@@ -8,7 +8,7 @@ OUT="$(bash bundle/chatgpt/build.sh)"
 echo "$OUT" | grep -q 'ARAYA ChatGPT bundle result: PASS' \
   || { echo "$OUT"; echo "FAIL: bundle build failed"; exit 1; }
 
-ZIP="bundle/chatgpt/dist/ARAYA-AX3-v0.5.0-chatgpt.zip"
+ZIP="bundle/chatgpt/dist/ARAYA-AX3-v0.6.0-chatgpt.zip"
 [[ -f "$ZIP" ]] || { echo "FAIL: bundle zip missing"; exit 1; }
 
 echo "$OUT" | grep -q 'KNOWLEDGE_FILES=10' || { echo "FAIL: knowledge count wrong"; exit 1; }

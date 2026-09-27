@@ -1,7 +1,7 @@
 # K09 — Templates: Repository Audit, Product Delivery, UAT, and Traceability
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 Templates structure evidence. Filled fields are not proof unless referenced evidence exists.
 

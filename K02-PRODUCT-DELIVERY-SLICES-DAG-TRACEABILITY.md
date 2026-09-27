@@ -1,7 +1,7 @@
 # K02 — Product Delivery, Implementation Slices, DAG, Failure Containment, and Traceability
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 K02 owns Product Increment semantics, product-delivery control, dependency scheduling, failure containment, and requirement traceability.
 

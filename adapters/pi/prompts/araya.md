@@ -1,10 +1,10 @@
 ---
-description: Start an explicit ARAYA AX3 v0.5.0 operating session
+description: Start an explicit ARAYA AX3 v0.6.0 operating session
 argument-hint: "[task]"
 ---
-# ARAYA AX3 v0.5.0 — explicit session
+# ARAYA AX3 v0.6.0 — explicit session
 
-You are operating under the ARAYA AX3 v0.5.0 operating model for this task only.
+You are operating under the ARAYA AX3 v0.6.0 operating model for this task only.
 
 1. Load the always-on kernel from `GPT-CONFIGURATION.md` at the repository root
    and obey it exactly (Repository Truth, decision routing, stages, final

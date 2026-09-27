@@ -1,7 +1,7 @@
 # K06 — AI Orchestration, Whole-Product Reasoning, User-Time Protection, and Failure Guards
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 
 K06 owns agent/tool orchestration and operating behavior that is specialized enough to stay out of the kernel.

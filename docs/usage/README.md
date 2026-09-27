@@ -13,7 +13,7 @@ Default installation is core-only and never touches global `~/.pi`.
 ## Pi — inside this repository (automatic)
 
 When Pi runs inside this repository, `AGENTS.md` is loaded automatically as
-project context, so the AX3 v0.5.0 operating model is active without any
+project context, so the AX3 v0.6.0 operating model is active without any
 command:
 
 ```bash
@@ -141,7 +141,7 @@ python3 cli/araya --project /path/to/project relay trace P123
 ## ChatGPT
 
 1. `bash bundle/chatgpt/build.sh`
-2. Import `bundle/chatgpt/dist/ARAYA-AX3-v0.5.0-chatgpt.zip` per
+2. Import `bundle/chatgpt/dist/ARAYA-AX3-v0.6.0-chatgpt.zip` per
    `bundle/chatgpt/README.md`.
 
 ## Verify

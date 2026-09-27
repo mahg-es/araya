@@ -1,7 +1,7 @@
-# K10 — Provenance, Adoption, Packaging, and v0.5.0 Candidate Change Map
+# K10 — Provenance, Adoption, Packaging, and v0.6.0 Change Map
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 
 K10 records provenance and packaging. It cannot override K01 authority or K07 version/adoption authority.
@@ -18,6 +18,7 @@ v0.1.0
 → v0.4.1
 → v0.4.2
 → v0.5.0
+→ v0.6.0
 ```
 
 v0.3.0 was adopted on 2026-08-11.
@@ -28,9 +29,11 @@ v0.4.1 was explicitly approved and adopted by owner authority on 2026-08-31.
 
 v0.4.2 was explicitly approved and adopted by owner authority on 2026-09-02 and is the canonical predecessor to v0.5.0.
 
-v0.5.0 was explicitly approved and adopted by owner authority on 2026-09-20 and is the active canonical governance.
+v0.5.0 was explicitly approved and adopted by owner authority on 2026-09-20 and is the canonical predecessor to v0.6.0.
 
-v0.4.2 and earlier canonical versions are superseded/archival. Historical `1.1.0` / `1.1.1` labels remain provenance only and are not canonical ARAYA versions.
+v0.6.0 was explicitly approved and adopted by owner authority on 2026-09-27 (PE-ARAYA-2609-C-06) and is the active canonical governance.
+
+v0.5.0 and earlier canonical versions are superseded/archival. Historical `1.1.0` / `1.1.1` labels remain provenance only and are not canonical ARAYA versions.
 
 ## 2. v0.4.0 owner-authorized evolution
 
@@ -538,3 +541,49 @@ Adopted bounded evolution:
   minimize unnecessary operational granularity; group compatible work into the largest safe governed transaction and split only for proven authority, dependency, risk, rollback, evidence, containment, or meaningful concurrency needs.
 
 v0.5.0 introduces no K11.
+
+
+## 14. v0.6.0 adoption and change map
+
+Status:
+
+```text
+ADOPTED / ACTIVE CANONICAL
+Baseline Canonical: v0.5.0
+Classification: Revision
+Adoption date: 2026-09-27
+```
+
+Owner authority approved and adopted v0.6.0 on 2026-09-27 (PE-ARAYA-2609-C-06). It preserves the v0.5.0 authority hierarchy, four-stage model, Product Delivery model, publication/release/production boundaries, deterministic routing, exactly 10 Knowledge files, and minimal Operating Kernel.
+
+Adopted evolution, recorded from the artifacts already present in Repository Truth (ADR-0001, ADR-0002):
+
+### K01
+- rule content unchanged: authority hierarchy, Repository Truth precedence, stage model, decision routing, and autogovernance are preserved.
+
+### K02
+- rule content unchanged: Implementation Slice, Execution Group, and Product Increment semantics are preserved and are exercised by the capability foundation's composition.
+
+### K03
+- rule content unchanged: Git publication, merge, release, and production authority boundaries are preserved; the Git operation gates (`git-feature-start`, `git-merge-gate`, `git-feature-pr-gate`, `git-repository-sanity`) are invoked explicitly as deterministic operations rather than through a global shell gate.
+
+### K04
+- the repository-native operational tooling responsibility is realized by the agent-first CLI (`cli/araya`) and the operations catalog; no operational-authority ownership is added.
+
+### K05
+- bundle contract unchanged: the reproducible ChatGPT bundle packages the same canonical core and the installer preserves permanent-installer classification and `UNKNOWN != MISSING`.
+
+### K06
+- anti-orchestration and user-time rules unchanged: no global Pi takeover; ARAYA remains host-scoped and project-scoped, and Daneel remains outside ARAYA.
+
+### K07
+- adopts v0.6.0 as active canonical governance;
+- records v0.5.0 as superseded canonical predecessor.
+
+### K08 / K09
+- rule content unchanged; no new mandatory planning or audit gate is introduced by this adoption.
+
+### K10
+- records v0.6.0 provenance, adoption, packaging identity, and change map.
+
+v0.6.0 introduces no K11.

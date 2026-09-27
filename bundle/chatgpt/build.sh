@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# build.sh — reproducible packaging of the ARAYA AX3 v0.5.0 ChatGPT bundle.
+# build.sh — reproducible packaging of the ARAYA AX3 v0.6.0 ChatGPT bundle.
 #
 #   verify canonical core -> assemble knowledge + instructions -> manifest
 #   -> zip -> validate produced bundle.
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 DIST="$REPO_ROOT/bundle/chatgpt/dist"
-NAME="ARAYA-AX3-v0.5.0-chatgpt"
+NAME="ARAYA-AX3-v0.6.0-chatgpt"
 PKG="$DIST/$NAME"
 ZIP="$DIST/$NAME.zip"
 
@@ -37,8 +37,8 @@ cp -p "$REPO_ROOT/GPT-CONFIGURATION.md" "$PKG/instructions.md"
 
 cat > "$PKG/gpt-manifest.json" <<'EOF'
 {
-  "name": "ARAYA AX3 v0.5.0",
-  "description": "AI Engineer operating model: Repository Truth first, authority/stages/ADR-driven delivery governance (AX3 v0.5.0).",
+  "name": "ARAYA AX3 v0.6.0",
+  "description": "AI Engineer operating model: Repository Truth first, authority/stages/ADR-driven delivery governance (AX3 v0.6.0).",
   "instructions": "instructions.md",
   "knowledge": "knowledge/"
 }

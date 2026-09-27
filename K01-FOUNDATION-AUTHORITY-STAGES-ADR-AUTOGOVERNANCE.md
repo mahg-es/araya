@@ -1,7 +1,7 @@
 # K01 — Foundation: Authority, Repository Truth, Stages, ADRs, and Autogovernance
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 K01 owns the fundamental authority and stage model. Other Knowledge files may specialize it but must not override it.
 

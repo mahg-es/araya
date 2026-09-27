@@ -1,7 +1,7 @@
 # K04 — Engineering Toolkit, Persistence, Runtime Reuse, and Automated UAT
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 K04 owns engineering-tool preferences and persistence selection. Repository Truth and accepted ADRs remain higher authority.
 
