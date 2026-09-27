@@ -149,6 +149,7 @@ python3 cli/araya --project /path/to/project relay trace P123
 ```bash
 sha256sum -c SHA256SUMS.txt
 bash tests/test-canonical-integrity.sh
+bash tests/test-canonical-version-coherence.sh
 bash tests/test-installer.sh
 bash tests/test-pi-adapter.sh
 bash tests/test-chatgpt-bundle.sh

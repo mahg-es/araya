@@ -213,13 +213,15 @@ Historical v0.4.1 remains the canonical predecessor adopted on 2026-08-31 and is
 
 ## 12. v0.5.0 classification
 
+Historical record (pre-adoption candidate state). v0.5.0 was adopted on 2026-09-20 and superseded by v0.6.0 on 2026-09-27; it is not the active canonical governance.
+
 Repository/Governance Owner has approved development of the v0.5.0 architecture and normative deltas. This does not constitute canonical adoption.
 
 ```text
 Proposed Version: v0.5.0
 Classification: Revision
 Baseline Canonical: v0.4.2
-Status: ADOPTED / ACTIVE CANONICAL
+Status: SUPERSEDED / HISTORICAL RECORD
 ```
 
 The candidate preserves the authority hierarchy, stage model, Product Delivery semantics, publication/production authority boundaries, deterministic routing, maximum 10 Knowledge files, and minimal Operating Kernel.
@@ -237,6 +239,8 @@ The candidate materially refines the operating model through:
 - explicit minimization of avoidable human and operational transitions.
 
 Canonical version identity, adoption date, supersession, and active status remain unchanged until explicit Repository/Governance Owner adoption of the completed candidate.
+
+That adoption happened on 2026-09-20 (see "## 12. v0.5.0 adoption" below); v0.5.0 is today a superseded historical version, not the active canonical governance.
 
 
 ## 12. v0.5.0 adoption
