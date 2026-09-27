@@ -362,10 +362,12 @@ v0.4.2 supersedes v0.4.1 as active canonical governance. Prior canonical version
 
 ## 12. v0.5.0 provenance and change map
 
+Historical record. v0.5.0 was adopted on 2026-09-20 and superseded by v0.6.0 on 2026-09-27.
+
 Status:
 
 ```text
-ADOPTED / ACTIVE CANONICAL
+SUPERSEDED / HISTORICAL RECORD
 Baseline Canonical: v0.4.2
 Proposed Classification: Revision
 ```
@@ -461,6 +463,8 @@ This candidate delta is not adopted into L0 until applied to and validated again
 
 ## 13. v0.5.0 validation state
 
+Historical record: the gate list below was required before v0.5.0 adoption on 2026-09-20. Current state: v0.6.0 = ACTIVE CANONICAL.
+
 Required before canonical adoption:
 
 - cross-file contradiction audit;
@@ -476,8 +480,11 @@ Required before canonical adoption:
 Until those gates pass and owner adoption is explicit:
 
 ```text
+HISTORICAL (pre-adoption state):
 v0.4.2 = ACTIVE CANONICAL
 v0.5.0 = CANDIDATE ONLY
+CURRENT:
+v0.6.0 = ACTIVE CANONICAL
 ```
 
 
@@ -548,6 +555,7 @@ v0.5.0 introduces no K11.
 Status:
 
 ```text
+Canonical Version: v0.6.0
 ADOPTED / ACTIVE CANONICAL
 Baseline Canonical: v0.5.0
 Classification: Revision
@@ -585,5 +593,8 @@ Adopted evolution, recorded from the artifacts already present in Repository Tru
 
 ### K10
 - records v0.6.0 provenance, adoption, packaging identity, and change map.
+
+### Repository tooling (K04)
+- `tests/test-canonical-version-coherence.sh` enforces the version-coherence invariant of this section: exactly one canonical audit for the active version, active version and baseline in every K header, no non-active version labelled `ACTIVE CANONICAL`, no unmarked stale status block, and no non-active AX3 identity in the active product files. The gate reads the active identity from `ADOPTION-RECORD.md` rather than hardcoding it.
 
 v0.6.0 introduces no K11.

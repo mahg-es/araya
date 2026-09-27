@@ -24,7 +24,7 @@ not moved, deleted, rewritten, or repointed by this adoption.
 - K10 active v0.6.0: PASS
 - Exactly 10 K files: PASS
 - Kernel present: PASS
-- Residual candidate-state defects: NONE
+- Residual candidate-state defects: NONE (superseded-version status blocks in K07/K10 are explicitly marked SUPERSEDED / HISTORICAL; enforced by `tests/test-canonical-version-coherence.sh`)
 
 ## Preserved invariants
 
