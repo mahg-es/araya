@@ -1,199 +1,134 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-PROGRAM="araya-install.sh"
-SUPPORTED_FORMAT="ARAYA_BUNDLE"
-SUPPORTED_FORMAT_VERSION="1.0.0"
+# araya-install.sh — repository installer for the ARAYA AX3 v0.5.0 core.
+#
+#   verify input
+#   -> install ARAYA core
+#   -> optionally install a requested host adapter
+#   -> verify installation
+#   -> report exact result
+#
+# Default installation is core-only and NEVER takes over global Pi. The Pi
+# adapter is opt-in and project-scoped (it only touches <target>/.pi/).
 
-die() {
-  printf 'ERROR: %s\n' "$*" >&2
-  exit 1
-}
+SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-info() {
-  printf '%s\n' "$*"
-}
+CANONICAL_FILES=(
+  "GPT-CONFIGURATION.md"
+  "K01-FOUNDATION-AUTHORITY-STAGES-ADR-AUTOGOVERNANCE.md"
+  "K02-PRODUCT-DELIVERY-SLICES-DAG-TRACEABILITY.md"
+  "K03-ASYNC-GIT-PUBLICATION-RELEASE.md"
+  "K04-ENGINEERING-TOOLKIT-PERSISTENCE-UAT.md"
+  "K05-INSTALL-BUNDLE-PROCEDURE-PREFLIGHT.md"
+  "K06-AI-ORCHESTRATION-PRODUCT-MODEL-USER-TIME.md"
+  "K07-RESPONSES-SCOPE-VERSIONING-CHANGE-CONTROL.md"
+  "K08-TEMPLATES-ADR-IMPLEMENTATION-PLAN.md"
+  "K09-TEMPLATES-AUDIT-UAT-TRACEABILITY.md"
+  "K10-PROVENANCE-ADOPTION-PACKAGING.md"
+  "ADOPTION-RECORD.md"
+  "ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md"
+  "SHA256SUMS.txt"
+)
+
+die() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
+info() { printf '%s\n' "$*"; }
 
 usage() {
   cat <<'EOF'
 Usage:
-  araya-install.sh <bundle.zip> <expected-sha256>
+  araya-install.sh [OPTIONS]
+
+Installs the ARAYA AX3 v0.5.0 operating-model core, and optionally a host
+adapter. Default installation is core-only and NEVER touches global Pi.
+
+Options:
+  --target DIR       Install the core into DIR (default: current directory).
+  --adapter pi       Opt-in: install the project-scoped Pi adapter into
+                     DIR/.pi/ (adds the explicit /araya command for DIR only).
+  --adapter chatgpt  Opt-in: build the reproducible ChatGPT bundle.
+  -h, --help         Show this help.
 
 Example:
-  bash ~/bin/araya-install.sh "$HOME/Downloads/BUNDLE.zip" "<sha256>"
-
-Behavior:
-  - validates the ZIP SHA-256 before extraction
-  - extracts to temporary storage
-  - validates ARAYA-BUNDLE.env
-  - validates MANIFEST.sha256
-  - validates APPLY.sh syntax
-  - discovers the actual Git repository root from the current directory
-  - executes APPLY.sh from that repository root
-  - cleans temporary extraction on success or failure
-
-The installer does not push, merge, alter PR state, or infer publication authority.
-Those effects may only occur if an individual governed bundle explicitly and validly
-contains such an authorized operation.
+  bash araya-install.sh --target /path/to/project --adapter pi
 EOF
 }
 
-[[ $# -eq 2 ]] || { usage >&2; exit 64; }
+TARGET=""
+ADAPTERS=()
 
-BUNDLE_ZIP="$1"
-EXPECTED_SHA256="$2"
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --target)
+      [[ $# -ge 2 ]] || die "--target requires a value"
+      TARGET="$2"; shift 2
+      ;;
+    --adapter)
+      [[ $# -ge 2 ]] || die "--adapter requires a value"
+      case "$2" in
+        pi|chatgpt) ADAPTERS+=("$2") ;;
+        *) die "Unsupported adapter: $2" ;;
+      esac
+      shift 2
+      ;;
+    -h|--help) usage; exit 0 ;;
+    *) die "Unknown option: $1" ;;
+  esac
+done
 
-[[ -f "$BUNDLE_ZIP" ]] || die "Bundle not found: $BUNDLE_ZIP"
-[[ "$EXPECTED_SHA256" =~ ^[0-9a-fA-F]{64}$ ]] || die "Expected SHA-256 must contain exactly 64 hexadecimal characters."
+[[ -n "$TARGET" ]] || TARGET="$PWD"
 
-for cmd in bash git sha256sum mktemp unzip find awk sed; do
+for cmd in bash sha256sum cp mkdir; do
   command -v "$cmd" >/dev/null 2>&1 || die "Required command not found: $cmd"
 done
 
-# Runtime validation.
-# Canonical ARAYA bundles were originally designed for Git Bash/MSYS.
-# This installer also accepts native Linux Bash because the same POSIX shell,
-# hashing, unzip and Git invariants can be proven directly there.
-case "$(uname -s 2>/dev/null || true)" in
-  MINGW*|MSYS*)
-    RUNTIME_KIND="git-bash-msys"
-    ;;
-  Linux*)
-    RUNTIME_KIND="linux-bash"
-    ;;
-  *)
-    die "Unsupported shell/runtime. Use Git Bash/MSYS or native Linux Bash."
-    ;;
-esac
+# ── 1. verify input ────────────────────────────────────────────────────────
+info "ARAYA installer: verifying input..."
+for f in "${CANONICAL_FILES[@]}"; do
+  [[ -f "$SELF_DIR/$f" ]] || die "Canonical file missing from source: $f"
+done
+( cd "$SELF_DIR" && sha256sum -c SHA256SUMS.txt ) \
+  || die "Canonical core integrity check failed (input)."
 
-ACTUAL_SHA256="$(sha256sum "$BUNDLE_ZIP" | awk '{print $1}')"
-EXPECTED_SHA256="$(printf '%s' "$EXPECTED_SHA256" | tr 'A-F' 'a-f')"
+# ── 2. install core ────────────────────────────────────────────────────────
+mkdir -p "$TARGET"
+for f in "${CANONICAL_FILES[@]}"; do
+  cp -p "$SELF_DIR/$f" "$TARGET/$f"
+done
+info "ARAYA core installed to: $TARGET"
 
-[[ "$ACTUAL_SHA256" == "$EXPECTED_SHA256" ]] || {
-  die "External SHA-256 mismatch.
-Expected: $EXPECTED_SHA256
-Actual:   $ACTUAL_SHA256"
-}
-
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
-
-TMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/araya-install.XXXXXXXX")"
-cleanup() {
-  rm -rf "$TMP_ROOT"
-}
-trap cleanup EXIT INT TERM
-
-unzip -q "$BUNDLE_ZIP" -d "$TMP_ROOT"
-
-# Accept either files directly at ZIP root or one wrapping directory.
-if [[ -f "$TMP_ROOT/ARAYA-BUNDLE.env" ]]; then
-  BUNDLE_ROOT="$TMP_ROOT"
-else
-  mapfile -t ENV_FILES < <(find "$TMP_ROOT" -mindepth 2 -maxdepth 2 -type f -name 'ARAYA-BUNDLE.env' -print)
-  [[ ${#ENV_FILES[@]} -eq 1 ]] || die "Expected exactly one ARAYA-BUNDLE.env at ZIP root or one top-level bundle directory."
-  BUNDLE_ROOT="$(dirname "${ENV_FILES[0]}")"
-fi
-
-for required in ARAYA-BUNDLE.env MANIFEST.sha256 APPLY.sh; do
-  [[ -f "$BUNDLE_ROOT/$required" ]] || die "Required bundle file missing: $required"
+# ── 3. optional adapters ───────────────────────────────────────────────────
+for adapter in "${ADAPTERS[@]}"; do
+  case "$adapter" in
+    pi)
+      # Project-scoped: only touches <target>/.pi/, never ~/.pi.
+      [[ -f "$SELF_DIR/adapters/pi/prompts/araya.md" ]] \
+        || die "Pi adapter source missing: adapters/pi/prompts/araya.md"
+      mkdir -p "$TARGET/.pi/prompts"
+      cp -p "$SELF_DIR/adapters/pi/prompts/araya.md" "$TARGET/.pi/prompts/araya.md"
+      info "Pi adapter installed (project-scoped): $TARGET/.pi/prompts/araya.md"
+      info "  -> /araya is available when Pi runs in: $TARGET"
+      info "  -> global Pi (~/.pi) was NOT modified."
+      ;;
+    chatgpt)
+      ( cd "$SELF_DIR" && bash bundle/chatgpt/build.sh )
+      ;;
+  esac
 done
 
-# Reject unsafe paths in the extracted bundle.
-while IFS= read -r rel; do
-  [[ "$rel" != /* ]] || die "Unsafe absolute path in bundle: $rel"
-  [[ ! "$rel" =~ ^[A-Za-z]: ]] || die "Unsafe Windows drive path in bundle: $rel"
-  case "/$rel/" in
-    */../*) die "Unsafe parent traversal path in bundle: $rel" ;;
-  esac
-done < <(cd "$BUNDLE_ROOT" && find . -mindepth 1 -printf '%P\n')
+# ── 4. verify installation ─────────────────────────────────────────────────
+info "ARAYA installer: verifying installation..."
+for f in "${CANONICAL_FILES[@]}"; do
+  [[ -f "$TARGET/$f" ]] || die "Canonical file missing after install: $f"
+done
+( cd "$TARGET" && sha256sum -c SHA256SUMS.txt ) \
+  || die "Canonical core integrity check failed (installed)."
 
-# Parse bundle metadata without executing it.
-FORMAT=""
-FORMAT_VERSION=""
-BUNDLE_ID=""
-ENTRYPOINT=""
-TARGET_MODE=""
-while IFS='=' read -r key value; do
-  case "$key" in
-    FORMAT) FORMAT="$value" ;;
-    FORMAT_VERSION) FORMAT_VERSION="$value" ;;
-    BUNDLE_ID) BUNDLE_ID="$value" ;;
-    ENTRYPOINT) ENTRYPOINT="$value" ;;
-    TARGET_MODE) TARGET_MODE="$value" ;;
-  esac
-done < "$BUNDLE_ROOT/ARAYA-BUNDLE.env"
-
-[[ "$FORMAT" == "$SUPPORTED_FORMAT" ]] || die "Unsupported FORMAT: $FORMAT"
-[[ "$FORMAT_VERSION" == "$SUPPORTED_FORMAT_VERSION" ]] || die "Unsupported FORMAT_VERSION: $FORMAT_VERSION"
-[[ -n "$BUNDLE_ID" ]] || die "BUNDLE_ID is missing."
-[[ "$ENTRYPOINT" == "APPLY.sh" ]] || die "Unsupported ENTRYPOINT: $ENTRYPOINT"
-
-case "$TARGET_MODE" in
-  "")
-    [[ -n "$REPO_ROOT" ]] || die "Current directory is not inside a Git repository. cd into the target repository first."
-    EXEC_ROOT="$REPO_ROOT"
-    ;;
-  BOOTSTRAP)
-    [[ -z "$REPO_ROOT" ]] || die "TARGET_MODE=BOOTSTRAP must be run outside an existing Git repository."
-    EXEC_ROOT="$PWD"
-    ;;
-  *)
-    die "Unsupported TARGET_MODE: $TARGET_MODE"
-    ;;
-esac
-
-# MANIFEST must not contain unsafe paths and must cover all governed files
-# except MANIFEST.sha256 itself.
-while read -r hash rel; do
-  [[ "$hash" =~ ^[0-9a-fA-F]{64}$ ]] || die "Malformed MANIFEST.sha256 entry: $hash $rel"
-  [[ -n "$rel" ]] || die "Empty path in MANIFEST.sha256"
-  [[ "$rel" != /* ]] || die "Unsafe absolute manifest path: $rel"
-  [[ ! "$rel" =~ ^[A-Za-z]: ]] || die "Unsafe drive manifest path: $rel"
-  case "/$rel/" in
-    */../*) die "Unsafe parent traversal in manifest: $rel" ;;
-  esac
-  [[ -f "$BUNDLE_ROOT/$rel" ]] || die "Manifest references missing file: $rel"
-done < "$BUNDLE_ROOT/MANIFEST.sha256"
-
-(
-  cd "$BUNDLE_ROOT"
-  sha256sum -c MANIFEST.sha256
-) || die "Internal manifest verification failed."
-
-mapfile -t ACTUAL_FILES < <(
-  cd "$BUNDLE_ROOT"
-  find . -type f ! -name MANIFEST.sha256 -printf '%P\n' | LC_ALL=C sort
-)
-mapfile -t MANIFEST_FILES < <(
-  awk '{ $1=""; sub(/^  ?/, ""); print }' "$BUNDLE_ROOT/MANIFEST.sha256" | LC_ALL=C sort
-)
-
-[[ "${ACTUAL_FILES[*]}" == "${MANIFEST_FILES[*]}" ]] || {
-  printf 'Actual governed files:\n' >&2
-  printf '  %s\n' "${ACTUAL_FILES[@]}" >&2
-  printf 'Manifest governed files:\n' >&2
-  printf '  %s\n' "${MANIFEST_FILES[@]}" >&2
-  die "Bundle contains undeclared or missing governed files."
-}
-
-bash -n "$BUNDLE_ROOT/APPLY.sh" || die "APPLY.sh shell syntax validation failed."
-
-info "ARAYA installer preflight: PASS"
-info "Runtime: $RUNTIME_KIND"
-info "Bundle: $BUNDLE_ID"
-info "External SHA-256: PASS"
-info "Internal manifest: PASS"
-info "Entrypoint syntax: PASS"
-info "Repository root: ${REPO_ROOT:-BOOTSTRAP-NONE}"
-info "Execution root: $EXEC_ROOT"
-info "Executing governed bundle..."
-
-if (
-  cd "$EXEC_ROOT"
-  bash "$BUNDLE_ROOT/APPLY.sh"
-); then
-  info "ARAYA installer result: PASS"
+# ── 5. report exact result ─────────────────────────────────────────────────
+info "ARAYA installer result: PASS"
+info "CORE=$TARGET"
+if [[ ${#ADAPTERS[@]} -gt 0 ]]; then
+  info "ADAPTERS=${ADAPTERS[*]}"
 else
-  RC=$?
-  die "Bundle entrypoint failed with exit code $RC"
+  info "ADAPTERS=none (default: no Pi takeover)"
 fi

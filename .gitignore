@@ -1,18 +1,16 @@
+# Dependencies
 node_modules/
+
+# Build / generated output
+dist/
+bundle/chatgpt/dist/
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+
+# Local / OS
+.DS_Store
 *.log
 .env
-.DS_Store
-.araya/evidence/
-.araya/telemetry/
-.araya/approvals/
-.araya/memory/
-.araya/worktrees/
-runtime/
-*.pyc
-__pycache__/
-dist/
-.venv/
-output.xml
-log.html
-report.html
-.araya/operating-model/state.json
