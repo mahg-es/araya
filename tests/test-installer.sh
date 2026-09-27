@@ -109,6 +109,25 @@ grep -q 'ARAYA installer result: PASS' "$TMP/core.log"
 python3 "$TARGET/cli/araya" --json status >/dev/null \
   || { echo "FAIL: installed CLI does not run"; exit 1; }
 
+# 1c. Upgrade idempotency — re-running the installer over an existing target
+#     must update in place: never nest duplicate directories (cli/cli, ...) and
+#     must restore a stale/corrupted foundation file.
+bash araya-install.sh --target "$TARGET" > "$TMP/upgrade.log" 2>&1
+[[ $? -eq 0 ]] || { echo "FAIL: upgrade re-run failed"; exit 1; }
+grep -q 'ARAYA installer result: PASS' "$TMP/upgrade.log"
+for d in cli operations skills capabilities communications runtime delegation; do
+  [[ ! -e "$TARGET/$d/$d" ]] \
+    || { echo "FAIL: upgrade nested duplicate directory: $d/$d"; exit 1; }
+done
+printf '{"stale":true}\n' > "$TARGET/skills/index.json"
+bash araya-install.sh --target "$TARGET" > "$TMP/upgrade2.log" 2>&1
+python3 - "$TARGET/skills/index.json" <<'PY' \
+  || { echo "FAIL: upgrade did not restore stale foundation file in place"; exit 1; }
+import json, sys
+d = json.load(open(sys.argv[1]))
+assert "skills" in d, d
+PY
+
 # 2. No global Pi change — no ARAYA artefacts dropped in ~/.pi.
 check_no_global_araya
 
@@ -142,6 +161,7 @@ fi
 
 echo "INSTALLER_TEST=PASS"
 echo "CORE_INSTALL=PASS"
+echo "UPGRADE_IDEMPOTENT=PASS"
 echo "PI_ADAPTER_PROJECT_SCOPED=PASS"
 echo "NO_GLOBAL_PI_TAKEOVER=PASS"
 echo "DANEEL_OWNED_PATHS_PROTECTED=PASS"

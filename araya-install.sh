@@ -148,7 +148,11 @@ for f in "${CANONICAL_FILES[@]}"; do
   cp -p "$SELF_DIR/$f" "$TARGET/$f"
 done
 for d in "${FOUNDATION_DIRS[@]}"; do
-  cp -R "$SELF_DIR/$d" "$TARGET/$d"
+  # Merge into any existing directory (idempotent upgrade). `cp -R src dst`
+  # would nest `dst/src` when `dst` already exists; copying the *contents*
+  # (`src/.` -> `dst/`) updates in place instead.
+  mkdir -p "$TARGET/$d"
+  cp -R "$SELF_DIR/$d/." "$TARGET/$d/"
 done
 info "ARAYA core installed to: $TARGET"
 
