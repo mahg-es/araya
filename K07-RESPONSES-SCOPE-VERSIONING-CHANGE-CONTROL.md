@@ -1,7 +1,7 @@
 # K07 — Responses, Scope, Dispositions, Versioning, Change Control, and Adoption
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 
 K07 owns response contracts, scope control, final dispositions, and ARAYA version/adoption authority.
@@ -130,9 +130,10 @@ v0.1.0
 → v0.4.1
 → v0.4.2
 → v0.5.0
+→ v0.6.0
 ```
 
-v0.5.0 is the active canonical governance. v0.4.2 and earlier canonical versions are superseded/archival.
+v0.6.0 is the active canonical governance. v0.5.0 and earlier canonical versions are superseded/archival.
 
 Historical `1.1.0` / `1.1.1` labels are provenance only, not active canonical versions.
 
@@ -262,3 +263,28 @@ The adopted evolution adds:
 v0.5.0 supersedes v0.4.2 as active canonical governance.
 
 Historical v0.4.2 remains the canonical predecessor adopted on 2026-09-02 and is retained for provenance only.
+
+
+## 13. v0.6.0 adoption
+
+Repository/Governance Owner authority explicitly approved and adopted v0.6.0 on 2026-09-27 (PE-ARAYA-2609-C-06).
+
+v0.6.0 is a Revision preserving the v0.5.0 authority hierarchy, four-stage model, deterministic decision routing, Product Delivery model, publication/release/production authority boundaries, exactly-10-Knowledge-file packaging, and minimal Operating Kernel.
+
+The adopted evolution records, as canonical, the stable product line built inside v0.5.0 (ADR-0001, ADR-0002):
+
+- agent-first capability foundation: skills with progressive disclosure, deterministic operations, and capabilities mapping intent to skills/operations;
+- delegation as a capability resolver plus ephemeral specialist factory, not a sovereign runtime or orchestration engine;
+- native subagent execution with an ephemeral worker trace;
+- PostOffice as messaging and trace only; PonyExpress as the Professor's channel only;
+- Relay recovered as L07 only: handoff, correlation, delivery, acknowledgement, trace;
+- Git operation gates as explicitly-invoked deterministic operations, with no global shell gate;
+- repository installer with idempotent in-place upgrade and an opt-in, project-scoped Pi adapter;
+- resolver precision and operation safety;
+- product documentation sufficient for first use without this history.
+
+The legacy Git tag `v0.6.0` belongs to a different historical lineage and is not an ARAYA canonical version identity.
+
+v0.6.0 supersedes v0.5.0 as active canonical governance.
+
+Historical v0.5.0 remains the canonical predecessor adopted on 2026-09-20 and is retained for provenance only.

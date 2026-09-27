@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# araya-install.sh — repository installer for the ARAYA AX3 v0.5.0 core.
+# araya-install.sh — repository installer for the ARAYA AX3 v0.6.0 core.
 #
 #   verify input
 #   -> install ARAYA core + capability foundation
@@ -27,7 +27,7 @@ CANONICAL_FILES=(
   "K09-TEMPLATES-AUDIT-UAT-TRACEABILITY.md"
   "K10-PROVENANCE-ADOPTION-PACKAGING.md"
   "ADOPTION-RECORD.md"
-  "ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md"
+  "ARAYA-AX3-v0.6.0-CANONICAL-AUDIT.md"
   "SHA256SUMS.txt"
 )
 
@@ -52,7 +52,7 @@ usage() {
 Usage:
   araya-install.sh [OPTIONS]
 
-Installs the ARAYA AX3 v0.5.0 operating-model core, and optionally a host
+Installs the ARAYA AX3 v0.6.0 operating-model core, and optionally a host
 adapter. Default installation is core-only and NEVER touches global Pi.
 
 Options:

@@ -1,4 +1,4 @@
-# ARAYA — AX3 v0.5.0
+# ARAYA — AX3 v0.6.0
 
 ## What is ARAYA?
 
@@ -38,7 +38,7 @@ and never owns or configures it.
 
 ## Current state
 
-- **Active canonical:** AX3 v0.5.0 (adopted 2026-09-20).
+- **Active canonical:** AX3 v0.6.0 (adopted 2026-09-27).
 - **Status:** clean core + capability foundation installed; Pi adapter,
   ChatGPT bundle, and installer working.
 - The legacy ARAYA runtime (global Pi hooks, orchestration engines, permanent
@@ -53,7 +53,7 @@ and never owns or configures it.
 2. Repository installer (`araya-install.sh`): core + capability foundation by
    default, opt-in adapters, never touches global `~/.pi`.
 3. Automatic ARAYA project context: when Pi runs inside this repository, it
-   loads `AGENTS.md` (AX3 v0.5.0) automatically — no command needed.
+   loads `AGENTS.md` (AX3 v0.6.0) automatically — no command needed.
 4. Explicit, project-scoped Pi adapter (`/araya <task>` in a project other
    than this repository).
 5. Reproducible ChatGPT bundle (`bundle/chatgpt/build.sh`).
@@ -209,7 +209,7 @@ pi
 ```
 
 Pi automatically loads `AGENTS.md`, so the active agent is **Daneel plus this
-repository's ARAYA AX3 v0.5.0 operating context**. You do **not** need to run
+repository's ARAYA AX3 v0.6.0 operating context**. You do **not** need to run
 `/araya` here.
 
 The `/araya` command is only for intentionally bringing ARAYA context into a
@@ -226,7 +226,7 @@ projects.
 
 ## Use with Pi
 
-- Inside this repository, run `pi` — the ARAYA AX3 v0.5.0 context loads
+- Inside this repository, run `pi` — the ARAYA AX3 v0.6.0 context loads
   automatically (see "Automatic ARAYA project context").
 - In another project, install the project-scoped adapter (`--adapter pi`) and
   run `/araya <task>` to open an explicit ARAYA session there.
@@ -256,7 +256,7 @@ Exit codes: `0` success, `1` operation failure, `2` usage error. See
 bash bundle/chatgpt/build.sh
 ```
 
-This produces `bundle/chatgpt/dist/ARAYA-AX3-v0.5.0-chatgpt.zip` (name,
+This produces `bundle/chatgpt/dist/ARAYA-AX3-v0.6.0-chatgpt.zip` (name,
 description, instructions, and the 10 Knowledge files) for import into a custom
 ChatGPT. See `docs/usage/`. The build validates the README before packaging, so
 a bundle can never be produced against a stale README.
@@ -267,7 +267,7 @@ a bundle can never be produced against a stale README.
 araya/
 ├── GPT-CONFIGURATION.md            operating kernel (always-on)
 ├── K01–K10                         canonical Knowledge (deep policy)
-├── ADOPTION-RECORD.md, ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md, SHA256SUMS.txt
+├── ADOPTION-RECORD.md, ARAYA-AX3-v0.6.0-CANONICAL-AUDIT.md, SHA256SUMS.txt
 │                                   adoption + integrity evidence
 ├── AGENTS.md                       Pi project context (auto-loaded in this repo)
 ├── araya-install.sh                installer (core + foundation + opt-in adapters)
@@ -292,7 +292,7 @@ araya/
 
 The canonical core is the 13 byte-identical files at the repository root:
 `GPT-CONFIGURATION.md`, `K01`–`K10`, `ADOPTION-RECORD.md`,
-`ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md`, and `SHA256SUMS.txt`. Verify with:
+`ARAYA-AX3-v0.6.0-CANONICAL-AUDIT.md`, and `SHA256SUMS.txt`. Verify with:
 
 ```bash
 sha256sum -c SHA256SUMS.txt

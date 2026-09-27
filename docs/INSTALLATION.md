@@ -38,7 +38,7 @@ copying, then reports `ARAYA installer result: PASS`.
 Into `<target>/`:
 
 - the 13 canonical core files (`GPT-CONFIGURATION.md`, `K01`–`K10`,
-  `ADOPTION-RECORD.md`, `ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md`, `SHA256SUMS.txt`);
+  `ADOPTION-RECORD.md`, `ARAYA-AX3-v0.6.0-CANONICAL-AUDIT.md`, `SHA256SUMS.txt`);
 - the capability foundation: `cli/`, `operations/`, `skills/`, `capabilities/`,
   `communications/`, `runtime/`, `delegation/`.
 
@@ -93,7 +93,7 @@ The installer has no uninstall command; it only ever created files under
 cd /path/to/project
 rm -rf cli operations skills capabilities communications runtime delegation
 rm -f GPT-CONFIGURATION.md K0[1-9]-*.md K10-*.md \
-      ADOPTION-RECORD.md ARAYA-AX3-v0.5.0-CANONICAL-AUDIT.md SHA256SUMS.txt
+      ADOPTION-RECORD.md ARAYA-AX3-v0.6.0-CANONICAL-AUDIT.md SHA256SUMS.txt
 # 2. If the Pi adapter was installed into this project:
 rm -f .pi/prompts/araya.md
 ```
@@ -106,6 +106,6 @@ rm -f .pi/prompts/araya.md
 bash bundle/chatgpt/build.sh
 ```
 
-Produces `bundle/chatgpt/dist/ARAYA-AX3-v0.5.0-chatgpt.zip`. Import it into a
+Produces `bundle/chatgpt/dist/ARAYA-AX3-v0.6.0-chatgpt.zip`. Import it into a
 custom GPT following `bundle/chatgpt/README.md` (kernel as Instructions, exactly
 the 10 Knowledge files).

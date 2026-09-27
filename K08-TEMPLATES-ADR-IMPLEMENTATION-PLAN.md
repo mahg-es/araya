@@ -1,7 +1,7 @@
 # K08 — Templates: ADR and Implementation Plan
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 Templates are forms, not authority. Populate them from Repository Truth and approved authority. Never invent missing facts to fill a field.
 

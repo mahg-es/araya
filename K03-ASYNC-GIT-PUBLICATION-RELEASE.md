@@ -1,7 +1,7 @@
 # K03 — Async HOLD, Git, Publication, Release, and Production
 
-**ARAYA AX3 Candidate Governance Version:** 0.5.0
-**Baseline Canonical Governance:** 0.4.2
+**ARAYA AX3 Candidate Governance Version:** 0.6.0
+**Baseline Canonical Governance:** 0.5.0
 **Status:** ADOPTED / ACTIVE CANONICAL
 K03 owns Git safety, asynchronous checks, publication boundaries, merge, release, and production authority.
 
