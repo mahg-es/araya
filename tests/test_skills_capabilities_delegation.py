@@ -136,13 +136,16 @@ class Wave2SkillsTest(unittest.TestCase):
         self.assertEqual(self.caps.get("design-api")["skills"], ["api-design"])
 
     def test_wave2_multi_skill_composition(self):
-        # A design-and-document task must select both Wave 2 skills (and the
-        # existing adr-write), composing into one ephemeral worker.
+        # A design-and-document task selects exactly the skills declared by the
+        # selected capabilities: design-api -> api-design and
+        # document-architecture -> architecture-diagram. Per PE-ARAYA-2609-C-03
+        # the resolver no longer accumulates unrelated skills (e.g. adr-write)
+        # merely because a shared word matched.
         r = self.delg.resolve(
             "design the API and architecture diagrams for a user management service")
         self.assertIn("architecture-diagram", r["skills"])
         self.assertIn("api-design", r["skills"])
-        self.assertIn("adr-write", r["skills"])
+        self.assertNotIn("adr-write", r["skills"])
         r2 = self.delg.compose_ephemeral_agent(
             "design the API and architecture for a user management service")
         self.assertFalse(r2["persistent"])

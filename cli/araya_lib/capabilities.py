@@ -59,12 +59,7 @@ class Capabilities:
             return {"found": True, "capability": q, "via": "exact-id"}
         matches_ = []
         for cap in self.list():
-            hay = " ".join([
-                cap.get("id", ""),
-                cap.get("description", ""),
-                *cap.get("skills", []),
-                *cap.get("operations", []),
-            ])
+            hay = " ".join(cap.get("keywords", []))
             if matches(hay, query):
                 matches_.append(cap.get("id"))
         if matches_:
