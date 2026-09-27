@@ -2,12 +2,12 @@
 set -Eeuo pipefail
 
 # vertical-demo.sh — real vertical demonstration of the capability foundation,
-# including REAL native Pi subagent worker execution.
+# including REAL native Pi subagent worker execution AND multi-skill composition.
 #
 #   Professor-originated work (simulated PonyExpress input)
 #   → Daneel / capability resolver
-#   → selected skill(s)
-#   → deterministic operation where applicable
+#   → 2+ selected skills (test-authoring + tdd-execute + git-publication)
+#   → deterministic operations (test.execute + git.repository-sanity)
 #   → real ephemeral Pi subagent worker (native subagent mechanism)
 #   → worker result
 #   → PostOffice trace
@@ -28,16 +28,16 @@ PROJECT="$(mktemp -d)"
 RUN="$REPO_ROOT/demo/.run"
 mkdir -p "$RUN"
 CORRELATION="P123"
+TASK="author and run tests and safely publish a fix to integration"
 
 phase1() {
   echo "== 1. Professor instruction (PonyExpress) =="
   $ARAYA --json --project "$PROJECT" ponyexpress send \
-    --recipient daneel --subject "verify the araya repository is sane" \
-    --correlation "$CORRELATION"
+    --recipient daneel --subject "$TASK" --correlation "$CORRELATION"
 
   echo "== 2. Capability resolution + worker handoff (PostOffice delegation) =="
   $ARAYA --json --project "$PROJECT" delegate run --correlation "$CORRELATION" \
-    "verify the araya repository is sane" > "$RUN/worker-request.json"
+    "$TASK" > "$RUN/worker-request.json"
 
   WORKER="$(python3 - "$RUN/worker-request.json" <<'PY'
 import json, sys
@@ -50,7 +50,9 @@ print(json.load(open(sys.argv[1]))["handoff_message_id"])
 PY
 )"
 
-  echo "== 3. Deterministic operation (real, read-only) =="
+  echo "== 3. Deterministic operations (real) =="
+  $ARAYA --json operation execute test.execute \
+    command="bash tests/test-canonical-integrity.sh" > "$RUN/test-result.json"
   $ARAYA --json git sanity --repo "$REPO_ROOT" > "$RUN/op-result.json"
 
   echo "== 4. Worker prompt (for native subagent invocation) =="
@@ -97,28 +99,33 @@ phase2() {
   $ARAYA --json --project "$PROJECT" postoffice trace "$CORRELATION"
 
   echo "== 7. Final structured result =="
-  python3 - "$RUN/op-result.json" "$RUN/delegate-result.json" "$RUN/worker-request.json" "$RESULT_BODY" <<'PY'
+  python3 - "$RUN/op-result.json" "$RUN/test-result.json" "$RUN/delegate-result.json" "$RUN/worker-request.json" "$RESULT_BODY" <<'PY'
 import json, sys
 op = json.load(open(sys.argv[1]))
-dres = json.load(open(sys.argv[2]))
-req = json.load(open(sys.argv[3]))
-body = sys.argv[4].strip()
+test = json.load(open(sys.argv[2]))
+dres = json.load(open(sys.argv[3]))
+req = json.load(open(sys.argv[4]))
+body = sys.argv[5].strip()
 print(json.dumps({
     "demo": "vertical",
     "correlation_id": req["correlation_id"],
     "instruction_origin": "ponyexpress",
     "capabilities": req["capabilities"],
     "skills": req["skills"],
+    "skill_count": len(req["skills"]),
     "operations": req["operations"],
-    "deterministic_operation": {
-        "id": op["operation_id"],
-        "status": op["status"],
-        "checks_passed": sum(1 for c in op["checks"] if c["passed"]),
-        "checks_total": len(op["checks"]),
-    },
+    "deterministic_operations": [
+        {"id": op["operation_id"], "status": op["status"],
+         "checks_passed": sum(1 for c in op["checks"] if c["passed"]),
+         "checks_total": len(op["checks"])},
+        {"id": test["operation_id"], "status": test["status"],
+         "checks_passed": sum(1 for c in test["checks"] if c["passed"]),
+         "checks_total": len(test["checks"])},
+    ],
     "ephemeral_worker": req["worker_name"],
     "display_name_has_no_meaning": req["display_name_has_no_meaning"],
     "native_subagent_executed": True,
+    "multi_skill_composition": len(req["skills"]) >= 2,
     "worker_result": body,
     "postoffice_trace_messages": len(dres["trace"]),
 }, indent=2, sort_keys=True))

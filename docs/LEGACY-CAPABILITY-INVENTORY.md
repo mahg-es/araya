@@ -1,5 +1,10 @@
 # Legacy capability inventory
 
+> **Superseded for the skills corpus.** The full per-skill disposition now lives
+> in `docs/legacy-skills-review.md` (human) + `docs/legacy-skills-review.json`
+> (machine-readable). This document is kept for the non-skill capability groups
+> (operations, CLI, relay, runtime) and is superseded for skills.
+
 The legacy ARAYA runtime was archived (see the `archive/araya-legacy-*` Git
 branches). This inventory lists its capability groups and their current
 disposition. Nothing is reintroduced automatically — each capability returns

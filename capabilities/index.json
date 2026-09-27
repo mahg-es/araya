@@ -12,7 +12,19 @@
       "id": "execute-tests",
       "description": "Execute a test suite and report red/green results.",
       "skills": ["tdd-execute"],
-      "operations": []
+      "operations": ["test.execute"]
+    },
+    {
+      "id": "author-tests",
+      "description": "Author unit/integration/E2E/BDD tests from requirements and specifications.",
+      "skills": ["test-authoring"],
+      "operations": ["test.execute"]
+    },
+    {
+      "id": "review-security",
+      "description": "Review code, architecture, dependencies, and secrets for security.",
+      "skills": ["security-review"],
+      "operations": ["git.feature-pr-gate"]
     },
     {
       "id": "publish-git",

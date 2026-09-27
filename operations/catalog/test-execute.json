@@ -1,0 +1,33 @@
+{
+  "operation_id": "test.execute",
+  "version": "1.0.0",
+  "status": "active",
+  "domain": "test",
+  "title": "Execute Test Command",
+  "description": "Run a test command deterministically and return a structured PASS/FAIL result with exit code and captured output. Skills that would otherwise teach the agent how to run a test tool should invoke this operation instead.",
+  "canonical_handler": "araya_lib.operations.test_execute",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "command": {"type": "string"},
+      "cmd": {"type": "string"},
+      "args": {"type": "array", "items": {"type": "string"}},
+      "cwd": {"type": "string"}
+    }
+  },
+  "output_schema": {"type": "object", "contract": "OperationResult"},
+  "side_effects": ["runs the given test command"],
+  "risk_level": "low",
+  "required_authority": "any",
+  "preconditions": ["a test command is provided"],
+  "postconditions": ["OperationResult contract-valid"],
+  "evidence": ["checks[]", "evidence[]"],
+  "idempotency": "safe to re-run (depends on the test command)",
+  "rollback": "no writes to roll back (the test command is responsible for its own state)",
+  "adapters": ["cli"],
+  "aliases": ["run tests", "execute tests", "test run"],
+  "intents": ["run the test suite", "execute tests", "are the tests passing"],
+  "tests": ["tests/test_operations.py"],
+  "owner": "araya",
+  "source_provenance": "recovered from legacy skills (tdd-execute, coverage) whose deterministic run/parse step is now reusable code"
+}

@@ -50,7 +50,13 @@ gate, feature PR gate, feature start) and are never a global shell gate.
 procedural specialization, loaded by progressive disclosure: minimal metadata
 is always discoverable (`skills/index.json`), full instructions load only when
 a skill is selected, and resources load only when needed. The full library is
-never loaded into every context.
+never loaded into every context. Seven canonical skills exist:
+`adr-write`, `tdd-execute`, `test-authoring`, `security-review`,
+`git-publication`, `postoffice`, `ponyexpress`.
+
+Skills compose into one ephemeral specialist (e.g. a "review and safely publish
+a fix" task selects `test-authoring` + `tdd-execute` + `git-publication` +
+`security-review` and the corresponding deterministic operations).
 
 **Ephemeral agent model.** Specialist agents are ephemeral workers composed
 from a task + selected skills + selected operations + scoped context +
@@ -109,6 +115,8 @@ the host.
    L07 handoff/correlation/delivery/acknowledgement/trace is recovered.
 3. Global ARAYA integration — none, and none is planned: integration is
    explicit/scoped by design.
+4. Most legacy domain skills remain deferred (84 of 128 reviewed) — see
+   `docs/legacy-skills-review.md`.
 
 ## Install
 
@@ -253,8 +261,8 @@ never creates a persona named `daneel`.
 
 ## Important limitations / debts
 
-1. The capability foundation is the first recovery pass; most legacy skills
-   (~130) remain archived and unreviewed (see `docs/LEGACY-CAPABILITY-INVENTORY.md`).
+1. Of the 128 legacy skills reviewed, 84 remain deferred (`LATER`) and are not
+   yet recovered — see `docs/legacy-skills-review.md` / `.json`.
 2. No automated cross-project delegation/state store; ARAYA is per-project and
    host-scoped. The library composes the scoped worker request and records the
    handoff/result, but the actual native subagent invocation is performed by
@@ -266,7 +274,23 @@ never creates a persona named `daneel`.
 5. The CLI is stdlib-only Python; there is no MCP adapter yet (only where
    interoperability justifies it).
 
+## Legacy skills review
+
+The full legacy skill corpus (128 skills) was reviewed evidence-first
+(`docs/legacy-skills-review.md` + `docs/legacy-skills-review.json`):
+
+- Reviewed: **128**
+- KEEP: **3** (already-canonical)
+- COMBINE: **12** (absorbed into 2 canonical skills)
+- REPLACE_BY_OPERATION: **1**
+- DROP: **28** (legacy machinery + SDLC ceremony)
+- LATER: **84** (deferred, re-reviewed individually)
+
+Wave 1 recovered `test-authoring` and `security-review` (foundational
+engineering). Provenance is retained per canonical skill via
+`source_provenance`; no legacy skill is lost (it remains in Git history).
+
 ## Next product increment
 
-Selective recovery and review of the remaining legacy skills and capabilities
-(see `docs/LEGACY-CAPABILITY-INVENTORY.md`), prioritized by product value.
+Wave 2 selective recovery of the remaining legacy skills, prioritized by
+product value (see `docs/legacy-skills-review.md`).

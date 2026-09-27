@@ -15,6 +15,7 @@ there is no probabilistic matching presented as certainty.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any, Callable, Optional
 
@@ -24,7 +25,8 @@ from .git_ops import (
     git_feature_pr_gate,
     git_feature_start,
 )
-from .result import OperationResult
+from .process import run
+from .result import OperationResult, check, build_result, now_iso
 
 VALID_STATUSES = ("active", "design-only", "deprecated")
 VALID_RISK = ("read-only", "low", "medium", "high")
@@ -32,6 +34,54 @@ VALID_RISK = ("read-only", "low", "medium", "high")
 
 class DefinitionError(Exception):
     pass
+
+
+def test_execute(input_: dict, ctx: dict) -> OperationResult:
+    """Deterministic test runner: run a test command and return a structured
+    PASS/FAIL result. Skills that would otherwise teach the agent how to run a
+    test tool should instead invoke this operation."""
+    started = now_iso()
+    command = str(input_.get("command", "") or "").strip()
+    cmd = input_.get("cmd")
+    args = [str(a) for a in (input_.get("args") or [])]
+    cwd = str(input_.get("cwd") or ctx.get("root") or os.getcwd())
+    checks = []
+    evidence = []
+
+    if not command and not cmd:
+        return build_result(
+            operation_id="test.execute",
+            version="1.0.0",
+            checks=[check("command_provided", False, "no test command given")],
+            subject={"cwd": cwd},
+            started_at=started,
+        )
+
+    if command:
+        parts = command.split()
+        r = run(parts[0], parts[1:], cwd)
+        display = command
+    else:
+        r = run(str(cmd), args, cwd)
+        display = " ".join([str(cmd), *args])
+
+    checks.append(check("exit_code_zero", r["code"] == 0, f"exit={r['code']}"))
+    evidence.append(f"exit={r['code']}")
+    tail = r["stdout"].strip()[-1500:]
+    if tail:
+        evidence.append(tail)
+    if r["stderr"].strip():
+        evidence.append("stderr: " + r["stderr"].strip()[-1500:])
+
+    return build_result(
+        operation_id="test.execute",
+        version="1.0.0",
+        checks=checks,
+        subject={"command": display, "cwd": cwd},
+        evidence=evidence,
+        side_effects=[f"ran test command: {display}"],
+        started_at=started,
+    )
 
 
 def _validate_definition(d: dict) -> list:
@@ -53,6 +103,7 @@ HANDLERS: dict[str, Callable[[dict, dict], OperationResult]] = {
     "git.merge-gate": git_merge_gate,
     "git.feature-pr-gate": git_feature_pr_gate,
     "git.feature-start": git_feature_start,
+    "test.execute": test_execute,
 }
 
 

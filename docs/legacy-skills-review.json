@@ -1,0 +1,787 @@
+{
+  "records": [
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "abc-costing-model",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "accessibility",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": "adr-write",
+      "disposition": "KEEP",
+      "legacy_skill_id": "adr-write",
+      "note": "already canonical (recovered in b-004)"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "agent-design",
+      "note": "legacy roster agent design (removed architecture)"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "agent-topology",
+      "note": "legacy dynamic agent topology (roster machinery)"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "ai-routing",
+      "note": "legacy provider-agnostic routing runtime"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "analytics-report",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "animation",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "api-design",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "api-document",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "api-gateway",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "api-integration",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "araya-command-and-delegation-expert",
+      "note": "legacy delegation machinery (replaced by delegation resolver + ephemeral worker)"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "araya-operation-runtime",
+      "note": "mandatory operation-first + OPERATION_GAP ceremony (b-004 explicitly removed)"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "architecture-diagram",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "asset-management",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "auth-middleware",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "autonomous-execution",
+      "note": "legacy autonomous NL execution triggers"
+    },
+    {
+      "canonical": "postoffice",
+      "disposition": "KEEP",
+      "legacy_skill_id": "ax-postoffice",
+      "note": "already canonical as `postoffice` (recovered in b-004)"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "ax3",
+      "note": "AX3 contract hierarchy is now the canonical kernel (K01-K10), not a skill"
+    },
+    {
+      "canonical": "test-authoring",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "bdd-feature",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "brand-audit",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "brand-compliance",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "budget-forecasting",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "cache-strategy",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "capability-registry",
+      "note": "legacy org capability registry (now capabilities/index.json)"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "cicd-pipeline",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "cicd-quality",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "cloud-deploy",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "cloud-provision",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "compliance",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "component",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "component-arch",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "content-calendar",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "cost-analysis",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "cost-to-serve",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": "test.execute",
+      "disposition": "REPLACE_BY_OPERATION",
+      "legacy_skill_id": "coverage",
+      "note": "deterministic step is now a reusable operation"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "cr-generate",
+      "note": "Change Request generation (legacy SDLC ceremony)"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "curriculum-planning",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "daily-note",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "daily-standup",
+      "note": "roster-based daily standup ceremony"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "dashboard-design",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "data-governance",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "data-lakehouse-design",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "data-modeling",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "data-quality",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "data-visualization",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "db-optimization",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "db-schema",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "definition-of-done",
+      "note": "mandatory DoD checklists (AX3 covers done criteria)"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "deployment-automation",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "docker",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "drr-create",
+      "note": "Delivery Review Reports (legacy SDLC ceremony)"
+    },
+    {
+      "canonical": "test-authoring",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "e2e-strategy",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "endpoint",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "error-handling",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "etl-orchestration",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "form-design",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "gap-analysis",
+      "note": "Gap Analysis Reports (legacy SDLC ceremony)"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "geo-branding",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "iar-generate",
+      "note": "Impact Analysis Reports (legacy SDLC ceremony)"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "impediment",
+      "note": "roster-based blocker tracking"
+    },
+    {
+      "canonical": "test-authoring",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "integration-test",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "knowledge-graph",
+      "note": "legacy organizational knowledge graph"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "kpi-framework",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "kubernetes",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "lab-scenario-design",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "llm-local-deploy",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "medallion-architecture",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "message-queue",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "microservice",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "model-fine-tuning",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "monitoring",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "multi-platform-publish",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "organizational-health",
+      "note": "legacy org health monitoring"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "organizational-knowledge",
+      "note": "legacy org knowledge management"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "page-route",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": "security-review",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "pentest",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "performance",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "performance-test",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "pkm-workflow",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "pm-decompose",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "pm-dependencies",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "pm-plan",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "pm-risk",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "pm-status",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "po-gap-questionnaire",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "profitability-lineage",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "project-planning",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "rag-pipeline",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "reality-verification",
+      "note": "legacy Reality Verification Layer (governance)"
+    },
+    {
+      "canonical": "test-authoring",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "regression",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "relay-participant",
+      "note": "legacy relay state machine (replaced by relay L07 handoff)"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "resource-rightsizing",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "responsive",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "retrospective",
+      "note": "roster-based sprint retrospective ceremony"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "sdd-requirements",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "sdd-vision",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": "security-review",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "secrets",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": "security-review",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "secure-arch",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": "security-review",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "secure-code",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "seo-optimize",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "skills-lifecycle",
+      "note": "legacy skills lifecycle governance"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "slide-deck-generate",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "spark-pipeline",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "spof-detection",
+      "note": "legacy single-point-of-failure detection"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "sprint-planning",
+      "note": "roster-based sprint planning ceremony"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "state-management",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "static-site-generate",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "student-assessment",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": "tdd-execute",
+      "disposition": "KEEP",
+      "legacy_skill_id": "tdd-execute",
+      "note": "already canonical (recovered in b-004); execution now delegates to test.execute"
+    },
+    {
+      "canonical": "test-authoring",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "tdd-generate",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "technical-book",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": "test-authoring",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "test-case",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "theme-design",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": "security-review",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "threat-model",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "token-efficiency",
+      "note": "legacy global token efficiency framework"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "training-module",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "trajectory-management",
+      "note": "legacy golden trajectory management"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "uat-generate",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "uat-review",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": "test-authoring",
+      "disposition": "COMBINE",
+      "legacy_skill_id": "unit-test",
+      "note": "combined into canonical skill"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "usage-metering",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "vector-search",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "velocity",
+      "note": "legacy roster-based team velocity tracking"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "visual-identity",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "LATER",
+      "legacy_skill_id": "whale-curve-analyze",
+      "note": "plausible domain value, deferred to a later wave"
+    },
+    {
+      "canonical": null,
+      "disposition": "DROP",
+      "legacy_skill_id": "workforce-planning",
+      "note": "legacy workforce planning"
+    }
+  ],
+  "source": "archive/araya-legacy-origin-dev-mahg-20260927 (skills/)",
+  "summary": {
+    "COMBINE": 12,
+    "DROP": 28,
+    "KEEP": 3,
+    "LATER": 84,
+    "REPLACE_BY_OPERATION": 1,
+    "canonical_skills_total": 7,
+    "total_reviewed": 128,
+    "wave1_recovered": [
+      "test-authoring",
+      "security-review"
+    ]
+  },
+  "version": "1.0.0"
+}

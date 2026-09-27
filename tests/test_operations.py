@@ -71,6 +71,16 @@ class OperationsTest(unittest.TestCase):
         result = self.registry.execute("git.repository-sanity", {"repo": str(REPO)})
         self.assertEqual(validate_result(result), [])
 
+    def test_execute_test_command(self):
+        result = self.registry.execute("test.execute", {"command": "python3 -c 'print(1+1)'"})
+        self.assertEqual(result.operation_id, "test.execute")
+        self.assertEqual(result.status, "PASS")
+        self.assertTrue(any(c.id == "exit_code_zero" and c.passed for c in result.checks))
+
+    def test_execute_test_command_failure(self):
+        result = self.registry.execute("test.execute", {"command": "python3 -c 'import sys; sys.exit(3)'"})
+        self.assertEqual(result.status, "FAIL")
+
 
 if __name__ == "__main__":
     unittest.main()
