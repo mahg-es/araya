@@ -276,19 +276,22 @@ never creates a persona named `daneel`.
 
 ## Legacy skills review
 
-The full legacy skill corpus (128 skills) was reviewed evidence-first
-(`docs/legacy-skills-review.md` + `docs/legacy-skills-review.json`):
+Every legacy `SKILL.md` body (128 skills) was read in full and reviewed
+evidence-first (`docs/legacy-skills-review.md` + `.json`). Each record carries
+purpose, inputs, outputs, dependencies, deterministic-code availability,
+overlaps, disposition, canonical target, reason, and provenance:
 
-- Reviewed: **128**
+- Reviewed (full source body): **128**
 - KEEP: **3** (already-canonical)
 - COMBINE: **12** (absorbed into 2 canonical skills)
 - REPLACE_BY_OPERATION: **1**
 - DROP: **28** (legacy machinery + SDLC ceremony)
-- LATER: **84** (deferred, re-reviewed individually)
+- LATER: **84** (each with an individual evidence-based reason)
 
-Wave 1 recovered `test-authoring` and `security-review` (foundational
-engineering). Provenance is retained per canonical skill via
-`source_provenance`; no legacy skill is lost (it remains in Git history).
+Canonical skills total: **7**. Wave 1 recovered `test-authoring` and
+`security-review` (foundational engineering). Provenance is retained per
+canonical skill via `source_provenance`; no legacy skill is lost (it remains
+in Git history).
 
 ## Next product increment
 
