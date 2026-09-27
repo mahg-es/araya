@@ -82,6 +82,25 @@ for cmd in bash sha256sum cp mkdir; do
   command -v "$cmd" >/dev/null 2>&1 || die "Required command not found: $cmd"
 done
 
+# ── 0. ownership boundary ──────────────────────────────────────────────────
+# ARAYA owns only the target directory it is given. It must never touch the Pi
+# user layer (~/.pi/agent/) — which includes the Professor's personal agent
+# Daneel — nor the reserved name "daneel".
+ABS_TARGET="$(cd "$TARGET" 2>/dev/null && pwd || printf '%s' "$TARGET")"
+PI_USER_LAYER="$(cd "$HOME/.pi/agent" 2>/dev/null && pwd)"
+
+if [[ -n "$PI_USER_LAYER" ]]; then
+  case "$ABS_TARGET" in
+    "$PI_USER_LAYER"|"$PI_USER_LAYER"/*)
+      die "Refusing to install into the Pi user layer ($PI_USER_LAYER). ARAYA does not own Pi user resources (including Daneel)."
+      ;;
+  esac
+fi
+
+if [[ "$(basename "$ABS_TARGET")" == "daneel" ]]; then
+  die "Refusing to install into a target named 'daneel' (reserved to the Professor's personal Pi agent)."
+fi
+
 # ── 1. verify input ────────────────────────────────────────────────────────
 info "ARAYA installer: verifying input..."
 for f in "${CANONICAL_FILES[@]}"; do
