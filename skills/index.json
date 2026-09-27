@@ -15,6 +15,28 @@
       "source_provenance": ["adr-write"]
     },
     {
+      "name": "architecture-diagram",
+      "description": "Create standards-based C4/sequence/data-flow architecture diagrams as version-controlled text (Mermaid/PlantUML), paired with ADRs.",
+      "path": "architecture-diagram/SKILL.md",
+      "tags": ["architecture", "diagram", "documentation", "c4", "mermaid"],
+      "capabilities": ["document-architecture"],
+      "dependencies": [],
+      "operations": [],
+      "resources": [],
+      "source_provenance": ["architecture-diagram"]
+    },
+    {
+      "name": "api-design",
+      "description": "Design REST/GraphQL APIs as an OpenAPI 3.1 contract (endpoints, schemas, auth, errors, versioning) and derive developer documentation from the spec.",
+      "path": "api-design/SKILL.md",
+      "tags": ["api", "openapi", "rest", "graphql", "design", "documentation"],
+      "capabilities": ["design-api"],
+      "dependencies": [],
+      "operations": [],
+      "resources": [],
+      "source_provenance": ["api-design", "api-document"]
+    },
+    {
       "name": "tdd-execute",
       "description": "Execute a test suite via the deterministic test.execute operation and report red/green results with actionable failures.",
       "path": "tdd-execute/SKILL.md",

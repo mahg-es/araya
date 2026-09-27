@@ -7,11 +7,15 @@ frontmatter-only). Source of truth: `archive/araya-legacy-origin-dev-mahg-202609
 ## Summary
 
 - Legacy skills reviewed (full body): **128**
-- KEEP: **3** — already-canonical, distinct procedural reasoning
-- COMBINE: **12** — absorbed into 2 canonical skills (provenance retained)
+- KEEP: **5** — already-canonical + Wave 2 recovered
+- COMBINE: **13** — absorbed into 3 canonical skills (provenance retained)
 - REPLACE_BY_OPERATION: **1** — deterministic step now reusable code
 - DROP: **28** — legacy machinery / SDLC ceremony / roster coupling
-- LATER: **84** — each with an individual, evidence-based reason
+- LATER: **81** — each with an individual, evidence-based reason
+
+- Canonical skills total: **9** (7 foundational + 2 Wave 2).
+- Wave 1 recovered: `test-authoring`, `security-review`.
+- Wave 2 recovered: `architecture-diagram`, `api-design` (absorbs legacy `api-document`).
 
 Every record carries purpose, inputs, outputs, dependencies,
 deterministic_code_available, overlap_with_other_skills,
@@ -27,6 +31,22 @@ canonical_target, reason, source_provenance.
 
 7 canonical skills total: adr-write, tdd-execute, test-authoring,
 security-review, git-publication, postoffice, ponyexpress.
+
+## Wave 2 — recovered skills
+
+Wave 2 selected 3 of the 84 `LATER` skills by product value, broad
+reusability, low legacy coupling, and composability with the foundation. Two
+canonical Wave-2 skills were recovered; one legacy skill was combined in.
+
+1. **`architecture-diagram`** ← `architecture-diagram` — C4/sequence/data-flow
+   diagrams as version-controlled text (Mermaid/PlantUML). Composes with
+   `adr-write`; foundational documentation, broadly reusable.
+2. **`api-design`** ← `api-design` + `api-document` — OpenAPI 3.1 contract
+   design plus the documentation derived from that spec (spec → docs pipeline).
+
+9 canonical skills total: adr-write, architecture-diagram, api-design,
+tdd-execute, test-authoring, security-review, git-publication, postoffice,
+ponyexpress.
 
 ## Deep deduplication
 
@@ -51,6 +71,8 @@ remain LATER for a future wave):
 - `adr-write` → **adr-write** — Distinct procedural reasoning: author Architecture Decision Records (context, options, decision, consequences). Foundational, already canonical.
 - `ax-postoffice` → **postoffice** — Distinct procedural reasoning: the agent-to-agent coordination channel (consult/write, advisory never a gate). Already canonical as `postoffice`.
 - `tdd-execute` → **tdd-execute** — Distinct procedural reasoning: run a suite and report red/green; the deterministic run step now delegates to test.execute (operation reuse). Already canonical.
+- `architecture-diagram` → **architecture-diagram** — Distinct procedural reasoning: C4/sequence/data-flow diagrams as version-controlled text (Mermaid/PlantUML), paired with ADRs. Recovered in Wave 2.
+- `api-design` → **api-design** — Distinct procedural reasoning: design REST/GraphQL APIs as an OpenAPI 3.1 contract; the spec is the single source of truth for code, tests, and docs. Recovered in Wave 2 (absorbs legacy `api-document`).
 
 ## Disposition — COMBINE (12)
 
@@ -66,6 +88,7 @@ remain LATER for a future wave):
 - `test-case` → **test-authoring** — Variant of test authoring (structured cases from requirements). Combined into `test-authoring`.
 - `threat-model` → **security-review** — Variant of security review (STRIDE threat modeling). Combined into `security-review`.
 - `unit-test` → **test-authoring** — Variant of test authoring (isolated unit behavior). Combined with 6 testing peers into `test-authoring`; run via test.execute.
+- `api-document` → **api-design** — Variant of API documentation: docs are generated from the OpenAPI spec that `api-design` produces. Combined into `api-design` (spec → docs pipeline).
 
 ## Disposition — REPLACE_BY_OPERATION (1)
 
@@ -102,17 +125,14 @@ remain LATER for a future wave):
 - `velocity` — Roster-based sprint velocity tracking; agile ceremony over removed roles.
 - `workforce-planning` — Legacy workforce planning over the roster. Removed.
 
-## Disposition — LATER (84)
+## Disposition — LATER (81)
 
 - `abc-costing-model` — Activity-Based Costing model for profitability attribution. Finance domain; deferred — not foundational, no current product need.
 - `accessibility` — WCAG 2.2 AA audit/remediation for UI. Frontend-quality domain; deferred.
 - `analytics-report` — Generate executive/operational analytics reports. BI domain; deferred.
 - `animation` — Purposeful motion/micro-interactions. Frontend design; deferred.
-- `api-design` — Design REST/GraphQL APIs (OpenAPI 3.1). Backend design; deferred.
-- `api-document` — Generate API reference docs. Backend docs; deferred.
 - `api-gateway` — Design/configure API gateways. Backend infra; deferred.
 - `api-integration` — Connect frontend to backend (typed clients). Frontend/backend glue; deferred.
-- `architecture-diagram` — C4/Mermaid architecture diagrams. Foundational-adjacent but not Wave 1; deferred.
 - `asset-management` — Organize brand assets. Design ops; deferred.
 - `auth-middleware` — Implement authn/authz middleware. Backend security-adjacent; deferred.
 - `brand-audit` — Quarterly brand audits. Marketing; deferred.
@@ -192,6 +212,6 @@ remain LATER for a future wave):
 ## Provenance policy
 
 - No legacy skill deleted from history; it remains in the archived Git branch.
-- Active `skills/` tree contains only the 7 canonical skills.
+- Active `skills/` tree contains only the 9 canonical skills (7 foundational + 2 Wave 2).
 - COMBINE records absorbed sources in `source_provenance` (skills/index.json).
 - No legacy authority/roster semantics copied; only procedural value.

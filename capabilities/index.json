@@ -9,6 +9,18 @@
       "operations": []
     },
     {
+      "id": "document-architecture",
+      "description": "Create standards-based architecture diagrams (C4/sequence/data-flow) as version-controlled text.",
+      "skills": ["architecture-diagram"],
+      "operations": []
+    },
+    {
+      "id": "design-api",
+      "description": "Design a REST/GraphQL API as an OpenAPI 3.1 contract and derive developer documentation from it.",
+      "skills": ["api-design"],
+      "operations": []
+    },
+    {
       "id": "execute-tests",
       "description": "Execute a test suite and report red/green results.",
       "skills": ["tdd-execute"],

@@ -1,4 +1,5 @@
 """Skills (progressive disclosure), capabilities, and delegation tests."""
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -95,6 +96,82 @@ class DelegationTest(unittest.TestCase):
         n = random_display_name()
         self.assertTrue(n.startswith("agent-"))
         self.assertEqual(len(n), len("agent-") + 6)
+
+
+class Wave2SkillsTest(unittest.TestCase):
+    """Wave 2 recovery: architecture-diagram + api-design (absorbs api-document)."""
+
+    def setUp(self):
+        self.skills = Skills(str(REPO))
+        self.skills.load_index()
+        self.caps = Capabilities(str(REPO))
+        self.caps.load()
+        self.delg = Delegation(str(REPO))
+
+    def test_wave2_skills_present(self):
+        names = self.skills.names()
+        for n in ("architecture-diagram", "api-design"):
+            self.assertIn(n, names)
+
+    def test_wave2_skill_bodies_load(self):
+        for n in ("architecture-diagram", "api-design"):
+            rec = self.skills.get(n)
+            self.assertIsNotNone(rec, n)
+            self.assertIn("body", rec)
+            self.assertGreater(len(rec["body"]), 200)
+        # api-design body carries the combined api-design + api-document value
+        # (OpenAPI spec design AND from-spec documentation).
+        body = self.skills.get("api-design")["body"]
+        self.assertIn("OpenAPI", body)
+        self.assertIn("documentation", body.lower())
+
+    def test_wave2_capabilities_present(self):
+        cap_ids = {c["id"] for c in self.caps.list()}
+        self.assertIn("document-architecture", cap_ids)
+        self.assertIn("design-api", cap_ids)
+
+    def test_wave2_capability_maps_skills(self):
+        self.assertEqual(self.caps.get("document-architecture")["skills"],
+                         ["architecture-diagram"])
+        self.assertEqual(self.caps.get("design-api")["skills"], ["api-design"])
+
+    def test_wave2_multi_skill_composition(self):
+        # A design-and-document task must select both Wave 2 skills (and the
+        # existing adr-write), composing into one ephemeral worker.
+        r = self.delg.resolve(
+            "design the API and architecture diagrams for a user management service")
+        self.assertIn("architecture-diagram", r["skills"])
+        self.assertIn("api-design", r["skills"])
+        self.assertIn("adr-write", r["skills"])
+        r2 = self.delg.compose_ephemeral_agent(
+            "design the API and architecture for a user management service")
+        self.assertFalse(r2["persistent"])
+        self.assertTrue(r2["display_name_has_no_meaning"])
+
+    def test_api_design_source_provenance_includes_api_document(self):
+        idx = json.loads((REPO / "skills" / "index.json").read_text(encoding="utf-8"))
+        api = next(s for s in idx["skills"] if s["name"] == "api-design")
+        self.assertIn("api-design", api["source_provenance"])
+        self.assertIn("api-document", api["source_provenance"])
+
+
+class Wave2ReviewDispositionsTest(unittest.TestCase):
+    """Wave 2 disposition changes must be reflected in the review record."""
+
+    def setUp(self):
+        self.review = json.loads(
+            (REPO / "docs" / "legacy-skills-review.json").read_text(encoding="utf-8"))
+        self.by_id = {r["legacy_skill_id"]: r for r in self.review["records"]}
+
+    def test_wave2_recovered_as_keep(self):
+        for sid in ("architecture-diagram", "api-design"):
+            self.assertEqual(self.by_id[sid]["disposition"], "KEEP", sid)
+            self.assertEqual(self.by_id[sid]["canonical_target"], sid, sid)
+
+    def test_api_document_combined_into_api_design(self):
+        r = self.by_id["api-document"]
+        self.assertEqual(r["disposition"], "COMBINE")
+        self.assertEqual(r["canonical_target"], "api-design")
 
 
 if __name__ == "__main__":

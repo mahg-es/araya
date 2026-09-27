@@ -23,7 +23,7 @@
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
       "purpose": "Implement Activity-Based Costing (ABC) to accurately attribute costs to products,",
-      "reason": "Activity-Based Costing model for profitability attribution. Finance domain; deferred \u2014 not foundational, no current product need.",
+      "reason": "Activity-Based Costing model for profitability attribution. Finance domain; deferred — not foundational, no current product need.",
       "source_provenance": [
         "abc-costing-model"
       ]
@@ -47,7 +47,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Implement WCAG 2.2 AA accessibility \u2014 semantic HTML, ARIA, keyboard navigation,",
+      "purpose": "Implement WCAG 2.2 AA accessibility — semantic HTML, ARIA, keyboard navigation,",
       "reason": "WCAG 2.2 AA audit/remediation for UI. Frontend-quality domain; deferred.",
       "source_provenance": [
         "accessibility"
@@ -63,7 +63,7 @@
       ],
       "disposition": "KEEP",
       "inputs": [
-        "The decision to document \u2014 technology choice, pattern adoption, or convention."
+        "The decision to document — technology choice, pattern adoption, or convention."
       ],
       "legacy_skill_id": "adr-write",
       "outputs": [
@@ -72,12 +72,12 @@
         "# ADR-005: Use PostgreSQL with PostGIS for Spatial Data",
         "**Status:** Accepted",
         "**Date:** 2026-05-27",
-        "**Deciders:** Junia (Data Platform Architect), Bernab\u00e9 (Data Engineer), The Data Professor"
+        "**Deciders:** Junia (Data Platform Architect), Bernabé (Data Engineer), The Data Professor"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Write Architecture Decision Records (ADRs) \u2014 lightweight documents that capture",
+      "purpose": "Write Architecture Decision Records (ADRs) — lightweight documents that capture",
       "reason": "Distinct procedural reasoning: author Architecture Decision Records (context, options, decision, consequences). Foundational, already canonical.",
       "source_provenance": [
         "adr-write"
@@ -96,12 +96,12 @@
       "legacy_skill_id": "agent-design",
       "outputs": [
         "An agent architecture specification with roles, tools, memory model, and",
-        "safety guardrails \u2014 ready for implementation."
+        "safety guardrails — ready for implementation."
       ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design multi-agent AI systems \u2014 agent architectures, tool use, memory systems,",
+      "purpose": "Design multi-agent AI systems — agent architectures, tool use, memory systems,",
       "reason": "Legacy roster: design multi-agent systems for the removed named-persona architecture. No current product value.",
       "source_provenance": [
         "agent-design"
@@ -127,7 +127,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA Dynamic Agent Topology \u2014 team assembly, workforce risk analysis, capability coverage, and adaptive organization design.",
+      "purpose": "ARAYA Dynamic Agent Topology — team assembly, workforce risk analysis, capability coverage, and adaptive organization design.",
       "reason": "Legacy roster machinery: dynamic agent topology/team assembly over the removed roster.",
       "source_provenance": [
         "agent-topology"
@@ -155,7 +155,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA Provider-Agnostic AI Routing \u2014 capability-based model selection, cost governance, and explainable routing decisions.",
+      "purpose": "ARAYA Provider-Agnostic AI Routing — capability-based model selection, cost governance, and explainable routing decisions.",
       "reason": "Legacy runtime: provider-agnostic AI routing + capability registry. Removed global runtime.",
       "source_provenance": [
         "ai-routing"
@@ -179,7 +179,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Generate executive and operational analytics reports \u2014 structured analysis",
+      "purpose": "Generate executive and operational analytics reports — structured analysis",
       "reason": "Generate executive/operational analytics reports. BI domain; deferred.",
       "source_provenance": [
         "analytics-report"
@@ -207,22 +207,22 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement purposeful motion \u2014 page transitions, micro-interactions,",
+      "purpose": "Design and implement purposeful motion — page transitions, micro-interactions,",
       "reason": "Purposeful motion/micro-interactions. Frontend design; deferred.",
       "source_provenance": [
         "animation"
       ]
     },
     {
-      "canonical_target": null,
-      "current_product_value": "deferred",
+      "canonical_target": "api-design",
+      "current_product_value": "Distinct procedural reasoning: design REST/GraphQL APIs as an OpenAPI 3.1 contract; the spec is the single source of truth for code, tests, and docs.",
       "dependencies": [],
       "deterministic_code_available": true,
       "deterministic_tools": [
         "OpenAPI",
         "openapi"
       ],
-      "disposition": "LATER",
+      "disposition": "KEEP",
       "inputs": [
         "Feature requirements, data model, authentication strategy."
       ],
@@ -239,21 +239,21 @@
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
       "purpose": "Design REST and GraphQL APIs following OpenAPI 3.1 standards. Produce complete",
-      "reason": "Design REST/GraphQL APIs (OpenAPI 3.1). Backend design; deferred.",
+      "reason": "Recovered in Wave 2: foundational backend design capability (OpenAPI 3.1), broadly reusable, low legacy coupling; absorbs api-document (spec -> docs pipeline).",
       "source_provenance": [
         "api-design"
       ]
     },
     {
-      "canonical_target": null,
-      "current_product_value": "deferred",
+      "canonical_target": "api-design",
+      "current_product_value": "Absorbed into api-design: API documentation is derived from the OpenAPI spec, so spec design and doc generation form one pipeline.",
       "dependencies": [],
       "deterministic_code_available": true,
       "deterministic_tools": [
         "OpenAPI",
         "Swagger"
       ],
-      "disposition": "LATER",
+      "disposition": "COMBINE",
       "inputs": [
         "OpenAPI specification, authentication details, example use cases."
       ],
@@ -265,8 +265,8 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Generate comprehensive API documentation \u2014 reference docs, getting-started",
-      "reason": "Generate API reference docs. Backend docs; deferred.",
+      "purpose": "Generate comprehensive API documentation — reference docs, getting-started",
+      "reason": "Combined into api-design: api-document's input is api-design's output (the OpenAPI spec); one canonical skill covers design -> documentation.",
       "source_provenance": [
         "api-document"
       ]
@@ -293,7 +293,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and configure API gateways \u2014 routing, rate limiting, authentication,",
+      "purpose": "Design and configure API gateways — routing, rate limiting, authentication,",
       "reason": "Design/configure API gateways. Backend infra; deferred.",
       "source_provenance": [
         "api-gateway"
@@ -323,7 +323,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Connect frontend to backend \u2014 type-safe API clients, request/response handling,",
+      "purpose": "Connect frontend to backend — type-safe API clients, request/response handling,",
       "reason": "Connect frontend to backend (typed clients). Frontend/backend glue; deferred.",
       "source_provenance": [
         "api-integration"
@@ -380,19 +380,19 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Mandatory operation-first protocol for every active ARAYA agent \u2014 resolve requested work to a governed operation from the Operation Catalog before any raw implementation; declare OPERATION_GAP when none applies. Use before executing any task that could be covered by a governed operation.",
+      "purpose": "Mandatory operation-first protocol for every active ARAYA agent — resolve requested work to a governed operation from the Operation Catalog before any raw implementation; declare OPERATION_GAP when none applies. Use before executing any task that could be covered by a governed operation.",
       "reason": "Mandatory operation-first + OPERATION_GAP ceremony; b-004 explicitly removed mandatory pre-task lookup.",
       "source_provenance": [
         "araya-operation-runtime"
       ]
     },
     {
-      "canonical_target": null,
-      "current_product_value": "deferred",
+      "canonical_target": "architecture-diagram",
+      "current_product_value": "Distinct procedural reasoning: C4/sequence/data-flow diagrams as version-controlled text; composes with adr-write for architecture documentation.",
       "dependencies": [],
       "deterministic_code_available": false,
       "deterministic_tools": [],
-      "disposition": "LATER",
+      "disposition": "KEEP",
       "inputs": [
         "System architecture, audience (executive, architect, developer), diagram type."
       ],
@@ -404,8 +404,8 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Create clear, standards-based architecture diagrams \u2014 C4 model (Context,",
-      "reason": "C4/Mermaid architecture diagrams. Foundational-adjacent but not Wave 1; deferred.",
+      "purpose": "Create clear, standards-based architecture diagrams — C4 model (Context,",
+      "reason": "Recovered in Wave 2: foundational documentation capability (C4/Mermaid), broadly reusable across projects, low legacy coupling, composes with adr-write.",
       "source_provenance": [
         "architecture-diagram"
       ]
@@ -428,7 +428,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Organize and manage digital brand assets \u2014 logos, fonts, templates, images,",
+      "purpose": "Organize and manage digital brand assets — logos, fonts, templates, images,",
       "reason": "Organize brand assets. Design ops; deferred.",
       "source_provenance": [
         "asset-management"
@@ -456,7 +456,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Implement authentication and authorization middleware \u2014 JWT validation, role-based",
+      "purpose": "Implement authentication and authorization middleware — JWT validation, role-based",
       "reason": "Implement authn/authz middleware. Backend security-adjacent; deferred.",
       "source_provenance": [
         "auth-middleware"
@@ -483,7 +483,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Reduce manual intervention \u2014 autonomous natural language execution triggers, delegation observability, and run persistence.",
+      "purpose": "Reduce manual intervention — autonomous natural language execution triggers, delegation observability, and run persistence.",
       "reason": "Legacy autonomous NL execution triggers + run persistence. Removed runtime.",
       "source_provenance": [
         "autonomous-execution"
@@ -513,7 +513,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "AX3 contract hierarchy \u2014 read AX3.md chain before editing, update after meaningful changes, reconcile the AX3 tree. This is an ARAYA AX (cross-cutting) feature.",
+      "purpose": "AX3 contract hierarchy — read AX3.md chain before editing, update after meaningful changes, reconcile the AX3 tree. This is an ARAYA AX (cross-cutting) feature.",
       "reason": "AX3 contract hierarchy is now the canonical kernel (K01-K10), not a skill.",
       "source_provenance": [
         "ax3"
@@ -533,13 +533,13 @@
       ],
       "legacy_skill_id": "ax-postoffice",
       "outputs": [
-        "One appended entry in `.araya/postoffice/thread.md`, newest last. Nothing else \u2014",
+        "One appended entry in `.araya/postoffice/thread.md`, newest last. Nothing else —",
         "this skill writes no ledger, emits no disposition, and gates nothing."
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Consult and write the ARAYA postoffice \u2014 the operational-directive channel. Advisory, never a gate: read it at cycle start, append your entry at cycle end, consider its directives, never be blocked by it. Governance acts never travel the postoffice.",
+      "purpose": "Consult and write the ARAYA postoffice — the operational-directive channel. Advisory, never a gate: read it at cycle start, append your entry at cycle end, consider its directives, never be blocked by it. Governance acts never travel the postoffice.",
       "reason": "Distinct procedural reasoning: the agent-to-agent coordination channel (consult/write, advisory never a gate). Already canonical as `postoffice`.",
       "source_provenance": [
         "ax-postoffice"
@@ -597,7 +597,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Conduct comprehensive brand audits \u2014 reviewing all touchpoints (web, social,",
+      "purpose": "Conduct comprehensive brand audits — reviewing all touchpoints (web, social,",
       "reason": "Quarterly brand audits. Marketing; deferred.",
       "source_provenance": [
         "brand-audit"
@@ -622,7 +622,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Audit and enforce brand compliance across all projects and platforms \u2014 logo,",
+      "purpose": "Audit and enforce brand compliance across all projects and platforms — logo,",
       "reason": "Enforce brand compliance. Marketing; deferred.",
       "source_provenance": [
         "brand-compliance"
@@ -646,7 +646,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Forecast cloud and infrastructure budgets \u2014 predicting future costs based on",
+      "purpose": "Forecast cloud and infrastructure budgets — predicting future costs based on",
       "reason": "Forecast cloud/infra budgets. FinOps; deferred.",
       "source_provenance": [
         "budget-forecasting"
@@ -670,7 +670,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design caching strategies \u2014 what to cache, where, for how long, and how to",
+      "purpose": "Design caching strategies — what to cache, where, for how long, and how to",
       "reason": "Design caching strategies. Backend performance; deferred.",
       "source_provenance": [
         "cache-strategy"
@@ -699,7 +699,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA organizational capability registry \u2014 authoritative source of agents, skills, domains, and coverage for workforce planning.",
+      "purpose": "ARAYA organizational capability registry — authoritative source of agents, skills, domains, and coverage for workforce planning.",
       "reason": "Legacy organizational capability registry; now capabilities/index.json.",
       "source_provenance": [
         "capability-registry"
@@ -723,8 +723,8 @@
       ],
       "legacy_skill_id": "cicd-pipeline",
       "outputs": [
-        "- `.github/workflows/ci.yml`: Build \u2192 Test \u2192 Security Scan \u2192 Quality Gate",
-        "- `.github/workflows/cd.yml`: Deploy to staging \u2192 Smoke tests \u2192 Deploy to production",
+        "- `.github/workflows/ci.yml`: Build → Test → Security Scan → Quality Gate",
+        "- `.github/workflows/cd.yml`: Deploy to staging → Smoke tests → Deploy to production",
         "- `.github/workflows/pr-validation.yml`: PR title check, branch naming, required reviews",
         "- Pipeline README: Diagram, triggers, secrets needed, troubleshooting"
       ],
@@ -773,7 +773,7 @@
         "git.feature-pr-gate"
       ],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement quality gates in CI/CD pipelines \u2014 automated checks that",
+      "purpose": "Design and implement quality gates in CI/CD pipelines — automated checks that",
       "reason": "Quality gates in CI/CD (overlaps git.merge-gate/feature-pr-gate). DevOps; deferred.",
       "source_provenance": [
         "cicd-quality"
@@ -797,7 +797,7 @@
       "legacy_skill_id": "cloud-deploy",
       "outputs": [
         "```hcl",
-        "# terraform/main.tf \u2014 AWS Infrastructure for ARAYA API",
+        "# terraform/main.tf — AWS Infrastructure for ARAYA API",
         "terraform {",
         "required_version = \">= 1.8\"",
         "required_providers {",
@@ -836,7 +836,7 @@
       "overlap_with_other_skills": [
         "cloud-deploy"
       ],
-      "purpose": "Provision cloud infrastructure \u2014 AWS, OCI, Hetzner \u2014 with Infrastructure as Code",
+      "purpose": "Provision cloud infrastructure — AWS, OCI, Hetzner — with Infrastructure as Code",
       "reason": "Provision cloud infra (Terraform/Pulumi). IaC; near-duplicate of cloud-deploy; deferred.",
       "source_provenance": [
         "cloud-provision"
@@ -856,12 +856,12 @@
       "legacy_skill_id": "compliance",
       "outputs": [
         "```markdown",
-        "# Compliance Assessment: ARAYA Platform \u2014 GDPR Readiness"
+        "# Compliance Assessment: ARAYA Platform — GDPR Readiness"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Assess, document, and achieve compliance with regulatory frameworks \u2014 GDPR,",
+      "purpose": "Assess, document, and achieve compliance with regulatory frameworks — GDPR,",
       "reason": "Regulatory compliance assessment (GDPR/SOC2/HIPAA). Governance-adjacent; deferred.",
       "source_provenance": [
         "compliance"
@@ -889,7 +889,7 @@
       "overlap_with_other_skills": [
         "component"
       ],
-      "purpose": "Design scalable component architectures \u2014 design systems, component libraries,",
+      "purpose": "Design scalable component architectures — design systems, component libraries,",
       "reason": "Design component architecture/design systems. Frontend; overlaps `component`; deferred.",
       "source_provenance": [
         "component-arch"
@@ -942,7 +942,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and maintain editorial content calendars \u2014 topic planning, publishing",
+      "purpose": "Design and maintain editorial content calendars — topic planning, publishing",
       "reason": "Editorial content calendars. Marketing ops; deferred.",
       "source_provenance": [
         "content-calendar"
@@ -970,7 +970,7 @@
         "usage-metering",
         "resource-rightsizing"
       ],
-      "purpose": "Analyze cloud and infrastructure costs \u2014 breakdown by service, project, and",
+      "purpose": "Analyze cloud and infrastructure costs — breakdown by service, project, and",
       "reason": "Cloud cost analysis by service/project. FinOps; overlaps usage-metering/resource-rightsizing; deferred.",
       "source_provenance": [
         "cost-analysis"
@@ -997,7 +997,7 @@
       "overlap_with_other_skills": [
         "abc-costing-model"
       ],
-      "purpose": "Model the cost of serving individual customers, products, or channels \u2014",
+      "purpose": "Model the cost of serving individual customers, products, or channels —",
       "reason": "Cost-to-serve modeling per customer/channel. Finance; depends on ABC model; deferred.",
       "source_provenance": [
         "cost-to-serve"
@@ -1024,14 +1024,14 @@
       "legacy_skill_id": "coverage",
       "outputs": [
         "```markdown",
-        "# Coverage Analysis Report \u2014 User Management API"
+        "# Coverage Analysis Report — User Management API"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [
         "test.execute"
       ],
       "overlap_with_other_skills": [],
-      "purpose": "Analyze test coverage \u2014 measure what code is tested, identify coverage gaps,",
+      "purpose": "Analyze test coverage — measure what code is tested, identify coverage gaps,",
       "reason": "Deterministic coverage measurement (run coverage tool + parse report); now `test.execute` with a coverage command. No distinct reasoning to preserve.",
       "source_provenance": [
         "coverage"
@@ -1079,7 +1079,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design complete learning curricula \u2014 multi-course programs with learning",
+      "purpose": "Design complete learning curricula — multi-course programs with learning",
       "reason": "Design multi-course curricula. Education; deferred.",
       "source_provenance": [
         "curriculum-planning"
@@ -1104,14 +1104,14 @@
       "legacy_skill_id": "daily-note",
       "outputs": [
         "```markdown",
-        "# 2026-05-28 \u2014 Wednesday"
+        "# 2026-05-28 — Wednesday"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [
         "pkm-workflow"
       ],
-      "purpose": "Capture structured daily knowledge \u2014 what was accomplished, what was learned,",
+      "purpose": "Capture structured daily knowledge — what was accomplished, what was learned,",
       "reason": "Capture structured daily knowledge (PKM). Overlaps pkm-workflow; deferred.",
       "source_provenance": [
         "daily-note"
@@ -1133,12 +1133,12 @@
       "legacy_skill_id": "daily-standup",
       "outputs": [
         "```markdown",
-        "# Daily Standup \u2014 2026-05-28 (Sprint Day 4)"
+        "# Daily Standup — 2026-05-28 (Sprint Day 4)"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Facilitate the daily standup \u2014 a 15-minute sync where agents report what they",
+      "purpose": "Facilitate the daily standup — a 15-minute sync where agents report what they",
       "reason": "Roster-based daily standup ceremony.",
       "source_provenance": [
         "daily-standup"
@@ -1163,7 +1163,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design BI dashboards \u2014 information architecture, visualization selection,",
+      "purpose": "Design BI dashboards — information architecture, visualization selection,",
       "reason": "BI dashboard design. Data/BI; deferred.",
       "source_provenance": [
         "dashboard-design"
@@ -1187,7 +1187,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement data governance frameworks \u2014 catalog, lineage, quality,",
+      "purpose": "Design and implement data governance frameworks — catalog, lineage, quality,",
       "reason": "Data governance frameworks. Data platform; deferred.",
       "source_provenance": [
         "data-governance"
@@ -1243,7 +1243,7 @@
       "overlap_with_other_skills": [
         "db-schema"
       ],
-      "purpose": "Design data models \u2014 conceptual, logical, and physical \u2014 using star schemas,",
+      "purpose": "Design data models — conceptual, logical, and physical — using star schemas,",
       "reason": "Dimensional/star data modeling. Data; overlaps db-schema; deferred.",
       "source_provenance": [
         "data-modeling"
@@ -1269,7 +1269,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Implement data quality validation \u2014 Great Expectations, schema validation,",
+      "purpose": "Implement data quality validation — Great Expectations, schema validation,",
       "reason": "Data quality validation (Great Expectations). Data; deferred.",
       "source_provenance": [
         "data-quality"
@@ -1293,7 +1293,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Transform data into visual stories \u2014 choosing the right chart for each data",
+      "purpose": "Transform data into visual stories — choosing the right chart for each data",
       "reason": "Chart/visualization selection. Data/BI; deferred.",
       "source_provenance": [
         "data-visualization"
@@ -1317,7 +1317,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Optimize database performance \u2014 query tuning, index design, connection pooling,",
+      "purpose": "Optimize database performance — query tuning, index design, connection pooling,",
       "reason": "DB query/index optimization. Backend performance; deferred.",
       "source_provenance": [
         "db-optimization"
@@ -1347,7 +1347,7 @@
       "overlap_with_other_skills": [
         "data-modeling"
       ],
-      "purpose": "Design database schemas \u2014 tables, columns, types, constraints, indexes, and",
+      "purpose": "Design database schemas — tables, columns, types, constraints, indexes, and",
       "reason": "Design DB schemas/ERDs. Backend; overlaps data-modeling; deferred.",
       "source_provenance": [
         "db-schema"
@@ -1374,7 +1374,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Generate Definition of Done (DoD) checklists for every task, phase, and delivery \u2014 mandatory verification before marking anything complete.",
+      "purpose": "Generate Definition of Done (DoD) checklists for every task, phase, and delivery — mandatory verification before marking anything complete.",
       "reason": "Mandatory DoD checklists + confidence-score ceremony; AX3 already covers done criteria.",
       "source_provenance": [
         "definition-of-done"
@@ -1402,7 +1402,7 @@
       "overlap_with_other_skills": [
         "cicd-pipeline"
       ],
-      "purpose": "Automate deployments \u2014 CI/CD pipelines for static sites, Docker containers,",
+      "purpose": "Automate deployments — CI/CD pipelines for static sites, Docker containers,",
       "reason": "Automate deployments. DevOps; overlaps cicd-pipeline; deferred.",
       "source_provenance": [
         "deployment-automation"
@@ -1482,7 +1482,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design end-to-end testing strategy \u2014 what to test, how to test it, when to run",
+      "purpose": "Design end-to-end testing strategy — what to test, how to test it, when to run",
       "reason": "Variant of test authoring (end-to-end strategy). Combined into `test-authoring`.",
       "source_provenance": [
         "e2e-strategy",
@@ -1547,7 +1547,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement standardized error handling patterns \u2014 consistent error",
+      "purpose": "Design and implement standardized error handling patterns — consistent error",
       "reason": "Standardized error-handling patterns. Backend code quality; deferred.",
       "source_provenance": [
         "error-handling"
@@ -1576,7 +1576,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement ETL orchestration \u2014 Airflow, Dagster, or Prefect workflows",
+      "purpose": "Design and implement ETL orchestration — Airflow, Dagster, or Prefect workflows",
       "reason": "ETL orchestration (Airflow/Dagster/Prefect). Data; deferred.",
       "source_provenance": [
         "etl-orchestration"
@@ -1629,7 +1629,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Generate Gap Analysis Reports (GAR) \u2014 detect missing capabilities, skills, agents, and recommend remediation.",
+      "purpose": "Generate Gap Analysis Reports (GAR) — detect missing capabilities, skills, agents, and recommend remediation.",
       "reason": "Gap Analysis Reports; legacy SDLC report ceremony.",
       "source_provenance": [
         "gap-analysis"
@@ -1655,7 +1655,7 @@
       "overlap_with_other_skills": [
         "seo-optimize"
       ],
-      "purpose": "Implement Generative Engine Optimization (GEO) \u2014 optimizing content for AI-powered",
+      "purpose": "Implement Generative Engine Optimization (GEO) — optimizing content for AI-powered",
       "reason": "Generative Engine Optimization. Marketing; overlaps seo-optimize; deferred.",
       "source_provenance": [
         "geo-branding"
@@ -1699,12 +1699,12 @@
       "legacy_skill_id": "impediment",
       "outputs": [
         "```markdown",
-        "# Blocker Log \u2014 Sprint 3"
+        "# Blocker Log — Sprint 3"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Identify, track, and remove blockers \u2014 anything preventing an agent from",
+      "purpose": "Identify, track, and remove blockers — anything preventing an agent from",
       "reason": "Roster-based blocker tracking tied to standup/roles.",
       "source_provenance": [
         "impediment"
@@ -1735,7 +1735,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Generate integration tests that verify interactions between multiple components \u2014",
+      "purpose": "Generate integration tests that verify interactions between multiple components —",
       "reason": "Variant of test authoring (component interactions). Combined into `test-authoring`.",
       "source_provenance": [
         "integration-test",
@@ -1762,7 +1762,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA Organizational Knowledge Graph \u2014 entity-relationship governance, impact analysis, and organizational query engine.",
+      "purpose": "ARAYA Organizational Knowledge Graph — entity-relationship governance, impact analysis, and organizational query engine.",
       "reason": "Legacy organizational knowledge graph/impact engine. Removed.",
       "source_provenance": [
         "knowledge-graph"
@@ -1780,13 +1780,13 @@
       ],
       "legacy_skill_id": "kpi-framework",
       "outputs": [
-        "A cascading KPI framework with strategic \u2192 tactical \u2192 operational metrics,",
+        "A cascading KPI framework with strategic → tactical → operational metrics,",
         "definitions, targets, and leading/lagging indicator balance."
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design cascading KPI frameworks \u2014 strategic, tactical, and operational metrics",
+      "purpose": "Design cascading KPI frameworks — strategic, tactical, and operational metrics",
       "reason": "Cascading KPI frameworks. Business/BI; deferred.",
       "source_provenance": [
         "kpi-framework"
@@ -1844,14 +1844,14 @@
         "A complete lab package:",
         "```",
         "labs/lab_N/",
-        "\u251c\u2500\u2500 README.md              # Briefing: business context, objectives, prerequisites, architecture",
-        "\u251c\u2500\u2500 lab_N.md               # Step-by-step instructions with expected outputs",
-        "\u251c\u2500\u2500 troubleshooting.md     # Common failures \u2192 symptom, cause, solution"
+        "├── README.md              # Briefing: business context, objectives, prerequisites, architecture",
+        "├── lab_N.md               # Step-by-step instructions with expected outputs",
+        "├── troubleshooting.md     # Common failures → symptom, cause, solution"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design hands-on educational laboratory exercises \u2014 realistic business scenarios",
+      "purpose": "Design hands-on educational laboratory exercises — realistic business scenarios",
       "reason": "Design hands-on educational labs. Education; deferred.",
       "source_provenance": [
         "lab-scenario-design"
@@ -1912,7 +1912,7 @@
       "overlap_with_other_skills": [
         "data-lakehouse-design"
       ],
-      "purpose": "Implement medallion (Bronze \u2192 Silver \u2192 Gold) data architecture \u2014 progressive",
+      "purpose": "Implement medallion (Bronze → Silver → Gold) data architecture — progressive",
       "reason": "Medallion (bronze/silver/gold) architecture. Data; overlaps data-lakehouse-design; deferred.",
       "source_provenance": [
         "medallion-architecture"
@@ -1937,7 +1937,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design asynchronous messaging architectures \u2014 choosing the right queue technology,",
+      "purpose": "Design asynchronous messaging architectures — choosing the right queue technology,",
       "reason": "Async messaging architecture. Backend; deferred.",
       "source_provenance": [
         "message-queue"
@@ -1964,7 +1964,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design microservice architectures \u2014 service boundaries, communication patterns,",
+      "purpose": "Design microservice architectures — service boundaries, communication patterns,",
       "reason": "Microservice architecture design. Backend; deferred.",
       "source_provenance": [
         "microservice"
@@ -1991,7 +1991,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Fine-tune open-source LLMs \u2014 LoRA, QLoRA, dataset preparation, and evaluation \u2014",
+      "purpose": "Fine-tune open-source LLMs — LoRA, QLoRA, dataset preparation, and evaluation —",
       "reason": "Fine-tune open LLMs (LoRA/QLoRA). ML; deferred.",
       "source_provenance": [
         "model-fine-tuning"
@@ -2021,7 +2021,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement observability \u2014 logs, metrics, traces, and alerts \u2014 that",
+      "purpose": "Design and implement observability — logs, metrics, traces, and alerts — that",
       "reason": "Observability (logs/metrics/traces). Ops; deferred.",
       "source_provenance": [
         "monitoring"
@@ -2044,7 +2044,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Publish and syndicate content across platforms \u2014 Blogger, X/Twitter, LinkedIn,",
+      "purpose": "Publish and syndicate content across platforms — Blogger, X/Twitter, LinkedIn,",
       "reason": "Syndicate content across platforms. Marketing; deferred.",
       "source_provenance": [
         "multi-platform-publish"
@@ -2077,7 +2077,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA organizational health monitoring \u2014 aggregate coverage scores, risk indicators, skill freshness, and workforce balance metrics.",
+      "purpose": "ARAYA organizational health monitoring — aggregate coverage scores, risk indicators, skill freshness, and workforce balance metrics.",
       "reason": "Legacy org-health monitoring over the roster. Removed.",
       "source_provenance": [
         "organizational-health"
@@ -2102,7 +2102,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA organizational knowledge management \u2014 standards, patterns, ADRs, lessons learned, technology preferences, and project reconstitution.",
+      "purpose": "ARAYA organizational knowledge management — standards, patterns, ADRs, lessons learned, technology preferences, and project reconstitution.",
       "reason": "Legacy org knowledge management. Removed.",
       "source_provenance": [
         "organizational-knowledge"
@@ -2130,7 +2130,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement page routing \u2014 URL structure, navigation, layouts,",
+      "purpose": "Design and implement page routing — URL structure, navigation, layouts,",
       "reason": "Page routing/navigation. Frontend; deferred.",
       "source_provenance": [
         "page-route"
@@ -2161,7 +2161,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Execute security penetration testing \u2014 SAST, DAST, dependency scanning, and",
+      "purpose": "Execute security penetration testing — SAST, DAST, dependency scanning, and",
       "reason": "Variant of security review (SAST/DAST scanning + manual adversarial testing). Combined into `security-review`.",
       "source_provenance": [
         "pentest",
@@ -2186,7 +2186,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Optimize frontend performance \u2014 bundle size, rendering speed, network efficiency,",
+      "purpose": "Optimize frontend performance — bundle size, rendering speed, network efficiency,",
       "reason": "Frontend performance optimization. Frontend; deferred.",
       "source_provenance": [
         "performance"
@@ -2210,7 +2210,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and execute performance tests \u2014 load, stress, soak, and spike testing \u2014",
+      "purpose": "Design and execute performance tests — load, stress, soak, and spike testing —",
       "reason": "Load/stress/soak testing. Performance engineering; deferred.",
       "source_provenance": [
         "performance-test"
@@ -2237,7 +2237,7 @@
       "overlap_with_other_skills": [
         "daily-note"
       ],
-      "purpose": "Design and optimize Personal Knowledge Management workflows \u2014 capture,",
+      "purpose": "Design and optimize Personal Knowledge Management workflows — capture,",
       "reason": "Personal knowledge management workflows. Overlaps daily-note; deferred.",
       "source_provenance": [
         "pkm-workflow"
@@ -2258,12 +2258,12 @@
       ],
       "legacy_skill_id": "pm-decompose",
       "outputs": [
-        "A decomposition tree where every leaf is an AWU \u2014 one agent, one session,",
+        "A decomposition tree where every leaf is an AWU — one agent, one session,",
         "independently deliverable:",
         "```",
         "Task: Build User Management API",
-        "\u251c\u2500\u2500 1.1 [P0] Design user schema (Bernab\u00e9/Mateo) \u2014 3 pts",
-        "\u2502   Depends on: nothing"
+        "├── 1.1 [P0] Design user schema (Bernabé/Mateo) — 3 pts",
+        "│   Depends on: nothing"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
@@ -2315,8 +2315,8 @@
       "legacy_skill_id": "pm-plan",
       "outputs": [
         "A sprint plan document containing:",
-        "- **Sprint Goal**: One sentence \u2014 what success looks like at sprint end",
-        "- **Task Backlog**: Prioritized task list (P0 \u2192 P3)",
+        "- **Sprint Goal**: One sentence — what success looks like at sprint end",
+        "- **Task Backlog**: Prioritized task list (P0 → P3)",
         "- **Estimates**: Story points or T-shirt sizes per task",
         "- **Assignments**: Which agent(s) own each task",
         "- **Dependencies**: Blocking relationships between tasks"
@@ -2376,8 +2376,8 @@
       "outputs": [
         "A status report in `.araya/plan/spec/status-report.md`:",
         "```markdown",
-        "# Sprint Status Report \u2014 Sprint 3",
-        "**Date:** 2026-05-27 | **Sprint:** May 24 \u2013 Jun 6"
+        "# Sprint Status Report — Sprint 3",
+        "**Date:** 2026-05-27 | **Sprint:** May 24 – Jun 6"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
@@ -2407,7 +2407,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Product Owner gap analysis questionnaire \u2014 generates structured markdown forms for missing requirements and acceptance criteria, with numbered Q&A support.",
+      "purpose": "Product Owner gap analysis questionnaire — generates structured markdown forms for missing requirements and acceptance criteria, with numbered Q&A support.",
       "reason": "PO requirements-gap questionnaire (Manu audit flow). PM/product; deferred.",
       "source_provenance": [
         "po-gap-questionnaire"
@@ -2425,7 +2425,7 @@
       ],
       "legacy_skill_id": "profitability-lineage",
       "outputs": [
-        "A profitability lineage map showing cost flows from source \u2192 activity \u2192 cost object,",
+        "A profitability lineage map showing cost flows from source → activity → cost object,",
         "with profit/loss attribution at each level."
       ],
       "overlap_with_AX3": false,
@@ -2435,7 +2435,7 @@
         "whale-curve-analyze"
       ],
       "purpose": "Trace profitability from cost source through activities to customers, products,",
-      "reason": "Trace profitability source\u2192activity\u2192customer. Finance; depends on ABC/whale-curve; deferred.",
+      "reason": "Trace profitability source→activity→customer. Finance; depends on ABC/whale-curve; deferred.",
       "source_provenance": [
         "profitability-lineage"
       ]
@@ -2460,7 +2460,7 @@
       "overlap_with_other_skills": [
         "pm-plan"
       ],
-      "purpose": "Facilitate project planning \u2014 charters, roadmaps, milestones, and resource",
+      "purpose": "Facilitate project planning — charters, roadmaps, milestones, and resource",
       "reason": "Project charter/roadmap/milestones. PM; overlaps pm-plan; deferred.",
       "source_provenance": [
         "project-planning"
@@ -2479,12 +2479,12 @@
       "legacy_skill_id": "rag-pipeline",
       "outputs": [
         "A complete RAG pipeline with chunking, embedding, retrieval, and generation",
-        "configuration \u2014 ready for deployment."
+        "configuration — ready for deployment."
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement Retrieval-Augmented Generation (RAG) pipelines \u2014 chunking",
+      "purpose": "Design and implement Retrieval-Augmented Generation (RAG) pipelines — chunking",
       "reason": "RAG pipeline (chunk/embed/retrieve). AI engineering; deferred.",
       "source_provenance": [
         "rag-pipeline"
@@ -2512,7 +2512,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA Reality Verification Layer \u2014 5-tier delivery state model, independent verification, governance enforcement, reality scoring.",
+      "purpose": "ARAYA Reality Verification Layer — 5-tier delivery state model, independent verification, governance enforcement, reality scoring.",
       "reason": "Legacy Reality Verification Layer (5-tier delivery governance). Covered by AX3.",
       "source_provenance": [
         "reality-verification"
@@ -2535,7 +2535,7 @@
       "outputs": [
         "A regression test plan:",
         "```markdown",
-        "# Regression Test Suite \u2014 User Management API v2.0"
+        "# Regression Test Suite — User Management API v2.0"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
@@ -2595,7 +2595,7 @@
       "overlap_with_other_skills": [
         "cost-analysis"
       ],
-      "purpose": "Analyze cloud resource utilization and recommend rightsizing \u2014 matching",
+      "purpose": "Analyze cloud resource utilization and recommend rightsizing — matching",
       "reason": "Cloud resource rightsizing. FinOps; overlaps cost-analysis; deferred.",
       "source_provenance": [
         "resource-rightsizing"
@@ -2623,7 +2623,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Implement mobile-first responsive design \u2014 fluid layouts, breakpoints,",
+      "purpose": "Implement mobile-first responsive design — fluid layouts, breakpoints,",
       "reason": "Mobile-first responsive design. Frontend; deferred.",
       "source_provenance": [
         "responsive"
@@ -2644,15 +2644,15 @@
       "legacy_skill_id": "retrospective",
       "outputs": [
         "```markdown",
-        "# Sprint Retrospective \u2014 Sprint 3",
+        "# Sprint Retrospective — Sprint 3",
         "**Date:** June 9, 2026",
         "**Sprint Goal:** User Management API with JWT authentication",
-        "**Outcome:** Goal met \u2705 (all P0 tasks completed, 2 P1 tasks carried over)"
+        "**Outcome:** Goal met ✅ (all P0 tasks completed, 2 P1 tasks carried over)"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Facilitate the sprint retrospective \u2014 a structured reflection on what went well,",
+      "purpose": "Facilitate the sprint retrospective — a structured reflection on what went well,",
       "reason": "Roster-based sprint retrospective ceremony.",
       "source_provenance": [
         "retrospective"
@@ -2748,7 +2748,7 @@
         "git.feature-pr-gate"
       ],
       "overlap_with_other_skills": [],
-      "purpose": "Audit, design, and implement secrets management strategies \u2014 detecting hardcoded",
+      "purpose": "Audit, design, and implement secrets management strategies — detecting hardcoded",
       "reason": "Variant of security review (secrets hygiene; deterministic detection now git.feature-pr-gate). Combined into `security-review`.",
       "source_provenance": [
         "secrets",
@@ -2777,7 +2777,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Review system architecture for security \u2014 zero-trust design, defense in depth,",
+      "purpose": "Review system architecture for security — zero-trust design, defense in depth,",
       "reason": "Variant of security review (zero-trust architecture review). Combined into `security-review`.",
       "source_provenance": [
         "secure-arch",
@@ -2839,7 +2839,7 @@
       "overlap_with_other_skills": [
         "geo-branding"
       ],
-      "purpose": "Optimize content and websites for search engines \u2014 keyword strategy, on-page",
+      "purpose": "Optimize content and websites for search engines — keyword strategy, on-page",
       "reason": "SEO keyword/on-page optimization. Marketing; deferred.",
       "source_provenance": [
         "seo-optimize"
@@ -2867,7 +2867,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA skills lifecycle management \u2014 govern creation, maturity, deprecation, and retirement of organizational skills.",
+      "purpose": "ARAYA skills lifecycle management — govern creation, maturity, deprecation, and retirement of organizational skills.",
       "reason": "Legacy skills lifecycle governance over the removed registry.",
       "source_provenance": [
         "skills-lifecycle"
@@ -2887,12 +2887,12 @@
       "legacy_skill_id": "slide-deck-generate",
       "outputs": [
         "A slide deck structure with content per slide, speaker notes, and visual",
-        "recommendations \u2014 ready for PowerPoint, Google Slides, or Reveal.js."
+        "recommendations — ready for PowerPoint, Google Slides, or Reveal.js."
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Create professional presentation slide decks \u2014 training materials, conference",
+      "purpose": "Create professional presentation slide decks — training materials, conference",
       "reason": "Presentation slide decks. Content; deferred.",
       "source_provenance": [
         "slide-deck-generate"
@@ -2924,7 +2924,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and implement Apache Spark data pipelines \u2014 batch and streaming ETL",
+      "purpose": "Design and implement Apache Spark data pipelines — batch and streaming ETL",
       "reason": "Apache Spark ETL pipelines. Data; deferred.",
       "source_provenance": [
         "spark-pipeline"
@@ -2951,7 +2951,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA Single Point of Failure detection \u2014 identify organizational risks where one agent is the sole holder of a critical capability.",
+      "purpose": "ARAYA Single Point of Failure detection — identify organizational risks where one agent is the sole holder of a critical capability.",
       "reason": "Legacy single-point-of-failure detection over the roster. Removed.",
       "source_provenance": [
         "spof-detection"
@@ -2978,14 +2978,14 @@
       "legacy_skill_id": "sprint-planning",
       "outputs": [
         "```markdown",
-        "# Sprint Plan \u2014 Sprint 3",
-        "**Dates:** May 27 \u2014 June 9, 2026 (2 weeks)",
-        "**Team:** Valentina, Teresa, Diana, Isla, Priscila, Bernab\u00e9"
+        "# Sprint Plan — Sprint 3",
+        "**Dates:** May 27 — June 9, 2026 (2 weeks)",
+        "**Team:** Valentina, Teresa, Diana, Isla, Priscila, Bernabé"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Facilitate sprint planning \u2014 setting the sprint goal, selecting backlog items,",
+      "purpose": "Facilitate sprint planning — setting the sprint goal, selecting backlog items,",
       "reason": "Roster-based sprint planning ceremony.",
       "source_provenance": [
         "sprint-planning"
@@ -3009,7 +3009,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design frontend state management architecture \u2014 choosing the right pattern",
+      "purpose": "Design frontend state management architecture — choosing the right pattern",
       "reason": "Frontend state management. Frontend; deferred.",
       "source_provenance": [
         "state-management"
@@ -3033,14 +3033,14 @@
         "A complete static site:",
         "```",
         "my-site/",
-        "\u251c\u2500\u2500 src/",
-        "\u2502   \u251c\u2500\u2500 pages/",
-        "\u2502   \u2502   \u251c\u2500\u2500 index.md           # Home page"
+        "├── src/",
+        "│   ├── pages/",
+        "│   │   ├── index.md           # Home page"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Generate static websites and blogs \u2014 from Markdown content to deployed HTML \u2014",
+      "purpose": "Generate static websites and blogs — from Markdown content to deployed HTML —",
       "reason": "Generate static sites from Markdown. Content/web; deferred.",
       "source_provenance": [
         "static-site-generate"
@@ -3064,7 +3064,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design competency-based student assessments \u2014 rubrics, automated grading,",
+      "purpose": "Design competency-based student assessments — rubrics, automated grading,",
       "reason": "Competency-based assessments. Education; deferred.",
       "source_provenance": [
         "student-assessment"
@@ -3092,10 +3092,10 @@
       "outputs": [
         "A red/green test report:",
         "```",
-        "\ud83e\uddea TDD Test Results",
-        "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501",
-        "\u2705 PASS  tests/login.test.ts (3 tests)",
-        "\u2713 should authenticate with valid credentials (45ms)"
+        "🧪 TDD Test Results",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "✅ PASS  tests/login.test.ts (3 tests)",
+        "✓ should authenticate with valid credentials (45ms)"
       ],
       "overlap_with_AX3": false,
       "overlap_with_operations": [
@@ -3162,7 +3162,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Write and structure technical book chapters \u2014 manuscripts, training books,",
+      "purpose": "Write and structure technical book chapters — manuscripts, training books,",
       "reason": "Write technical book chapters. Content; deferred.",
       "source_provenance": [
         "technical-book"
@@ -3216,7 +3216,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design CSS theme systems \u2014 design tokens, color palettes, typography scales,",
+      "purpose": "Design CSS theme systems — design tokens, color palettes, typography scales,",
       "reason": "CSS theme systems/design tokens. Frontend design; deferred.",
       "source_provenance": [
         "theme-design"
@@ -3270,7 +3270,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Global Token Efficiency and Provider Optimization Framework \u2014 maximize useful work within available quotas by optimizing prompts, contexts, and delegation.",
+      "purpose": "Global Token Efficiency and Provider Optimization Framework — maximize useful work within available quotas by optimizing prompts, contexts, and delegation.",
       "reason": "Legacy global token efficiency framework. Removed runtime.",
       "source_provenance": [
         "token-efficiency"
@@ -3294,7 +3294,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design modular training courses \u2014 structured learning paths with modules,",
+      "purpose": "Design modular training courses — structured learning paths with modules,",
       "reason": "Modular training courses. Education; deferred.",
       "source_provenance": [
         "training-module"
@@ -3321,7 +3321,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA golden trajectory management \u2014 capture, validate, promote, and reuse successful delivery patterns.",
+      "purpose": "ARAYA golden trajectory management — capture, validate, promote, and reuse successful delivery patterns.",
       "reason": "Legacy golden trajectory management. Removed.",
       "source_provenance": [
         "trajectory-management"
@@ -3348,7 +3348,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Generate User Acceptance Testing (UAT) packages from requirements, acceptance criteria, SDD, BDD, and TDD \u2014 formal customer validation before delivery acceptance.",
+      "purpose": "Generate User Acceptance Testing (UAT) packages from requirements, acceptance criteria, SDD, BDD, and TDD — formal customer validation before delivery acceptance.",
       "reason": "Generate UAT packages. Legacy SDLC ceremony; deferred (no current acceptance workflow).",
       "source_provenance": [
         "uat-generate"
@@ -3374,7 +3374,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Review and validate UAT packages \u2014 verify completeness, coverage, traceability, and acceptance readiness before customer submission.",
+      "purpose": "Review and validate UAT packages — verify completeness, coverage, traceability, and acceptance readiness before customer submission.",
       "reason": "Review UAT packages. Legacy SDLC ceremony; deferred.",
       "source_provenance": [
         "uat-review"
@@ -3435,7 +3435,7 @@
       "overlap_with_other_skills": [
         "cost-analysis"
       ],
-      "purpose": "Track and analyze cloud resource consumption \u2014 CPU-hours, storage GB-months,",
+      "purpose": "Track and analyze cloud resource consumption — CPU-hours, storage GB-months,",
       "reason": "Track cloud resource consumption. FinOps; overlaps cost-analysis; deferred.",
       "source_provenance": [
         "usage-metering"
@@ -3459,7 +3459,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Implement vector similarity search \u2014 embedding strategies, index configuration,",
+      "purpose": "Implement vector similarity search — embedding strategies, index configuration,",
       "reason": "Vector similarity search (embeddings/HNSW). AI/data; deferred.",
       "source_provenance": [
         "vector-search"
@@ -3478,12 +3478,12 @@
       "legacy_skill_id": "velocity",
       "outputs": [
         "```markdown",
-        "# Velocity Report \u2014 Q1-Q2 2026"
+        "# Velocity Report — Q1-Q2 2026"
       ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Track, analyze, and forecast team velocity \u2014 the amount of work completed per",
+      "purpose": "Track, analyze, and forecast team velocity — the amount of work completed per",
       "reason": "Roster-based sprint velocity tracking; agile ceremony over removed roles.",
       "source_provenance": [
         "velocity"
@@ -3507,7 +3507,7 @@
       "overlap_with_AX3": false,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "Design and maintain visual identity systems \u2014 logo, color palette, typography,",
+      "purpose": "Design and maintain visual identity systems — logo, color palette, typography,",
       "reason": "Visual identity systems. Design; deferred.",
       "source_provenance": [
         "visual-identity"
@@ -3533,7 +3533,7 @@
       "overlap_with_other_skills": [
         "abc-costing-model"
       ],
-      "purpose": "Analyze customer/product profitability using the Whale Curve methodology \u2014",
+      "purpose": "Analyze customer/product profitability using the Whale Curve methodology —",
       "reason": "Whale Curve customer profitability. Finance; depends on ABC model; deferred.",
       "source_provenance": [
         "whale-curve-analyze"
@@ -3561,7 +3561,7 @@
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
-      "purpose": "ARAYA workforce planning \u2014 project future skill needs, recommend agent hiring/retirement, manage organizational capacity.",
+      "purpose": "ARAYA workforce planning — project future skill needs, recommend agent hiring/retirement, manage organizational capacity.",
       "reason": "Legacy workforce planning over the roster. Removed.",
       "source_provenance": [
         "workforce-planning"
@@ -3571,18 +3571,22 @@
   "review_method": "evidence-based full-source review (not frontmatter-only)",
   "source": "archive/araya-legacy-origin-dev-mahg-20260927 (skills/*/SKILL.md, full body)",
   "summary": {
-    "COMBINE": 12,
+    "COMBINE": 13,
     "DROP": 28,
-    "KEEP": 3,
-    "LATER": 84,
+    "KEEP": 5,
+    "LATER": 81,
     "REPLACE_BY_OPERATION": 1,
-    "canonical_skills_total": 7,
+    "canonical_skills_total": 9,
     "review_method": "full source body read (SKILL.md), per-skill evidence fields derived",
     "total_reviewed": 128,
     "wave1_recovered": [
       "test-authoring",
       "security-review"
+    ],
+    "wave2_recovered": [
+      "architecture-diagram",
+      "api-design"
     ]
   },
-  "version": "2.0.0"
+  "version": "1.1.0"
 }
