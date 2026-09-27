@@ -181,7 +181,10 @@ class LegacySkillsReviewTest(unittest.TestCase):
         by_name = {s["name"]: s for s in self.index["skills"]}
         self.assertIn("test.execute", by_name["tdd-execute"]["operations"])
         self.assertIn("test.execute", by_name["test-authoring"]["operations"])
-        self.assertIn("git.feature-pr-gate", by_name["security-review"]["operations"])
+        # PE-ARAYA-2609-C-04: security review is reasoning-only and must NOT
+        # drag an irrelevant Git operation via an indirect relation.
+        self.assertEqual(by_name["security-review"]["operations"], [])
+        self.assertNotIn("git.feature-pr-gate", by_name["security-review"]["operations"])
 
     def test_wave1_skills_present(self):
         names = {s["name"] for s in self.index["skills"]}

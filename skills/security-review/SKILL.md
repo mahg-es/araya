@@ -1,6 +1,6 @@
 ---
 name: security-review
-description: "Review code, architecture, and dependencies for security (OWASP/CWE/STRIDE), and audit secrets — with deterministic secret/path checks delegated to the git operations."
+description: "Review code, architecture, and dependencies for security (OWASP/CWE/STRIDE), and audit secrets across four lenses."
 ---
 
 # Security Review
@@ -17,17 +17,15 @@ Security defects are 10x more expensive to fix in production than at review.
 This skill finds injection flaws, broken auth, sensitive-data exposure,
 design flaws, and hardcoded secrets before they ship.
 
-## Boundary — deterministic checks via operations
+## Boundary — reasoning-only capability
 
 - **Reasoning** lives here: threat modeling, trust boundaries, contextual
-  review of authn/authz/input-handling/data-access.
-- **Deterministic secret/path checks** are already operations — invoke them
-  instead of re-deriving:
-
-```bash
-araya operation execute git.feature-pr-gate base=origin/dev-mahg
-# reports no_secrets + no_forbidden_paths deterministically
-```
+  review of authn/authz/input-handling/data-access, and secrets hygiene.
+- This capability declares **no deterministic operation**: a security review is
+  not, by itself, a Git action. It therefore never drags a Git operation into a
+  resolution. Where a change is published, the deterministic secret/path check
+  belongs to the publication flow (`git.feature-pr-gate`), not to this skill —
+  invoke it explicitly when you are actually publishing, not merely reviewing.
 
 ## Lenses
 
@@ -44,19 +42,20 @@ araya operation execute git.feature-pr-gate base=origin/dev-mahg
 1. Identify the change's trust boundaries and data flows.
 2. Apply STRIDE; rank threats by likelihood × impact.
 3. Review code for the most dangerous vulnerability classes; produce fixes.
-4. Invoke the git operations' secret/path checks for the deterministic part.
+4. For a change being published, note that the deterministic secret/path check
+   runs in the publication flow; this skill does not declare that operation.
 5. Recommend mitigations (not just findings).
 
 ## Rules
 
 - Report findings with severity + concrete fix, not just "looks risky".
-- Do not re-derive secret/path scanning — invoke the deterministic operation.
+- This skill declares no deterministic operation — do not present secret/path
+  scanning as an automatic step of the security-review capability.
 - Least privilege and secure defaults over bolted-on hardening.
 
 ## Done criteria
 
 - [ ] Code + architecture + threat model reviewed
-- [ ] Deterministic secret/path check invoked
 - [ ] Findings carry severity + actionable mitigation
 
 ## Provenance

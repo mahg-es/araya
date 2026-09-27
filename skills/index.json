@@ -60,12 +60,12 @@
     },
     {
       "name": "security-review",
-      "description": "Review code, architecture, and dependencies for security (OWASP/CWE/STRIDE) and audit secrets; deterministic secret/path checks delegated to git operations.",
+      "description": "Review code, architecture, and dependencies for security (OWASP/CWE/STRIDE) and audit secrets. Reasoning-only capability; it declares no deterministic operation.",
       "path": "security-review/SKILL.md",
       "tags": ["security", "code-review", "threat-model", "secrets"],
       "capabilities": ["review-security"],
       "dependencies": [],
-      "operations": ["git.feature-pr-gate"],
+      "operations": [],
       "resources": [],
       "source_provenance": ["secure-code", "secure-arch", "threat-model", "pentest", "secrets"]
     },
