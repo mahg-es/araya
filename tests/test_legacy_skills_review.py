@@ -116,6 +116,21 @@ class LegacySkillsReviewTest(unittest.TestCase):
             for field in REQUIRED_FIELDS:
                 self.assertIn(field, r, f"{r['legacy_skill_id']} missing {field}")
 
+    def test_no_empty_inputs_outputs(self):
+        # Required analysis fields that must carry source evidence cannot be left
+        # empty. inputs/outputs are populated from the archived SKILL.md body
+        # (handling alternate headings Input/Inputs/Inputs (Required) and
+        # Output/Outputs/Outputs (Required)/Expected Output); when the source
+        # genuinely provides none, the field must carry an explicit UNKNOWN.
+        for r in self.records:
+            sid = r["legacy_skill_id"]
+            self.assertTrue(r["inputs"], f"{sid} has empty inputs")
+            self.assertTrue(r["outputs"], f"{sid} has empty outputs")
+            for v in r["inputs"]:
+                self.assertTrue(str(v).strip(), f"{sid} has a blank inputs entry")
+            for v in r["outputs"]:
+                self.assertTrue(str(v).strip(), f"{sid} has a blank outputs entry")
+
     def test_later_reasons_individualized(self):
         later = [r for r in self.records if r["disposition"] == "LATER"]
         self.assertTrue(later)
