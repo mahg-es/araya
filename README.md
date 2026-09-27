@@ -61,8 +61,16 @@ not names. There is no permanent persona roster.
 **Delegation.** A capability resolver plus an ephemeral-agent factory. A task
 is resolved to capabilities, skills, and deterministic operations; if no
 specialist is needed it executes directly, otherwise it composes an ephemeral
-specialist (delegated via the host's native subagent mechanism) and traces the
+specialist and hands it off for REAL native subagent execution, then traces the
 communication through PostOffice.
+
+The native subagent boundary: `delegate run` resolves, composes a scoped worker
+request, records the PostOffice handoff (delegation), and emits the worker
+prompt for the agent-facing caller to invoke through Pi's native `subagent`
+mechanism; `delegate result` records the worker's returned result and emits the
+correlation trace. The library never spawns the subagent itself — it provides
+the smallest adapter boundary so the caller invokes the host's native subagent
+without duplicating orchestration logic.
 
 **CLI (agent-first).** `cli/araya` provides stable, namespaced commands with
 structured parameters, `--json` output, stable exit codes, non-interactive
@@ -74,6 +82,8 @@ python3 cli/araya --json operation list
 python3 cli/araya --json operation execute git.repository-sanity repo=/path/to/repo
 python3 cli/araya --json git merge-gate --pr 123 --candidate <sha> --base dev-mahg
 python3 cli/araya --json delegate "publish this branch to integration"
+python3 cli/araya --json delegate run --correlation P123 "verify the repository"
+python3 cli/araya --json delegate result --correlation P123 --worker <name> --status PASS
 ```
 
 **PostOffice (agent ↔ agent).** Messaging + historical trace: sender, recipient,
@@ -246,8 +256,10 @@ never creates a persona named `daneel`.
 1. The capability foundation is the first recovery pass; most legacy skills
    (~130) remain archived and unreviewed (see `docs/LEGACY-CAPABILITY-INVENTORY.md`).
 2. No automated cross-project delegation/state store; ARAYA is per-project and
-   host-scoped. The ephemeral-agent factory composes a spec; it does not itself
-   run subagents.
+   host-scoped. The library composes the scoped worker request and records the
+   handoff/result, but the actual native subagent invocation is performed by
+   the agent-facing caller (Daneel) at the adapter boundary — the library does
+   not spawn subagents itself.
 3. The ChatGPT bundle is for a custom GPT; there is no hosted ARAYA service.
 4. Daneel's private memory/identity is not versioned inside ARAYA; if it needs
    backup/versioning, that must live in a private location independent of ARAYA.

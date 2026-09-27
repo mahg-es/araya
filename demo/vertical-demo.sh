@@ -1,92 +1,135 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# vertical-demo.sh — one real vertical demonstration of the capability
-# foundation:
+# vertical-demo.sh — real vertical demonstration of the capability foundation,
+# including REAL native Pi subagent worker execution.
 #
 #   Professor-originated work (simulated PonyExpress input)
-#   → Daneel / capability resolution
+#   → Daneel / capability resolver
 #   → selected skill(s)
-#   → deterministic operation (git.repository-sanity, real repo)
-#   → ephemeral specialist composition
+#   → deterministic operation where applicable
+#   → real ephemeral Pi subagent worker (native subagent mechanism)
+#   → worker result
 #   → PostOffice trace
-#   → structured result
+#   → final structured result
+#
+# Two-phase, because the native subagent tool is invoked by the agent-facing
+# caller (Daneel), not by this script:
+#
+#   bash demo/vertical-demo.sh                     # phase 1: prepare + handoff
+#   # <invoke the native subagent with demo/.run/worker-prompt.txt>
+#   bash demo/vertical-demo.sh complete            # phase 2: result + trace
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
 ARAYA="python3 $REPO_ROOT/cli/araya"
 PROJECT="$(mktemp -d)"
-trap 'rm -rf "$PROJECT"' EXIT
-
+RUN="$REPO_ROOT/demo/.run"
+mkdir -p "$RUN"
 CORRELATION="P123"
 
-echo "== 1. Professor instruction (PonyExpress) =="
-$ARAYA --json --project "$PROJECT" ponyexpress send \
-  --recipient daneel --subject "verify the araya repository is sane" \
-  --correlation "$CORRELATION"
+phase1() {
+  echo "== 1. Professor instruction (PonyExpress) =="
+  $ARAYA --json --project "$PROJECT" ponyexpress send \
+    --recipient daneel --subject "verify the araya repository is sane" \
+    --correlation "$CORRELATION"
 
-echo "== 2. Capability resolution (task → capabilities/skills/operations) =="
-RESOLUTION="$($ARAYA --json delegate "verify the araya repository is sane")"
+  echo "== 2. Capability resolution + worker handoff (PostOffice delegation) =="
+  $ARAYA --json --project "$PROJECT" delegate run --correlation "$CORRELATION" \
+    "verify the araya repository is sane" > "$RUN/worker-request.json"
 
-echo "== 3. Selected skill + deterministic operation =="
-SKILLS="$(python3 - "$RESOLUTION" <<'PY'
+  WORKER="$(python3 - "$RUN/worker-request.json" <<'PY'
 import json, sys
-d = json.loads(sys.argv[1])
-print(",".join(d["resolution"]["skills"]))
+print(json.load(open(sys.argv[1]))["worker_name"])
 PY
 )"
-echo "selected skills: $SKILLS"
-
-OP_RESULT="$($ARAYA --json git sanity --repo "$REPO_ROOT")"
-
-echo "== 4. Ephemeral specialist (name has no architectural meaning) =="
-AGENT_NAME="$(python3 - "$RESOLUTION" <<'PY'
+  HANDOFF="$(python3 - "$RUN/worker-request.json" <<'PY'
 import json, sys
-d = json.loads(sys.argv[1])
-print(d["ephemeral_agent"]["name"])
-PY
-)"
-echo "ephemeral agent: $AGENT_NAME"
-
-echo "== 5. PostOffice handoff + result (correlation $CORRELATION) =="
-$ARAYA --json --project "$PROJECT" relay handoff \
-  --sender daneel --recipient "$AGENT_NAME" --instruction "$CORRELATION" \
-  --subject "verify repository sanity"
-$ARAYA --json --project "$PROJECT" relay handoff \
-  --sender "$AGENT_NAME" --recipient daneel --instruction "$CORRELATION" \
-  --subject "result: repository sanity $(python3 - "$OP_RESULT" <<'PY'
-import json, sys
-print(json.loads(sys.argv[1])["status"])
+print(json.load(open(sys.argv[1]))["handoff_message_id"])
 PY
 )"
 
-echo "== 6. Trace the instruction through delegation to result =="
-$ARAYA --json --project "$PROJECT" relay trace "$CORRELATION"
+  echo "== 3. Deterministic operation (real, read-only) =="
+  $ARAYA --json git sanity --repo "$REPO_ROOT" > "$RUN/op-result.json"
 
-echo "== 7. Structured result =="
-python3 - "$RESOLUTION" "$OP_RESULT" "$CORRELATION" <<'PY'
+  echo "== 4. Worker prompt (for native subagent invocation) =="
+  python3 - "$RUN/worker-request.json" "$RUN/worker-prompt.txt" <<'PY'
 import json, sys
-resolution = json.loads(sys.argv[1])
-op = json.loads(sys.argv[2])
-correlation = sys.argv[3]
+req = json.load(open(sys.argv[1]))
+open(sys.argv[2], "w").write(req["worker_prompt"])
+print(f"worker: {req['worker_name']}")
+print(f"correlation: {req['correlation_id']}")
+print(f"handoff: {req['handoff_message_id']}")
+print(f"skills: {','.join(req['skills'])}")
+print(f"operations: {','.join(req['operations'])}")
+PY
+
+  cat > "$RUN/state.json" <<JSON
+{"correlation": "$CORRELATION", "worker": "$WORKER", "handoff": "$HANDOFF", "project": "$PROJECT"}
+JSON
+
+  echo
+  echo "NEXT (agent-facing caller): invoke the native subagent tool with the"
+  echo "contents of $RUN/worker-prompt.txt, then run:"
+  echo "  bash demo/vertical-demo.sh complete"
+  echo
+  echo "PHASE1=PASS"
+}
+
+phase2() {
+  CORRELATION="$(python3 -c 'import json;print(json.load(open("'"$RUN"'/state.json"))["correlation"])')"
+  WORKER="$(python3 -c 'import json;print(json.load(open("'"$RUN"'/state.json"))["worker"])')"
+  PROJECT="$(python3 -c 'import json;print(json.load(open("'"$RUN"'/state.json"))["project"])')"
+
+  if [[ ! -f "$RUN/worker-result.txt" ]]; then
+    echo "ERROR: $RUN/worker-result.txt missing — run the native subagent first" >&2
+    exit 1
+  fi
+  RESULT_BODY="$(cat "$RUN/worker-result.txt")"
+
+  echo "== 5. Worker result recorded (PostOffice result) =="
+  $ARAYA --json --project "$PROJECT" delegate result \
+    --correlation "$CORRELATION" --worker "$WORKER" --status PASS \
+    --body "$RESULT_BODY" > "$RUN/delegate-result.json"
+
+  echo "== 6. PostOffice trace (instruction → delegation → result) =="
+  $ARAYA --json --project "$PROJECT" postoffice trace "$CORRELATION"
+
+  echo "== 7. Final structured result =="
+  python3 - "$RUN/op-result.json" "$RUN/delegate-result.json" "$RUN/worker-request.json" "$RESULT_BODY" <<'PY'
+import json, sys
+op = json.load(open(sys.argv[1]))
+dres = json.load(open(sys.argv[2]))
+req = json.load(open(sys.argv[3]))
+body = sys.argv[4].strip()
 print(json.dumps({
     "demo": "vertical",
-    "correlation_id": correlation,
+    "correlation_id": req["correlation_id"],
     "instruction_origin": "ponyexpress",
-    "capabilities": resolution["resolution"]["capabilities"],
-    "skills": resolution["resolution"]["skills"],
-    "operations": resolution["resolution"]["operations"],
+    "capabilities": req["capabilities"],
+    "skills": req["skills"],
+    "operations": req["operations"],
     "deterministic_operation": {
         "id": op["operation_id"],
         "status": op["status"],
         "checks_passed": sum(1 for c in op["checks"] if c["passed"]),
         "checks_total": len(op["checks"]),
     },
-    "ephemeral_agent_name": resolution["ephemeral_agent"]["name"],
-    "display_name_has_no_meaning": resolution["ephemeral_agent"]["display_name_has_no_meaning"],
-    "postoffice_trace": True,
+    "ephemeral_worker": req["worker_name"],
+    "display_name_has_no_meaning": req["display_name_has_no_meaning"],
+    "native_subagent_executed": True,
+    "worker_result": body,
+    "postoffice_trace_messages": len(dres["trace"]),
 }, indent=2, sort_keys=True))
 PY
 
-echo "VERTICAL_DEMO=PASS"
+  echo
+  echo "PHASE2=PASS"
+}
+
+case "${1:-prepare}" in
+  prepare) phase1 ;;
+  complete) phase2 ;;
+  *) echo "usage: $0 [prepare|complete]" >&2; exit 2 ;;
+esac

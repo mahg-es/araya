@@ -13,6 +13,7 @@ PY_TESTS=(
   tests/test_communications.py
   tests/test_skills_capabilities_delegation.py
   tests/test_runtime.py
+  tests/test_native_subagent.py
   tests/test_cli.py
 )
 
