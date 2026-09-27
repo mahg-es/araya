@@ -25,7 +25,7 @@ from typing import Any, Optional
 from .capabilities import Capabilities
 from .operations import OperationRegistry
 from .skills import Skills
-from .matching import matches
+from .matching import matches, tokenize, hay_tokens
 from .store import new_id
 
 
@@ -54,10 +54,12 @@ class Delegation:
         return " ".join(cap.get("keywords", []))
 
     def _operation_warranted(self, op_id: str, task: str) -> bool:
-        """Operation safety: an operation is warranted only when it is
-        read-only, or when the intent explicitly names the action the operation
-        performs. A read-only/design intent never silently gains a
-        state-changing operation from a textual similarity."""
+        """Operation safety: a read-only operation is always safe. A
+        state-changing operation is warranted only by a *strong* match — the
+        intent must share **at least two distinct normalized tokens** with the
+        operation's declared action (id/title/aliases/intents). A single generic
+        noun (e.g. "branch", "integration") can therefore never pull in a
+        state-changing operation; the request must actually name the action."""
         definition = self.operations.describe(op_id)
         if definition is None:
             return False
@@ -69,7 +71,7 @@ class Delegation:
             *definition.get("aliases", []),
             *definition.get("intents", []),
         ])
-        return matches(hay, task)
+        return len(set(tokenize(task)) & set(hay_tokens(hay))) >= 2
 
     def resolve(self, task: str) -> dict:
         """Determine capabilities, skills, and deterministic operations for a

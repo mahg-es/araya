@@ -175,6 +175,16 @@ class OperationSafetyTest(unittest.TestCase):
         r = self.d.resolve("start a feature branch")
         self.assertIn("git.feature-start", r["operations"])
 
+    def test_generic_noun_does_not_warrant_state_changing_operation(self):
+        # Regression for the independent-verifier finding: a single generic
+        # shared token ("branch") must never warrant a state-changing operation
+        # (git.feature-start creates a worktree+branch). A strong match — at
+        # least two distinct action tokens — is required.
+        r = self.d.resolve("document the branch naming conventions")
+        self.assertNotIn("git.feature-start", r["operations"])
+        r2 = self.d.resolve("explain the integration strategy")
+        self.assertNotIn("git.feature-start", r2["operations"])
+
     def test_design_request_has_no_operations(self):
         self.assertEqual(self.d.resolve(C02_ES)["operations"], [])
         self.assertEqual(self.d.resolve("design a REST API")["operations"], [])
