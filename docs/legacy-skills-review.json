@@ -116,9 +116,14 @@
         "coverage"
       ],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "requirements, capabilities, skills, trajectories, knowledge graph, and constitutional constraints (skill intro)"
+      ],
       "legacy_skill_id": "agent-topology",
-      "outputs": [],
+      "outputs": [
+        "optimal team assembly and recommendations (team:recommend / team:assemble)",
+        "capability coverage, SPOF, and risk reports (team:validate / team:risk)"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -365,9 +370,13 @@
         "Git "
       ],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "requested outcome/intent (Protocol step 1: interpret what is being asked)"
+      ],
       "legacy_skill_id": "araya-operation-runtime",
-      "outputs": [],
+      "outputs": [
+        "governed OperationResult (passed:true) or an OPERATION_GAP record"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -677,9 +686,16 @@
         "coverage"
       ],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "new agent or skill added",
+        "before any task delegation",
+        "gap analysis request"
+      ],
       "legacy_skill_id": "capability-registry",
-      "outputs": [],
+      "outputs": [
+        "capability-registry.yaml (agents to domains/capabilities/skills)",
+        "coverage gap analysis with documented gaps"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -1032,7 +1048,10 @@
         "DRR ID, IAR ID, and Manu's approval decisions."
       ],
       "legacy_skill_id": "cr-generate",
-      "outputs": [],
+      "outputs": [
+        "Structured CR saved to .araya/reviews/cr/{cr_id}.yaml",
+        "work package routed back into the SDLC"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -1345,9 +1364,13 @@
         "coverage"
       ],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "a task, phase, or delivery about to begin (DoD defined FIRST)"
+      ],
       "legacy_skill_id": "definition-of-done",
-      "outputs": [],
+      "outputs": [
+        "Definition of Done checklists at task, phase, and delivery levels"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -1426,7 +1449,9 @@
         "Delivery ID, reviewer name, and all feedback observations."
       ],
       "legacy_skill_id": "drr-create",
-      "outputs": [],
+      "outputs": [
+        "Structured DRR saved to .araya/reviews/drr/{drr_id}.yaml with findings classified"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -1592,9 +1617,15 @@
       "deterministic_code_available": false,
       "deterministic_tools": [],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "before any major delivery",
+        "when a new domain is needed",
+        "when a task has no qualified agent"
+      ],
       "legacy_skill_id": "gap-analysis",
-      "outputs": [],
+      "outputs": [
+        "Gap Analysis Report (GAR-YYYY-NNN) with detected gaps, impact, and remediation recommendations"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -1641,7 +1672,9 @@
         "DRR ID and the full project context (SDD, BDD, TDD, architecture)."
       ],
       "legacy_skill_id": "iar-generate",
-      "outputs": [],
+      "outputs": [
+        "Structured IAR saved to .araya/reviews/iar/{iar_id}.yaml with impact analysis per finding"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -1716,9 +1749,16 @@
       "deterministic_code_available": false,
       "deterministic_tools": [],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "existing artifacts: specs, preferences, metrics, trajectories (Rules)",
+        "query terms for graph search/ask"
+      ],
       "legacy_skill_id": "knowledge-graph",
-      "outputs": [],
+      "outputs": [
+        "entity/relationship summaries and detailed views",
+        "impact analyses and Mermaid diagrams",
+        "organizational query answers"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -2050,9 +2090,15 @@
       "deterministic_code_available": false,
       "deterministic_tools": [],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "standards, patterns, ADRs, lessons learned, technology preferences (Knowledge Types)",
+        "projects for reconstitution"
+      ],
       "legacy_skill_id": "organizational-knowledge",
-      "outputs": [],
+      "outputs": [
+        "knowledge summaries and search results",
+        "reconstitution: recovered specs and recovery roadmap"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -2453,9 +2499,16 @@
         "Docker"
       ],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "claims vs repository evidence (reality-check)",
+        "branch strategy, run records, traceability (governance-check)",
+        "Docker/Traefik/secrets/health checks (deployment-check)"
+      ],
       "legacy_skill_id": "reality-verification",
-      "outputs": [],
+      "outputs": [
+        "reality confidence score (5-tier model)",
+        "governance and deployment verification reports"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -2503,9 +2556,15 @@
         "Git "
       ],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "task_file - path to the assigned Relay task file",
+        "actor_profile - agent's canonical profile including relay section"
+      ],
       "legacy_skill_id": "relay-participant",
-      "outputs": [],
+      "outputs": [
+        "claim_file - valid claim written with flock + version check",
+        "event_record - valid event appended to task event log"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -3198,9 +3257,16 @@
       "deterministic_code_available": false,
       "deterministic_tools": [],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "before any large task execution",
+        "when rate-limit risk is detected",
+        "multi-agent orchestration planning",
+        "when context windows approach limits"
+      ],
       "legacy_skill_id": "token-efficiency",
-      "outputs": [],
+      "outputs": [
+        "token budget report (estimated tokens, rate-limit risk assessment, optimization recommendations, provider strategy)"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -3243,9 +3309,15 @@
         "Coverage"
       ],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "successful delivery patterns for capture/promotion",
+        "task for pattern recommendation"
+      ],
       "legacy_skill_id": "trajectory-management",
-      "outputs": [],
+      "outputs": [
+        "golden/candidate trajectory records",
+        "pattern recommendations for new tasks"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -3270,7 +3342,9 @@
         "TDD definitions, and delivery metadata."
       ],
       "legacy_skill_id": "uat-generate",
-      "outputs": [],
+      "outputs": [
+        "UAT package saved to .araya/reviews/uat/uat-{delivery-id}.md (traceability matrix, test cases, coverage, findings register, acceptance decision)"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -3294,7 +3368,9 @@
         "UAT ID and the full UAT package."
       ],
       "legacy_skill_id": "uat-review",
-      "outputs": [],
+      "outputs": [
+        "UAT review report (requirements/AC coverage %, traceability gaps, recommendation READY|NEEDS FIXES|REJECTED)"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
@@ -3473,9 +3549,15 @@
         "coverage"
       ],
       "disposition": "DROP",
-      "inputs": [],
+      "inputs": [
+        "when roadmap shows new domains",
+        "when a capability gap is detected",
+        "when an agent is over-assigned"
+      ],
       "legacy_skill_id": "workforce-planning",
-      "outputs": [],
+      "outputs": [
+        "Workforce Plan (WP-YYYY-QN) with future needs and hire/extend/retire recommendations"
+      ],
       "overlap_with_AX3": true,
       "overlap_with_operations": [],
       "overlap_with_other_skills": [],
