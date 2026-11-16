@@ -11,16 +11,26 @@
 5. **Presupuesto de Contexto Medible (`Context Budget`):** Cada tarea lista explícitamente los únicos **3 a 5 archivos** que el agente tiene permitido leer. Para garantizar atomicidad real y bajo costo operativo, la suma total del prompt inicial y dichos archivos **no debe superar los 30k–50k tokens (aprox. 1,500–2,000 líneas de código/texto)**, manteniendo un techo duro absoluto de **150k tokens** incluyendo el historial de ejecución. Si una tarea exige más contexto, está mal particionada y debe dividirse.
 6. **Paralelismo Controlado y Efímero (`Git Worktrees`):** Las tareas sin dependencias bloqueantes avanzan en paralelo hasta un máximo de **4 subprocesos simultáneos**. Cada subproceso opera exclusivamente dentro de una ruta oculta controlada fuera del repositorio (`~/.gh-worktree/<proyecto>/<rama-atomica>`) y **se destruye obligatoriamente (`git worktree remove`)** inmediatamente después de fusionar el PR, prohibiendo worktrees huérfanos o en directorios de trabajo visibles.
 7. **Freno de Emergencia (`Circuit Breaker`):** Si una tarea falla la validación automática **2 veces consecutivas**, el subproceso se detiene de inmediato, no hace `push` de código roto y genera un ticket atómico en `docs/governance/action-logs/`.
-8. **Prolijidad Estructural y Modularidad (`SSOT`):** Prohibido crear archivos monolíticos gigantes o documentos sueltos. Todo artefacto sigue una taxonomía estricta verificada por linter antes de aceptar cada cambio.
+8. **Prolijidad Estructural y Taxonomía Explícita (`SSOT`):** Prohibido crear archivos monolíticos gigantes o documentos sueltos en caos. Todo proyecto debe tener una **estructura de carpetas explícita, documentada y verificada por linter** en CI (ya sea adoptando la taxonomía base de MADA o declarando su mapa canónico adaptado en repositorios ya activos).
 
 ---
 
-## 2. Taxonomía Obligatoria del Repositorio
+## 2. Taxonomía Base de Referencia y Adaptación a Proyectos Activos
+
+La siguiente estructura constituye la **arquitectura de carpetas base recomendada por MADA** para proyectos nuevos (`greenfield`).
+
+> **Regla para Proyectos Activos (`brownfield` / repositorios en curso):** Si el repositorio ya posee una jerarquía consolidada (por ejemplo, `apps/`, `content/`, `locales/` en un juego o `distribution/` en una plataforma existente), **no es obligatorio migrarla de golpe ni detener el desarrollo**. En su lugar, el proyecto debe:
+> 1. **Documentar su Mapa Canónico de Directorios** en el `README.md` raíz o en `docs/architecture/REPO_MAP.md`, especificando el propósito de cada carpeta existente y su equivalencia con los roles de MADA (gobernanza, activos/contratos, núcleo y módulos).
+> 2. **Configurar el Linter Estructural en CI** contra ese mapa aprobado para bloquear cualquier archivo suelto fuera de las rutas declaradas, evitando el desorden sin romper integraciones previas.
+> 3. **Aplicar migración progresiva (opcional):** Si se decide converger hacia la estructura estándar de MADA, se ejecuta mediante PRs dedicados y atómicos en `MASTER_MATRIX.md`, nunca mezclados con tareas funcionales.
+
+### Estructura Base de Referencia (Proyectos Nuevos)
 
 ```text
 repo-root/
+├── README.md                                               # Punto de entrada único e índice general (y mapa de carpetas)
 ├── docs/
-│   ├── governance/
+│   ├── governance/                                         # Control operativo, seguimiento y auditoría
 │   │   ├── METHODOLOGY.md                                  # Este documento rector
 │   │   ├── MASTER_MATRIX.md                                # Backlog maestro y contratos por PR
 │   │   ├── action-logs/                                    # Tickets atómicos de escalación (1 archivo = 1 incidente)
@@ -28,6 +38,7 @@ repo-root/
 │   │   └── daily-handoffs/                                 # Cierres diarios inmutables (1 archivo = 1 jornada)
 │   │       └── YYYY-MM-DD_handoff.md                       # Ej: 2026-11-16_handoff.md
 │   └── architecture/                                       # Diagramas, ADRs y especificaciones técnicas
+│       └── REPO_MAP.md                                     # (Obligatorio en proyectos activos) Taxonomía aprobada del repo
 ├── assets/
 │   ├── contracts/                                          # Pruebas de aceptación previas (test_prXX.*)
 │   └── fixtures/                                           # Insumos inmutables (datos, textos, media, mocks)
@@ -46,22 +57,22 @@ repo-root/
 
 ### Fase 0: Construcción de la Base del Sistema (Día 1)
 
-Antes de construir cualquier módulo funcional, se ensambla e integra el núcleo técnico (`core/`): entorno de ejecución, dependencias, comunicación entre componentes y estructuras base en estado final validado.
+Antes de construir cualquier módulo funcional, se ensambla e integra el núcleo técnico (`core/` o las rutas equivalentes declaradas en `REPO_MAP.md`): entorno de ejecución, dependencias, comunicación entre componentes y estructuras base en estado final validado.
 
 ### Fase 1 a N: Construcción Modular Continua (Días 2 en adelante)
 
-Con la base operativa y los activos cerrados, el agente ejecuta secuencialmente o en paralelo (máx. 4 subprocesos) las filas de `MASTER_MATRIX.md` desde `mod01` hasta `modN`. Cada fila representa un **Pull Request (PR) atómico, completo y verificable** (desde una interacción simple hasta un flujo complejo).
+Con la base operativa y los activos cerrados, el agente ejecuta secuencialmente o en paralelo (máx. 4 subprocesos) las filas de `MASTER_MATRIX.md` desde `mod01` hasta `modN` (o sus rutas canónicas equivalentes). Cada fila representa un **Pull Request (PR) atómico, completo y verificable** (desde una interacción simple hasta un flujo complejo).
 
 ---
 
 ## 4. Plantilla Operativa: `MASTER_MATRIX.md`
 
-| PR ID | Fase / Módulo | Objetivo Funcional | Skill (1:1) | Dependencias | Context Budget (3–5 archivos / ≤ 50k tokens) | Insumos (`assets/fixtures/`) | Contrato de Validación (`assets/contracts/`) | Estado |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `PR-00` | Fase 0 (`core`) | Inicializar entorno base y dependencias | `env-setup` | Ninguna | `docs/architecture/core.md` | `fixtures/config.json` | `contracts/test_pr00.py` | Pendiente |
-| `PR-01` | Fase 0 (`core`) | Definir modelos/esquemas principales | `data-modeling` | `PR-00` | `docs/architecture/models.md`, `core/config` | `fixtures/seed_data.*` | `contracts/test_pr01.py` | Pendiente |
-| `PR-02` | Fase 1 (`mod01`) | Implementar flujo de entrada inicial | `core-logic` | `PR-01` | `modules/mod01/README.md`, `core/models` | `fixtures/mod01_input.*` | `contracts/test_pr02.py` | Pendiente |
-| `PR-03` | Fase 1 (`mod01`) | Renderizar/exponer salida del módulo | `ui-interface` | `PR-02` | `modules/mod01/README.md`, `modules/mod01/src/` | `fixtures/mod01_expected.*` | `contracts/test_pr03.py` | Pendiente |
+| PR ID | Fase / Módulo | Ruta Destino | Objetivo Funcional | Skill (1:1) | Dependencias | Context Budget (3–5 archivos / ≤ 50k tokens) | Insumos (`assets/fixtures/`) | Contrato de Validación (`assets/contracts/`) | Estado |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `PR-00` | Fase 0 (`core`) | `core/` *(o ruta mapeada)* | Inicializar entorno base y dependencias | `env-setup` | Ninguna | `docs/architecture/core.md` | `fixtures/config.json` | `contracts/test_pr00.py` | Pendiente |
+| `PR-01` | Fase 0 (`core`) | `core/` *(o ruta mapeada)* | Definir modelos/esquemas principales | `data-modeling` | `PR-00` | `docs/architecture/models.md`, `core/config` | `fixtures/seed_data.*` | `contracts/test_pr01.py` | Pendiente |
+| `PR-02` | Fase 1 (`mod01`) | `modules/mod01/` | Implementar flujo de entrada inicial | `core-logic` | `PR-01` | `modules/mod01/README.md`, `core/models` | `fixtures/mod01_input.*` | `contracts/test_pr02.py` | Pendiente |
+| `PR-03` | Fase 1 (`mod01`) | `modules/mod01/` | Renderizar/exponer salida del módulo | `ui-interface` | `PR-02` | `modules/mod01/README.md`, `modules/mod01/src/` | `fixtures/mod01_expected.*` | `contracts/test_pr03.py` | Pendiente |
 
 ---
 
@@ -71,8 +82,8 @@ Con la base operativa y los activos cerrados, el agente ejecuta secuencialmente 
    * El agente crea el worktree exclusivamente en `~/.gh-worktree/<proyecto>/feat-PR-XX` mediante:
      `git worktree add ~/.gh-worktree/<proyecto>/feat-PR-XX -b feat/PR-XX`
    * Carga únicamente los archivos listados en su *Context Budget* verificando que no excedan el umbral de tokens definido.
-2. **Implementación:** Escribe el código mínimo necesario para cumplir el objetivo funcional usando la única skill asignada.
-3. **Validación Automática:** Ejecuta el script de `assets/contracts/test_prXX.*` y el linter de estructura de carpetas.
+2. **Implementación:** Escribe el código mínimo necesario en la `Ruta Destino` declarada para cumplir el objetivo funcional usando la única skill asignada.
+3. **Validación Automática:** Ejecuta el script de `assets/contracts/test_prXX.*` y el linter de estructura de carpetas (validado contra la taxonomía base o `docs/architecture/REPO_MAP.md`).
    * *Si pasa:* Hace `rebase` contra `main`, ejecuta `git push` y marca el PR como listo para fusión.
    * *Si falla (Intento 1):* Analiza el error del test y corrige dentro del mismo worktree.
    * *Si falla (Intento 2 - Circuit Breaker):* Detiene el subproceso, no hace `push` de código roto y crea un ticket individual en `docs/governance/action-logs/YYYYMMDD-HHMMSS_PR-XX_<slug>.md`.
